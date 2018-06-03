@@ -1,6 +1,6 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.b.4.1"
+var ver = "4.5.0_r"
 var updatecode = "복권! 인생은 한방!"
 var error = false;
 var errorchk = 0;
