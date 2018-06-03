@@ -325,7 +325,12 @@ if (msg == "!DB삭제") {
     DataBase.setDataBase(JSON.stringify(DB1), "DB");
     Api.reload();
 }
-
+if (msg == "!pDB삭제ddd") {
+    delete DB.p.0000
+    DB.icode.splice(DB.icode.indexOf(scode), 1);
+	DB.inick.splice(DB.icode.indexOf(scode), 1);
+    
+}
 // 작동안?됨
 try {
 if (msg.split(" ")[0] == "!DBkey삭제") {
