@@ -487,7 +487,7 @@ loop: {
 if (msg.split(" ")[0] == "!코드변경") {
   var to = msg.split("!코드변경 ")[1]
   if (DB.p[scode].pt > 499){
-  if (isInt(Number(to)) == true || 999 < parseInt(to) < 10000) {
+  if (isInt(Number(to)) == true && 999 < parseInt(to) < 10000) {
     if (DB.icode.indexOf(to) != -1) {
       replier.reply("이미 사용중인 식별코드입니다.");
     } else {
