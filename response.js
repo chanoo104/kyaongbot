@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
 var ver = "4.5.0_r"
-var updatecode = "복권! 인생은 한방!"
+var updatecode = "식별코드 변경!"
 var error = false;
 var errorchk = 0;
 
@@ -145,7 +145,7 @@ if (DB.inick.indexOf(sender) == -1) {
       DB.icode = ta2
       
       var scode = DB.icode[DB.inick.indexOf(sender)]; // scode: 전송자의 식별코드
-      replier.reply("[▃▄▅▆KyaongBot▆▅▄▃]\n자유로운 컴퓨터 커뮤니티 컴퓨톡에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n[신규 코드 등록]\n" + sender + " - " + scode)
+      replier.reply("▃▄▅▆KyaongBot▆▅▄▃\n자유로운 컴퓨터 커뮤니티 컴퓨톡에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n[신규 코드 등록]\n" + sender + " - " + scode)
 
       DB.p[scode] = new Object()
       
@@ -472,7 +472,34 @@ if (msg == "!코드목록") {
       }
       rep = ilist.join([separator = '']);      
       replier.reply("식별코드 목록\n▼전체보기 클릭▼" + blank + "\n" + rep);
+}
+
+
+//코드변경
+loop: {
+if (msg.split(" ")[0] == "!코드변경") {
+  var to = msg.split("!코드변경 ")[1]
+  if (DB.p[scode].pt > 499){
+  if (isInt(a) == false || 0 < parseInt(to) < 10000) {
+    if (DB.icode.indexOf(to) != -1) {
+      replier.reply("이미 사용중인 식별코드입니다.");
+    } else {
+      DB.p[to] = DB.p[scode]
+      delete DB.icode[scode]
+      DB.icode.splice(DB.icode.indexOf(scode), 1, to);
+      DB.p[to].pt -= 500
+      replier.reply("식별코드가 변경되었습니다. 500cp가 차감되었습니다.");
     }
+  } else {
+    replier.reply("1000에서 9999까지의 자연수를 입력해 주십시오.");
+  }
+} else {
+var x = 500 - DB.p[scode].pt
+replier.reply("포인트가 " + x + "cp 부족합니다.")
+}
+}
+}
+
 
 //호출
 loop: {
