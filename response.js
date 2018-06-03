@@ -90,6 +90,7 @@ if ("inick" in DB == false) DB.inick = new Array()
 if ("date" in DB == false) DB.date = new Date().getDate() - 1
 if ("attendance" in DB == false) DB.attendance = 0
 if ("ncounter" in DB == false) DB.ncounter = 0
+if ("acounter" in DB == false) DB.acounter = 0
 if ("p" in DB == false) DB.p = new Object()
 if ("lottery" in DB == false) DB.lottery = new Array()
 
@@ -177,6 +178,9 @@ if (msg.indexOf("!evalf ") == 0) {
 // 포인트/카운터 증가
 DB.p[scode].pt++;
 DB.p[scode].counter++;
+DB.ncounter++
+DB.acounter++
+
 
 if (msg == "!날짜변경") DB.date = new Date().getDate() - 1
 // 날짜가 변함에 따라 광역 변수 초기화
@@ -355,6 +359,7 @@ if (msg == "!공지") {
     replier.reply(DB.notice)
 }
 
+if (msg == "!카운터 전체") replier.reply(DB.acounter)
 if (msg == "!카운터 공지") replier.reply(DB.ncounter + "/300")
 
 if (msg == "!카운터 자신") replier.reply("[" + sender + "]\n" + DB.p[scode].counter)
