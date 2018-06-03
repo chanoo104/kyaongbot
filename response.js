@@ -1,6 +1,6 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.0_r"
+var ver = "4.5.1_r"
 var updatecode = "식별코드 변경!"
 var error = false;
 var errorchk = 0;
