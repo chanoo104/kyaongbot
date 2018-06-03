@@ -313,7 +313,8 @@ if (msg == "!확인") {
 // 관리용으로 넣었는데 절대 사적으로 쓰지 말아주세요. 문법검사없어서 잘못쓰면 DB폭파되니 조심.
 if (msg.split(" ")[0] == "!ptmgmt") {
 	DB.p[msg.split(" ")[1]]pt += msg.split(" ")[2]
-
+}
+	
 // 작동됨
 if (msg == "!DB삭제") {
 	var DB1= new Object();
