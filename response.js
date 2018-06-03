@@ -314,6 +314,9 @@ if (msg == "!확인") {
 if (msg.split(" ")[0] == "!ptmgmt") {
 	DB.p[msg.split(" ")[1]].pt += Number(msg.split(" ")[2])
 }
+if (msg.split(" ")[0] == "!wrmgmt") {
+	DB.p[msg.split(" ")[1]].warning += Number(msg.split(" ")[2])
+}
 	
 // 작동됨
 if (msg == "!DB삭제") {
