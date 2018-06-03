@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.0.2_r"
-var updatecode = "구라는 욕이 아닙니다."
+var ver = "4.5.0.3_r"
+var updatecode = "dddd"
 var error = false;
 var errorchk = 0;
 
@@ -326,7 +326,7 @@ if (msg == "!DB삭제") {
     Api.reload();
 }
 if (msg == "!pDB삭제ddd") {
-    delete DB.p.0000
+    delete DB.p[scode]
     DB.icode.splice(DB.icode.indexOf(scode), 1);
 	DB.inick.splice(DB.icode.indexOf(scode), 1);
     
