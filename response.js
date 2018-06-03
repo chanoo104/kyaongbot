@@ -270,9 +270,9 @@ var r = Math.floor(Math.random() * 100);
 if (r == 50) {
 	var p = Math.floor(Math.random() * 800 + 200) / 100;
 	var q = Math.floor(Math.random() * 800 + 200) / 100;
-	var i = Math.round(p * q)
-	DB.p[scode].pt += i
-	replier.reply("[" + sender + "]\n럭키 포인트! " + i "cp")
+	var i = Math.round(p * q);
+	DB.p[scode].pt += i;
+	replier.reply("[" + sender + "]\n럭키 포인트! " + i + "cp");
 }
 
 	
