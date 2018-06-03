@@ -5,7 +5,7 @@ var updatecode = "복권! 인생은 한방!"
 var error = false;
 var errorchk = 0;
 
-// AMD TR™은 아조시가 맞다
+// AMD TR™은 아조시가 아니다. (수정금지)
 
 
 if (DataBase.getDataBase("DB") == undefined) {
