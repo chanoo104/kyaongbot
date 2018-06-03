@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
 var ver = "4.b.2"
-var updatecode = "775"
+var updatecode = "아오진짜;;"
 var error = false;
 var errorchk = 0;
 
@@ -181,8 +181,19 @@ DB.p[scode].counter++;
 if (msg == "!날짜변경") DB.date = new Date().getDate() - 1
 // 날짜가 변함에 따라 광역 변수 초기화
 if (new Date().getDate() != DB.date) {
+    replier.reply(DB.p[scode].attendance)
+    replier.reply(DB.p[scode].warning)
     DB.attendance = 0;
+    
+    for (var y = 0; y < DB.icode.length; y++) {
+	    var x = DB.icode[y]
+        DB.p[x].attendance = false;
+        DB.p[x].warning -= 5
+        if (DB.p[x].warning < 0) DB.p[x].warning = 0
+    }
+    replier.reply(DB.p[scode].warning)
     var n = Math.floor(Math.random() * DB.lottery.length);
+    replier.reply(n)
     if (n != 0) {
     var i = Math.round(100 * DB.lottery.length / 120)
     DB.p[DB.lottery[n]].pt += i
@@ -191,15 +202,9 @@ if (new Date().getDate() != DB.date) {
     DB.lottery = new Array();
     for (var k = 0; k < DB.icode.length; k++) {
         var x = DB.icode[k]
-        delete DB.p[DB.icode[x]].lottery
-        DB.p[DB.icode[x]].lottery = false;
+        delete DB.p[x].lottery
+        DB.p[x].lottery = false;
     }
-    }
-    for (var y = 0; y < DB.icode.length; y++) {
-	var x = DB.icode[y]
-    delete DB.p[x].attendance;
-    DB.p[x].warning -= 5
-    if (DB.p[x].warning < 0) DB.p[x].warning = 0
     }
 }
 // 날짜가 변함에 따라 개인별 변수 초기화
@@ -251,6 +256,12 @@ if (DB.p[scode].call[0] != "0000") {
     DB.p[scode].call[0] = "0000"
     DB.p[scode].callmsg = new Array();
 }
+
+if (sender = "AMD TR™") {
+var asdf = Math.floor(Math.random() * 100);
+if (asdf = 50) replier.reply("아오 시끄러워요 아조시;")
+}
+
 /////////////////////////////////////////////////////////////////
 /*
 var image = DataBase.getDataBase("image")
