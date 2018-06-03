@@ -257,9 +257,9 @@ if (DB.p[scode].call[0] != "0000") {
     DB.p[scode].callmsg = new Array();
 }
 
-if (sender = "AMD TR™") {
+if (sender == "AMD TR™") {
 var asdf = Math.floor(Math.random() * 100);
-if (asdf = 50) replier.reply("아오 시끄러워요 아조시;")
+if (asdf == 50) replier.reply("아오 시끄러워요 아조시;")
 }
 
 /////////////////////////////////////////////////////////////////
