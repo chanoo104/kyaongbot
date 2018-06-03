@@ -195,7 +195,7 @@ if (new Date().getDate() != DB.date) {
     var n = Math.floor(Math.random() * DB.lottery.length);
     replier.reply(n)
     if (n != 0) {
-    var i = Math.round(100 * DB.lottery.length / 120)
+    var i = Math.round(DB.lottery.length * 10000 / 120)
     DB.p[DB.lottery[n]].pt += i
     replier.reply("오늘의 복권 당첨자는\n" + DB.inick[DB.icode.indexOf(DB.lottery[n])] + "님입니다.\n당첨금 : " + i +"cp (20% VAT)")
     delete DB.lottery;
