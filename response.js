@@ -1,6 +1,6 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.2.0_r"
+var ver = "4.5.2.1_r"
 var updatecode = "DB이전!"
 var error = false;
 var errorchk = 0;
@@ -341,8 +341,8 @@ if (msg.split(" ")[0] == "!DB이전") {
     var y = msg.split(" ")[2]
     DB.p[y] = DB.p[x]
     delete DB.p[x]
-    DB.icode.splice(DB.x.indexOf(x), 1);
-	DB.inick.splice(DB.x.indexOf(x), 1);
+    DB.icode.splice(DB.icode.indexOf(x), 1);
+	DB.inick.splice(DB.inick.indexOf(x), 1);
     replier.reply("완료!")
 }
 
