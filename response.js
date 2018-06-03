@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
 var ver = "4.b.2"
-var updatecode = "아오진짜;;"
+var updatecode = "아오진짜"
 var error = false;
 var errorchk = 0;
 
