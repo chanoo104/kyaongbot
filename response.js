@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.0.3_r"
-var updatecode = "dddd"
+var ver = "4.5.1.0_r"
+var updatecode = "럭키포인트! 포인트 염탐!"
 var error = false;
 var errorchk = 0;
 
@@ -272,6 +272,7 @@ if (r == 50) {
 	var q = Math.floor(Math.random() * 800 + 200) / 100;
 	var i = Math.round(p * q)
 	DB.p[scode].pt += i
+	replier.reply("[" + sender + "]\n럭키 포인트! " + i "cp")
 }
 
 	
@@ -544,6 +545,22 @@ loop: {
     }
 }
 
+loop: {
+    if (msg.split(" ")[0] == "!염탐") {
+            if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
+        replier.reply("상대의 식별코드가 등록되지 않았습니다.");
+        break loop;
+    }
+    var x = 50 - DB.p[scode].pt
+    if (x  > 0) {
+            replier.reply("포인트가 " + x + "cp 부족합니다.");
+            break loop;
+    }
+    DB.p[scode].pt -= 50
+    replier.reply("50cp가 차감됩니다.\n[" + msg.split(" ")[1] + "] " + DB.p[msg.split(" ")[1]].pt + "cp")
+    }
+}
+	
 // 복권
 loop : {
 if (msg.split(" ")[0] == "!복권") {
