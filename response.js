@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.1.0_r"
-var updatecode = "DB !"
+var ver = "4.5.2.0_r"
+var updatecode = "DB이전!"
 var error = false;
 var errorchk = 0;
 
