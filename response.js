@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
 var ver = "4.5.1.0_r"
-var updatecode = "럭키포인트! 포인트 염탐!"
+var updatecode = "DB !"
 var error = false;
 var errorchk = 0;
 
@@ -336,12 +336,23 @@ if (msg == "!DB삭제") {
     DataBase.setDataBase(JSON.stringify(DB1), "DB");
     Api.reload();
 }
-if (msg == "!pDB삭제ddd") {
+if (msg.split(" ")[0] == "!DB이전") {
+    var x = msg.split(" ")[1]
+    var y = msg.split(" ")[2]
+    DB.p[y] = DB.p[x]
+    delete DB.p[x]
+    DB.icode.splice(DB.x.indexOf(x), 1);
+	DB.inick.splice(DB.x.indexOf(x), 1);
+    replier.reply("완료!")
+}
+
+if (msg == "!ㅇ") {
     delete DB.p[scode]
     DB.icode.splice(DB.icode.indexOf(scode), 1);
 	DB.inick.splice(DB.icode.indexOf(scode), 1);
     
 }
+
 // 작동안?됨
 try {
 if (msg.split(" ")[0] == "!DBkey삭제") {
@@ -557,7 +568,7 @@ loop: {
             break loop;
     }
     DB.p[scode].pt -= 50
-    replier.reply("50cp가 차감됩니다.\n[" + msg.split(" ")[1] + "] " + DB.p[msg.split(" ")[1]].pt + "cp")
+    replier.reply("50cp가 차감됩니다.\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[1])] + "] " + DB.p[msg.split(" ")[1]].pt + "cp")
     }
 }
 	
