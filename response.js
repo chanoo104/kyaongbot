@@ -266,6 +266,15 @@ var asdf = Math.floor(Math.random() * 100);
 if (asdf == 50) replier.reply("아오 시끄러워요 아조시;")
 }
 
+var r = Math.floor(Math.random() * 100);
+if (r == 50) {
+	var p = Math.floor(Math.random() * 800 + 200) / 100;
+	var q = Math.floor(Math.random() * 800 + 200) / 100;
+	var i = Math.round(p * q)
+	DB.p[scode].pt += i
+}
+
+	
 /////////////////////////////////////////////////////////////////
 /*
 var image = DataBase.getDataBase("image")
