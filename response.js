@@ -321,14 +321,14 @@ if (msg == "!확인") {
 // 포인트가 별 의미있는 기능은 아닙니다.
 // 하지만 그렇다고 포인트 관련 치트 기능을 넣지는 말아주세요. 부탁드려요.
 // 관리용으로 넣었는데 절대 사적으로 쓰지 말아주세요. 문법검사없어서 잘못쓰면 DB폭파되니 조심.
-	/*
+	
 if (msg.split(" ")[0] == "!ptmgmt") {
 	DB.p[msg.split(" ")[1]].pt += Number(msg.split(" ")[2])
 }
 if (msg.split(" ")[0] == "!wrmgmt") {
 	DB.p[msg.split(" ")[1]].warning += Number(msg.split(" ")[2])
 }
-	*/
+	
 // 작동됨
 if (msg == "!DB삭제") {
 	var DB1= new Object();
