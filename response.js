@@ -5,7 +5,7 @@ var updatecode = "DB이전!"
 var error = false;
 var errorchk = 0;
 
-// AMD TR™은 아조시가 맞다
+// AMD TR™은 아조시가 맞지는 않다.
 
 
 if (DataBase.getDataBase("DB") == undefined) {
