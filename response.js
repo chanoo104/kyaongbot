@@ -8,14 +8,15 @@ var errorchk = 0;
 // AMD TR™은 아조시가 맞지는 않다.
 
 
-
+/*
    var DB1 = new Object()
    DataBase.setDataBase(JSON.stringify(DB1), "DB");
 
 var DB = JSON.parse(DataBase.getDataBase("DB"));
-/*이건 리로드기능 안에 대체해서 삽입
+이건 리로드기능 안에 대체해서 삽입
 DataBase.setDataBase(JSON.stringify(DB), "DB");
 */
+var DB1 = new Object ()
 
 
 var blank = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               \n"
