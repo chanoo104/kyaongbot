@@ -314,12 +314,12 @@ if (msg == "!리로드") {
 }
 if (msg == "!로드") {
     replier.reply("백업 진행중...");
-    var DB = JSON.parse(DataBase.getDataBase("DB1"));
+    var DB = JSON.parse(DataBase.getDataBase("DB2"));
     replier.reply(startmsg)
 }
 if (msg == "!세이브") {
     replier.reply("진행중...");
-    DataBase.setDataBase(JSON.stringify(DB), "DB1");
+    DataBase.setDataBase(JSON.stringify(DB), "DB2");
     replier.reply(startmsg)
 }
 
