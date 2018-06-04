@@ -221,23 +221,23 @@ if (DB.p[scode].attendance == false) {
     if (DB.attendance == 1) {
         var cp = 300
         DB.p[scode].pt += cp
-        replier.reply(DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
+        replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
     } else if (DB.attendance == 2) {
         var cp = 250
         DB.p[scode].pt += cp
-        replier.reply(DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
+        replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
     } else if (DB.attendance > 2 && DB.attendance < 6) {
         var cp = 200
         DB.p[scode].pt += cp
-        replier.reply(DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
+        replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
     } else if (DB.attendance > 4 && DB.attendance < 11) {
         var cp = 150
         DB.p[scode].pt += cp
-        replier.reply(DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
+        replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
     } else {
         var cp = 100
         DB.p[scode].pt += cp
-        replier.reply(DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
+        replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
     }
     DB.p[scode].attendance = true;
 }
