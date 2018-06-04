@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.2.1_r"
-var updatecode = "DB이전!"
+var ver = "4.5.3.1_r"
+var updatecode = "백업!"
 var error = false;
 var errorchk = 0;
 
@@ -310,6 +310,16 @@ if (msg == "!리로드") {
     replier.reply("백업 진행중...");
     DataBase.setDataBase(JSON.stringify(DB), "DB");
     Api.reload();
+    replier.reply(startmsg)
+}
+if (msg == "!로드") {
+    replier.reply("백업 진행중...");
+    var DB = JSON.parse(DataBase.getDataBase("DB1"));
+    replier.reply(startmsg)
+}
+if (msg == "!세이브") {
+    replier.reply("진행중...");
+    DataBase.setDataBase(JSON.stringify(DB), "DB1");
     replier.reply(startmsg)
 }
 
