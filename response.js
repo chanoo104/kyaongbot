@@ -1,11 +1,11 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.6.0_s"
-var updatecode = "!명령어 "
+var ver = "4.5.7.0"
+var updatecode = "!8ball "
 var error = false;
 var errorchk = 0;
 
-// AMD TR™은 아조시가 맞지는 않다.
+// AMD TR™은 아조시가 맞다 메우
 
 
 
@@ -841,6 +841,66 @@ if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
 if (msg.indexOf("!eval ") == 0) {
     replier.reply(eval(msg.substring(6)))
 }
+}
+/////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////
+
+// 카운터 다차면 공지표시
+DB.ncounter++;
+if (DB.ncounter >> 299) {
+   DB.ncounter = 0
+   replier.reply(DB.notice)
+}
+
+if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
+if (msg.indexOf("!eval ") == 0) {
+    replier.reply(eval(msg.substring(6)))
+}
+}
+/////////////////////////////////////////////////////////////////
+
+
+/////////////////////(크롬이 만든거)//////////////////////////////
+if (msg == "!8ball") {
+    if (msg.indexOf("?") == -1) {
+        var e_ball_rand = randomRange(1, 15)
+        if (e_ball_rand == 1){
+            replier.reply("전망이 좋지 않습니다..")
+        } else if (e_ball_rand == 2){
+            replier.reply("아니요!")
+        } else if (e_ball_rand == 3){
+            replier.reply("제 직감으로 봐서는 아닐겁니다!")
+        } else if (e_ball_rand == 4){
+            replier.reply("제 답변은...아니오입니다!")
+        } else if (e_ball_rand == 5){
+            replier.reply("그렇지 않을겁니다..")
+        } else if (e_ball_rand == 6){
+            replier.reply("앗..! 깜빡하고 졸아서 질문을 받지 못하였습니다..")
+        } else if (e_ball_rand == 7){
+            replier.reply("아앗..집중해서 다시 해보세요!")
+        } else if (e_ball_rand == 8){
+            replier.reply("예측을..못하겠습니다..!")
+        } else if (e_ball_rand == 9){
+            replier.reply("아마.. 그렇지 않을까요?")
+        } else if (e_ball_rand == 10){
+            replier.reply("아마도 그럴겁니다!")
+        } else if (e_ball_rand == 11){
+            replier.reply("저를 믿어도 좋습니다!")
+        } else if (e_ball_rand == 12){
+            replier.reply("네!")
+        } else if (e_ball_rand == 13){
+            replier.reply("의심할 여지 없이 당연합니다!")
+        } else if (e_ball_rand == 14){
+            replier.reply("확실히 그렇습니다!")
+        } else if (e_ball_rand == 15){
+            replier.reply("당연히 그럴겁니다!")
+        }          
+    }
+}
+
+if (msg == "!크롬") {
+    replier.reply("코딩을 좋아한다 메우")
 }
 /////////////////////////////////////////////////////////////////
 
