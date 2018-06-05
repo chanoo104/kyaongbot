@@ -1,12 +1,19 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.7.0"
+var ver = "4.5.7.0_f"
 var updatecode = "!8ball "
 var error = false;
 var errorchk = 0;
 
 // AMD TR™은 아조시가 맞다 메우
 
+
+////////랜덤 발생기///////
+var generateRandom = function (min, max) {
+    var ranNum = Math.floor(Math.random()*(max-min+1)) + min;
+    return ranNum;
+}
+/////////////////////////
 
 
 if (DataBase.getDataBase("DB") == undefined) {
@@ -854,7 +861,7 @@ if (DB.ncounter >> 299) {
 }
 
 if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
-if (msg.indexOf("!eval ") == 0) {
+if (ㅊ) {
     replier.reply(eval(msg.substring(6)))
 }
 }
@@ -862,9 +869,9 @@ if (msg.indexOf("!eval ") == 0) {
 
 
 /////////////////////(크롬이 만든거)//////////////////////////////
-if (msg == "!8ball") {
-    if (msg.indexOf("?") == -1) {
-        var e_ball_rand = randomRange(1, 15)
+if (msg.indexOf("8ball ") == 0) {
+    if (msg.indexOf("?") == 0) {
+        var e_ball_rand = generateRandom(1, 16);
         if (e_ball_rand == 1){
             replier.reply("전망이 좋지 않습니다..")
         } else if (e_ball_rand == 2){
