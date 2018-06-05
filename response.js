@@ -843,58 +843,57 @@ if (msg.indexOf("!eval ") == 0) {
 }
 /////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////
-
-// 카운터 다차면 공지표시
-DB.ncounter++;
-if (DB.ncounter >> 299) {
-   DB.ncounter = 0
-   replier.reply(DB.notice)
-}
-
-if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
-if (ㅊ) {
-    replier.reply(eval(msg.substring(6)))
-}
-}
-/////////////////////////////////////////////////////////////////
-
 
 /////////////////////(크롬이 만든거)//////////////////////////////
-if (msg.indexOf("8ball") == 0) {
-    var br = Math.floor(Math.random() * 14 + 1);
-    if (br == 1){
-        replier.reply("전망이 좋지 않습니다..");
-    } else if (br == 2){
-        replier.reply("아니요!");
-    } else if (br == 3){
-        replier.reply("제 직감으로 봐서는 아닐겁니다!");
-    } else if (br == 4){
-        replier.reply("제 답변은...아니오입니다!");
-    } else if (br == 5){
-        replier.reply("그렇지 않을겁니다..");
-    } else if (br == 6){
-        replier.reply("앗..! 깜빡하고 졸아서 질문을 받지 못하였습니다..");
-    } else if (br == 7){
-        replier.reply("아앗..집중해서 다시 해보세요!");
-    } else if (br == 8){
-        replier.reply("예측을..못하겠습니다..!");
-    } else if (br == 9){
-        replier.reply("아마.. 그렇지 않을까요?");
-    } else if (br == 10){
-        replier.reply("아마도 그럴겁니다!");
-    } else if (br == 11){
-        replier.reply("저를 믿어도 좋습니다!");
-    } else if (br == 12){
-        replier.reply("네!");
-    } else if (br == 13){
-        replier.reply("의심할 여지 없이 당연합니다!");
-    } else if (br == 14){
-        replier.reply("확실히 그렇습니다!");
-    } else {
-        replier.reply("당연히 그럴겁니다!");
-    }          
-}
+if (msg.indexOf("8ball ") == 0) {
+        var br = Math.floor(Math.random()*15)+1;
+        if (br == 1){
+            replier.reply("전망이 좋지 않습니다..");
+        } 
+        if (br == 2){
+            replier.reply("아니요!");
+        } 
+        if (br == 3){
+            replier.reply("제 직감으로 봐서는 아닐겁니다!");
+        } 
+        if (br == 4){
+            replier.reply("제 답변은...아니오입니다!");
+        } 
+        if (br == 5){
+            replier.reply("그렇지 않을겁니다..");
+        }
+        if (br == 6){
+            replier.reply("앗..! 깜빡하고 졸아서 질문을 받지 못하였습니다..");
+        } 
+        if (br == 7){
+            replier.reply("아앗..집중해서 다시 해보세요!");
+        }
+        if (br == 8){
+            replier.reply("예측을..못하겠습니다..!");
+        }
+        if (br == 9){
+            replier.reply("아마.. 그렇지 않을까요?");
+        }
+        if (br == 10){
+            replier.reply("아마도 그럴겁니다!");
+        }
+        if (br == 11){
+            replier.reply("저를 믿어도 좋습니다!");
+        }
+        if (br == 12){
+            replier.reply("네!");
+        }
+        if (br == 13){
+            replier.reply("의심할 여지 없이 당연합니다!");
+        }
+        if (br == 14){
+            replier.reply("확실히 그렇습니다!");
+        }
+        if (br == 15){
+            replier.reply("당연히 그럴겁니다!");
+        }          
+    }
+
 
 if (msg == "!크롬") {
     replier.reply("코딩을 좋아한다 메우")
