@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.7.0_f"
-var updatecode = "!8ball"
+var ver = "4.5.7.1_f"
+var updatecode = "!d"
 var error = false;
 var errorchk = 0;
 
