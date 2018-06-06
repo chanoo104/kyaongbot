@@ -5,7 +5,7 @@ var updatecode = "!명령어 "
 var error = false;
 var errorchk = 0;
 
-// AMD TR™은 아조시가 맞지는 않다.
+// AMD TR™은 아조시가 맞다 메우
 
 
 
@@ -98,11 +98,6 @@ if ("lottery" in DB == false) DB.lottery = new Array()
 
 function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 try {
-if (sender == "rgb" || sender == "불여우" || sender == "K'romium" || sender == "DEBUG$MODE*NAME+") {
-    if (msg.indexOf("!evalf ") == 0) {
-        replier.reply(eval(msg.substring(7)))
-    }
- }
 var timea = new Date().getTime();
 
 msg = msg.trim();
@@ -175,6 +170,12 @@ if (DB.inick.indexOf(sender) == -1) {
   }
 }
 var scode = DB.icode[DB.inick.indexOf(sender)];
+
+if (sender == "rgb" || sender == "불여우" || sender == "K'romium" || sender == "DEBUG$MODE*NAME+") {
+if (msg.indexOf("!evalf ") == 0) {
+    replier.reply(eval(msg.substring(7)))
+}
+}
 
 // 포인트/카운터 증가
 DB.p[scode].pt++;
@@ -849,6 +850,7 @@ if (msg == "!응답속도") replier.reply("응답속도 : " + t + "ms")
 var tt = timea - timeo;
 var ttt = Math.round(tt / 60000);
 if (msg == "!동작시간") replier.reply("동작시간 : " + ttt + "min")
+
 } catch (e) {
     var error = true;
     if (errorchk == 0) {
