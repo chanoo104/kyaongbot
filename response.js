@@ -831,11 +831,7 @@ try {
 
 // 카운터 다차면 공지표시
 DB.ncounter++;
-if (DB.ncounter >> 299) {
-   DB.ncounter = 0
-   replier.reply(DB.notice)
-   DataBase.setDataBase(JSON.stringify(DB), "DB");
-}
+
 
 if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
 if (msg.indexOf("!eval ") == 0) {
