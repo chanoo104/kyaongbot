@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.7.0_f"
-var updatecode = "!8ball"
+var ver = "4.5.7.1_s"
+var updatecode = "가위바위보 "
 var error = false;
 var errorchk = 0;
 
@@ -207,11 +207,11 @@ if (new Date().getDate() != DB.date) {
     for (var k = 0; k < DB.icode.length; k++) {
         var x = DB.icode[k]
         delete DB.p[x].lottery
+	DB.p[scode].rps = 0
         DB.p[x].lottery = false;
     }
     }
 }
-// 날짜가 변함에 따라 개인별 변수 초기화
 DB.date = new Date().getDate();
 
 // 출석체크
