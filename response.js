@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.7.2_s"
-var updatecode = "이제 !포인트에 닉네임도 출력됨"
+var ver = "4.5.7.3_s"
+var updatecode = "fatal error fix"
 var error = false;
 var errorchk = 0;
 
@@ -207,7 +207,7 @@ if (new Date().getDate() != DB.date) {
     for (var k = 0; k < DB.icode.length; k++) {
         var x = DB.icode[k]
         delete DB.p[x].lottery
-	DB.p[scode].rps = 0
+	DB.p[x].rps = 0
         DB.p[x].lottery = false;
     }
     }
