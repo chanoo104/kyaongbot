@@ -1,9 +1,9 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
 var ver = "4.5.9.0_s"
-var updatecode = "양!"
+var updatecode = "양식!"
 var error = false;
-var errorchk = 0;
+if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
 
 // AMD TR™은 아조시가 맞다 메우
@@ -926,10 +926,10 @@ if (msg == "!견적양식") {
 }
 } catch (e) {
     var error = true;
-    if (errorchk == 0) {
-      replier.reply("오류 발생!\n오류메시지 : " + e.message + "\n" + Number(Number(e.lineNumber) + Number(1)) + "번째 줄에서 오류가 발생했습니다!")
-      errorchk = 1;
-      return;
+    if (DataBase.getDataBase("errorchk") == 0) {
+      replier.reply("ERROR!\nmessage : " + e.message + "\n:line no. : " + Number(Number(e.lineNumber) + Number(1)))
+      DataBase.setDataBase(1, "errorchk")
+      Api.reload();
     }
 }
 }
