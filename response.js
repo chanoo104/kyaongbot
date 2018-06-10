@@ -420,7 +420,7 @@ if (msg == "!프사") {
     replier.reply(img);
 }
 
-if (msg == "!포인트") replier.reply("[" +  + "]\n" + DB.p[scode].pt + "cp")
+if (msg == "!포인트") replier.reply("[" + sender + "]\n" + DB.p[scode].pt + "cp")
 
 
 // 욕설인식
