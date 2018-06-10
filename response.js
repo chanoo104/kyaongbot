@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.7.1_s"
-var updatecode = "가위바위보 "
+var ver = "4.5.7.2_s"
+var updatecode = "이제 !포인트에 닉네임도 출력됨"
 var error = false;
 var errorchk = 0;
 
@@ -420,7 +420,7 @@ if (msg == "!프사") {
     replier.reply(img);
 }
 
-if (msg == "!포인트") replier.reply(DB.p[scode].pt + "cp")
+if (msg == "!포인트") replier.reply("[" +  + "]\n" + DB.p[scode].pt + "cp")
 
 
 // 욕설인식
