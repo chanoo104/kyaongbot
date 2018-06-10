@@ -1,9 +1,10 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.7.3_s"
-var updatecode = "fatal error fix"
+var ver = "4.5.8.0_s"
+var updatecode = "off"
 var error = false;
 var errorchk = 0;
+var off = false
 
 // AMD TR™은 아조시가 맞다 메우
 
@@ -289,7 +290,12 @@ if (ImageDB.getProfileImage() == image) {
   }
 }
 */
+
 if (admin.indexOf(sender) != -1) {
+if (msg == "!on") off = false
+if (off == true) return
+if (msg == "!off") off = true
+
 if (msg == "!업데이트") {
     replier.reply("백업 진행중...");
     DataBase.setDataBase(JSON.stringify(DB), "DB");
