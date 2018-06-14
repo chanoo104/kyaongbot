@@ -6,7 +6,7 @@ var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
 
-// AMD TR™은 아조시가 맞다 메우
+// AMD TR™은 아조시가 아니다 전혀
 
 
 if (DataBase.getDataBase("DB") == undefined) {
