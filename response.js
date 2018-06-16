@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.5.9.0_s"
-var updatecode = "양식!"
+var ver = "4.5.9.1_s"
+var updatecode = "버그픽스"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -291,11 +291,13 @@ if (ImageDB.getProfileImage() == image) {
   }
 }
 */
-
-if (admin.indexOf(sender) != -1) {
+	
 if (msg == "!on") off = false
 if (off == true) return
 if (msg == "!off") off = true
+
+if (admin.indexOf(sender) != -1) {
+
 
 if (msg == "!업데이트") {
     replier.reply("백업 진행중...");
