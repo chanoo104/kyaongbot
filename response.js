@@ -1,12 +1,12 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.6.0.1"
-var updatecode = "CRYSTAL"
+var ver = "4.6.0.2"
+var updatecode = "가위바위보 횟수 강제 5회 제한"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
 
-// AMD TR™은 아조시가 아니다 전혀
+// AMD TR™은 아조시다 매우
 /* 이게 작동할지 안할지 모르겠다면 일단 eval 기능을 이용해 작동을 확인후 적용 시켜주세요.
 그리고 eval로 테스트가 전혀 안될거 같으면 제발 try기능을 써서 오류가 발생해도 예외처리를 해주셔야 손쉽게 오류를 고칠수 있습니다.
 꼭 테스트하고 넣어주세요 제발 부탁입니다. 고치기 너무 귀찮아요;;;(특히 지비)
@@ -634,12 +634,10 @@ if (msg.split(" ")[0] == "!가위") {
             break loop;
         }
         if (DB.p[scode].rps == 4) {
-    	replier.reply("오늘의 마지막 무료 기회입니다. 다음 시행부터 이용료가 10cp씩 증가합니다.");
+    	replier.reply("오늘의 마지막 기회입니다.");
     }
         if (DB.p[scode].rps > 4) {
-            replier.reply("무료 사용 횟수를 초과하셨습니다.");
-            DB.p[scode].pt -= y * 10
-        replier.reply(10 * y + "cp가 차감됩니다.")
+break loop;
         }
         DB.p[scode].rps++
         var n = Math.floor(Math.random() * 3);
@@ -674,12 +672,10 @@ if (msg.split(" ")[0] == "!바위") {
             break loop;
         }
         if (DB.p[scode].rps == 4) {
-    	replier.reply("오늘의 마지막 무료 기회입니다. 다음 시행부터 이용료가 10cp씩 증가합니다.");
+    	replier.reply("오늘의 마지막 기회입니다.");
     }
         if (DB.p[scode].rps > 4) {
-            replier.reply("무료 사용 횟수를 초과하셨습니다.");
-            DB.p[scode].pt -= y * 10
-        replier.reply(10 * y + "cp가 차감됩니다.")
+          break loop;  
         }
         DB.p[scode].rps++
         var n = Math.floor(Math.random() * 3);
@@ -714,12 +710,10 @@ if (msg.split(" ")[0] == "!보") {
             break loop;
         }
         if (DB.p[scode].rps == 4) {
-    	replier.reply("오늘의 마지막 무료 기회입니다. 다음 시행부터 이용료가 10cp씩 증가합니다.");
+    	replier.reply("오늘의 마지막 기회입니다.");
     }
         if (DB.p[scode].rps > 4) {
-            replier.reply("무료 사용 횟수를 초과하셨습니다.");
-            DB.p[scode].pt -= y * 10
-        replier.reply(10 * y + "cp가 차감됩니다.")
+            break loop;
         }
         DB.p[scode].rps++
         var n = Math.floor(Math.random() * 3);
