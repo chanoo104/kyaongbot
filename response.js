@@ -753,7 +753,7 @@ loop: {
     var list = new Array();
     list.push("[검색결과]");
     for (var i = 0; i < DB.icode.length; i++) {
-    if (DB.inick[i].indexOf(key) != -1) {
+        if (DB.inick[i].toLowerCase().indexOf(key.toLowerCase()) =! -1) {
         list.push("\n" + DB.inick[i] + " - " + DB.icode[i]);
     }
     }
@@ -761,7 +761,7 @@ loop: {
         replier.reply("검색 결과가 없습니다.");
         break loop;
     }
-    replier.reply(list.join([separator = ""]));
+    replier.reply(list.join());
     }
 }
     
