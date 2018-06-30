@@ -1050,11 +1050,16 @@ if (DB.ncounter > 299) {
    DataBase.setDataBase(JSON.stringify(DB), "DB");
 }
 
-if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
+	if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
+try{
 if (msg.indexOf("!eval ") == 0) {
     replier.reply(eval(msg.substring(6)))
+    }
 }
+catch (e) {
+replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message))
 }
+
 /////////////////////////////////////////////////////////////////
 
 
