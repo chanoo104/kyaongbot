@@ -742,6 +742,22 @@ replier.reply("포인트가 " + x + "cp 부족합니다.")
 }
 }
 
+//코드검색
+loop: {
+if (msg.split(" ")[0] == "!코드검색") {
+var key = msg.split(" ")[1]
+if (key.length =< 2) {
+replier.reply("3글자 이상 입력해 주세요.")
+break loop;
+}
+var list = new Array();
+for (var y = 0; y < DB.icode.length; y++) {
+if (DB.inick[i].toLowerCase().indexOf(key.toLowerCase()) =! -1) {
+list.push("/n" + DB.inick[i] + " - " + DB.icode[i])
+}
+replier.reply(list.join())
+}
+}
 
 //호출
 loop: {
