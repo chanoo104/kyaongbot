@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.6.0.2"
-var updatecode = "가위바위보 횟수 강제 5회 제한"
+var ver = "4.7.0.0"
+var updatecode = "견적봇 베타"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -376,7 +376,189 @@ if (msg.split(" ")[0] == "!pDB삭제") {
     DB.inick.splice(DB.icode.indexOf(x), 1);
     DB.icode.splice(DB.icode.indexOf(x), 1);
 }
+	
+DB.code = new Object()
+DB.preprice = new Object()
+DB.price = new Object()
+DB.cat = new String()
 
+function getDB(name, link) {
+	var data = Utils.getWebText(link);
+	DB.code[name] = new Array();
+	DB.preprice[name] = new Array();
+	var a = data.split('<tr style="border-bottom:1px solid #eee;">');
+	for (var i = 0; i < (a.length-1); i++) {
+		DB.code[name][i] = link.split("SeqList=")[1].split("&quantity")[0].split(",")[i]
+		var b = a[i+1].split('<td style="text-align:center;color:#666;">1</td>');
+		var b = b[0].split('<td style="text-align:right;padding-right:5px;color:#666;">')
+		var b = b[2].split("&nbsp")
+		var b = b[0].replace(/,/g, "")
+		if (b == 0) b = Infinity
+		DB.preprice[name][i] = Number(b);
+		DB.price[name] = new Array();
+	}
+	DB.cat = name
+}
+
+	if (msg.split(" ")[0] == "!견적") {
+    DB.estreq= msg.split(" ")[1];
+    
+replier.reply("DB 파싱중...")
+getDB("cpu", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=5530456,5530356,6020667,6020678,5530013&quantityList=1,1,1,1,1&marketPlaceSeq=16&type=print")
+//5530456,5530356,6020667,6020678,5530013
+var factor = [1,0.95,1,1.05,1];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("mb", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=6024335,6016476,6014541,6020619,6020606,6013975,6023368,6015067&quantityList=1,1,1,1,1,1,1,1&marketPlaceSeq=16&type=print")
+//6024335,6016476,6014541,6020619,6020606,6013975,6023368,6015067
+var factor = [1.04,1.02,1,0.98,0.9,1,0.95,1];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("ram", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=4343051,5937666&quantityList=1,1&marketPlaceSeq=16&type=print")
+//4343051,5937666
+var factor = [1,1.07];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("50ti", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=4586507,5065115,4705488,4586604,4587231,4597633,4610900,4585828,4586410&quantityList=1,1,1,1,1,1,1,1,1&marketPlaceSeq=16&type=print")
+//4586507,5065115,4705488,4586604,4587231,4597633,4610900,4585828,4586410
+var factor = [1.02,1,0.98,0.97,1,1.01,1,1,0.99];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("603", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=4360026,4387267,4362427,4360054,5078735&quantityList=1,1,1,1,1&marketPlaceSeq=16&type=print")
+//4360026,4387267,4362427,4360054,5078735
+var factor = [1,0.98,0.98,0.99,1]
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("606", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=4384735,4260053,5315858,4260892,4340985&quantityList=1,1,1,1,1&marketPlaceSeq=16&type=print")
+//4384735,4260053,5315858,4260892,4340985
+var factor = [0.98,0.98,1,1,0.99];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("70", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=5900442,4157306,4218595,5613238,4157969,6020607,6076923,5222545,4347178,4129990,5078612&quantityList=1,1,1,1,1,1,1,1,1,1,1&marketPlaceSeq=16&type=print")
+//5900442,4157306,4218595,5613238,4157969,6020607,6076923,5222545,4347178,4129990,5078612
+var factor = [1,1,1,0.99,1.005,1,1,1,1,0.99,1.02];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("70ti", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=5589466,5594464,5589437,5593383,5594444,5596803,5654372,5742583&quantityList=1,1,1,1,1,1,1,1&marketPlaceSeq=16&type=print")
+//5589466,5594464,5589437,5593383,5594444,5596803,5654372,5742583
+var factor = [0.98,1,1,1,1,1.01,0.99,1];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("80", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=4137997,4370619,5629697,4128900,4096868,5629753,4347202,5964313,5329502,5081805&quantityList=1,1,1,1,1,1,1,1,1,1&marketPlaceSeq=16&type=print")
+//4137997,4370619,5629697,4128900,4096868,5629753,4347202,5964313,5329502,5081805
+var factor = [1,1,0.99,1.005,1,1,1,1.01,1,1.015];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("80ti", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=5064255,5064306,5222571,5141068,5046674,5045456,5065092,5435682,5050866,5022642&quantityList=1,1,1,1,1,1,1,1,1,1&marketPlaceSeq=16&type=print")
+//5064255,5064306,5222571,5141068,5046674,5045456,5065092,5435682,5050866,5022642
+var factor = [0.94,0.95,1,1,1.01,1.01,1.01,1.03,1.02,1];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("ssd", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=5791861,5834197,5791864,6096943&quantityList=1,1,1,1&marketPlaceSeq=16&type=print")
+//5791861,5834197,5791864,6096943
+var factor = [0.9,1,1,1.3];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("hdd", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=1706996,4354440&quantityList=1,1&marketPlaceSeq=16&type=print")
+//1706996,4354440
+var factor = [1,1.2];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("pwr","http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=3969924,4678115,6006452,4742536&quantityList=1,1,1,1&marketPlaceSeq=16&type=print")
+//3969924,4678115,6006452,4742536
+var factor = [1,1,1,1];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+getDB("chassis", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=1928673,5129268,3272823,5615143&quantityList=1,1,1,1&marketPlaceSeq=16&type=print")
+//1928673,5129268,3272823,5615143
+var factor = [1,1,1,1,];
+for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i]/factor[i]);
+
+replier.reply("DB 후처리중...")
+var tmp = ["code", "preprice", "price"]
+for (var i = 0; i < 3; i++) {
+DB[tmp[i]].cpu1 = DB[tmp[i]].cpu.slice(0,1);
+DB[tmp[i]].cpu2 = DB[tmp[i]].cpu.slice(1,4);
+DB[tmp[i]].cpu3 = DB[tmp[i]].cpu.slice(4,5);
+}
+for (var i = 0; i < 3; i++) {
+DB[tmp[i]].mb1 = DB[tmp[i]].mb.slice(0,4);
+DB[tmp[i]].mb2 = DB[tmp[i]].mb.slice(4,7);
+DB[tmp[i]].mb3 = DB[tmp[i]].mb.slice(7,8);
+}
+for (var i = 0; i < 3; i++) {
+DB[tmp[i]].ssd1 = DB[tmp[i]].ssd.slice(0,2);
+DB[tmp[i]].ssd2 = DB[tmp[i]].ssd.slice(2,4);
+}
+for (var i = 0; i < 3; i++) {
+DB[tmp[i]].pwr1 = DB[tmp[i]].pwr.slice(0,1);
+DB[tmp[i]].pwr2 = DB[tmp[i]].pwr.slice(1,2);
+DB[tmp[i]].pwr3 = DB[tmp[i]].pwr.slice(2,3);
+DB[tmp[i]].pwr4 = DB[tmp[i]].pwr.slice(3,4);
+}
+for (var i = 0; i < 3; i++) {
+DB[tmp[i]].chassis1 = DB[tmp[i]].chassis.slice(0,1);
+DB[tmp[i]].chassis2 = DB[tmp[i]].chassis.slice(1,2);
+DB[tmp[i]].chassis3 = DB[tmp[i]].chassis.slice(2,3);
+DB[tmp[i]].chassis4 = DB[tmp[i]].chassis.slice(3,4);
+}
+	
+
+//replier.reply(JSON.stringify(DB))
+replier.reply("표준 견적 추출중...")
+
+var est = new Object();
+est.code = new Array();
+est.quan = new Array();
+
+function minprice(a) {
+	return DB.preprice[a][DB.price[a].indexOf(Math.min.apply(null, DB.price[a]))]
+}
+
+function estimate(a, b, c, d, e, f, g, h, i) {
+	var temp1 = [a,b,c,d,e,f,g,h,i]
+	var temp2 = ["cpu","mb","ram","gpu","ssd","hdd","pwr","cool","chassis"]
+	for (var i = 0; i < temp1.length; i++) {
+		if (temp1[i] == 0) {
+			est[temp2[i]] = 0
+		} else {
+			if (temp1[i].indexOf("2*") == 0) {
+				var t = temp1[i].slice(2)
+				est[temp2[i]] = 2*minprice(t)
+				est.code.push(DB.code[t][DB.preprice[t].indexOf(minprice(t))])
+				est.quan.push(2)
+			} else {
+				est[temp2[i]] = minprice(temp1[i])
+				est.code.push(DB.code[temp1[i]][DB.preprice[temp1[i]].indexOf(minprice(temp1[i]))])
+				est.quan.push(1)
+			}
+		}
+	}
+	return est.cpu+est.mb+est.ram+est.gpu+est.ssd+est.hdd+est.pwr+est.cool+est.chassis
+}
+
+{
+/*
+var estab = estimate("cpu1","mb1","ram","50ti","ssd1",0,"pwr1",0,"chassis1")
+var estbb = estimate("cpu1","mb1","2*ram","603","ssd1",0,"pwr1",0,"chassis1")
+var estcb = estimate("cpu1","mb2","2*ram","606","ssd1",0,"pwr1",0,"chassis2")
+var estdb = estimate("cpu2","mb2","2*ram","70","ssd1",0,"pwr2",0,"chassis2")
+var esteb = estimate("cpu2","mb2","2*ram","70ti","ssd1",0,"pwr2",0,"chassis2")
+var estfb = estimate("cpu3","mb2","2*ram","70ti","ssd1",0,"pwr2",0,"chassis3")
+var estgb = estimate("cpu3","mb3","2*ram","80ti","ssd2",0,"pwr4",0,"chassis4")
+
+var estab = estimate("cpu1","mb1","ram","50ti","ssd1",0,"pwr1",0,"chassis1")
+var estab = estimate("cpu1","mb1","ram","50ti","ssd1",0,"pwr1",0,"chassis1")
+var estab = estimate("cpu1","mb1","ram","50ti","ssd1",0,"pwr1",0,"chassis1")
+var estab = estimate("cpu1","mb1","ram","50ti","ssd1",0,"pwr1",0,"chassis1")
+var estab = estimate("cpu1","mb1","ram","50ti","ssd1",0,"pwr1",0,"chassis1")
+var estab = estimate("cpu1","mb1","ram","50ti","ssd1",0,"pwr1",0,"chassis1")
+var estab = estimate("cpu1","mb1","ram","50ti","ssd1",0,"pwr1",0,"chassis1")
+
+replier.reply(estab)
+replier.reply(estbb)
+replier.reply(estcb)
+replier.reply(estdb)
+replier.reply(esteb)
+replier.reply(estfb)
+replier.reply(estgb)
+*/
+eval("estimate("+DB.estreq+")")
+replier.reply("http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=" + est.code.join([separator=',']) + "&quantityList=" + est.quan.join([separator=',']) + "&marketPlaceSeq=16&type=print")
+replier.reply(eval("estimate("+DB.estreq+")")+"₩")
+
+}
+}
+	
+	
+	
 // 작동안?됨
 /*
 try {
