@@ -1,6 +1,6 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.1.3"
+var ver = "4.7.1.2"
 var updatecode = "코드검색!"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
@@ -753,9 +753,12 @@ break loop;
 var list = new Array();
 list.push("[검색결과]")
 for (var i = 0; i < DB.icode.length; i++) {
-//if (DB.inick[i].toLowerCase().indexOf(key.toLowerCase()) =! -1) list.push("/n" + DB.inick[i] + " - " + DB.icode[i])
+if (DB.inick[i].toLowerCase().indexOf(key.toLowerCase()) =! -1) replier.reply("a")//list.push("/n" + DB.inick[i] + " - " + DB.icode[i])
 }
-if (list.length == 1) replier.reply("검색 결과가 없습니다.")
+if (list.length == 1) {
+	replier.reply("검색 결과가 없습니다.")
+	break loop;
+}
 replier.reply(list.join())
 }
 }
