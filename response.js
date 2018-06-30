@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.0.0"
-var updatecode = "견적봇 베타"
+var ver = "4.7.1.0"
+var updatecode = "코드검색!"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -755,6 +755,7 @@ for (var y = 0; y < DB.icode.length; y++) {
 if (DB.inick[i].toLowerCase().indexOf(key.toLowerCase()) =! -1) {
 list.push("/n" + DB.inick[i] + " - " + DB.icode[i])
 }
+if (list.length == 0) replier.reply("검색 결과가 없습니다.")
 replier.reply(list.join())
 }
 }
