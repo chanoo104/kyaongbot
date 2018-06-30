@@ -745,25 +745,25 @@ replier.reply("포인트가 " + x + "cp 부족합니다.")
 //코드검색
 loop: {
     if (msg.split(" ")[0] == "!코드검색") {
-    var key = msg.split(" ")[1]
+    var key = msg.split(" ")[1];
     if (key.length <= 2) {
-    replier.reply("3글자 이상 입력해 주세요.")
+    replier.reply("3글자 이상 입력해 주세요.");
     break loop;
     }
     var list = new Array();
-    list.push("[검색결과]")
+    list.push("[검색결과]");
     for (var i = 0; i < DB.icode.length; i++) {
-    if (DB.inick[i].toLowerCase().indexOf(key.toLowerCase()) =! -1) {
-        list.push("/n" + DB.inick[i] + " - " + DB.icode[i])
+    if (DB.inick[i].indexOf(key) != -1) {
+        list.push("\n" + DB.inick[i] + " - " + DB.icode[i]);
     }
     }
     if (list.length == 1) {
-        replier.reply("검색 결과가 없습니다.")
+        replier.reply("검색 결과가 없습니다.");
         break loop;
     }
-    replier.reply(list.join())
+    replier.reply(list.join([separator = ""]));
     }
-    }
+}
     
 //호출
 loop: {
