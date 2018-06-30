@@ -1,6 +1,6 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.2.1"
+var ver = "4.7.2.2"
 var updatecode = "업뎃 안된거 실화녀"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
@@ -761,7 +761,7 @@ loop: {
         replier.reply("검색 결과가 없습니다.");
         break loop;
     }
-    replier.reply(list.join());
+    replier.reply(list.join([separator = ""]));
     }
 }
     
