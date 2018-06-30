@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.1.0"
-var updatecode = "코드검색!"
+var ver = "4.7.2.0"
+var updatecode = "eval!"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -1057,7 +1057,7 @@ if (msg.indexOf("!eval ") == 0) {
     }
 }
 catch (e) {
-replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message))
+replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
 }
 
 /////////////////////////////////////////////////////////////////
