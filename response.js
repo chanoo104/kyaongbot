@@ -551,7 +551,8 @@ replier.reply(estfb)
 replier.reply(estgb)
 */
 eval("estimate("+DB.estreq+")")
-replier.reply("http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=" + est.code.join([separator=',']) + "&quantityList=" + est.quan.join([separator=',']) + "&marketPlaceSeq=16&type=print")
+//replier.reply("http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=" + est.code.join([separator=',']) + "&quantityList=" + est.quan.join([separator=',']) + "&marketPlaceSeq=16&type=print")
+replier.reply("http://micro.danawa.com/product/wishList?productSeq=" + est.code.join([separator=',']) + "&count=" + est.quan.join([separator=',']))
 replier.reply(eval("estimate("+DB.estreq+")")+"₩")
 
 }
