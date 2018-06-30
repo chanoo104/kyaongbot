@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.1.0"
-var updatecode = "코드검색!"
+var ver = "4.7.2.0"
+var updatecode = "업뎃 안된거 실화녀"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -1054,11 +1054,12 @@ if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
 try{
 if (msg.indexOf("!eval ") == 0) {
     replier.reply(eval(msg.substring(6)))
+    }
 }
-} catch (e) {
-replier.reply("ERROR!\nmessage : " + e.message + "\n:line no. : " + Number(Number(e.lineNumber) + Number(1)))
+catch (e) {
+replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
 }
-}
+
 
 /////////////////////////////////////////////////////////////////
 
