@@ -746,8 +746,8 @@ replier.reply("포인트가 " + x + "cp 부족합니다.")
 loop: {
     if (msg.split(" ")[0] == "!코드검색") {
     var key = msg.split(" ")[1];
-    if (key.length <= 2) {
-    replier.reply("3글자 이상 입력해 주세요.");
+    if (key.length <= 1) {
+    replier.reply("2글자 이상 입력해 주세요.");
     break loop;
     }
     var list = new Array();
