@@ -703,7 +703,7 @@ if (msg.split(" ")[0] == "!투표") {
 	} else {
 		if (Number.isInteger(v) == true && v>=0 && v<DB.vote.length) {
 			if (DB.pdata[sender].indexOf(v) != -1) {
-				("이미 투표한 후보입니다.")
+				replier.reply("이미 투표한 후보입니다.")
 				break loop;
 			} else {
 				if (sender == DB.can[v]) {
