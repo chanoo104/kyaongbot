@@ -71,7 +71,7 @@ function wiki(query) {
 
 
 
-if ("p" in DB == false) DB.p = new Object()
+if ("pdata" in DB == false) DB.pdata = new Object()
 if ("can" in DB == false) DB.can = new Array()
 if ("intr" in DB == false) DB.intr = new Array()
 if ("spe" in DB == false) DB.spe = new Array()
@@ -638,6 +638,7 @@ if (msg == "!포인트") replier.reply("[" + sender + "]\n" + DB.p[scode].pt + "
 
 
 
+
 if (msg.split("\n")[0] == "!후보등록") {
 	if (DB.first.indexOf(sender) == -1) {
 		replier.reply("!후보조건 명령어를 사용하여 자신이 조건에 맞는지, 부방장이 될 자격과 능력이 있는 지 확인 후 다시 등록해 주세요.")
@@ -690,18 +691,18 @@ if (msg == "!선거현황") {
 
 
 loop: {
-if (typeof DB.p[sender] === "undefined") DB.p[sender] = new Array();
+if (typeof DB.pdata[sender] === "undefined") DB.pdata[sender] = new Array();
 if (msg.split(" ")[0] == "!투표") {
 	if (DB.first2.indexOf(sender) == -1) {
 		replier.reply("!선거현황 명령어를 사용하여 공지, 현 투표 상황과 각 후보의 말들을 꼼꼼히 확인한 후 다시 투표해 주세요.")
 	} else {
 	var v = Number(msg.split(" ")[1])-1
-	if (DB.p[sender].length >= 3) {
+	if (DB.pdata[sender].length >= 3) {
 		replier.reply("이미 투표 횟수를 초과하셨습니다.")
 		break loop;
 	} else {
 		if (Number.isInteger(v) == true && v>=0 && v<DB.vote.length) {
-			if (DB.p[sender].indexOf(v) != -1) {
+			if (DB.pdata[sender].indexOf(v) != -1) {
 				("이미 투표한 후보입니다.")
 				break loop;
 			} else {
@@ -709,9 +710,9 @@ if (msg.split(" ")[0] == "!투표") {
 					replier.reply("자기 자신에게는 투표할 수 없습니다.")
 					break loop;
 				} else {
-					DB.p[sender].push(v)
+					DB.pdata[sender].push(v)
 					DB.vote[v]++
-					replier.reply("투표하셨습니다.\n남은 투표권: " + (3-DB.p[sender].length) + "장")
+					replier.reply("투표하셨습니다.\n남은 투표권: " + (3-DB.pdata[sender].length) + "장")
 				}
 			}
 		} else {
@@ -722,8 +723,6 @@ if (msg.split(" ")[0] == "!투표") {
 }
 
 }
-
-
 
 
 
