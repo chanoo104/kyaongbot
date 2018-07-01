@@ -692,11 +692,12 @@ if (msg == "!선거현황") {
 
 
 loop: {
-if (typeof DB.startvote === "undefined") {
-	replier.reply("지금은 후보 등록 기간입니다. 투표 기간 때 투표를 해주시기 바랍니다. 투표 기간이 되면 공지로 알려드리겠습니다.")
-} else {
+
 if (typeof DB.pdata[sender] === "undefined") DB.pdata[sender] = new Array();
 if (msg.split(" ")[0] == "!투표") {
+	if (typeof DB.startvote === "undefined") {
+	replier.reply("지금은 후보 등록 기간입니다. 투표 기간 때 투표를 해주시기 바랍니다. 투표 기간이 되면 공지로 알려드리겠습니다.")
+} else {
 	if (DB.first2.indexOf(sender) == -1) {
 		replier.reply("!선거현황 명령어를 사용하여 공지, 현 투표 상황과 각 후보의 말들을 꼼꼼히 확인한 후 다시 투표해 주세요.")
 	} else {
