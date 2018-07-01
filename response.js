@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.3.2"
-var updatecode = "명령어 수정 "
+var ver = "4.7.3.3"
+var updatecode = "많은 분들을 헷갈리고 고통받게 했던 중복명령어무시기능이 사라집니다. 언젠간 스마트필터로 바뀔거에요."
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -126,12 +126,13 @@ msg = msg.trim();
 room = room.trim();
 sender = sender.trim();
 
-// 도배 방지
+	
+/* 도배 방지
 if (preMsg[room] == msg) {
     return;
 }
 preMsg[room] = msg;
-
+*/
 if (room == "불여우") {
     if (msg == "!프사갱신") {
       DataBase.setDataBase(ImageDB.getProfileImage(), "image")
