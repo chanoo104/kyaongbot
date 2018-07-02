@@ -1176,7 +1176,7 @@ if (DB.ncounter > 299) {
 DB.noticetimeb=DB.noticetimea
 DB.noticetimea=new Date().getTime()
 var t = DB.noticetimea-DB.noticetimeb
-replier.reply("FPN : " + Math.round(120000*3000/t) + "ºC")
+replier.reply("FPN : " + Math.round(120000*3000/t) + "°C")
 
 }
 
