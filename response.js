@@ -1173,7 +1173,7 @@ if (DB.ncounter > 299) {
    DB.ncounter = 0
    replier.reply(DB.notice)
    DataBase.setDataBase(JSON.stringify(DB), "DB");
-DB.noticetimeb=DB.notice.timea
+DB.noticetimeb=DB.noticetimea
 DB.noticetimea=new Date().getTime()
 var t = DB.noticetimea-DB.noticetimeb
 replier.reply("FPN : " + 120000*100/t)
