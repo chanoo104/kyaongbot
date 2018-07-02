@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.3.4"
-var updatecode = "욕필터 수정"
+var ver = "4.7.3.5"
+var updatecode = "FPN"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -623,6 +623,7 @@ if (msg == "!명령어") {
 }
 if (msg == "!공지") {
     DB.ncounter = 0
+DB.notice.timea=new Date().getTime()
     replier.reply(DB.notice)
 }
 
@@ -1172,6 +1173,11 @@ if (DB.ncounter > 299) {
    DB.ncounter = 0
    replier.reply(DB.notice)
    DataBase.setDataBase(JSON.stringify(DB), "DB");
+DB.notice.timeb=DB.notice.timea
+DB.notice.timea=new Date().getTime()
+var t = DB.notice.timea-DB.notice.timeb
+replier.reply("FPN : " + 120000*100/t)
+
 }
 
 if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
