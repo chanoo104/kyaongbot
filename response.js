@@ -53,6 +53,7 @@ function isInt(x) {
     } else {
     	return false
 }
+}
 
 function getHtml(text) {
     var content = new java.io.ByteArrayOutputStream();
