@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.3.5"
-var updatecode = "FPN"
+var ver = "4.7.3.6"
+var updatecode = "코드변경 오류 해결"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
