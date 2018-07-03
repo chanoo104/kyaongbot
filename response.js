@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.3.6"
-var updatecode = "코드변경 오류 해결"
+var ver = "4.7.4.0"
+var updatecode = "견적생성"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -739,7 +739,44 @@ if (msg.split(" ")[0] == "!투표") {
 
 
 
+    loop:{
+if (msg.split("\n")[0] == "!견적생성") {
+var est = new Object();
+est.code = new Array();
+est.quan = new Array();
 
+for (var i = 0; i < (msg.match(/\n/g) || []).length; i++) {
+var input = msg.split("\n")[(i+1)].replace( / /gi, '+')
+
+if (input.indexOf("*") == 1) {
+replier.reply(Number(input.split("*")[0]))
+	if (Number.isInteger(Number(input.split("*")[0])) == true) {
+		est.quan.push(input.split("*")[0])
+		input.slice(0, 2)
+	} else {
+		replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
+		break loop;
+	}
+} else {
+	est.quan.push("1")
+}
+
+replier,reply("파싱 중")
+replier.reply("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input)
+var code = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1].split('"')[0].split("&")[0];
+if (Number.isInteger(Number(code)) == true) {
+	est.code.push(code)
+} else {
+	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
+	break loop;
+}
+
+}
+
+replier.reply("http://micro.danawa.com/product/wishList?productSeq=" + est.code.join([separator=',']) + "&count=" + est.quan.join([separator=',']))
+
+}
+}
 
 // 욕설인식
 loop: {
