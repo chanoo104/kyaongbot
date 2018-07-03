@@ -48,11 +48,7 @@ UPDATE.saveData = function(msg) { //파일에 내용을 저장하는 함수
 };
 
 function isInt(x) {
-if (typeof int == "undefined") return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
-if (int==true)  {
-	return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
-} else{
-return false;
+!isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
 }
 
 function getHtml(text) {
@@ -145,10 +141,6 @@ if (room == "불여우") {
     }
 }
 
-if (msg.indexOf(".")=!-1) {
-	int = false
-}
-else { int=true }
 
 /////////////////////////////////////////////////////////////////
 /*
@@ -853,6 +845,7 @@ if (msg == "!코드목록") {
 loop: {
 if (msg.split(" ")[0] == "!코드변경") {
   var to = msg.split("!코드변경 ")[1]
+  if (to.indexOf(".") =! -1) replier.reply("뒤지실?"); break loop;
   if (DB.p[scode].pt > 499){
   if (isInt(Number(to)) == true && parseInt(to) > 999 && parseInt(to) < 10000) {
     if (DB.icode.indexOf(to) != -1) {
