@@ -48,7 +48,7 @@ UPDATE.saveData = function(msg) { //파일에 내용을 저장하는 함수
 };
 
 function isInt(x) {
-!isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
+return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
 }
 
 function getHtml(text) {
