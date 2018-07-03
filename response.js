@@ -745,9 +745,10 @@ var est = new Object();
 est.code = new Array();
 est.quan = new Array();
 
+replier,reply("a")
 for (var i = 0; i < (msg.match(/\n/g) || []).length; i++) {
 var input = msg.split("\n")[(i+1)].replace( / /gi, '+')
-
+replier,reply("b")
 if (input.indexOf("*") == 1) {
 replier.reply(Number(input.split("*")[0]))
 	if (Number.isInteger(Number(input.split("*")[0])) == true) {
