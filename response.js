@@ -762,8 +762,7 @@ replier.reply(Number(input.split("*")[0]))
 	est.quan.push("1")
 }
 
-replier,reply("파싱 중")
-replier.reply("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input)
+replier.reply("파싱 중");
 var code = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1].split('"')[0].split("&")[0];
 if (Number.isInteger(Number(code)) == true) {
 	est.code.push(code)
@@ -883,7 +882,8 @@ if (msg == "!코드목록") {
 loop: {
 if (msg.split(" ")[0] == "!코드변경") {
   var to = msg.split("!코드변경 ")[1]
-  if (to.indexOf(".") =! -1) {
+  var a = to.indexOf(".")
+  if (a =! -1) {
 	  replier.reply("뒤지실?");
 	  break loop;
 }
