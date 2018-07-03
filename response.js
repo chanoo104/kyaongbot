@@ -48,12 +48,10 @@ UPDATE.saveData = function(msg) { //파일에 내용을 저장하는 함수
 };
 
 function isInt(x) {
-var a = String(x);
-	if (a.indexOf(".") == -1) {
-    return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
-    } else {
-    	return false
-}
+if (int==true)  {
+	return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
+} else{
+return false;
 }
 
 function getHtml(text) {
@@ -146,7 +144,10 @@ if (room == "불여우") {
     }
 }
 
-
+if (msg.indexOf(".")=!-1) {
+	int = false
+}
+else { int=true }
 
 /////////////////////////////////////////////////////////////////
 /*
