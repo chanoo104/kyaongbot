@@ -11,7 +11,7 @@ var off = false
 그리고 eval로 테스트가 전혀 안될거 같으면 제발 try기능을 써서 오류가 발생해도 예외처리를 해주셔야 손쉽게 오류를 고칠수 있습니다.
 꼭 테스트하고 넣어주세요 제발 부탁입니다. 고치기 너무 귀찮아요;;;(특히 지비)
 */
-
+DataBase.setDataBase(0, "errorchk")
 
 if (DataBase.getDataBase("DB") == undefined) {
 var DB1 = new Object();
@@ -745,10 +745,10 @@ var est = new Object();
 est.code = new Array();
 est.quan = new Array();
 
-replier,reply("a")
+replier.reply("a")
 for (var i = 0; i < (msg.match(/\n/g) || []).length; i++) {
 var input = msg.split("\n")[(i+1)].replace( / /gi, '+')
-replier,reply("b")
+replier.reply("b")
 if (input.indexOf("*") == 1) {
 replier.reply(Number(input.split("*")[0]))
 	if (Number.isInteger(Number(input.split("*")[0])) == true) {
