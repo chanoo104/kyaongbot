@@ -845,7 +845,10 @@ if (msg == "!코드목록") {
 loop: {
 if (msg.split(" ")[0] == "!코드변경") {
   var to = msg.split("!코드변경 ")[1]
-  if (to.indexOf(".") =! -1) replier.reply("뒤지실?"); break loop;
+  if (to.indexOf(".") =! -1) {
+	  replier.reply("뒤지실?");
+	  break loop;
+}
   if (DB.p[scode].pt > 499){
   if (isInt(Number(to)) == true && parseInt(to) > 999 && parseInt(to) < 10000) {
     if (DB.icode.indexOf(to) != -1) {
