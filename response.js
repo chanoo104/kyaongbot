@@ -745,10 +745,8 @@ var est = new Object();
 est.code = new Array();
 est.quan = new Array();
 
-replier.reply("a")
 for (var i = 0; i < (msg.match(/\n/g) || []).length; i++) {
 var input = msg.split("\n")[(i+1)].replace( / /gi, '+')
-replier.reply("b")
 if (input.indexOf("*") == 1) {
 replier.reply(Number(input.split("*")[0]))
 	if (Number.isInteger(Number(input.split("*")[0])) == true) {
@@ -882,11 +880,11 @@ if (msg == "!코드목록") {
 loop: {
 if (msg.split(" ")[0] == "!코드변경") {
   var to = msg.split("!코드변경 ")[1]
-  var a = to.indexOf(".")
-  if (a =! -1) {
+  if (to.indexOf(".") != -1) {
 	  replier.reply("뒤지실?");
 	  break loop;
 }
+	
   if (DB.p[scode].pt > 499){
   if (isInt(Number(to)) == true && parseInt(to) > 999 && parseInt(to) < 10000) {
     if (DB.icode.indexOf(to) != -1) {
@@ -905,6 +903,7 @@ if (msg.split(" ")[0] == "!코드변경") {
 var x = 500 - DB.p[scode].pt
 replier.reply("포인트가 " + x + "cp 부족합니다.")
 }
+	
 }
 }
 
@@ -1308,7 +1307,7 @@ if (msg == "!견적양식") {
 } catch (e) {
     var error = true;
     if (DataBase.getDataBase("errorchk") == 0) {
-      replier.reply("ERROR!\nmessage : " + e.message + "\n:line no. : " + Number(Number(e.lineNumber) + Number(1)))
+      replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
       DataBase.setDataBase(1, "errorchk")
       Api.reload();
     }
