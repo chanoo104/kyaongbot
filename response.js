@@ -745,6 +745,7 @@ var est = new Object();
 est.code = new Array();
 est.quan = new Array();
 
+replier.reply("파싱 중...");
 for (var i = 0; i < (msg.match(/\n/g) || []).length; i++) {
 var input = msg.split("\n")[(i+1)].replace( / /gi, '+')
 if (input.indexOf("*") == 1) {
@@ -760,7 +761,6 @@ replier.reply(Number(input.split("*")[0]))
 	est.quan.push("1")
 }
 
-replier.reply("파싱 중");
 var code = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1].split('"')[0].split("&")[0];
 if (Number.isInteger(Number(code)) == true) {
 	est.code.push(code)
@@ -880,6 +880,7 @@ if (msg == "!코드목록") {
 loop: {
 if (msg.split(" ")[0] == "!코드변경") {
   var to = msg.split("!코드변경 ")[1]
+  if (typeof to == "undefined") replier.reply("1000에서 9999까지의 자연수를 입력해 주십시오.");
   if (to.indexOf(".") != -1) {
 	  replier.reply("뒤지실?");
 	  break loop;
