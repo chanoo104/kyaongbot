@@ -48,6 +48,7 @@ UPDATE.saveData = function(msg) { //파일에 내용을 저장하는 함수
 };
 
 function isInt(x) {
+if (typeof int == "undefined") return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
 if (int==true)  {
 	return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
 } else{
