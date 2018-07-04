@@ -1143,7 +1143,7 @@ if (msg == "!차트") { //!차트면
 }
 // 암호화폐 시세 확인
 if (msg == "!비트코인") { //만약 비트코인이라면
-    var coinone = getHtml("http://api.coinone.co.kr/ticker?currency=all"); //코인원에서 파싱
+    var coinone = getHtml("http://api.coinone.co.kr/ticker?currency=all&format=json"); //코인원에서 파싱
     var last = coinone.split('"last":"'); // last:" 를 기준으로 자르기
     var currency = coinone.split('"currency":"'); //currenct": 를 기준으로 자르기
     var vmlist = []; //새로운 함수 생성
