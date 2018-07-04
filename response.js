@@ -1308,6 +1308,7 @@ if (msg == "!견적양식") {
 } catch (e) {
     var error = true;
     if (DataBase.getDataBase("errorchk") == 0) {
+      Utils.getWebText("에러발생!\nhttps://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
       replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
       DataBase.setDataBase(1, "errorchk")
       Api.reload();
