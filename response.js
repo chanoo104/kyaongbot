@@ -736,7 +736,7 @@ if (msg.split(" ")[0] == "!투표") {
 }
 }
 
-
+loop:{
 var m = msg.split (" ");
 if (m[0]=="!비교"){
 var char;
@@ -756,6 +756,7 @@ char += u [i];
       var t = test.split ("/Rating/");
 if (!t [1]){
 replier.reply(tt [0]+"을(를) 찾을수 없습니다.");
+break loop;
 }
       var p = t [1].split ('"');
       var s = p [0];
@@ -773,12 +774,13 @@ char += r [i];
        t = test.split ("/Rating/");
 if (!t [1]){
 replier.reply(tt [1]+"을(를) 찾을수 없습니다.");
+break loop;
 }
       p = t [1].split ('"');
       var s1 = p [0];
       replier.reply("http://cpu.userbenchmark.com/Compare/CompuTalk/"+s+"vs"+s1);
     }
-    
+   }
 
     loop:{
 if (msg.split("\n")[0] == "!견적생성") {
@@ -790,26 +792,26 @@ replier.reply("파싱 중...");
 for (var i = 0; i < (msg.match(/\n/g) || []).length; i++) {
 var input = msg.split("\n")[(i+1)].replace( / /gi, '+')
 if (input.indexOf("*") == 1) {
-replier.reply(Number(input.split("*")[0]))
 	if (Number.isInteger(Number(input.split("*")[0])) == true) {
 		est.quan.push(input.split("*")[0])
 		input.slice(0, 2)
 	} else {
-		replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
+		replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다1.")
 		break loop;
 	}
 } else {
 	est.quan.push("1")
 }
 var p = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1]
+replier,reply(p)
 if (typeof p == "undefined") {
-	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
+	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다2.")
 	break loop;
 }
 if (Number.isInteger(Number(p)) == true) {
 	est.code.push(p)
 } else {
-	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
+	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다3.")
 	break loop;
 }
 
