@@ -641,7 +641,7 @@ if (msg == "!프사") {
 
 if (msg == "!포인트") replier.reply("[" + sender + "]\n" + DB.p[scode].pt + "cp")
 
-
+/*
 
 
 
@@ -735,13 +735,18 @@ if (msg.split(" ")[0] == "!투표") {
 }
 }
 }
-
+*/
+	
 loop:{
 var m = msg.split (" ");
 if (m[0]=="!비교"){
 var char;
 var s = msg.split ("비교 ");
 var tt = s [1].split (","); 
+if (typeof tt == "undefined") {
+	replier.reply(tt [0]+"을(를) 찾을수 없습니다.")
+	break loop;
+}
 var u = tt[0].split(" ");
 if (u [0]){
 char = u [0];
@@ -803,7 +808,7 @@ if (input.indexOf("*") == 1) {
 	est.quan.push("1")
 }
 var p = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1]
-replier,reply(p)
+replier.reply(p)
 if (typeof p == "undefined") {
 	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다2.")
 	break loop;
