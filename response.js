@@ -737,7 +737,7 @@ if (msg.split(" ")[0] == "!투표") {
 }
 
 
-var msg = m.split (" ");
+var msg = msg.split (" ");
 if (msg[0]=="!비교"){
 var char;
 var s = m.split ("비교 ");
