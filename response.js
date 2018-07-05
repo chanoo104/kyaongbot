@@ -807,7 +807,7 @@ if (input.indexOf("*") == 1) {
 } else {
 	est.quan.push("1")
 }
-var p = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1].split("\"")[0].split("&")[0];
+var p = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1].split('"')[0].split("&")[0];
 if (typeof p == "undefined") {
 	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
 	break loop;
