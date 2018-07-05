@@ -801,22 +801,23 @@ if (input.indexOf("*") == 1) {
 		est.quan.push(input.split("*")[0])
 		input.slice(0, 2)
 	} else {
-		replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
+		replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다1.")
 		break loop;
 	}
 } else {
 	est.quan.push("1")
 }
 var p = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1].split('"')[0].split("&")[0];
-if (typeof p == "undefined") {
-	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
+replier.reply(p)
+	if (typeof p == "undefined") {
+	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다2.")
 	break loop;
 }
 var p = p.split
 if (Number.isInteger(Number(p)) == true) {
 	est.code.push(p)
 } else {
-	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
+	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다3.")
 	break loop;
 }
 
