@@ -737,10 +737,10 @@ if (msg.split(" ")[0] == "!투표") {
 }
 
 
-var msg = msg.split (" ");
-if (msg[0]=="!비교"){
+var m = msg.split (" ");
+if (m[0]=="!비교"){
 var char;
-var s = m.split ("비교 ");
+var s = msg.split ("비교 ");
 var tt = s [1].split (","); 
 var u = tt[0].split(" ");
 if (u [0]){
