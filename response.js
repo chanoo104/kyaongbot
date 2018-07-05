@@ -743,7 +743,7 @@ if (m[0]=="!비교"){
 var char;
 var s = msg.split ("비교 ");
 var tt = s [1].split (","); 
-if (typeof tt == "undefined") {
+if (typeof tt[1] == "undefined") {
 	replier.reply(tt [0]+"을(를) 찾을수 없습니다.")
 	break loop;
 }
@@ -801,22 +801,22 @@ if (input.indexOf("*") == 1) {
 		est.quan.push(input.split("*")[0])
 		input.slice(0, 2)
 	} else {
-		replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다1.")
+		replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
 		break loop;
 	}
 } else {
 	est.quan.push("1")
 }
-var p = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1]
-replier.reply(p)
+var p = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1].split("\"")[0].split("&")[0];
 if (typeof p == "undefined") {
-	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다2.")
+	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
 	break loop;
 }
+var p = p.split
 if (Number.isInteger(Number(p)) == true) {
 	est.code.push(p)
 } else {
-	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다3.")
+	replier.reply("[" + (i+2) + "번째 줄] \n잘못된 입력입니다.")
 	break loop;
 }
 
