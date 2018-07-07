@@ -2,7 +2,7 @@
 
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.7.0"
+var ver = "4.7.7.1"
 var updatecode = "벌점 VAT 상향, 가위바위보 이용시간 제한, 명령어 목록에 신규기능들 추가"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
@@ -1044,7 +1044,7 @@ if (msg.split(" ")[0] == "!복권") {
 
 
 if (new Date().getHours() == 18 || new Date().getHours() == 0 || new Date().getHours() == 7) {
-if (new Date().getMinutes()>=30 || new Date().getMinutes()<=59){
+if (new Date().getMinutes()>=30 && new Date().getMinutes()<=59){
 // 가위바위보
 loop: {
 if (msg.split(" ")[0] == "!가위") {
