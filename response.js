@@ -934,8 +934,8 @@ loop: {
 if (msg.split(" ")[0] == "!코드변경") {
   var to = msg.split("!코드변경 ")[1]
   if (typeof to == "undefined") replier.reply("1000에서 9999까지의 자연수를 입력해 주십시오.");
-  if (to.indexOf(".") != -1) {
-	  replier.reply("뒤지실?");
+  if (! /^[0-9]+$/.test(to)) {
+	  replier.reply("잘못된 입력입니다.");
 	  break loop;
 }
 	
