@@ -2,8 +2,8 @@
 
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.7.1"
-var updatecode = "벌점 VAT 상향, 가위바위보 이용시간 제한, 명령어 목록에 신규기능들 추가"
+var ver = "4.7.7.2"
+var updatecode = "다나와 앱 카톡공유시 경고메세지 출력"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -643,11 +643,11 @@ if (msg == "!프사") {
 
 if (msg == "!포인트") replier.reply("[" + sender + "]\n" + DB.p[scode].pt + "cp")
 
+
+
+if (msg == "다나와 PC견적 [장바구니]") replier.reply("앱에서 견적 공유시 카카오톡으로 보내기 말고 URL 복사를 이용해 주시기 바랍니다. PC버전에서 안보여요.")
+
 /*
-
-
-
-
 
 if (msg.split("\n")[0] == "!후보등록") {
 	if (DB.first.indexOf(sender) == -1) {
