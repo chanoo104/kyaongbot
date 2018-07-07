@@ -2,8 +2,8 @@
 
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.4.0"
-var updatecode = "견적생성"
+var ver = "4.7.5.0"
+var updatecode = "엄청나게 심각한 오류 수정"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -155,11 +155,13 @@ if (room == "불여우") {
 
 if (room != "■컴퓨터 하드웨어 견적 잡담방■") {
 // 식별코드 체크 - 등록 - [scode]변수할당
-loop: {
+	
+
 if (DB.inick.indexOf(sender) == -1) {
   while (true) {
     var n = Math.floor(Math.random() * 9000 + 1000);
-    if (DB.icode.indexOf(n) == -1) {
+    if (DB.icode.indexOf(n) == -1) break;
+}
       DB.inick.push(sender);
       DB.icode.push(String(n));
       var tb = escape(JSON.stringify(DB.inick));
@@ -189,11 +191,11 @@ if (DB.inick.indexOf(sender) == -1) {
       DB.p[scode].lottery = false
       DB.p[scode].pns = 0
       
-      break loop;
+     
     }
   }
-  }
-}
+  
+
 var scode = DB.icode[DB.inick.indexOf(sender)];
 
 if (sender == "rgb" || sender == "불여우" || sender == "K'romium" || sender == "DEBUG$MODE*NAME+") {
