@@ -645,7 +645,7 @@ if (msg == "!포인트") replier.reply("[" + sender + "]\n" + DB.p[scode].pt + "
 
 
 
-if (msg.indexOf("[다나와 PC견적]")) replier.reply("앱에서 견적 공유시 카카오톡으로 보내기 말고 URL 복사를 이용해 주시기 바랍니다. PC버전에서 안보여요.")
+if (msg.indexOf("[다나와 PC견적]") == 0) replier.reply("앱에서 견적 공유시 카카오톡으로 보내기 말고 URL 복사를 이용해 주시기 바랍니다. PC버전에서 안보여요.")
 
 /*
 
