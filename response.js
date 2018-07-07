@@ -2,8 +2,8 @@
 
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.7.3"
-var updatecode = "다나와 앱 카톡공유시 경고메세지 출력"
+var ver = "4.7.7.4"
+var updatecode = "FATAL ERROR FIXMENT"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
