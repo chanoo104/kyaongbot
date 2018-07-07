@@ -3,7 +3,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
 var ver = "4.7.7.4"
-var updatecode = "FATAL ERROR FIXMENT"
+var updatecode = "FATAL ERROR FIXMENT 2"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -934,7 +934,7 @@ loop: {
 if (msg.split(" ")[0] == "!코드변경") {
   var to = msg.split("!코드변경 ")[1]
   if (typeof to == "undefined") replier.reply("1000에서 9999까지의 자연수를 입력해 주십시오.");
-  if (! /^[0-9]+$/.test(to)) {
+  if (! /^[0-9]+$/.test(to) || to.indexOf("0") == 0 ) {
 	  replier.reply("잘못된 입력입니다.");
 	  break loop;
 }
