@@ -192,7 +192,7 @@ if (DB.inick.indexOf(sender) == -1) {
       DB.p[scode].pns = 0
       
      
-    }
+    
   }
   
 
