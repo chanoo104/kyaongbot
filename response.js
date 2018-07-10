@@ -2,8 +2,8 @@
 
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.7.4"
-var updatecode = "FATAL ERROR FIXMENT 2"
+var ver = "4.7.7.5"
+var updatecode = "OFF FIX"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -202,6 +202,8 @@ if (sender == "rgb" || sender == "불여우" || sender == "K'romium" || sender =
 if (msg.indexOf("!evalf ") == 0) {
     replier.reply(eval(msg.substring(7)))
 }
+if (msg == "!on") off = false
+if (msg == "!off") off = true
 }
 
 // 포인트/카운터 증가
@@ -304,6 +306,7 @@ if (r == 50) {
 }
 
 
+if (off != true) {
 /////////////////////////////////////////////////////////////////
 /*
 var image = DataBase.getDataBase("image")
@@ -319,9 +322,7 @@ if (ImageDB.getProfileImage() == image) {
 */
 
 if (admin.indexOf(sender) != -1) {
-if (msg == "!on") off = false
-if (off == true) return
-if (msg == "!off") off = true
+
 
 if (msg == "!업데이트") {
     replier.reply("백업 진행중...");
@@ -1272,28 +1273,7 @@ try {
 /////////////////////////////////////////////////////////////////
 
 // 카운터 다차면 공지표시
-DB.ncounter++;
-if (DB.ncounter > 299) {
-   DB.ncounter = 0
-   replier.reply(DB.notice)
-   DataBase.setDataBase(JSON.stringify(DB), "DB");
-DB.noticetimeb=DB.noticetimea
-DB.noticetimea=new Date().getTime()
-var t = DB.noticetimea-DB.noticetimeb
-replier.reply("FPN : " + Math.round(120000*3000/t) + "°C")
 
-}
-
-if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
-try{
-if (msg.indexOf("!eval ") == 0) {
-    replier.reply(eval(msg.substring(6)))
-    }
-}
-catch (e) {
-replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
-}
-}
 
 
 /////////////////////////////////////////////////////////////////
@@ -1366,6 +1346,29 @@ if (msg == "!동작시간") replier.reply("동작시간 : " + ttt + "min")
 if (msg == "!견적양식") {
 	replier.reply("[rgb]\n견적 요청 전 생각해봐야할 것들" + blank + "\n\n》자기가 컴퓨터가 왜 필요한지 생각합니다.\n컴퓨터를 구매하는 필요성과 중요도를 파악하고 목적을 정합니다.\nex) 이제 피방 말고 집에서 배그를 하고싶어! 취미로 하던 영상편집도 좀 더 수월하게!\n\n》또 필요한게 없는지 생각해 봅니다. (윈도우, 모니터, 키보드/마우스, 스피커/헤드셋 등)\n운영 체제, 주변 기기와 특수 목적 장비(캡처보드 등)의 구입 필요성을 판단해 봅니다.\nex) 모니터도 144인가? 그걸로 사고, 키마도 지금쓰는 삼성키보드에서 벗어나야지. 윈도우는 내가 예산이 여유롭지 않으니 그냥 직접 설치해야겠어.\n\n》컴퓨터 구입에 사용할 예산과, 컴퓨터 실 구매 예정일을 정합니다.\n자기가 무리하지 않고 지출할 수 있는 적절한 예산과, 그에 연계되는 구매 예정일을 정합니다.\nex) 구매를 미루고 싶지는 않으니.. 일단 지금 수중에 돈이 130정도 있는데, 월말까지 30만원정도 더 모은 후 구매해야겠어.\n예상 구매 예정일이 너무 많이(1달 이상) 남았을 경우 견적은 구매 임박 일자에 짜는 것이 좋습니다. 돈 모으고 계세요.\n\n》자기가 컴퓨터에 바라는 점을 생각합니다.\n예를 들자면\n- 사양 좋게\n- 업글같은거 안하고 한번 사서 오래 쓰게\n이런 단순한 것부터\n- 저소음\n- 내부 부품 품질을 좋게\n이런거나\n- 플루이드 모션!\n이런 것까지 아주 단순한 것부터 복잡한 것까지 최대한 많이 생각해 봅니다.\n\n》견적 양식을 채웁니다.\n")
 	replier.reply("[rgb]\n견적 양식(전체보기-꾹눌러 복사)" + blank + "\n\n1. 구매예정일(구체적!)\n\n2. 용도(자세히!)\n\n3. 구성품(모니터 마우스 헤드셋 등)\n\n3.1. 윈도우 포함 여부\n\n4. 컴퓨터에 바라는 점(최대한 많이)\n\n5. 본체 디자인 신경쓰세요?\n\n6. 예산(대충이라도)\n\n7. 기타 질문?\n")
+}
+}
+}
+DB.ncounter++;
+if (DB.ncounter > 299) {
+   DB.ncounter = 0
+   replier.reply(DB.notice)
+   DataBase.setDataBase(JSON.stringify(DB), "DB");
+DB.noticetimeb=DB.noticetimea
+DB.noticetimea=new Date().getTime()
+var t = DB.noticetimea-DB.noticetimeb
+replier.reply("FPN : " + Math.round(120000*3000/t) + "°C")
+
+}
+
+if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
+try{
+if (msg.indexOf("!eval ") == 0) {
+    replier.reply(eval(msg.substring(6)))
+    }
+}
+catch (e) {
+replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
 }
 }
 } catch (e) {
