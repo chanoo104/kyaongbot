@@ -2,8 +2,8 @@
 
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.7.4"
-var updatecode = "FATAL ERROR FIXMENT 2"
+var ver = "4.7.7.5"
+var updatecode = "OFF FIX"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -202,6 +202,8 @@ if (sender == "rgb" || sender == "불여우" || sender == "K'romium" || sender =
 if (msg.indexOf("!evalf ") == 0) {
     replier.reply(eval(msg.substring(7)))
 }
+if (msg == "!on") off = false
+if (msg == "!off") off = true
 }
 
 // 포인트/카운터 증가
@@ -304,6 +306,7 @@ if (r == 50) {
 }
 
 
+if (off != true) {
 /////////////////////////////////////////////////////////////////
 /*
 var image = DataBase.getDataBase("image")
@@ -319,9 +322,7 @@ if (ImageDB.getProfileImage() == image) {
 */
 
 if (admin.indexOf(sender) != -1) {
-if (msg == "!on") off = false
-if (off == true) return
-if (msg == "!off") off = true
+
 
 if (msg == "!업데이트") {
     replier.reply("백업 진행중...");
@@ -1272,28 +1273,7 @@ try {
 /////////////////////////////////////////////////////////////////
 
 // 카운터 다차면 공지표시
-DB.ncounter++;
-if (DB.ncounter > 299) {
-   DB.ncounter = 0
-   replier.reply(DB.notice)
-   DataBase.setDataBase(JSON.stringify(DB), "DB");
-DB.noticetimeb=DB.noticetimea
-DB.noticetimea=new Date().getTime()
-var t = DB.noticetimea-DB.noticetimeb
-replier.reply("FPN : " + Math.round(120000*3000/t) + "°C")
 
-}
-
-if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
-try{
-if (msg.indexOf("!eval ") == 0) {
-    replier.reply(eval(msg.substring(6)))
-    }
-}
-catch (e) {
-replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
-}
-}
 
 
 /////////////////////////////////////////////////////////////////
@@ -1368,6 +1348,29 @@ if (msg == "!견적양식") {
 	replier.reply("[rgb]\n견적 양식(전체보기-꾹눌러 복사)" + blank + "\n\n1. 구매예정일(구체적!)\n\n2. 용도(자세히!)\n\n3. 구성품(모니터 마우스 헤드셋 등)\n\n3.1. 윈도우 포함 여부\n\n4. 컴퓨터에 바라는 점(최대한 많이)\n\n5. 본체 디자인 신경쓰세요?\n\n6. 예산(대충이라도)\n\n7. 기타 질문?\n")
 }
 }
+}
+DB.ncounter++;
+if (DB.ncounter > 299) {
+   DB.ncounter = 0
+   replier.reply(DB.notice)
+   DataBase.setDataBase(JSON.stringify(DB), "DB");
+DB.noticetimeb=DB.noticetimea
+DB.noticetimea=new Date().getTime()
+var t = DB.noticetimea-DB.noticetimeb
+replier.reply("FPN : " + Math.round(120000*3000/t) + "°C")
+
+}
+
+if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
+try{
+if (msg.indexOf("!eval ") == 0) {
+    replier.reply(eval(msg.substring(6)))
+    }
+}
+catch (e) {
+replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
+}
+}
 } catch (e) {
     var error = true;
     if (DataBase.getDataBase("errorchk") == 0) {
@@ -1378,4 +1381,3 @@ if (msg == "!견적양식") {
     }
 }
 }
-
