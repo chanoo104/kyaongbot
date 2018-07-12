@@ -1,9 +1,7 @@
-//이제 봇 코드 암호화 하겠습니다 너무 코드 도용이 심해서.. 지비님 원본코드는 카톡 간부방에 올리겠슴다.
-
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.7.5"
-var updatecode = "OFF FIX"
+var ver = "4.7.7.6"
+var updatecode = "Telegram"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
@@ -613,13 +611,8 @@ if (msg.split(" ")[0] == "!pDB삭제") {
 }
 
 /////////////////////////////////////////////////////////////////
-	//불여우호출
-if (msg == "!불여우호출")
-{
-	Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=불여우님 컴퓨톡에서 " + sender + " 님이 찾고 있습니다.&chat_id=338145573")
-        replier.reply("텔레그램으로 불여우를 호출하였습니다.")
-}
-
+	//불여우호출 (코드 도용 방지 암호화 함)
+    eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(c/a))+String.fromCharCode(c%a+161)};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\[\xa1-\xff]+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp(e(c),'g'),k[c])}}return p}('µ(´=="!&#¡;&#¢;&#£;&#¦;&#¨;"){³.¶("·://².¹.¸/»:¯-¬/«?ª=&#¡;&#¢;&#£;&#©; &#­;&#®;&#±;&#°;&#º; "+Í+" &#©;&#È; &#Ç;&#¼; &#Æ;&#§;&#¤;&#¥;.&É=Ê")Ì.Ë("&#Å;&#Ä;&#¿;&#¾;&#½;&#À; &#¡;&#¢;&#£;&#Á; &#¦;&#¨;&#Ã;&#Â;&#§;&#¤;&#¥;.")}',45,45,'48520|50668|50864|45768|45796|54840|49845|52636|45784|text|sendmessage|9vF8dOdis|52980|54504|AAFhcn0ybpyCw_xwno2ga6pyA|50640|53665|api|Utils|msg|if|getWebText|https|org|telegram|49436|bot607216116|44256|51004|47016|44536|47196|47484|50688|54616|47112|53588|51080|52286|51060|chat_id|338145573|reply|replier|sender'.split('|'),0,{}))
 if (msg == "!명령어") {
     replier.reply(DB.ncommand)
 }
