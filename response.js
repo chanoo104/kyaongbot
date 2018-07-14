@@ -160,7 +160,7 @@ if (room != "■컴퓨터 하드웨어 견적 잡담방■") {
 if (DB.inick.indexOf(sender) == -1) {
   while (true) {
     var n = Math.floor(Math.random() * 9000 + 1000);
-    if (DB.icode.indexOf(n) == -1) break;
+    if (DB.icode.indexOf(String(n)) == -1) break;
 }
       DB.inick.push(sender);
       DB.icode.push(String(n));
