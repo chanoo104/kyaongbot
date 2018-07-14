@@ -1043,7 +1043,7 @@ if (msg.split(" ")[0] == "!복권") {
 }
 
 if (msg.split(" ")[0] == "!가위" || msg.split(" ")[0] == "!바위" || msg.split(" ")[0] == "!보") {
-if (new Date().getHours() == 19 || new Date().getHours() == 0 || new Date().getHours() == 7) {
+if (new Date().getHours() == 18 || new Date().getHours() == 0 || new Date().getHours() == 7) {
 if (new Date().getMinutes() >= 30){
 // 가위바위보
 loop: {
