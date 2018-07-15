@@ -628,6 +628,8 @@ DB.noticetimea=new Date().getTime()
     replier.reply(DB.notice)
 }
 
+if (msg == "!캬옹봇") replier.reply("KyaongBot, a javascript autoresponse system\n©[Firefox & rgb] 2018. All rights reserved. KyaongBot is protected by GPL 3.0 LICENSE.\n캬옹봇은 카카오톡 오픈채팅방 '컴퓨톡' 만을 위해 개발된 전용 자바스크립트 기반 자동응답 시스템입니다. 다양한 일상 및 편의 기능, 견적 특화 기능, 포인트 시스템 등을 지원합니다. 핵심 개발자는 불여우, rgb이며 서버 호스팅 담당자는 불여우입니다.")
+
 if (msg == "!카운터 전체") replier.reply(DB.acounter)
 if (msg == "!카운터 공지") replier.reply(DB.ncounter + "/300")
 
@@ -643,7 +645,23 @@ if (msg == "!프사") {
 
 if (msg == "!포인트") replier.reply("[" + sender + "]\n" + DB.p[scode].pt + "cp")
 
-
+if (msg == "!순위") {
+var ctemp1 = DB.inick;
+var ctemp2 = [];
+for (i=0;i<DB.icode.length;i++) {
+ctemp2.push(DB.p[DB.icode[i]].pt)
+}
+var ctemp3 = ctemp2.slice()
+ctemp2.sort(function (f, s) { return s-f; });
+ctemp2=ctemp2.splice(0, 15);
+var out = [];
+out.push("◇[포인트 순위]◇\n▼전체보기 클릭▼\n" + blank + "\n")
+for (i=0;i<ctemp2.length;i++) {
+out.push((i+1) + "위 - " + DB.inick[ctemp3.indexOf(ctemp2[i])] + "\n")
+out.push(" 》" + ctemp2[i] + "cp\n\n")
+}
+replier.reply(out.join(""))
+}
 
 if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply("앱에서 견적 공유시 카카오톡으로 보내기 말고 URL 복사를 이용해 주시기 바랍니다. PC버전에서 안보여요.")
 
