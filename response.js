@@ -2,7 +2,7 @@
 
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.8.0"
+var ver = "4.7.8.1"
 var updatecode = "!순위, !캬옹봇, 복권 추가포인트!"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
@@ -657,13 +657,16 @@ ctemp2.sort(function (f, s) { return s-f; });
 ctemp2=ctemp2.splice(0, 15);
 var out = [];
 out.push("◇[포인트 순위]◇\n▼전체보기 클릭▼\n" + blank + "\n")
+var ctemp = DB.inick.slice()
 for (i=0;i<ctemp2.length;i++) {
-out.push((i+1) + "위 - " + DB.inick[ctemp3.indexOf(ctemp2[i])] + "\n")
+out.push((i+1) + "위 - " + ctemp[ctemp3.indexOf(ctemp2[i])] + "\n")
+ctemp.splice([ctemp3.indexOf(ctemp2[i])], 1)
+ctemp3.splice([ctemp3.indexOf(ctemp2[i])], 1)
 out.push(" 》" + ctemp2[i] + "cp\n\n")
 }
 replier.reply(out.join(""))
 }
-
+	
 if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply("앱에서 견적 공유시 카카오톡으로 보내기 말고 URL 복사를 이용해 주시기 바랍니다. PC버전에서 안보여요.")
 
 /*
