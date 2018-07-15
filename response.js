@@ -1065,7 +1065,7 @@ if (msg.split(" ")[0] == "!복권") {
 }
 
 if (msg.split(" ")[0] == "!가위" || msg.split(" ")[0] == "!바위" || msg.split(" ")[0] == "!보") {
-if (new Date().getHours() == 18 || new Date().getHours() == 0 || new Date().getHours() == 7) {
+if (new Date().getHours() == 12 || new Date().getHours() == 0 || new Date().getHours() == 7 || new Date().getHours() == 22) {
 if (new Date().getMinutes() >= 30){
 // 가위바위보
 loop: {
@@ -1183,10 +1183,10 @@ if (msg.split(" ")[0] == "!보") {
 }
 }
 } else {
-replier.reply("0시, 7시, 18시 30~59분에만 사용 가능합니다.")
+replier.reply("0, 7, 12, 22시 30~59분에만 사용 가능합니다.")
 }
 } else {
-replier.reply("0시, 7시, 18시 30~59분에만 사용 가능합니다.")
+replier.reply("0, 7, 12, 22시 30~59분에만 사용 가능합니다.")
 }
 }	
 
