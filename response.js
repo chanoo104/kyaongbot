@@ -653,7 +653,7 @@ for (i=0;i<DB.icode.length;i++) {
 ctemp2.push(DB.p[DB.icode[i]].pt)
 }
 var ctemp3 = ctemp2.slice()
-ctemp2.sort(function (f, s) { return s-f; });
+ctemp2.sort(function (f, s) { return s-f; });
 ctemp2=ctemp2.splice(0, 15);
 var out = [];
 out.push("◇[포인트 순위]◇\n▼전체보기 클릭▼\n" + blank + "\n")
