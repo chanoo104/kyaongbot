@@ -1231,15 +1231,15 @@ if (msg == "!차트") { //!차트면
 }
 // 암호화폐 시세 확인
 if (msg == "!비트코인") { //만약 비트코인이라면
-    bit = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw")))
-    bch = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=bch_krw")))
-    btg = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btg_krw")))
-    eth = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=eth_krw")))
-    etc = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=etc_krw")))
-    xrp = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=xrp_krw")))
-    ltc = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=ltc_krw")))
-    zil = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=zil_krw")))
-    replier.reply("[암호화폐 시세]\n ▣비트코인 :: " + bit + "원\n" + "▣비트코인 캐시 :: " + bch + "원\n" + "▣비트코인 골드 :: " + bit + "원\n" + "▣이더리움 :: " + eth + "원\n" + "▣이더리움 클래식 :: " + etc + "원\n" + "▣리플 :: " + xrp + "원\n" + "▣라이트코인 :: " + ltc + "원\n" + "▣질리카 :: " + zil + "원\n")
+    bit = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw")).last)
+    bch = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=bch_krw")).last)
+    btg = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btg_krw")).last)
+    eth = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=eth_krw")).last)
+    etc = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=etc_krw")).last)
+    xrp = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=xrp_krw")).last)
+    ltc = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=ltc_krw")).last)
+    zil = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=zil_krw")).last)
+    replier.reply("[암호화폐 시세]\n ▣비트코인 :: " + bit + "원\n" + "▣비트코인 캐시 :: " + bch + "원\n" + "▣비트코인 골드 :: " + bit + "원\n" + "▣이더리움 :: " + eth + "원\n" + "▣이더리움 클래식 :: " + etc + "원\n" + "▣리플 :: " + xrp + "원\n" + "▣라이트코인 :: " + ltc + "원\n" + "▣질리카 :: " + zil + "원")
 }
 // 단어 검색
 try {
