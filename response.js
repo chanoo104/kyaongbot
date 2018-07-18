@@ -2,8 +2,8 @@
 
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.8.1"
-var updatecode = "!순위, !캬옹봇, 복권 추가포인트!"
+var ver = "4.7.9.0"
+var updatecode = "!비트코인"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
 var off = false
