@@ -49,6 +49,9 @@ UPDATE.saveData = function(msg) { //파일에 내용을 저장하는 함수
   }
 };
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 function isInt(x) {
 return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
 }
@@ -1228,14 +1231,14 @@ if (msg == "!차트") { //!차트면
 }
 // 암호화폐 시세 확인
 if (msg == "!비트코인") { //만약 비트코인이라면
-    var coinone = getHtml("http://api.coinone.co.kr/ticker?currency=all&format=json"); //코인원에서 파싱
-    var last = coinone.split('"last":"'); // last:" 를 기준으로 자르기
-    var currency = coinone.split('"currency":"'); //currenct": 를 기준으로 자르기
-    var vmlist = []; //새로운 함수 생성
-    for (var i = 1; i <= 9; i++) { //반복
-      vmlist.push(currency[i].split('"')[0] + " : " + last[i].split('"')[0]); //변수 생성
-    }
-    replier.reply(vmlist.join("원\n") + "원"); // 보내기
+    bit = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw")))
+    bch = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=bch_krw")))
+    btg = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btg_krw")))
+    eth = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=eth_krw")))
+    xrp = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=xrp_krw")))
+    ltc = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=ltc_krw")))
+    zil = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=zil_krw")))
+    replier.reply("[암호화폐 시세]\n ▣비트코인 :: " + bit + "원\n" + "▣비트코인 캐시 :: " + bch + "원\n" + "▣비트코인 골드 :: " + bit + "원\n" + "▣이더리움 :: " + eth + "원\n" + "▣이더리움 클래식 :: " + etc + "원\n" + "▣리플 :: " + xrp + "원\n" + "▣라이트코인 :: " + ltc + "원\n" + "▣질리카 :: " + zil + "원\n")
 }
 // 단어 검색
 try {
