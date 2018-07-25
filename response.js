@@ -1326,7 +1326,7 @@ replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
 
 
 /////////////////////(크롬이 만든거)//////////////////////////////
-if (msg.indexOf("8ball ") == 0) {
+if (msg.indexOf("!8ball ") == 0) {
         var br = Math.floor(Math.random()*15)+1;
         if (br == 1){
             replier.reply("전망이 좋지 않습니다..");
