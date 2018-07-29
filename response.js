@@ -201,7 +201,7 @@ if (DB.inick.indexOf(sender) == -1) {
 
 var scode = DB.icode[DB.inick.indexOf(sender)];
 
-if (sender == "rgb" || sender == "불여우" || sender == "K'romium" || sender == "AMD TR™" || sender == "DEBUG$MODE*NAME+" || sender == "컴잘알")) {
+if (sender == "rgb" || sender == "불여우" || sender == "K'romium" || sender == "AMD TR™" || sender == "DEBUG$MODE*NAME+" || sender == "컴잘알") {
 if (msg.indexOf("!evalf ") == 0) {
     replier.reply(eval(msg.substring(7)))
 }
