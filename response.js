@@ -1310,7 +1310,7 @@ replier.reply("FPN : " + Math.round(120000*3000/t) + "°C")
 
 }
 
-if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
+if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+" || sender == "컴잘알") {
 try{
 if (msg.indexOf("!eval ") == 0) {
     replier.reply(eval(msg.substring(6)))
