@@ -5,7 +5,7 @@ var timeo = new Date().getTime();
 var ver = "4.7.9.0"
 var updatecode = "!비트코인"
 var error = false;
-if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase(0, "errorchk")
+if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase("errorchk", 0)
 var off = false
 
 // AMD TR™은 아조시다 매우
@@ -13,21 +13,21 @@ var off = false
 그리고 eval로 테스트가 전혀 안될거 같으면 제발 try기능을 써서 오류가 발생해도 예외처리를 해주셔야 손쉽게 오류를 고칠수 있습니다.
 꼭 테스트하고 넣어주세요 제발 부탁입니다. 고치기 너무 귀찮아요;;;(특히 지비)
 */
-DataBase.setDataBase(0, "errorchk")
+DataBase.setDataBase("errorchk", 0)
 
 if (DataBase.getDataBase("DB") == undefined) {
 var DB1 = new Object();
-DataBase.setDataBase(JSON.stringify(DB1), "DB");
+DataBase.setDataBase("DB", JSON.stringify(DB1));
 }
 var DB = JSON.parse(DataBase.getDataBase("DB"));
 
 
 /*이건 리로드기능 안에 대체해서 삽입
-DataBase.setDataBase(JSON.stringify(DB), "DB");
+DataBase.setDataBase("DB", JSON.stringify(DB));
 */
 
 var blank = "​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​\n" //이거 유니코드이니까 띄어쓰기로 고치지 마세요 제발 ;;
-var admin = ["불여우", "AMD TR™", "rgb", "K'romium", "케이시", "DEBUG$MODE*NAME+", "Apz74", "GeForce", "핫산"]
+var admin = ["컴잘알", "불여우", "AMD TR™", "rgb", "K'romium", "케이시", "DEBUG$MODE*NAME+", "Apz74", "GeForce", "핫산"]
 DB.notice = ("<공지사항을 숙지해 주시기 바랍니다.>\n\n공지사항: goo.gl/iyP83B\n\n채팅/홍보 이벤트 진행중, 공지사항 참조해주세요!\n\n방장 카카오톡 id : rgbkakao\n\n공식업체: compury.com ('엘' 님)\n\n모바일 메뉴열고 우측상단\nPC 채팅창 방제아래 상단바\n♡->♥ 하트 부탁 드려요")
 DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n▼전체보기 클릭▼\n" + blank + "캬옹봇은 이용자가 첫 채팅을 올리면 자동으로 식별코드를 부여하고 데이터베이스를 생성합니다.\n명령어에서는 닉네임이 아닌 식별코드를 이용해 개인을 구별합니다.\n활동을 하면 컴퓨톡 포인트(cp)를 부여합니다.\n닉네임 변경시 나갔다 들어오신 후 이전 식별코드와 새로 발급된 식별코드를 각각 갠톡(rgbkakao) 또는 [!호출 9999 내용]으로 보내주셔야 데이터를 이전해드립니다.\n\n》채팅 1개당 1cp 부여\n》매일 리셋되는 출석체크시 순위에 따라 300~100cp 부여\n》채팅 시 1%의 확률로 4~100cp 부여\n》욕설 사용시 30cp씩 누적 차감\n\n아래 설명에서 <> 안에 들어있는 내용은 직접 채우시는 겁니다.\n\n\n◆[전체 / 개인]◆\n\n!공지\n》공지사항을 출력하고 공지 카운터를 초기화합니다.\n!캬옹봇\n》캬옹봇에 개한 설명을 출력합니다.\n!명령어\n》캬옹봇에서 사용 가능한 명령어 목록을 출력합니다.\n!닉네임\n》발신자의 닉네임을 출력합니다.\n!코드확인\n》발신자의 식별코드를 출력합니다.\n!코드목록\n》식별코드 목록을 전화번호부처럼 출력합니다.\n!코드변경\n》[비용:500cp]호출코드를 원하는 번호(1000~9999)로 변경합니다.\n!호출 <식별코드> <메세지>\n》식별코드에 해당하는 사람이 호출 이후 첫 메세지를 보낼 때 발신자가 자신을 찾고 있음을 메세지 내용과 함께 알려줍니다.\n!포인트\n》발신자의 포인트를 출력합니다.\n!순위\n》보유 포인트 순위를 출력합니다.\n!염탐 <식별코드>\n》[비용:50cp]식별코드에 해당하는 사람의 포인트를 염탐합니다.\n!상점 <식별코드> <포인트>\n》[VAT:20%]발신자의 계좌에서 수수료를 포함한 포인트를 차감하고, 수수료를 제외한 포인트를 식별코드에 해당하는 사람의 계좌에 보냅니다.\n!벌점 <식별코드> <포인트>\n》[VAT:50%|쿨타임:180초]상점과 같지만 식별코드의 해당하는 사람의 포인트를 차감합니다.\n!가위/바위/보 <포인트>\n》[일 5회 제한]해당 포인트를 걸고 봇과 가위바위보를 합니다.\n!복권\n》[일 1회 제한|비용:100cp]복권에 응모합니다. 당첨자는 매일 00시 정각에 발표됩니다. (당첨 금액:100+누적 금액, VAT:20%)\n\n\n◆[단어 포함 발동 방식]◆\n\nㅇㅈ? / ㅂㅇㄹ / 소라고둥 / 쓰읍\n\n\n◆[유틸리티]◆\n\n!견적생성<엔터키><키워드><엔터키><키워드>...\n》스페이스바가 아닌 엔터키를 사용해 각 키워드를 분리합니다. 부품 이름을 엔터키로 구분해 대충 입력하면 다나와 견적으로 만들어 반환합니다.\n!비교 <부품1,부품2>\n》(by 시공) 두 부품 이름을 대충 입력하면(되도록 영문으로만) userbenchmarks 사이트에서 비교한 링크를 출력합니다.\n!날씨\n》주요 지역의 날씨를 출력합니다.\n!지역날씨 <지역>\n》해당 지역의 날씨를 출력합니다.\n!실검\n》네이버 실시간 검색어 차트를 출력합니다.\n!비트코인\n》주요 암호화폐 시세를 출력합니다.\n!검색 <내용>\n》네이버에서 해당 내용을 검색합니다.\n!유튜브/구글/나무위키 <내용>\n》해당 사이트에서 해당 내용을 검색합니다.\n!배그서버\n》배틀그라운드 동접자 수와 서버 상태를 출력합니다.\n!롤전적 <닉네임>\n》정확한 닉네임을 입력하면 해당 닉네임의 전적을 출력합니다.\n!단어 <내용>\n》해당 단어를 검색합니다.\n!차트\n》네이버 뮤직 음원 순위를 출력합니다.\n!가사 <제목>\n》해당 노래의 가사를 출력합니다.\n!번역 <언어> <내용>\n》내용을 해당 언어로 번역합니다.\n!언어\n》번역에서 사용 가능한 언어를 출력합니다.\n\n\n◆[기타]◆\n\n!주사위\n》주사위를 굴려 결과값을 출력합니다.\n!시간\n》현재 시각을 출력합니다.\n!디지털시계\n》현재 시각을 디지털 시계 형식으로 출력합니다.\n!카운터 전체\n》DB 초기화 이후 올라온 모든 채팅 갯수를 출력합니다.\n!카운터 자신\n》DB 초기화 이후 자신이 보낸 모든 채팅 갯수를 출력합니다.\n!카운터 공지\n》공지가 출력되기까지 남은 채팅 갯수를 출력합니다. 공지가 출력될때 DB도 같이 저장됩니다.\n!응답속도\n》캬옹봇의 passive 코드 실행속도를 출력합니다.\n!동작시간\n》리로드 이후 현재까지 캬옹봇이 켜져있는 시간을 출력합니다.\n!불여우호출\n》불여우를 텔레그램으로 호출합니다.(봇이 죽었다던지 할때 사용)\n")
 var startmsg = "▃▄▅▆|KyaongBot|▆▅▄▃"
@@ -39,7 +39,7 @@ const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsoluteP
 const UPDATE = {};
 UPDATE.saveData = function(msg) { //파일에 내용을 저장하는 함수
   try {
-    var file = new java.io.File(sdcard + "/kbot/response.js");
+    var file = new java.io.File(sdcard + "/katalkbot/response.js");
     var fos = new java.io.FileOutputStream(file);
     var str = new java.lang.String(msg);
     fos.write(str.getBytes());
@@ -140,7 +140,7 @@ preMsg[room] = msg;
 */
 if (room == "불여우") {
     if (msg == "!프사갱신") {
-      DataBase.setDataBase(ImageDB.getProfileImage(), "image")
+      DataBase.setDataBase("image", ImageDB.getProfileImage())
       replier.reply("프사갱신 완료!" + DataBase.getDataBase("image"))
       return;
     }
@@ -201,7 +201,7 @@ if (DB.inick.indexOf(sender) == -1) {
 
 var scode = DB.icode[DB.inick.indexOf(sender)];
 
-if (sender == "rgb" || sender == "불여우" || sender == "K'romium" || sender == "AMD TR™" || sender == "DEBUG$MODE*NAME+") {
+if (sender == "rgb" || sender == "불여우" || sender == "K'romium" || sender == "AMD TR™" || sender == "DEBUG$MODE*NAME+" || sender == "컴잘알")) {
 if (msg.indexOf("!evalf ") == 0) {
     replier.reply(eval(msg.substring(7)))
 }
@@ -329,7 +329,7 @@ if (msg == "!off") off = true
 
 if (msg == "!업데이트") {
     replier.reply("백업 진행중...");
-    DataBase.setDataBase(JSON.stringify(DB), "DB");
+    DataBase.setDataBase("DB", JSON.stringify(DB));
     replier.reply("다운로드 진행중...");
     UPDATE.saveData(getHtml("https://raw.githubusercontent.com/chanoo104/kyaongbot/master/response.js"));
     replier.reply("[업데이트 코멘트]\n" + getHtml("https://github.com/chanoo104/kyaongbot/commit/master").split('<p class="commit-title">')[1].split("</p>")[0].trim());
@@ -345,7 +345,7 @@ if (msg == "!업데이트") {
 }
 if (msg == "!리로드") {
     replier.reply("백업 진행중...");
-    DataBase.setDataBase(JSON.stringify(DB), "DB");
+    DataBase.setDataBase("DB", JSON.stringify(DB));
     Api.reload();
     replier.reply(startmsg)
 }
@@ -357,7 +357,7 @@ if (msg == "!로드") {
 }
 if (msg == "!세이브") {
     replier.reply("진행중...");
-    DataBase.setDataBase(JSON.stringify(DB), "DB2");
+    DataBase.setDataBase("DB2", JSON.stringify(DB));
     replier.reply(startmsg)
 }
 
@@ -381,7 +381,7 @@ if (msg.split(" ")[0] == "!wrmgmt") {
 if (msg == "!DB삭제") {
 	var DB1= new Object();
 	replier.reply("진행중...");
-    DataBase.setDataBase(JSON.stringify(DB1), "DB");
+    DataBase.setDataBase("DB", JSON.stringify(DB1));
     Api.reload();
 }
 if (msg.split(" ")[0] == "!pDB이전") {
@@ -1302,7 +1302,7 @@ DB.ncounter++;
 if (DB.ncounter > 299) {
    DB.ncounter = 0
    replier.reply(DB.notice)
-   DataBase.setDataBase(JSON.stringify(DB), "DB");
+   DataBase.setDataBase("DB", JSON.stringify(DB));
 DB.noticetimeb=DB.noticetimea
 DB.noticetimea=new Date().getTime()
 var t = DB.noticetimea-DB.noticetimeb
@@ -1399,8 +1399,9 @@ if (msg == "!견적양식") {
     if (DataBase.getDataBase("errorchk") == 0) {
       Utils.getWebText("에러발생!\nhttps://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
       replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
-      DataBase.setDataBase(1, "errorchk")
+      DataBase.setDataBase("errorchk", 1)
       Api.reload();
     }
 }
 }
+
