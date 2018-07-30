@@ -144,9 +144,21 @@ if (room == "불여우") {
       replier.reply("프사갱신 완료!" + DataBase.getDataBase("image"))
       return;
     }
-}
-
-
+    }
+// 프사 저장
+    if (DataBase.getDataBase(sender + "profile") == undefined) {
+        DataBase.setDataBase(sender + "profile", java.lang.String(ImageDB.getProfileImage()).hashCode())
+        replier.reply("[" + sender + "]님의 프로필을 새로 DB에 추가했습니다.\n" + java.lang.String(ImageDB.getProfileImage()).hashCode())
+    }
+// 프사 확인
+    if (msg == "!프사확인") {
+        replier.reply(java.lang.String(ImageDB.getProfileImage()).hashCode())
+    }
+// 프사 변경시 새로 추가
+    if (DataBase.getDataBase(sender + "profile") != java.lang.String(ImageDB.getProfileImage()).hashCode()) {
+        DataBase.setDataBase(sender + "profile", java.lang.String(ImageDB.getProfileImage()).hashCode())
+        replier.reply("[" + sender + "]님의 프사가 변경된것 같아 DB에 수정했습니다.\n" + java.lang.String(ImageDB.getProfileImage()).hashCode())
+    }
 /////////////////////////////////////////////////////////////////
 /*
 패시브1 - 관리자 - 일반 - 패시브2 순으로 작성해 주세요
