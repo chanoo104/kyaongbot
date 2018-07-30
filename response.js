@@ -1216,7 +1216,13 @@ if (msg.trim() == "!실검") { //!실검 이면
       실검.push(abab + ". " + getHtml("http://rank.search.naver.net/rank.js").replace(/\"/g, "").split("keyword:")[abab].split(",")[0]); //파싱
     }
     replier.reply(실검.join("\n")); //합해서 보내기
-}
+    }
+    //로그 확인
+    if (room == "간부방") {
+        if (msg == "!로그") {
+            replier.reply("▼전체 보기 클릭▼" + blank + DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))
+        }
+    }
 // 날씨
 if (msg == "!날씨") { //!날씨면
     var data = Utils.getWebText("https://m.search.naver.com/search.naver?query=날씨"); //네이버 검색에서 파싱
