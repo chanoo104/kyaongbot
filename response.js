@@ -1249,7 +1249,7 @@ if (msg == "!차트") { //!차트면
       var c = chart.split("<span class=\"stit\">")[i].split("</span>")[0];
       charts.push("순위 : " + a + "\n제목 : " + b + "\n아티스트(앨범) : " + c);
     }
-    replier.reply(charts.join("\n=============\n"))
+    replier.reply("▼ 전체보기 클릭 ▼" + blank + charts.join("\n=============\n"))
 }
 // 암호화폐 시세 확인
 if (msg == "!비트코인") { //만약 비트코인이라면
