@@ -349,7 +349,7 @@ if (msg == "!업데이트") {
     replier.reply("다운로드 진행중...");
     UPDATE.saveData(getHtml("https://raw.githubusercontent.com/chanoo104/kyaongbot/master/response.js"));
     replier.reply("[업데이트 코멘트]\n" + getHtml("https://github.com/chanoo104/kyaongbot/commit/master").split('<p class="commit-title">')[1].split("</p>")[0].trim());
-    Api.reload();
+    Api.reload("response.js");
     if (error == false) {
       replier.reply("업데이트 성공!")
     } else if (error == true) {
@@ -362,7 +362,7 @@ if (msg == "!업데이트") {
 if (msg == "!리로드") {
     replier.reply("백업 진행중...");
     DataBase.setDataBase("DB", JSON.stringify(DB));
-    Api.reload();
+    Api.reload("response.js");
     replier.reply(startmsg)
 }
 
@@ -398,7 +398,7 @@ if (msg == "!DB삭제") {
 	var DB1= new Object();
 	replier.reply("진행중...");
     DataBase.setDataBase("DB", JSON.stringify(DB1));
-    Api.reload();
+    Api.reload("response.js");
 }
 if (msg.split(" ")[0] == "!pDB이전") {
     var x = msg.split(" ")[1];
@@ -632,12 +632,6 @@ if (msg.split(" ")[0] == "!pDB삭제") {
 }
 
 /////////////////////////////////////////////////////////////////
-	//불여우호출
-if (msg == "!불여우호출")
-{
-	Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=불여우님 컴퓨톡에서 " + sender + " 님이 찾고 있습니다.&chat_id=338145573")
-        replier.reply("텔레그램으로 불여우를 호출하였습니다.")
-}
 
 if (msg == "!명령어") {
     replier.reply(DB.ncommand)
@@ -1422,7 +1416,7 @@ if (msg == "!견적양식") {
       Utils.getWebText("에러발생!\nhttps://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
       replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
       DataBase.setDataBase("errorchk", 1)
-      Api.reload();
+      Api.reload("response.js");
     }
 }
 }
