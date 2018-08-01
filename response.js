@@ -1242,8 +1242,8 @@ if (msg == "!날씨") { //!날씨면
 // 음원차트 순위 확인
 if (msg == "!차트") { //!차트면
     var charts = [];
+    chart = Utils.getWebText("http://m.music.naver.com/listen/top100.nhn?domain=DOMESTIC")
     for (var i = 1; i < 51; i++) {
-      chart = Utils.getWebText("http://m.music.naver.com/listen/top100.nhn?domain=DOMESTIC")
       var a = chart.split("<span class=\"rank\">")[i].split("</span>")[0];
       var b = chart.split("<strong class=\"tit\"> ")[i].split("</strong>")[0];
       var c = chart.split("<span class=\"stit\">")[i].split("</span>")[0];
