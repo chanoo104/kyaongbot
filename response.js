@@ -235,7 +235,7 @@ if (msg == "!날짜변경") DB.date = new Date().getDate() - 1
 if (new Date().getDate() != DB.date) {
     replier.reply("어제의 출석 인원수 : " + DB.attendance + "명")
     DB.attendance = 0;
-    
+    DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", new Date().getFullYear() + "년 " + new Date().getMonth() + "월 " + new Date().getDate() + "일의 기록입니다.")   
     for (var y = 0; y < DB.icode.length; y++) {
 	    var x = DB.icode[y]
         DB.p[x].attendance = false;
