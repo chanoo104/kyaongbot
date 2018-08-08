@@ -69,7 +69,29 @@ function wiki(query) {
     kiwi = kiwi.substring(0, kiwi.length - 17)
     return kiwi.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "")
 }
+function leadingZeros(n, digits) {
+    var zero = '';
+    n = n.toString();
 
+    if (n.length < digits) {
+        for (i = 0; i < digits - n.length; i++)
+            zero += '0';
+    }
+    return zero + n;
+}
+function getTimeStamp() {
+    var d = new Date();
+    var s =
+        leadingZeros(d.getFullYear(), 4) + '-' +
+        leadingZeros(d.getMonth() + 1, 2) + '-' +
+        leadingZeros(d.getDate(), 2) + ', ' +
+
+        leadingZeros(d.getHours(), 2) + ':' +
+        leadingZeros(d.getMinutes(), 2) + ':' +
+        leadingZeros(d.getSeconds(), 2);
+
+    return s;
+}
 
 
 
@@ -236,7 +258,7 @@ if (new Date().getDate() != DB.date) {
     replier.reply("어제의 출석 인원수 : " + DB.attendance + "명")
     DB.attendance = 0;
     DataBase.removeDataBase("컴퓨터의 모든것 || 컴퓨톡Log")
-    DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", new Date().getFullYear() + "년 " + new Date().getMonth() + "월 " + new Date().getDate() + "일의 기록입니다.")   
+    DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", getTimeStamp() + "의 기록입니다.")   
     for (var y = 0; y < DB.icode.length; y++) {
 	    var x = DB.icode[y]
         DB.p[x].attendance = false;
