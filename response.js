@@ -431,7 +431,6 @@ if (msg.split(" ")[0] == "!pDB이전") {
     DB.inick.splice(DB.icode.indexOf(x), 1);
     DB.icode.splice(DB.icode.indexOf(x), 1);
     DB.icode.splice(DB.icode.indexOf(y), 1, z);
-    replier.reply(DB.icode[0]  + " " + DB.inick[0])
     replier.reply("완료!");
 }
 
