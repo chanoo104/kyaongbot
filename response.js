@@ -160,7 +160,7 @@ room = room.trim();
 sender = sender.trim();
 
 if(room == "간부방"){
-if(msg == "!로그 "){
+if(msg == "!로그"){
 replier.reply("▼전체보기 클릭▼" + blank + DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))
     }
 if (msg == "!로그 ") {
