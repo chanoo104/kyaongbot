@@ -796,55 +796,78 @@ if (msg.split(" ")[0] == "!투표") {
 }
 */
 	
-loop:{
-var m = msg.split (" ");
-if (m[0]=="!비교"){
-var char;
-var s = msg.split ("비교 ");
-var tt = s [1].split (","); 
-if (typeof tt[1] == "undefined") {
-	replier.reply(tt [0]+"을(를) 찾을수 없습니다.")
-	break loop;
-}
-var u = tt[0].split(" ");
-if (u [0]){
-char = u [0];
-}
-for (var i=1;i < 100;i++){
-if (u[i]){
-char+="+";
-char += u [i];
-}
-}
-      var test = Utils.getWebText("https://www.google.co.kr/search?&q=userbenchmark+" + char);
-      var t = test.split ("/Rating/");
-if (!t [1]){
-replier.reply(tt [0]+"을(를) 찾을수 없습니다.");
-break loop;
-}
-      var p = t [1].split ('"');
-      var s = p [0];
- var r = tt[1].split(" ");
-if (r [0]){
-char = r [0];
-}
-for (var i=1;i < 100;i++){
-if (r[i]){
-char+="+";
-char += r [i];
-}
-}
-       test = Utils.getWebText("https://www.google.co.kr/search?&q=userbenchmark+" + char);
-       t = test.split ("/Rating/");
-if (!t [1]){
-replier.reply(tt [1]+"을(를) 찾을수 없습니다.");
-break loop;
-}
-      p = t [1].split ('"');
-      var s1 = p [0];
-      replier.reply("http://cpu.userbenchmark.com/Compare/CompuTalk/"+s+"vs"+s1);
+loop: {
+    var m = msg.split(" ");
+    if (m[0] == "!비교") {
+        var char;
+        var s = msg.split("비교 ");
+        var tt = s[1].split(",");
+        if (typeof tt[1] == "undefined") {
+            replier.reply(tt[0] + "을(를) 찾을수 없습니다.")
+            break loop;
+        }
+        var u = tt[0].split(" ");
+        if (u[0]) {
+            char = u[0];
+        }
+        for (var i = 1; i < 100; i++) {
+            if (u[i]) {
+                char += "+";
+                char += u[i];
+            }
+        }
+        var test = Utils.getWebText("https://www.google.co.kr/search?&q=userbenchmark+" + char);
+        var t = test.split("/Rating/");
+        var bo = false;
+        if (!t[1]) {
+            t = test.split("/SpeedTest/");
+            bo = true;
+        }
+        if (!t[1]) {
+            replier.reply(tt[0] + "을(를) 찾을수 없습니다.");
+            break loop;
+        }
+        var p = t[1].split('"');
+        if (bo == true) {
+            var ttt = t[1].split("/");
+            bo = false;
+            var s = "m";
+            s += ttt[0];
+        } else {
+            var s = p[0];
+        }
+        var r = tt[1].split(" ");
+        if (r[0]) {
+            char = r[0];
+        }
+        for (var i = 1; i < 100; i++) {
+            if (r[i]) {
+                char += "+";
+                char += r[i];
+            }
+        }
+        test = Utils.getWebText("https://www.google.co.kr/search?&q=userbenchmark+" + char);
+        t = test.split("/Rating/");
+        if (!t[1]) {
+            t = test.split("/SpeedTest/");
+            bo = true;
+        }
+        if (!t[1]) {
+            replier.reply(tt[1] + "을(를) 찾을수 없습니다.");
+            break loop;
+        }
+        p = t[1].split('"');
+        if (bo == true) {
+            var ttt = t[1].split("/");
+            bo = false;
+            var s1 = "m";
+            s1 += ttt[0];
+        } else {
+            var s1 = p[0];
+        }
+        replier.reply("http://cpu.userbenchmark.com/Compare/CompuTalk/" + s + "vs" + s1);
     }
-   }
+}
 
     loop:{
 if (msg.split("\n")[0] == "!견적생성") {
