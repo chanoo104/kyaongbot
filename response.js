@@ -163,12 +163,14 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 replier.reply("▼전체보기 클릭▼" + blank + DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))
             }
             if (msg == "!로그 ") {
-                try {
-                    replier.reply("▼전체보기 클릭▼" + blank + DataBase.getDataBase(msg.split(" ")[0] + "Log"))
-                }
-                catch (e) {
+                i = DataBase.getDataBase(msg.substr(4) + "Log")
+                if (i == undefinded) {
                     replier.reply("그날의 로그가 없거나 잘못된 값입니다.")
+                    return;
                 }
+            }
+            if (msg == "!로그 ") {
+                replier.reply("▼전체보기 클릭▼" + blank + DataBase.getDataBase(msg.substr(4) + "Log"))
             }
 
         }
