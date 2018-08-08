@@ -92,7 +92,14 @@ function getTimeStamp() {
 
     return s;
 }
-
+function getYMDStamp() {
+  var d = new Date();
+  var s =
+    leadingZeros(d.getFullYear(), 4) +
+    leadingZeros(d.getMonth() + 1, 2) +
+    leadingZeros(d.getDate(), 2)
+  return s;
+}
 
 
 
@@ -153,9 +160,12 @@ room = room.trim();
 sender = sender.trim();
 
 if(room == "간부방"){
-if(msg == "!로그"){
+if(msg == "!로그 "){
 replier.reply("▼전체보기 클릭▼" + blank + DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))
-     }
+    }
+if (msg == "!로그 ") {
+        replier.reply("▼전체보기 클릭▼" + blank + DataBase.getDataBase(msg.split(" ")[1] + "Log"))
+    }
 }
 	
 /* 도배 방지
@@ -257,8 +267,9 @@ if (msg == "!날짜변경") DB.date = new Date().getDate() - 1
 if (new Date().getDate() != DB.date) {
     replier.reply("어제의 출석 인원수 : " + DB.attendance + "명")
     DB.attendance = 0;
+    DataBase.setDataBase(getYMDStamp() + "Log", DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))   
     DataBase.removeDataBase("컴퓨터의 모든것 || 컴퓨톡Log")
-    DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", getTimeStamp() + "의 기록입니다.")   
+    DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", getYMDStamp() + "의 기록입니다.")   
     for (var y = 0; y < DB.icode.length; y++) {
 	    var x = DB.icode[y]
         DB.p[x].attendance = false;
