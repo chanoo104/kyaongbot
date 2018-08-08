@@ -69,7 +69,37 @@ function wiki(query) {
     kiwi = kiwi.substring(0, kiwi.length - 17)
     return kiwi.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "")
 }
+function leadingZeros(n, digits) {
+    var zero = '';
+    n = n.toString();
 
+    if (n.length < digits) {
+        for (i = 0; i < digits - n.length; i++)
+            zero += '0';
+    }
+    return zero + n;
+}
+function getTimeStamp() {
+    var d = new Date();
+    var s =
+        leadingZeros(d.getFullYear(), 4) + '-' +
+        leadingZeros(d.getMonth() + 1, 2) + '-' +
+        leadingZeros(d.getDate(), 2) + ', ' +
+
+        leadingZeros(d.getHours(), 2) + ':' +
+        leadingZeros(d.getMinutes(), 2) + ':' +
+        leadingZeros(d.getSeconds(), 2);
+
+    return s;
+}
+function getYMDStamp() {
+    var d = new Date();
+    var s =
+        leadingZeros(d.getFullYear(), 4) +
+        leadingZeros(d.getMonth() + 1, 2) +
+        leadingZeros(d.getDate(), 2)
+    return s;
+}
 
 
 
@@ -1433,10 +1463,10 @@ if (msg == "!견적양식") {
 } catch (e) {
     var error = true;
     if (DataBase.getDataBase("errorchk") == 0) {
-      Utils.getWebText("에러발생!\nhttps://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
-      replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
-      DataBase.setDataBase("errorchk", 1)
-      Api.reload("response.js");
+        Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
+        replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
+        DataBase.setDataBase("errorchk", 1)
+        Api.reload();
     }
 }
 }
