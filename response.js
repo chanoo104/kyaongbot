@@ -262,39 +262,39 @@ DB.ncounter++;
 DB.acounter++;
 
 
-if (msg == "!날짜변경") DB.date = new Date().getDate() - 1
-// 날짜가 변함에 따라 광역 변수 초기화
-if (new Date().getDate() != DB.date) {
-    replier.reply("어제의 출석 인원수 : " + DB.attendance + "명")
-    DB.attendance = 0;
-    DataBase.setDataBase(getYMDStamp() + "Log", DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))   
-    DataBase.removeDataBase("컴퓨터의 모든것 || 컴퓨톡Log")
-    DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", getYMDStamp() + "의 기록입니다.")   
-    for (var y = 0; y < DB.icode.length; y++) {
-	    var x = DB.icode[y]
-        DB.p[x].attendance = false;
-        DB.p[x].warning -= 5
-        if (DB.p[x].warning < 0) DB.p[x].warning = 0
+    if (msg == "!날짜변경") DB.date = new Date().getDate() - 1
+    // 날짜가 변함에 따라 광역 변수 초기화
+    if (new Date().getDate() != DB.date) {
+        replier.reply("어제의 출석 인원수 : " + DB.attendance + "명")
+        DB.attendance = 0;
+        DataBase.setDataBase(getYMDStamp() + "Log", DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))   
+        DataBase.removeDataBase("컴퓨터의 모든것 || 컴퓨톡Log")
+        DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", new Date().getFullYear() + "년 " + new Date().getMonth() + "월 " + new Date().getDate() + "일의 기록입니다.")
+        for (var y = 0; y < DB.icode.length; y++) {
+            var x = DB.icode[y]
+            DB.p[x].attendance = false;
+            DB.p[x].warning -= 5
+            if (DB.p[x].warning < 0) DB.p[x].warning = 0
+        }
+        var n = Math.floor(Math.random() * DB.lottery.length);
+        if (DB.lottery.length != 0) {
+            replier.reply("복권 응모자 수 : " + DB.lottery.length + "명")
+            var y = DB.lottery.length + 1
+            var i = Math.round(y * 10000 / 120)
+            if (DB.addpt == true) i += 4000
+            DB.p[DB.lottery[n]].pt += i
+            replier.reply("오늘의 복권 당첨자는\n" + DB.inick[DB.icode.indexOf(DB.lottery[n])] + "님입니다.\n당첨금 : " + i + "cp (20% VAT)")
+            delete DB.lottery;
+            DB.lottery = new Array();
+            for (var k = 0; k < DB.icode.length; k++) {
+                var x = DB.icode[k]
+                delete DB.p[x].lottery
+                DB.p[x].rps = 0
+                DB.p[x].lottery = false;
+            }
+        }
     }
-    var n = Math.floor(Math.random() * DB.lottery.length);
-    if (DB.lottery.length != 0) {
-    replier.reply("복권 응모자 수 : " + DB.lottery.length + "명")
-    var y = DB.lottery.length + 1
-    var i = Math.round(y * 10000 / 120)
-    if (DB.addpt == true) i += 4000
-    DB.p[DB.lottery[n]].pt += i
-    replier.reply("오늘의 복권 당첨자는\n" + DB.inick[DB.icode.indexOf(DB.lottery[n])] + "님입니다.\n당첨금 : " + i +"cp (20% VAT)")
-    delete DB.lottery;
-    DB.lottery = new Array();
-    for (var k = 0; k < DB.icode.length; k++) {
-        var x = DB.icode[k]
-        delete DB.p[x].lottery
-	DB.p[x].rps = 0
-        DB.p[x].lottery = false;
-    }
-    }
-}
-DB.date = new Date().getDate();
+    DB.date = new Date().getDate();
 
 // 출석체크
 if (DB.p[scode].attendance == false) {
