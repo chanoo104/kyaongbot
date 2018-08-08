@@ -164,7 +164,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             }
             if (msg == "!로그 ") {
                 i = DataBase.getDataBase(msg.substr(4) + "Log")
-                if (i == undefinded) {
+                if (i == undefined) {
                     replier.reply("그날의 로그가 없거나 잘못된 값입니다.")
                     return;
                 }
