@@ -1383,7 +1383,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             }
 
-            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+" || sender == "컴잘알") {
+            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+" || sender == ".,.") {
                 try {
                     if (msg.indexOf("!eval ") == 0) {
                         replier.reply(eval(msg.substring(6)))
