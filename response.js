@@ -160,7 +160,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
         if (room == "간부방") {
             if (msg == "!로그") {
-                replier.reply("▼전체보기 클릭▼" + blank + DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))
+                replier.reply("▼전체보기 클릭▼" + blank + DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡 잡담방Log"))
             }
             if (msg.indexOf("!로그 ") == 0) {
                 i = DataBase.getDataBase(msg.substr(4) + "Log")
@@ -274,9 +274,10 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             if (new Date().getDate() != DB.date) {
                 replier.reply("어제의 출석 인원수 : " + DB.attendance + "명")
                 DB.attendance = 0;
+                var d = new Date();
                 DataBase.setDataBase(getYMDStamp() + "Log", DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))
                 DataBase.removeDataBase("컴퓨터의 모든것 || 컴퓨톡Log")
-                DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", new Date().getFullYear() + "년 " + new Date().getMonth()+1 + "월 " + new Date().getDate() + "일의 기록입니다.")
+                DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", d.getFullYear() + "년 " + (d.getMonth() + 1) + "월 " + d.getDate() + "일의 기록입니다.")
                 for (var y = 0; y < DB.icode.length; y++) {
                     var x = DB.icode[y]
                     DB.p[x].attendance = false;
