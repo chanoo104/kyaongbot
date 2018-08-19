@@ -275,9 +275,9 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 replier.reply("어제의 출석 인원수 : " + DB.attendance + "명")
                 DB.attendance = 0;
                 var d = new Date();
-                DataBase.setDataBase(getYMDStamp() + "Log", DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡Log"))
-                DataBase.removeDataBase("컴퓨터의 모든것 || 컴퓨톡Log")
-                DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡Log", d.getFullYear() + "년 " + (d.getMonth() + 1) + "월 " + d.getDate() + "일의 기록입니다.")
+                DataBase.setDataBase(getYMDStamp() + "Log", DataBase.getDataBase("컴퓨터의 모든것 || 컴퓨톡 잡담방Log"))
+                DataBase.removeDataBase("컴퓨터의 모든것 || 컴퓨톡 잡담방Log")
+                DataBase.setDataBase("컴퓨터의 모든것 || 컴퓨톡 잡담방Log", d.getFullYear() + "년 " + (d.getMonth() + 1) + "월 " + d.getDate() + "일의 기록입니다.")
                 for (var y = 0; y < DB.icode.length; y++) {
                     var x = DB.icode[y]
                     DB.p[x].attendance = false;
