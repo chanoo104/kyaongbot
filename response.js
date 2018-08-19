@@ -268,8 +268,9 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             DB.ncounter++;
             DB.acounter++;
 
-
-            if (msg == "!날짜변경") DB.date = new Date().getDate() - 1
+            if (admin.indexOf(sender) != -1) {
+                if (msg == "!날짜변경") DB.date = new Date().getDate() - 1
+            }
             // 날짜가 변함에 따라 광역 변수 초기화
             if (new Date().getDate() != DB.date) {
                 replier.reply("어제의 출석 인원수 : " + DB.attendance + "명")
