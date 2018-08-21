@@ -1378,18 +1378,20 @@ balls.push(ball.split('alt="')[i].split('"/>')[0])
 replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
 }
 
-try{
-if (msg.indexOf("!로또 ") == 0) { 
+		try{
+	if (msg.indexOf("!로또 ") == 0) { 
 var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('<p class="number">')[1].trim()
 var balls = []
 for (var i = 1; i < 7; i++) {
 balls.push(ball.split('alt="')[i].split('"/>')[0])
-}
+	}
 replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
-}
-catch(e){
+	}
+} catch(e){
    replier.reply("잘못된 회차입니다. 다시 시도해주십시오.")
 }
+
+
             /////////////////////////////////////////////////////////////////
 
             // 카운터 다차면 공지표시
