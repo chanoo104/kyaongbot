@@ -173,6 +173,13 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             }
 
         }
+        if (room == "간부방"){
+            if (msg == "!프사변경")
+            {
+            DataBase.setDataBase(sender + "profile", java.lang.String(ImageDB.getProfileImage()).hashCode()) 
+        replier.reply("프사변경이 완료되었습니다.")    
+        }
+        }
 
         /* 도배 방지
         if (preMsg[room] == msg) {
@@ -196,11 +203,19 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         if (msg == "!프사확인") {
             replier.reply(java.lang.String(ImageDB.getProfileImage()).hashCode())
         }
+        //관리자면 씹고 간부방에 보내야함
+        if (DataBase.getDataBase(sender + "profile") != java.lang.String(ImageDB.getProfileImage()).hashCode()) {
+            if (admin.indexOf(sender) != -1) {
+            replier.reply(sender + '님 프사가 변경 된것으로 보입니다. 변경된것이 맞다면 간부방으로 "!프사변경"이라고 보내주십시오. 만약 변경한게 아니면 무시하시면 됩니다. 그리고 변경 하지 않았는데 뜨시면 역시 간부방에 보내주십시오.\n 그전까진 캬옹봇을 사용하실수 없습니다.')
+            return;
+            }
+        }
         // 프사 변경시 새로 추가
         if (DataBase.getDataBase(sender + "profile") != java.lang.String(ImageDB.getProfileImage()).hashCode()) {
             DataBase.setDataBase(sender + "profile", java.lang.String(ImageDB.getProfileImage()).hashCode())
             replier.reply("[" + sender + "]님의 프로필 사진이 변경된것 같아 DB에 수정했습니다.\n" + java.lang.String(ImageDB.getProfileImage()).hashCode())
         }
+            
         /////////////////////////////////////////////////////////////////
         /*
         패시브1 - 관리자 - 일반 - 패시브2 순으로 작성해 주세요
