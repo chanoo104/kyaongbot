@@ -482,7 +482,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                         return
                     }
                     DB.p[msg.split(" ")[2]].realwr++;
-                replier.reply("[강퇴 경고 추가]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + DB.p[scode].realwr + "]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.") 
+                replier.reply("[강퇴 경고 추가]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + " " + DB.p[scode].realwr + "회]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.") 
                 if (DB.p[msg.split(" ")[2]].realwr > 3){
                     Api.replyRoom("간부방", "[★경 " + sender + " 축☆]\n강퇴 경고 횟수:" + DB.p[scode].realwr + "회입니다. 강퇴해주세요.")
                 }
@@ -493,7 +493,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                         return
                     }
                     DB.p[msg.split(" ")[2]].realwr--;
-                replier.reply("[강퇴 경고 삭제]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + DB.p[scode].realwr + "]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.") 
+                replier.reply("[강퇴 경고 삭제]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + " " + DB.p[scode].realwr + "회]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.") 
                 }
 
                 DB.code = new Object()
