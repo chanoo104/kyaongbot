@@ -263,6 +263,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 DB.p[scode].callmsg = new Array()
                 DB.p[scode].lottery = false
                 DB.p[scode].pns = 0
+                DB.p[scode].realwr = 0
 
 
 
