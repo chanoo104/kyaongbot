@@ -475,7 +475,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     DB.inick.splice(DB.icode.indexOf(x), 1);
                     DB.icode.splice(DB.icode.indexOf(x), 1);
                 }
-                if (msg.split(" ")[0] == "!강퇴경고 추가") {
+                if (msg.indexOf("!강퇴경고 추가 ") == 0) { 
                     if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
                         replier.reply("상대의 식별코드가 등록되지 않았습니다.");
                         return
@@ -486,7 +486,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     Api.replyRoom("간부방", "[★경 " + sender + " 축☆]\n강퇴 경고 횟수:" + DB.p[scode].realwr + "회입니다. 강퇴해주세요.")
                 }
             }
-                if (msg.split(" ")[0] == "!강퇴경고 삭제") {
+            if (msg.indexOf("!강퇴경고 삭제 ") == 0) { 
                     if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
                         replier.reply("상대의 식별코드가 등록되지 않았습니다.");
                         return
