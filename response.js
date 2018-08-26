@@ -476,14 +476,22 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     DB.icode.splice(DB.icode.indexOf(x), 1);
                 }
                 if (msg.split(" ")[0] == "!강퇴경고 추가") {
-                    DB.p[scode].realwr++;
+                    if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
+                        replier.reply("상대의 식별코드가 등록되지 않았습니다.");
+                        return
+                    }
+                    DB.p[msg.split(" ")[1]].realwr++;
                 replier.reply("[강퇴 경고 추가]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[1])] + DB.p[scode].realwr + "]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.") 
-                if (DB.p[scode].realwr > 3){
+                if (DB.p[msg.split(" ")[1]].realwr > 3){
                     Api.replyRoom("간부방", "[★경 " + sender + " 축☆]\n강퇴 경고 횟수:" + DB.p[scode].realwr + "회입니다. 강퇴해주세요.")
                 }
             }
                 if (msg.split(" ")[0] == "!강퇴경고 삭제") {
-                    DB.p[scode].realwr--;
+                    if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
+                        replier.reply("상대의 식별코드가 등록되지 않았습니다.");
+                        return
+                    }
+                    DB.p[msg.split(" ")[1]].realwr--;
                 replier.reply("[강퇴 경고 삭제]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[1])] + DB.p[scode].realwr + "]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.") 
                 }
 
