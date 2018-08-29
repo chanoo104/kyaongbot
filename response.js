@@ -1384,7 +1384,9 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     var w = u.split("<span class=\"wins\">"); //나머지도 마찬가지입니다
                     var l = u.split("<span class=\"losses\">");
                     var win = u.split("<span class=\"winratio\">");
-                    replier.reply(msg.substr(5) + "님의 롤 전적 검색결과 입니다\n티어 : " + t[1].split("<")[0] + "\n승리 : " + w[1].split("<")[0] + "\n패배 : " + l[1].split("<")[0] + "\n승률 : " + win[1].split("<")[0]);
+                    doc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/ajax/mmr/summonerName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
+                    replier.reply(msg.substr(5) + "님의 롤 전적 검색결과 입니다\n티어 : " + t[1].split("<")[0] + "\n승리 : " + w[1].split("<")[0] + "\n패배 : " + l[1].split("<")[0] + "\n승률 : " + win[1].split("<")[0] + doc.select(".TipStatus").text() + "\n예상 MMR은 " + doc.select(".MMR").text() +"점입니다. 티어는 " + doc.select(".TierRankString").text() + "로 예상됩니다."
+                );
                 }
             } catch (e) { //결과값을 찾을수 없으면
                 replier.reply("롤전적 정보가 없습니다");
