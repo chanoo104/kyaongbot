@@ -174,12 +174,11 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             }
 
         }
-        if (room == "간부방"){
-            if (msg == "!프사변경")
-            {
-            DataBase.setDataBase(sender + "profile", java.lang.String(ImageDB.getProfileImage()).hashCode()) 
-        replier.reply("프사변경이 완료되었습니다.")    
-        }
+        if (room == "간부방") {
+            if (msg == "!프사변경") {
+                DataBase.setDataBase(sender + "profile", java.lang.String(ImageDB.getProfileImage()).hashCode())
+                replier.reply("프사변경이 완료되었습니다.")
+            }
         }
 
         /* 도배 방지
@@ -207,8 +206,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         //관리자면 씹고 간부방에 보내야함
         if (DataBase.getDataBase(sender + "profile") != java.lang.String(ImageDB.getProfileImage()).hashCode()) {
             if (admin.indexOf(sender) != -1) {
-            replier.reply(sender + '님 프사가 변경 된것으로 보입니다. 변경된것이 맞다면 간부방으로 "!프사변경"이라고 보내주십시오. 만약 변경한게 아니면 무시하시면 됩니다. 그리고 변경 하지 않았는데 뜨시면 역시 간부방에 보내주십시오.\n 그전까진 캬옹봇을 사용하실수 없습니다.')
-            return;
+                replier.reply(sender + '님 프사가 변경 된것으로 보입니다. 변경된것이 맞다면 간부방으로 "!프사변경"이라고 보내주십시오. 만약 변경한게 아니면 무시하시면 됩니다. 그리고 변경 하지 않았는데 뜨시면 역시 간부방에 보내주십시오.\n 그전까진 캬옹봇을 사용하실수 없습니다.')
+                return;
             }
         }
         // 프사 변경시 새로 추가
@@ -216,7 +215,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             DataBase.setDataBase(sender + "profile", java.lang.String(ImageDB.getProfileImage()).hashCode())
             replier.reply("[" + sender + "]님의 프로필 사진이 변경된것 같아 DB에 수정했습니다.\n" + java.lang.String(ImageDB.getProfileImage()).hashCode())
         }
-            
+
         /////////////////////////////////////////////////////////////////
         /*
         패시브1 - 관리자 - 일반 - 패시브2 순으로 작성해 주세요
@@ -263,13 +262,13 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 DB.p[scode].callmsg = new Array()
                 DB.p[scode].lottery = false
                 DB.p[scode].pns = 0
-                
-                
+
+
 
 
 
             }
-            if (DB.p[scode].realwr == undefined){
+            if (DB.p[scode].realwr == undefined) {
                 DB.p[scode].realwr == 0
             }
 
@@ -480,24 +479,24 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     DB.inick.splice(DB.icode.indexOf(x), 1);
                     DB.icode.splice(DB.icode.indexOf(x), 1);
                 }
-                if (msg.indexOf("!강퇴경고 추가 ") == 0) { 
+                if (msg.indexOf("!강퇴경고 추가 ") == 0) {
                     if (DB.icode.indexOf(msg.split(" ")[2]) == -1) {
                         replier.reply("상대의 식별코드가 등록되지 않았습니다.");
                         return
                     }
                     DB.p[msg.split(" ")[2]].realwr++;
-                replier.reply("[강퇴 경고 추가]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + " " + DB.p[msg.split(" ")[2]].realwr + "회]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.") 
-                if (DB.p[msg.split(" ")[2]].realwr >= 3){
-                    Api.replyRoom("간부방", "[★경 " + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + " 축☆]\n강퇴 경고 횟수:" + DB.p[msg.split(" ")[2]].realwr + " 회입니다. 강퇴해주세요.")
+                    replier.reply("[강퇴 경고 추가]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + " " + DB.p[msg.split(" ")[2]].realwr + "회]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
+                    if (DB.p[msg.split(" ")[2]].realwr >= 3) {
+                        Api.replyRoom("간부방", "[★경 " + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + " 축☆]\n강퇴 경고 횟수:" + DB.p[msg.split(" ")[2]].realwr + " 회입니다. 강퇴해주세요.")
+                    }
                 }
-            }
-            if (msg.indexOf("!강퇴경고 삭제 ") == 0) { 
+                if (msg.indexOf("!강퇴경고 삭제 ") == 0) {
                     if (DB.icode.indexOf(msg.split(" ")[2]) == -1) {
                         replier.reply("상대의 식별코드가 등록되지 않았습니다.");
                         return
                     }
                     DB.p[msg.split(" ")[2]].realwr--;
-                replier.reply("[강퇴 경고 삭제]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + " " + DB.p[msg.split(" ")[2]].realwr + "회]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.") 
+                    replier.reply("[강퇴 경고 삭제]\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[2])] + " " + DB.p[msg.split(" ")[2]].realwr + "회]\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
                 }
 
                 DB.code = new Object()
@@ -1375,6 +1374,24 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             } catch (e) {
                 replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
             }
+            // 배그 전적
+            if (msg.indexOf("!배그전적 ") == 0) {
+                try {
+                    doc = org.jsoup.Jsoup.connect("https://dak.gg/profile/" + msg.substr(6) + "/2018-08/krjp")
+                        .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
+                        .get()
+                    solo = doc.select(".solo").select(".rating").select(".value").text()
+                    duo = doc.select(".duo").select(".rating").select(".value").text()
+                    squad = doc.select(".squad").select(".rating").select(".value").text()
+                    if (solo == "") solo = "기록 없음"
+                    if (duo == "") duo = "기록 없음"
+                    if (squad == "") squad = "기록 없음"
+                    replier.reply("솔로 : " + solo + " 듀오 : " + duo + " 스쿼드 : " + squad + " 입니다.")
+                }
+                catch (e) {
+                    replier.reply("배그 전적 정보가 없습니다.")
+                }
+            }
             // 롤 전적
             try {
                 if (msg.indexOf("!롤전적") == 0) {
@@ -1385,8 +1402,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     var l = u.split("<span class=\"losses\">");
                     var win = u.split("<span class=\"winratio\">");
                     doc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/ajax/mmr/summonerName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
-                    replier.reply(msg.substr(5) + "님의 롤 전적 검색결과 입니다\n티어 : " + t[1].split("<")[0] + "\n승리 : " + w[1].split("<")[0] + "\n패배 : " + l[1].split("<")[0] + "\n승률 : " + win[1].split("<")[0] + "\n" + doc.select(".TipStatus").text() + "\n예상 MMR은 " + doc.select(".MMR").text() +"점입니다. 티어는 " + doc.select(".TierRankString").text() + "로 예상됩니다."
-                );
+                    replier.reply(msg.substr(5) + "님의 롤 전적 검색결과 입니다\n티어 : " + t[1].split("<")[0] + "\n승리 : " + w[1].split("<")[0] + "\n패배 : " + l[1].split("<")[0] + "\n승률 : " + win[1].split("<")[0] + "\n" + doc.select(".TipStatus").text() + "\n예상 MMR은 " + doc.select(".MMR").text() + "점입니다. 티어는 " + doc.select(".TierRankString").text() + "로 예상됩니다."
+                    );
                 }
             } catch (e) { //결과값을 찾을수 없으면
                 replier.reply("롤전적 정보가 없습니다");
@@ -1411,27 +1428,27 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             } catch (e) {
                 replier.reply("가사 정보가 없습니다. 다시 입력해보세요.");
             }
-			if (msg == "!로또"){
-var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('<p class="number">')[1].trim()
-var balls = []
-for (var i = 1; i < 7; i++) {
-balls.push(ball.split('alt="')[i].split('"/>')[0])
-}
-replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
-}
+            if (msg == "!로또") {
+                var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('<p class="number">')[1].trim()
+                var balls = []
+                for (var i = 1; i < 7; i++) {
+                    balls.push(ball.split('alt="')[i].split('"/>')[0])
+                }
+                replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
+            }
 
-		try{
-	if (msg.indexOf("!로또 ") == 0) { 
-var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('<p class="number">')[1].trim()
-var balls = []
-for (var i = 1; i < 7; i++) {
-balls.push(ball.split('alt="')[i].split('"/>')[0])
-	}
-replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
-	}
-} catch(e){
-   replier.reply("잘못된 회차입니다. 다시 시도해주십시오.")
-}
+            try {
+                if (msg.indexOf("!로또 ") == 0) {
+                    var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('<p class="number">')[1].trim()
+                    var balls = []
+                    for (var i = 1; i < 7; i++) {
+                        balls.push(ball.split('alt="')[i].split('"/>')[0])
+                    }
+                    replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
+                }
+            } catch (e) {
+                replier.reply("잘못된 회차입니다. 다시 시도해주십시오.")
+            }
 
 
             /////////////////////////////////////////////////////////////////
