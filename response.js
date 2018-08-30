@@ -1374,10 +1374,14 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             } catch (e) {
                 replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
             }
+            // 컴퓨터
+            if (msg.indexOf("!컴퓨리 ") == 0) {
+                Api.replyRoom("엘", "[" + sender + "]\n" + msg.substr(5))
+            }
             // 배그 전적
             if (msg.indexOf("!배그전적 ") == 0) {
                 try {
-                    doc = org.jsoup.Jsoup.connect("https://dak.gg/profile/" + msg.substr(6) + "/2018-08/krjp")
+                    doc = org.jsoup.Jsoup.connect("https://dak.gg/profile/" + msg.substr(6))
                         .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
                         .get()
                     solo = doc.select(".solo").select(".rating").select(".value").text()
@@ -1386,7 +1390,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     if (solo == "") solo = "기록 없음"
                     if (duo == "") duo = "기록 없음"
                     if (squad == "") squad = "기록 없음"
-                    replier.reply("솔로 : " + solo + " 듀오 : " + duo + " 스쿼드 : " + squad + " 입니다.")
+                    replier.reply("[" + msg.substr(6) + "]님의 배그 레이팅 점수는\n솔로 : " + solo + " 듀오 : " + duo + " 스쿼드 : " + squad + " 입니다.")
                 }
                 catch (e) {
                     replier.reply("배그 전적 정보가 없습니다.")
