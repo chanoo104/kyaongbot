@@ -1403,7 +1403,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     var u = Utils.getWebText("http://www.op.gg/summoner/userName=" + msgi.substr(4)); //변수 u는 이링크를 HTML파싱한 값이다
                     docc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
                     if (u.split('<span class="tierRank">')[1].split("</span>")[0] == "Unranked"){
-                        replier.reply("[" + msg.substr(5) + "]\n 티어 : 언랭\n 레벨 : " + docc.select(".ProfileIcon").select(".level").text())
+                        replier.reply("[" + msg.substr(5) + "]\n티어 : 언랭\n레벨 : " + docc.select(".ProfileIcon").select(".level").text())
                     }else{
                     var t = u.split("<span class=\"tierRank\">"); //변수 a는 변수 u에서 HTML에 <span class="tierRank"> 을 자른값 입니다 /이걸로 해서 tierRank부분을 자른겁니다
                     var w = u.split("<span class=\"wins\">"); //나머지도 마찬가지입니다
