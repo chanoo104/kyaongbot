@@ -1400,24 +1400,25 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             try {
                 if (msg.indexOf("!롤전적") == 0) {
                     msgi = msg.replace(/ /g, "+"); //메세지 부분에 공백부분을 +로 대체해줍니다 (그냥 띄어쓰기용)
-                    if (u.split('<span class="tierRank">')[1].split("</span>")[0] == "Unranked"){
+                    var u = Utils.getWebText("http://www.op.gg/summoner/userName=" + msgi.substr(4)); //변수 u는 이링크를 HTML파싱한 값이다
+                    if (u.split('<span class="tierRank">')[1].split("</span>")[0] == "Unranked") {
                         docc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
                         replier.reply("[" + msg.substr(5) + "]\n티어 : 언랭\n레벨 : " + docc.select(".ProfileIcon").select(".level").text())
-                    }else{
+                    } else {
                         docc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
                         var u = Utils.getWebText("http://www.op.gg/summoner/userName=" + msgi.substr(4)); //변수 u는 이링크를 HTML파싱한 값이다
-                    var t = u.split("<span class=\"tierRank\">"); //변수 a는 변수 u에서 HTML에 <span class="tierRank"> 을 자른값 입니다 /이걸로 해서 tierRank부분을 자른겁니다
-                    var w = u.split("<span class=\"wins\">"); //나머지도 마찬가지입니다
-                    var l = u.split("<span class=\"losses\">");
-                    var win = u.split("<span class=\"winratio\">");
-                    var most_1 = docc.select(".ChampionBox:eq(0)").select(".Face").attr("title")
-                    var most_2 = docc.select(".ChampionBox:eq(1)").select(".Face").attr("title")
-                    var most_3 = docc.select(".ChampionBox:eq(2)").select(".Face").attr("title")
-                    var most = most_1 + ", " + most_2 + ", " + most_3
-                    doc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/ajax/mmr/summonerName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
-                    replier.reply("[" + msg.substr(5) + "]\n레벨 : " + docc.select(".ProfileIcon").select(".level").text() + "\n티어 : " + t[1].split("<")[0] + "\n승리 : " + w[1].split("<")[0] + "\n패배 : " + l[1].split("<")[0] + "\n승률 : " + win[1].split("<")[0] + "\n랭크 모스트 챔피언 : " + most + "\n" + doc.select(".TipStatus").text() + "\n예상 MMR은 " + doc.select(".MMR").text() + "점입니다. 티어는 " + doc.select(".TierRankString").text() + "로 예상됩니다.");
-                        }
-                    }   
+                        var t = u.split("<span class=\"tierRank\">"); //변수 a는 변수 u에서 HTML에 <span class="tierRank"> 을 자른값 입니다 /이걸로 해서 tierRank부분을 자른겁니다
+                        var w = u.split("<span class=\"wins\">"); //나머지도 마찬가지입니다
+                        var l = u.split("<span class=\"losses\">");
+                        var win = u.split("<span class=\"winratio\">");
+                        var most_1 = docc.select(".ChampionBox:eq(0)").select(".Face").attr("title")
+                        var most_2 = docc.select(".ChampionBox:eq(1)").select(".Face").attr("title")
+                        var most_3 = docc.select(".ChampionBox:eq(2)").select(".Face").attr("title")
+                        var most = most_1 + ", " + most_2 + ", " + most_3
+                        doc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/ajax/mmr/summonerName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
+                        replier.reply("[" + msg.substr(5) + "]\n레벨 : " + docc.select(".ProfileIcon").select(".level").text() + "\n티어 : " + t[1].split("<")[0] + "\n승리 : " + w[1].split("<")[0] + "\n패배 : " + l[1].split("<")[0] + "\n승률 : " + win[1].split("<")[0] + "\n랭크 모스트 챔피언 : " + most + "\n" + doc.select(".TipStatus").text() + "\n예상 MMR은 " + doc.select(".MMR").text() + "점입니다. 티어는 " + doc.select(".TierRankString").text() + "로 예상됩니다.");
+                    }
+                }
             } catch (e) { //결과값을 찾을수 없으면
                 replier.reply("롤전적 정보가 없습니다");
             }
