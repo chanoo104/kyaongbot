@@ -97,6 +97,10 @@ UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
         Log.debug(e + " At:" + e.lineNumber);
     }
 };
+function getByteLength(s,b,i,c){
+    for(b=i=0;c=s.charCodeAt(i++);b+=c>>11?3:c>>7?2:1);
+    return b;
+}
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
