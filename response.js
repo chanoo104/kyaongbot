@@ -537,10 +537,10 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     DB.icode.splice(DB.icode.indexOf(x), 1);
                 }
                 if (msg.indexOf("!강퇴경고 추가 ") == 0) {
-                    if (DB.p[msg.split(" ")[2]].realwr == undefined) {
+                    if (DB.p[msg.split(" ")[2]].realwr == "undefined") {
                         DB.p[msg.split(" ")[2]].realwr == Number(0)
                     }
-                    if (DB.p[msg.split(" ")[2]].realwr == NaN) {
+                    if (DB.p[msg.split(" ")[2]].realwr == "NaN") {
                         DB.p[msg.split(" ")[2]].realwr == Number(0)
                     }
                     if (DB.icode.indexOf(msg.split(" ")[2]) == -1) {
