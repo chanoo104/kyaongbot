@@ -1052,7 +1052,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                             if (DB.p[scode].realwr == "NaN") { 
                                 DB.p[scode].realwr == Number(0) 
                             } 
-                            DB.p[msg.split(" ")[2]].realwr++; replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수가 10회를 초과하여 강퇴경고가 1회 추가되었습니다. 앞으로 5번 더쓰시면 강퇴경고가 한번더 들어갑니다.\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
+                            DB.p[scode].realwr++; 
+                            replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수가 10회를 초과하여 강퇴경고가 1회 추가되었습니다. 앞으로 5번 더쓰시면 강퇴경고가 한번더 들어갑니다.\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
                         }
                         if (DB.p[scode].warning == 15) {
                             if (DB.p[scode].realwr == "undefined") {
@@ -1061,7 +1062,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                             if (DB.p[scode].realwr == "NaN") { 
                                 DB.p[scode].realwr == Number(0) 
                             } 
-                            DB.p[msg.split(" ")[2]].realwr++; replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수가 15회를 초과하여 강퇴경고가 1회 추가되었습니다. 앞으로 5번 더쓰시면 강퇴경고가 한번더 들어갑니다.\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
+                            DB.p[scode].realwr++; 
+                            replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수가 15회를 초과하여 강퇴경고가 1회 추가되었습니다. 앞으로 5번 더쓰시면 강퇴경고가 한번더 들어갑니다.\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
                         }
                         if (DB.p[scode].warning == 20) {
                             if (DB.p[scode].realwr == "undefined") {
@@ -1070,7 +1072,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                             if (DB.p[scode].realwr == "NaN") { 
                                 DB.p[scode].realwr == Number(0) 
                             } 
-                            DB.p[msg.split(" ")[2]].realwr++; replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수를 20회 초과 하셨습니다. " + sender + "님은 강퇴처리 됩니다.")
+                            DB.p[scode].realwr++; 
+                            replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수를 20회 초과 하셨습니다. " + sender + "님은 강퇴처리 됩니다.")
                         }
                         if (DB.p[scode].warning >= 10) {
                             Api.replyRoom("간부방", "[" + sender + "]\n욕설 사용 횟수:" + DB.p[scode].warning + "회")
