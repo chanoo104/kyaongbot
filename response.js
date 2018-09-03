@@ -538,7 +538,10 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 }
                 if (msg.indexOf("!강퇴경고 추가 ") == 0) {
                     if (DB.p[msg.split(" ")[2]].realwr == undefined) {
-                        DB.p[msg.split(" ")[2]].realwr == 0
+                        DB.p[msg.split(" ")[2]].realwr == Number(0)
+                    }
+                    if (DB.p[msg.split(" ")[2]].realwr == NaN) {
+                        DB.p[msg.split(" ")[2]].realwr == Number(0)
                     }
                     if (DB.icode.indexOf(msg.split(" ")[2]) == -1) {
                         replier.reply("상대의 식별코드가 등록되지 않았습니다.");
