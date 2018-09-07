@@ -497,10 +497,11 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     DataBase.setDataBase("DB2", JSON.stringify(DB));
                     replier.reply(startmsg)
                 }
-                if (room == "간부방"){
+                if (room == "간부방") {
                     if (msg.indexOf("!뉴스추가 ") == 0) {
-                    DB.news == msg.split("\n")[1]
-                    replier.reply("등록 완료!" + blank + DB.news)
+                        DB.news == msg.split("\n")[1]
+                        replier.reply("등록 완료!" + blank + DB.news)
+                    }
                 }
 
 
