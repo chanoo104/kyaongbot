@@ -499,7 +499,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 }
                 if (room == "간부방") {
                     if (msg.indexOf("!뉴스추가 ") == 0) {
-                        DB.news == msg.split(" ")[1]
+                        DB.news = msg.split(" ")[1]
                         replier.reply("등록 완료!" + blank + DB.news)
                     }
                 }
