@@ -178,6 +178,7 @@ if ("first2" in DB == false) DB.first2 = new Array()
 // DB.attendance : 숫자, 출석 인원 수
 // DB.ncounter : 숫자, 공지카운터
 // DB.notice : 스트링, 공지
+// DB.news : 주간 뉴스(칼럼?)
 // DB.ncommand : 스트링, 공지
 // DB.lottery : 배열
 // DB.p
@@ -495,6 +496,11 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     replier.reply("진행중...");
                     DataBase.setDataBase("DB2", JSON.stringify(DB));
                     replier.reply(startmsg)
+                }
+                if (room == "간부방"){
+                    if (msg.indexOf("!뉴스추가 ") == 0) {
+                    DB.news == msg.split("\n")[1]
+                    replier.reply("등록 완료!" + blank + DB.news)
                 }
 
 
@@ -1565,6 +1571,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             if (DB.ncounter > 299) {
                 DB.ncounter = 0
                 replier.reply(DB.notice)
+                replier.reply("[지비의 주간 뉴스]" + blank + DB.news)
                 DataBase.setDataBase("DB", JSON.stringify(DB));
                 DB.noticetimeb = DB.noticetimea
                 DB.noticetimea = new Date().getTime()
