@@ -454,24 +454,24 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     hangulram.push(random_hangul());
                 }
                 replier.reply("[돌발 퀴즈!]\n가장 먼저 치시면 포인트!\n" + hangulram.join("͏"))
-                var han_r = hangulram.join("")
-                var han_n = hangulram.join("͏")
-                var is_continue = true
+                DataBase.setDataBase("realh", hangulram.join(""))
+                DataBase.setDataBase("noth", hangulram.join("͏"))
+                DataBase.setDataBase("is_continue = true")
                 java.lang.Thread.sleep(180000)
-                var is_continue = false
-                if (is_finished != true) {
+                DataBase.setDataBase("is_continue = false")
+                if (DataBase.getDataBase("is_finished") != true) {
                     replier.reply("도전자가 없어 퀴즈가 종료되었습니다.")
-                    var is_finished = true
+                    DataBase.setDataBase("is_finished", "true")
                 }
             }
-            if (is_continue == true) {
-                if (msg == han_r) {
+            if (DataBase.getDataBase("is_continue") == true) {
+                if (msg == DataBase.getDataBase("realh")) {
                     replier.reply("[" + sender + "]\n돌발 퀴즈! 100cp")
                     DB.p[scode].pt += 100
-                    var is_continue = false
-                    var is_finished = true
+                    DataBase.setDataBase("is_continue", "false")
+                    DataBase.setDataBase("is_finished = true")
                 }
-                else if (msg == han_n) {
+                else if (msg == DataBase.getDataBase("noth")) {
                     replier.reply("ㅇ 안속아")
                 }
 
