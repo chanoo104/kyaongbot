@@ -443,38 +443,40 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 DB.p[scode].pt += i;
                 replier.reply("[" + sender + "]\n럭키 포인트! " + i + "cp");
             }
-            var ram = Math.floor(Math.random() * 2);
-            if (ram == 1) {
+            var ram = Math.floor(Math.random() * 55);
+            if (ram == 50) {
                 var hangulram = []
                 function random_hangul() {
-                   return String.fromCharCode( 44031 + Math.ceil( 11172 * Math.random() ) );
+                    return String.fromCharCode(44031 + Math.ceil(11172 * Math.random()));
                 }
-                
-                for( var i=0; i<5; i++ ) {
-                   var rh = hangulram.push(random_hangul());
+
+                for (var i = 0; i < 5; i++) {
+                    hangulram.push(random_hangul());
                 }
-                replier.reply("[돌발 퀴즈!]\n가장 먼저 치시면 포인트!" + rh.join("͏"))
+                replier.reply("[돌발 퀴즈!]\n가장 먼저 치시면 포인트!\n" + hangulram.join("͏"))
+                var han_r = hangulram.join("")
+                var han_n = hangulram.join("͏")
                 var is_continue = true
                 java.lang.Thread.sleep(180000)
                 var is_continue = false
-                if(is_finished != true){
-                replier.reply("도전자가 없어 퀴즈가 종료되었습니다.")    
-                var is_finished = true
-                }           
+                if (is_finished != true) {
+                    replier.reply("도전자가 없어 퀴즈가 종료되었습니다.")
+                    var is_finished = true
+                }
             }
-            if (is_continue == true){
-                if (msg == rh.join("")){
-                    replier.reply("[" + sender +  "]\n돌발 퀴즈! 100cp")
+            if (is_continue == true) {
+                if (msg == han_r) {
+                    replier.reply("[" + sender + "]\n돌발 퀴즈! 100cp")
                     DB.p[scode].pt += 100
                     var is_continue = false
                     var is_finished = true
                 }
-                else if(msg == rh.join("͏")){
+                else if (msg == han_n) {
                     replier.reply("ㅇ 안속아")
                 }
-                
+
             }
-            
+
 
 
             /////////////////////////////////////////////////////////////////
