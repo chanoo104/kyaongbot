@@ -443,8 +443,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 DB.p[scode].pt += i;
                 replier.reply("[" + sender + "]\n럭키 포인트! " + i + "cp");
             }
-            var ram = Math.floor(Math.random() * 51);
-            if (ram == 50) {
+            var ram = Math.floor(Math.random() * 2);
+            if (ram == 1) {
                 var hangulram = []
                 function random_hangul() {
                    return String.fromCharCode( 44031 + Math.ceil( 11172 * Math.random() ) );
