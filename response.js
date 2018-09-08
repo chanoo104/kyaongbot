@@ -443,6 +443,38 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 DB.p[scode].pt += i;
                 replier.reply("[" + sender + "]\n럭키 포인트! " + i + "cp");
             }
+            var ram = Math.floor(Math.random() * 100);
+            if (ram == 50) {
+                var hangulram = []
+                function random_hangul() {
+                   return String.fromCharCode( 44031 + Math.ceil( 11172 * Math.random() ) );
+                }
+                
+                for( var i=0; i<5; i++ ) {
+                   hangulram.push(random_hangul());
+                }
+                replier.reply("[돌발 퀴즈!]\n가장 먼저 치시면 포인트!" + hangulram.join("͏"))
+                var is_continue = true
+                java.lang.Thread.sleep(180000)
+                var is_continue = false
+                if(is_finished != true){
+                replier.reply("도전자가 없어 퀴즈가 종료되었습니다.")    
+                var is_finished = true
+                }           
+            }
+            if (is_continue == true){
+                if (msg == hangulram.join("")){
+                    replier.reply("[" + sender +  "]\n돌발 퀴즈! 100cp")
+                    DB.p[scode].pt += 100
+                    var is_continue = false
+                    var is_finished = true
+                }
+                else if(msg == hangulram.join("͏")){
+                    replier.reply("ㅇ 안속아")
+                }
+                
+            }
+            
 
 
             /////////////////////////////////////////////////////////////////
