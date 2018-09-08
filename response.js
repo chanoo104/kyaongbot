@@ -443,44 +443,6 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 DB.p[scode].pt += i;
                 replier.reply("[" + sender + "]\n럭키 포인트! " + i + "cp");
             }
-            var ram = Math.floor(Math.random() * 55);
-            if (ram == 50) {
-                if (new Date().getMinutes() < 50){
-                var hangulram = []
-                function random_hangul() {
-                    return String.fromCharCode(44031 + Math.ceil(11172 * Math.random()));
-                }
-
-                for (var i = 0; i < 5; i++) {
-                    hangulram.push(random_hangul());
-                }
-                replier.reply("[돌발 퀴즈!]\n가장 먼저 치시면 포인트!\n" + hangulram.join("͏"))
-                var han_r = hangulram.join("")
-                var han_n = hangulram.join("͏")
-                var is_continue = true
-                var D_M = new Date().getMinutes()
-            }
-        }
-        if (is_continue == true) {
-            if (msg == han_r) {
-                replier.reply("[" + sender + "]\n돌발 퀴즈! 100cp")
-                DB.p[scode].pt += 100
-                var is_finished = true
-            }
-            else if (msg == han_n) {
-                replier.reply("ㅇ 안속아")
-            }
-
-        }    
-        if (new Date().getMinutes() >= Number(D_M) + Number(4)){
-            if (is_finished != true) {
-                replier.reply("도전자가 없어 퀴즈가 종료되었습니다.")
-                var is_finished = true
-                var is_continue = false
-                var han_r = undefined
-                var han_n = undefined
-            }  
-        }
 
 
 
