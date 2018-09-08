@@ -451,9 +451,9 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 }
                 
                 for( var i=0; i<5; i++ ) {
-                   hangulram.push(random_hangul());
+                   var rh = hangulram.push(random_hangul());
                 }
-                replier.reply("[돌발 퀴즈!]\n가장 먼저 치시면 포인트!" + hangulram.join("͏"))
+                replier.reply("[돌발 퀴즈!]\n가장 먼저 치시면 포인트!" + rh.join("͏"))
                 var is_continue = true
                 java.lang.Thread.sleep(180000)
                 var is_continue = false
@@ -463,13 +463,13 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 }           
             }
             if (is_continue == true){
-                if (msg == hangulram.join("")){
+                if (msg == rh.join("")){
                     replier.reply("[" + sender +  "]\n돌발 퀴즈! 100cp")
                     DB.p[scode].pt += 100
                     var is_continue = false
                     var is_finished = true
                 }
-                else if(msg == hangulram.join("͏")){
+                else if(msg == rh.join("͏")){
                     replier.reply("ㅇ 안속아")
                 }
                 
