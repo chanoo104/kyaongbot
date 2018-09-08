@@ -472,7 +472,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             }
 
         }    
-        if (D_M <= Number(D_M) + Number(4)){
+        if (new Date().getMinutes() >= Number(D_M) + Number(4)){
             if (is_finished != true) {
                 replier.reply("도전자가 없어 퀴즈가 종료되었습니다.")
                 var is_finished = true
