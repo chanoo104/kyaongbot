@@ -1582,7 +1582,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             }
 
-            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+" || sender == ".,.") {
+            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
                 try {
                     if (msg.indexOf("!eval ") == 0) {
                         replier.reply(eval(msg.substring(6)))
