@@ -1044,15 +1044,15 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 for (var n = 0; n < notwords.length; n++) {
                     if (msg.indexOf(notwords[n]) != -1) break loop;
                 }
-                for (var n = 0; n < admin.length; n++) {
-                    if (sender.indexOf(admin[n]) != -1) {
-                        replier.reply("[" + sender + "]\n누적 경ㄱ...읍읍 당신누구얏 !!")
-                        break loop;
-                }
             }
                 var msg1 = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, "");
                 for (var n = 0; n < words.length; n++) {
                     if (msg1.indexOf(words[n]) != -1) {
+                        for (var n = 0; n < admin.length; n++) {
+                            if (sender.indexOf(admin[n]) != -1) {
+                                replier.reply("[" + sender + "]\n누적 경ㄱ...읍읍 당신누구얏 !!")
+                                break loop;
+                        }
                         DB.p[scode].warning++
                         var i = DB.p[scode].warning * 30 - 30
                         if (DB.p[scode].warning == 1) replier.reply("[" + sender + "]\n누적 경고: 1회")
