@@ -1049,7 +1049,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     if (msg1.indexOf(words[n]) != -1) {
                         if (sender.indexOf(admin) != -1) {
                             replier.reply("[" + sender + "]\n누적 경ㄱ...읍읍 당신누구얏 !!")
-                            break loop
+                            break
                         }
                         DB.p[scode].warning++
                         var i = DB.p[scode].warning * 30 - 30
