@@ -1049,6 +1049,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                         replier.reply("[" + sender + "]\n누적 경ㄱ...읍읍 당신누구얏 !!")
                         break loop;
                 }
+            }
                 var msg1 = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, "");
                 for (var n = 0; n < words.length; n++) {
                     if (msg1.indexOf(words[n]) != -1) {
