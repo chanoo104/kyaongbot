@@ -1045,9 +1045,6 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     if (msg.indexOf(notwords[n]) != -1) break loop;
                 }
                 for (var n = 0; n < admin.length; n++) {
-                    if (sender.indexOf(admin[n]) != -1) {
-                        break loop;
-                }
             }
                 var msg1 = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, "");
                 for (var n = 0; n < words.length; n++) {
