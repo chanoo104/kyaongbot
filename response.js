@@ -1045,7 +1045,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     if (msg.indexOf(notwords[n]) != -1) break loop;
                 }
                 for (var n = 0; n < admin.length; n++) {
-            }
+                }
                 var msg1 = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, "");
                 for (var n = 0; n < words.length; n++) {
                     if (msg1.indexOf(words[n]) != -1) {
@@ -1494,6 +1494,14 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     if (solo == "") solo = "기록 없음"
                     if (duo == "") duo = "기록 없음"
                     if (squad == "") squad = "기록 없음"
+                    if (solo == "기록 없음") {
+                        if (duo == "기록 없음") {
+                            if (duo == "기록 없음") {
+                                replier.reply("이번 시즌에 플레이를 하지 않았거나 전적정보가 없습니다.")
+                                return;
+                            }
+                        }
+                    }
                     replier.reply("[" + msg.substr(6) + "]님의 배그 레이팅 점수는\n솔로 : " + solo + " 듀오 : " + duo + " 스쿼드 : " + squad + " 입니다.")
                 }
                 catch (e) {
