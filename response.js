@@ -24,7 +24,7 @@ var DB = JSON.parse(DataBase.getDataBase("DB"));
 DataBase.setDataBase("DB", JSON.stringify(DB));
 */
 var blank = "​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​\n" //이거 유니코드이니까 띄어쓰기로 고치지 마세요 제발 ;;
-var admin = ["불여우", "AMD TR™", "rgb", "K'romium", "케이시", "DEBUG$MODE*NAME+", "GeForce", "핫산", "Yui"]
+var admin = ["불여우", "AMD TR™", "rgb", "K'romium", "케이시", "DEBUG$MODE*NAME+", "Apz74", "GeForce", "핫산", "Yui"]
 DB.notice = ("<공지사항을 숙지해 주시기 바랍니다.>\n\n공지사항: goo.gl/iyP83B\n\n채팅/홍보 이벤트 진행중, 공지사항 참조해주세요!\n\n방장 카카오톡 id : rgbkakao\n\n공식업체: compury.com ('엘' 님)\n\n모바일 메뉴열고 우측상단\nPC 채팅창 방제아래 상단바\n♡->♥ 하트 부탁 드려요")
 DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n" +
     "▼전체보기 클릭▼\n" + blank +
@@ -95,6 +95,26 @@ UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
         fos.close();
     } catch (e) {
         Log.debug(e + " At:" + e.lineNumber);
+    }
+};
+function ReadData(name) { //파일에 저장된 내용을 불러오는 함수
+    try { //사실, 나도 어디서 긁어와서 이곳저곳에서 사용하는 거임
+        var file = new java.io.File(sdcard + name);
+        if (!file.exists()) return null;
+        var fis = new java.io.FileInputStream(file);
+        var isr = new java.io.InputStreamReader(fis);
+        var br = new java.io.BufferedReader(isr);
+        var str = br.readLine();
+        var line = "";
+        while ((line = br.readLine()) != null) {
+            str += "\n" + line;
+        }
+        fis.close();
+        isr.close();
+        br.close();
+        return str;
+    } catch (e) {
+        Log.debug(e + ", " + e.lineNumber);
     }
 };
 function getByteLength(s, b, i, c) {
@@ -207,7 +227,7 @@ if ("acounter" in DB == false) DB.acounter = 0
 if ("p" in DB == false) DB.p = new Object()
 if ("lottery" in DB == false) DB.lottery = new Array()
 
-function response(room, msg, sender, isGroupChat, replier, ImageDB) {
+
     try {
         var timea = new Date().getTime();
 
@@ -801,15 +821,6 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             if (msg == "!카운터 자신") replier.reply("[" + sender + "]\n" + DB.p[scode].counter)
 
-            if (msg.split(" ")[0] == "!인분") {
-                if (isInt(msg.split(" ")[1])) {
-                    num = Number(DB.p[scode].counter) / Number(DB.acounter) * msg.split(" ")[1]
-                    replier.reply(sender + "님의 채팅 인분 :: " + num.toFixed(3) + "인분")
-                }
-                else replier.reply("뒤에 현재 방 인원을 적어주세요.")
-            }
-            else if (msg == "!인분") replier.reply("뒤에 현재 방 인원을 적어주세요.")
-
             if (msg == "!닉네임") {
                 replier.reply(sender)
             }
@@ -1052,8 +1063,6 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             loop: {
                 for (var n = 0; n < notwords.length; n++) {
                     if (msg.indexOf(notwords[n]) != -1) break loop;
-                }
-                for (var n = 0; n < admin.length; n++) {
                 }
                 var msg1 = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, "");
                 for (var n = 0; n < words.length; n++) {
@@ -1503,14 +1512,6 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     if (solo == "") solo = "기록 없음"
                     if (duo == "") duo = "기록 없음"
                     if (squad == "") squad = "기록 없음"
-                    if (solo == "기록 없음") {
-                        if (duo == "기록 없음") {
-                            if (duo == "기록 없음") {
-                                replier.reply("이번 시즌에 플레이를 하지 않았거나 전적정보가 없습니다.")
-                                return;
-                            }
-                        }
-                    }
                     replier.reply("[" + msg.substr(6) + "]님의 배그 레이팅 점수는\n솔로 : " + solo + " 듀오 : " + duo + " 스쿼드 : " + squad + " 입니다.")
                 }
                 catch (e) {
@@ -1601,7 +1602,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             }
 
-            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
+            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+" || sender == "더러운 시공 녀석") {
                 try {
                     if (msg.indexOf("!eval ") == 0) {
                         replier.reply(eval(msg.substring(6)))
@@ -1688,11 +1689,12 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
     } catch (e) {
         var error = true;
         if (DataBase.getDataBase("errorchk") == 0) {
-            Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=" + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)) + "&chat_id=338145573")
+            Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
             replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
             DataBase.setDataBase("errorchk", 1)
             Api.reload();
         }
     }
 }
+
 
