@@ -802,899 +802,898 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             if (msg == "!카운터 자신") replier.reply("[" + sender + "]\n" + DB.p[scode].counter)
 
             if (msg.split(" ")[0] == "!인분") {
-                if (isInt(msg.split(" ")[1]) == fasle) { 
-                replier.reply("뒤에 현재 방 인원을 적어주세요.")
-                return
+                if (isInt(msg.split(" ")[1])) {
+                    num = Number(DB.p[scode].counter) / Number(DB.acounter) * msg.split(" ")[1]
+                    replier.reply(sender + "님의 채팅 인분 :: " + num.toFixed(3) + "인분")
+                }
+                else replier.reply("뒤에 현재 방 인원을 적어주세요.")
             }
-            num = Number(DB.p[scode].counter) / Number(DB.acounter) * msg.split(" ")[1]
-            replier.reply(sender + "님의 채팅 인분 :: " + num.toFixed(3) + "인분")
-        }
-        else if (msg == "!인분") replier.reply("뒤에 현재 방 인원을 적어주세요.")
+            else if (msg == "!인분") replier.reply("뒤에 현재 방 인원을 적어주세요.")
 
-        if (msg == "!닉네임") {
-            replier.reply(sender)
-        }
-        if (msg == "!프사") {
-            var img = ImageDB.getProfileImage();
-            replier.reply(img);
-        }
-
-        if (msg == "!포인트") replier.reply("[" + sender + "]\n" + DB.p[scode].pt + "cp")
-
-        if (msg == "!순위") {
-            var ctemp1 = DB.inick;
-            var ctemp2 = [];
-            for (i = 0; i < DB.icode.length; i++) {
-                ctemp2.push(DB.p[DB.icode[i]].pt)
+            if (msg == "!닉네임") {
+                replier.reply(sender)
             }
-            var ctemp3 = ctemp2.slice()
-            ctemp2.sort(function (f, s) { return s - f; });
-            ctemp2 = ctemp2.splice(0, 15);
-            var out = [];
-            out.push("◇[포인트 순위]◇\n▼전체보기 클릭▼\n" + blank + "\n")
-            var ctemp = DB.inick.slice()
-            for (i = 0; i < ctemp2.length; i++) {
-                out.push((i + 1) + "위 - " + ctemp[ctemp3.indexOf(ctemp2[i])] + "\n")
-                ctemp.splice([ctemp3.indexOf(ctemp2[i])], 1)
-                ctemp3.splice([ctemp3.indexOf(ctemp2[i])], 1)
-                out.push(" 》" + ctemp2[i] + "cp\n\n")
+            if (msg == "!프사") {
+                var img = ImageDB.getProfileImage();
+                replier.reply(img);
             }
-            replier.reply(out.join(""))
-        }
 
-        if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply("앱에서 견적 공유시 카카오톡으로 보내기 말고 URL 복사를 이용해 주시기 바랍니다. PC버전에서 안보여요.")
+            if (msg == "!포인트") replier.reply("[" + sender + "]\n" + DB.p[scode].pt + "cp")
 
-        /*
-        
-        if (msg.split("\n")[0] == "!후보등록") {
-            if (DB.first.indexOf(sender) == -1) {
-                replier.reply("!후보조건 명령어를 사용하여 자신이 조건에 맞는지, 부방장이 될 자격과 능력이 있는 지 확인 후 다시 등록해 주세요.")
-            } else {
-                if (DB.can.indexOf(sender) != -1) {
-                    replier.reply("이미 부방장 후보로 등록되었습니다.")
+            if (msg == "!순위") {
+                var ctemp1 = DB.inick;
+                var ctemp2 = [];
+                for (i = 0; i < DB.icode.length; i++) {
+                    ctemp2.push(DB.p[DB.icode[i]].pt)
+                }
+                var ctemp3 = ctemp2.slice()
+                ctemp2.sort(function (f, s) { return s - f; });
+                ctemp2 = ctemp2.splice(0, 15);
+                var out = [];
+                out.push("◇[포인트 순위]◇\n▼전체보기 클릭▼\n" + blank + "\n")
+                var ctemp = DB.inick.slice()
+                for (i = 0; i < ctemp2.length; i++) {
+                    out.push((i + 1) + "위 - " + ctemp[ctemp3.indexOf(ctemp2[i])] + "\n")
+                    ctemp.splice([ctemp3.indexOf(ctemp2[i])], 1)
+                    ctemp3.splice([ctemp3.indexOf(ctemp2[i])], 1)
+                    out.push(" 》" + ctemp2[i] + "cp\n\n")
+                }
+                replier.reply(out.join(""))
+            }
+
+            if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply("앱에서 견적 공유시 카카오톡으로 보내기 말고 URL 복사를 이용해 주시기 바랍니다. PC버전에서 안보여요.")
+
+            /*
+            
+            if (msg.split("\n")[0] == "!후보등록") {
+                if (DB.first.indexOf(sender) == -1) {
+                    replier.reply("!후보조건 명령어를 사용하여 자신이 조건에 맞는지, 부방장이 될 자격과 능력이 있는 지 확인 후 다시 등록해 주세요.")
                 } else {
-                    int = msg.split("\n")[1]
-                    spe = msg.split("\n")[2]
-                    DB.can.push(sender)
-                    DB.intr.push(int)
-                    DB.spe.push(spe)
-                    DB.vote.push(0)
-                    replier.reply("부방장 후보로 등록되었습니다.")
-                }
-            }
-        }
-        
-        if (msg == "!후보조건") {
-            replier.reply("《후보조건》\n▼내용확인▼" + blank + "[자격조건]\n현 중학교 1학년 이상, 접률 높음(캬옹봇 채팅수 기준 1000회 이상이면 좋음), 객관적인 판단을 할 자신이 있고 끝까지 방 관리를 책임지고 할 수 있는 사람, 컴퓨터에 대해 어느정도 아는 사람\n\n[주의사항]\n장난등록/무성의 등록(기준은 제맘이니 잘 적으세요) 시 투표 종료시까지 강퇴, 벌점 1000cp\n후보등록 이후 어떠한 선거유세도 금지, 위반시 후보자격 박탈, 투표 종료시까지 강퇴\n\n후보등록 취소,수정 불가능\n[후보등록방법]\n아래와 같이 입력(엔터로만 구분, 》》》》엔터 키 2번 이상 사용금지《《《《)\n》경고 문법 오류시 공란으로 표시될 수 있으니 엔터에 주의할것 특히 PC버전 실수로 안보내게 주의《\n\n!후보등록(엔터치고)\n(첫번째줄: 자신의 스펙, 활동이력, 자기가 방에 어떤 기여를 했는지 등 자기소개)(엔터치고)\n(두번째줄: 하고싶은말,다짐 등 한마디)")
-            if (DB.first.indexOf(sender) == -1) DB.first.push(sender)
-        }
-        if (msg == "!선거?") {
-            replier.reply("《선거?》\n▼내용확인▼" + blank + "\n\n차기 부방장 3명이 이 투표를 통해 결정됩니다.후보등록 기간과 투표 기간으로 나뉘며 후보등록 기간에는 투표가 불가능하지만 선거 기간에도 후보등록이 가능합니다. 부방장 출마에 관한 자세한 내용은 <!후보조건> 으로 확인하세요. 개인당 3개의 투표권이 자동으로 주어지며, 자신에게 투표와 중복 투표는 제한되어 있습니다. 투표권을 3장 모두 사용할 의무는 없으니 마음에 드는 사람이 없다면 뽑지 않으셔도 됩니다. 단 한표는 되도록 사용해 주시기 바랍니다. 부정행위는 엄격히 금합니다.\n\n\n\n!선거현황\n》현재 득표수와 후보별 정보 출력\n!투표 <기호(숫자만)>\n》해당 기호의 후보에게 투표(투표권 3회 제공)\n!후보등록\n》부방장 후보로 출마")
-        }
-        
-        
-        if (msg == "!선거현황") {
-            DB.list = new Array;
-            DB.list.push("\n\n\n차기 부방장을 뽑는 선거이니만큼 각 후보를 꼼꼼하게 확인 후 《!투표 <기호>》 로 투표하세요.(취소불가능) 일인당 3개의 투표권이 있습니다. 부정선거시 강력 제제가 가해집니다.\n\n<《득표현황》>\n")
-            for (i=0; i<DB.vote.length; i++) {
-                var v = new Array;
-                var a = Math.floor(DB.vote[i] / 5)
-                var b = DB.vote[i] % 5
-                for (o=0; o<a; o++) {
-                    v.push("●")
-                }
-                for (o=0; o<b; o++) {
-                    v.push("○")
-                }
-                DB.list.push("\n\n[기호 " + (i+1) + "번]\n》득표수: " + DB.vote[i] + "\n" + v.join([separator = ""]))
-            }
-            DB.list.push("\n\n\n<《선거벽보》>\n")
-            for (i=0; i<DB.vote.length; i++) {
-                DB.list.push("\n\n[기호 " + (i+1) + "번]\n 》닉네임: " + DB.can[i] + "\n 》소개: " + DB.intr[i] + "\n 》다짐: " + DB.spe[i])
-            }
-            replier.reply("《선거현황》\n▼내용확인▼" + blank + DB.list.join([separator = ""]))
-            if (DB.first2.indexOf(sender) == -1) DB.first2.push(sender)
-        }
-        
-        
-        loop: {
-        
-        if (typeof DB.pdata[sender] === "undefined") DB.pdata[sender] = new Array();
-        if (msg.split(" ")[0] == "!투표") {
-            if (typeof DB.startvote === "undefined") {
-            replier.reply("지금은 후보 등록 기간입니다. 투표 기간 때 투표를 해주시기 바랍니다. 투표 기간이 되면 공지로 알려드리겠습니다.")
-        } else {
-            if (DB.first2.indexOf(sender) == -1) {
-                replier.reply("!선거현황 명령어를 사용하여 공지, 현 투표 상황과 각 후보의 말들을 꼼꼼히 확인한 후 다시 투표해 주세요.")
-            } else {
-            var v = Number(msg.split(" ")[1])-1
-            if (DB.pdata[sender].length >= 3) {
-                replier.reply("이미 투표 횟수를 초과하셨습니다.")
-                break loop;
-            } else {
-                if (Number.isInteger(v) == true && v>=0 && v<DB.vote.length) {
-                    if (DB.pdata[sender].indexOf(v) != -1) {
-                        ("이미 투표한 후보입니다.")
-                        break loop;
+                    if (DB.can.indexOf(sender) != -1) {
+                        replier.reply("이미 부방장 후보로 등록되었습니다.")
                     } else {
-                        if (sender == DB.can[v]) {
-                            replier.reply("자기 자신에게는 투표할 수 없습니다.")
+                        int = msg.split("\n")[1]
+                        spe = msg.split("\n")[2]
+                        DB.can.push(sender)
+                        DB.intr.push(int)
+                        DB.spe.push(spe)
+                        DB.vote.push(0)
+                        replier.reply("부방장 후보로 등록되었습니다.")
+                    }
+                }
+            }
+            
+            if (msg == "!후보조건") {
+                replier.reply("《후보조건》\n▼내용확인▼" + blank + "[자격조건]\n현 중학교 1학년 이상, 접률 높음(캬옹봇 채팅수 기준 1000회 이상이면 좋음), 객관적인 판단을 할 자신이 있고 끝까지 방 관리를 책임지고 할 수 있는 사람, 컴퓨터에 대해 어느정도 아는 사람\n\n[주의사항]\n장난등록/무성의 등록(기준은 제맘이니 잘 적으세요) 시 투표 종료시까지 강퇴, 벌점 1000cp\n후보등록 이후 어떠한 선거유세도 금지, 위반시 후보자격 박탈, 투표 종료시까지 강퇴\n\n후보등록 취소,수정 불가능\n[후보등록방법]\n아래와 같이 입력(엔터로만 구분, 》》》》엔터 키 2번 이상 사용금지《《《《)\n》경고 문법 오류시 공란으로 표시될 수 있으니 엔터에 주의할것 특히 PC버전 실수로 안보내게 주의《\n\n!후보등록(엔터치고)\n(첫번째줄: 자신의 스펙, 활동이력, 자기가 방에 어떤 기여를 했는지 등 자기소개)(엔터치고)\n(두번째줄: 하고싶은말,다짐 등 한마디)")
+                if (DB.first.indexOf(sender) == -1) DB.first.push(sender)
+            }
+            if (msg == "!선거?") {
+                replier.reply("《선거?》\n▼내용확인▼" + blank + "\n\n차기 부방장 3명이 이 투표를 통해 결정됩니다.후보등록 기간과 투표 기간으로 나뉘며 후보등록 기간에는 투표가 불가능하지만 선거 기간에도 후보등록이 가능합니다. 부방장 출마에 관한 자세한 내용은 <!후보조건> 으로 확인하세요. 개인당 3개의 투표권이 자동으로 주어지며, 자신에게 투표와 중복 투표는 제한되어 있습니다. 투표권을 3장 모두 사용할 의무는 없으니 마음에 드는 사람이 없다면 뽑지 않으셔도 됩니다. 단 한표는 되도록 사용해 주시기 바랍니다. 부정행위는 엄격히 금합니다.\n\n\n\n!선거현황\n》현재 득표수와 후보별 정보 출력\n!투표 <기호(숫자만)>\n》해당 기호의 후보에게 투표(투표권 3회 제공)\n!후보등록\n》부방장 후보로 출마")
+            }
+            
+            
+            if (msg == "!선거현황") {
+                DB.list = new Array;
+                DB.list.push("\n\n\n차기 부방장을 뽑는 선거이니만큼 각 후보를 꼼꼼하게 확인 후 《!투표 <기호>》 로 투표하세요.(취소불가능) 일인당 3개의 투표권이 있습니다. 부정선거시 강력 제제가 가해집니다.\n\n<《득표현황》>\n")
+                for (i=0; i<DB.vote.length; i++) {
+                    var v = new Array;
+                    var a = Math.floor(DB.vote[i] / 5)
+                    var b = DB.vote[i] % 5
+                    for (o=0; o<a; o++) {
+                        v.push("●")
+                    }
+                    for (o=0; o<b; o++) {
+                        v.push("○")
+                    }
+                    DB.list.push("\n\n[기호 " + (i+1) + "번]\n》득표수: " + DB.vote[i] + "\n" + v.join([separator = ""]))
+                }
+                DB.list.push("\n\n\n<《선거벽보》>\n")
+                for (i=0; i<DB.vote.length; i++) {
+                    DB.list.push("\n\n[기호 " + (i+1) + "번]\n 》닉네임: " + DB.can[i] + "\n 》소개: " + DB.intr[i] + "\n 》다짐: " + DB.spe[i])
+                }
+                replier.reply("《선거현황》\n▼내용확인▼" + blank + DB.list.join([separator = ""]))
+                if (DB.first2.indexOf(sender) == -1) DB.first2.push(sender)
+            }
+            
+            
+            loop: {
+            
+            if (typeof DB.pdata[sender] === "undefined") DB.pdata[sender] = new Array();
+            if (msg.split(" ")[0] == "!투표") {
+                if (typeof DB.startvote === "undefined") {
+                replier.reply("지금은 후보 등록 기간입니다. 투표 기간 때 투표를 해주시기 바랍니다. 투표 기간이 되면 공지로 알려드리겠습니다.")
+            } else {
+                if (DB.first2.indexOf(sender) == -1) {
+                    replier.reply("!선거현황 명령어를 사용하여 공지, 현 투표 상황과 각 후보의 말들을 꼼꼼히 확인한 후 다시 투표해 주세요.")
+                } else {
+                var v = Number(msg.split(" ")[1])-1
+                if (DB.pdata[sender].length >= 3) {
+                    replier.reply("이미 투표 횟수를 초과하셨습니다.")
+                    break loop;
+                } else {
+                    if (Number.isInteger(v) == true && v>=0 && v<DB.vote.length) {
+                        if (DB.pdata[sender].indexOf(v) != -1) {
+                            ("이미 투표한 후보입니다.")
                             break loop;
                         } else {
-                            DB.pdata[sender].push(v)
-                            DB.vote[v]++
-                            replier.reply("투표하셨습니다.\n남은 투표권: " + (3-DB.pdata[sender].length) + "장")
+                            if (sender == DB.can[v]) {
+                                replier.reply("자기 자신에게는 투표할 수 없습니다.")
+                                break loop;
+                            } else {
+                                DB.pdata[sender].push(v)
+                                DB.vote[v]++
+                                replier.reply("투표하셨습니다.\n남은 투표권: " + (3-DB.pdata[sender].length) + "장")
+                            }
+                        }
+                    } else {
+                    replier.reply("잘못된 입력입니다.")
+                    }
+                }
+            }
+            }
+            }
+            }
+            */
+
+            loop: {
+                var m = msg.split(" ");
+                if (m[0] == "!비교") {
+                    var char;
+                    var s = msg.split("비교 ");
+                    var tt = s[1].split(",");
+                    if (typeof tt[1] == "undefined") {
+                        replier.reply(tt[0] + "을(를) 찾을수 없습니다.")
+                        break loop;
+                    }
+                    var u = tt[0].split(" ");
+                    if (u[0]) {
+                        char = u[0];
+                    }
+                    for (var i = 1; i < 100; i++) {
+                        if (u[i]) {
+                            char += "+";
+                            char += u[i];
                         }
                     }
-                } else {
-                replier.reply("잘못된 입력입니다.")
+                    var test = Utils.getWebText("https://www.google.co.kr/search?&q=userbenchmark+" + char);
+                    var t = test.split("/Rating/");
+                    var bo = false;
+                    if (!t[1]) {
+                        t = test.split("/SpeedTest/");
+                        bo = true;
+                    }
+                    if (!t[1]) {
+                        replier.reply(tt[0] + "을(를) 찾을수 없습니다.");
+                        break loop;
+                    }
+                    var p = t[1].split('"');
+                    if (bo == true) {
+                        var ttt = t[1].split("/");
+                        bo = false;
+                        var s = "m";
+                        s += ttt[0];
+                    } else {
+                        var s = p[0];
+                    }
+                    var r = tt[1].split(" ");
+                    if (r[0]) {
+                        char = r[0];
+                    }
+                    for (var i = 1; i < 100; i++) {
+                        if (r[i]) {
+                            char += "+";
+                            char += r[i];
+                        }
+                    }
+                    test = Utils.getWebText("https://www.google.co.kr/search?&q=userbenchmark+" + char);
+                    t = test.split("/Rating/");
+                    if (!t[1]) {
+                        t = test.split("/SpeedTest/");
+                        bo = true;
+                    }
+                    if (!t[1]) {
+                        replier.reply(tt[1] + "을(를) 찾을수 없습니다.");
+                        break loop;
+                    }
+                    p = t[1].split('"');
+                    if (bo == true) {
+                        var ttt = t[1].split("/");
+                        bo = false;
+                        var s1 = "m";
+                        s1 += ttt[0];
+                    } else {
+                        var s1 = p[0];
+                    }
+                    replier.reply("http://cpu.userbenchmark.com/Compare/CompuTalk/" + s + "vs" + s1);
                 }
             }
-        }
-        }
-        }
-        }
-        */
 
-        loop: {
-            var m = msg.split(" ");
-            if (m[0] == "!비교") {
-                var char;
-                var s = msg.split("비교 ");
-                var tt = s[1].split(",");
-                if (typeof tt[1] == "undefined") {
-                    replier.reply(tt[0] + "을(를) 찾을수 없습니다.")
-                    break loop;
-                }
-                var u = tt[0].split(" ");
-                if (u[0]) {
-                    char = u[0];
-                }
-                for (var i = 1; i < 100; i++) {
-                    if (u[i]) {
-                        char += "+";
-                        char += u[i];
-                    }
-                }
-                var test = Utils.getWebText("https://www.google.co.kr/search?&q=userbenchmark+" + char);
-                var t = test.split("/Rating/");
-                var bo = false;
-                if (!t[1]) {
-                    t = test.split("/SpeedTest/");
-                    bo = true;
-                }
-                if (!t[1]) {
-                    replier.reply(tt[0] + "을(를) 찾을수 없습니다.");
-                    break loop;
-                }
-                var p = t[1].split('"');
-                if (bo == true) {
-                    var ttt = t[1].split("/");
-                    bo = false;
-                    var s = "m";
-                    s += ttt[0];
-                } else {
-                    var s = p[0];
-                }
-                var r = tt[1].split(" ");
-                if (r[0]) {
-                    char = r[0];
-                }
-                for (var i = 1; i < 100; i++) {
-                    if (r[i]) {
-                        char += "+";
-                        char += r[i];
-                    }
-                }
-                test = Utils.getWebText("https://www.google.co.kr/search?&q=userbenchmark+" + char);
-                t = test.split("/Rating/");
-                if (!t[1]) {
-                    t = test.split("/SpeedTest/");
-                    bo = true;
-                }
-                if (!t[1]) {
-                    replier.reply(tt[1] + "을(를) 찾을수 없습니다.");
-                    break loop;
-                }
-                p = t[1].split('"');
-                if (bo == true) {
-                    var ttt = t[1].split("/");
-                    bo = false;
-                    var s1 = "m";
-                    s1 += ttt[0];
-                } else {
-                    var s1 = p[0];
-                }
-                replier.reply("http://cpu.userbenchmark.com/Compare/CompuTalk/" + s + "vs" + s1);
-            }
-        }
+            loop: {
+                if (msg.split("\n")[0] == "!견적생성") {
+                    var est = new Object();
+                    est.code = new Array();
+                    est.quan = new Array();
 
-        loop: {
-            if (msg.split("\n")[0] == "!견적생성") {
-                var est = new Object();
-                est.code = new Array();
-                est.quan = new Array();
-
-                replier.reply("파싱 중...");
-                for (var i = 0; i < (msg.match(/\n/g) || []).length; i++) {
-                    var input = msg.split("\n")[(i + 1)].replace(/ /gi, '+')
-                    if (input.indexOf("*") == 1) {
-                        if (Number.isInteger(Number(input.split("*")[0])) == true) {
-                            est.quan.push(input.split("*")[0])
-                            input.slice(0, 2)
+                    replier.reply("파싱 중...");
+                    for (var i = 0; i < (msg.match(/\n/g) || []).length; i++) {
+                        var input = msg.split("\n")[(i + 1)].replace(/ /gi, '+')
+                        if (input.indexOf("*") == 1) {
+                            if (Number.isInteger(Number(input.split("*")[0])) == true) {
+                                est.quan.push(input.split("*")[0])
+                                input.slice(0, 2)
+                            } else {
+                                replier.reply("[" + (i + 2) + "번째 줄] \n잘못된 입력입니다.")
+                                break loop;
+                            }
+                        } else {
+                            est.quan.push("1")
+                        }
+                        var p = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1]
+                        if (typeof p == "undefined") {
+                            replier.reply("[" + (i + 2) + "번째 줄] \n잘못된 입력입니다.")
+                            break loop;
+                        }
+                        var p = p.split('"')[0].split("&")[0];
+                        if (Number.isInteger(Number(p)) == true) {
+                            est.code.push(p)
                         } else {
                             replier.reply("[" + (i + 2) + "번째 줄] \n잘못된 입력입니다.")
                             break loop;
                         }
-                    } else {
-                        est.quan.push("1")
+
                     }
-                    var p = Utils.getWebText("https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+" + input).split('http://prod.danawa.com/info/?pcode=')[1]
-                    if (typeof p == "undefined") {
-                        replier.reply("[" + (i + 2) + "번째 줄] \n잘못된 입력입니다.")
+
+                    replier.reply("http://micro.danawa.com/product/wishList?productSeq=" + est.code.join([separator = ',']) + "&count=" + est.quan.join([separator = ',']))
+
+                }
+            }
+
+            // 욕설인식
+            loop: {
+                for (var n = 0; n < notwords.length; n++) {
+                    if (msg.indexOf(notwords[n]) != -1) break loop;
+                }
+                for (var n = 0; n < admin.length; n++) {
+                }
+                var msg1 = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, "");
+                for (var n = 0; n < words.length; n++) {
+                    if (msg1.indexOf(words[n]) != -1) {
+                        DB.p[scode].warning++
+                        var i = DB.p[scode].warning * 30 - 30
+                        if (DB.p[scode].warning == 1) replier.reply("[" + sender + "]\n누적 경고: 1회")
+                        if (DB.p[scode].warning != 1) {
+                            replier.reply("[" + sender + "]\n누적 경고: " + DB.p[scode].warning + "회\n" + i + "cp 차감");
+                            DB.p[scode].pt -= i
+                        }
+                        if (DB.p[scode].warning == 10) {
+                            if (DB.p[scode].realwr == "undefined") {
+                                DB.p[scode].realwr == Number(0)
+                            }
+                            if (DB.p[scode].realwr == "NaN") {
+                                DB.p[scode].realwr == Number(0)
+                            }
+                            DB.p[scode].realwr++;
+                            replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수가 10회를 초과하여 강퇴경고가 1회 추가되었습니다. 앞으로 5번 더쓰시면 강퇴경고가 한번더 들어갑니다.\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
+                        }
+                        if (DB.p[scode].warning == 15) {
+                            if (DB.p[scode].realwr == "undefined") {
+                                DB.p[scode].realwr == Number(0)
+                            }
+                            if (DB.p[scode].realwr == "NaN") {
+                                DB.p[scode].realwr == Number(0)
+                            }
+                            DB.p[scode].realwr++;
+                            replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수가 15회를 초과하여 강퇴경고가 1회 추가되었습니다. 앞으로 5번 더쓰시면 강퇴경고가 한번더 들어갑니다.\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
+                        }
+                        if (DB.p[scode].warning == 20) {
+                            if (DB.p[scode].realwr == "undefined") {
+                                DB.p[scode].realwr == Number(0)
+                            }
+                            if (DB.p[scode].realwr == "NaN") {
+                                DB.p[scode].realwr == Number(0)
+                            }
+                            DB.p[scode].realwr++;
+                            replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수를 20회 초과 하셨습니다. " + sender + "님은 강퇴처리 됩니다.")
+                        }
+                        if (DB.p[scode].warning >= 10) {
+                            Api.replyRoom("간부방", "[" + sender + "]\n욕설 사용 횟수:" + DB.p[scode].warning + "회")
+                        }
+                        break;
+                    }
+                }
+            }
+
+            // 상벌점
+            loop: {
+                if (msg.split(" ")[0] == "!상점") {
+                    if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
+                        replier.reply("상대의 식별코드가 등록되지 않았습니다.");
                         break loop;
                     }
-                    var p = p.split('"')[0].split("&")[0];
-                    if (Number.isInteger(Number(p)) == true) {
-                        est.code.push(p)
-                    } else {
-                        replier.reply("[" + (i + 2) + "번째 줄] \n잘못된 입력입니다.")
+                    var a = Number(msg.split(" ")[2])
+                    if (isInt(a) == false || a < 0) {
+                        replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
                         break loop;
                     }
-
-                }
-
-                replier.reply("http://micro.danawa.com/product/wishList?productSeq=" + est.code.join([separator = ',']) + "&count=" + est.quan.join([separator = ',']))
-
-            }
-        }
-
-        // 욕설인식
-        loop: {
-            for (var n = 0; n < notwords.length; n++) {
-                if (msg.indexOf(notwords[n]) != -1) break loop;
-            }
-            for (var n = 0; n < admin.length; n++) {
-            }
-            var msg1 = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, "");
-            for (var n = 0; n < words.length; n++) {
-                if (msg1.indexOf(words[n]) != -1) {
-                    DB.p[scode].warning++
-                    var i = DB.p[scode].warning * 30 - 30
-                    if (DB.p[scode].warning == 1) replier.reply("[" + sender + "]\n누적 경고: 1회")
-                    if (DB.p[scode].warning != 1) {
-                        replier.reply("[" + sender + "]\n누적 경고: " + DB.p[scode].warning + "회\n" + i + "cp 차감");
-                        DB.p[scode].pt -= i
+                    if (a < 10) {
+                        replier.reply("10cp부터 이용 가능합니다.");
+                        break loop;
                     }
-                    if (DB.p[scode].warning == 10) {
-                        if (DB.p[scode].realwr == "undefined") {
-                            DB.p[scode].realwr == Number(0)
-                        }
-                        if (DB.p[scode].realwr == "NaN") {
-                            DB.p[scode].realwr == Number(0)
-                        }
-                        DB.p[scode].realwr++;
-                        replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수가 10회를 초과하여 강퇴경고가 1회 추가되었습니다. 앞으로 5번 더쓰시면 강퇴경고가 한번더 들어갑니다.\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
+                    var i = Math.round(a * 1.2);
+                    if (DB.p[scode].pt - i < 0) {
+                        var x = i - DB.p[scode].pt;
+                        replier.reply("포인트가 " + x + "cp 부족합니다. VAT 20%를 유의해 주세요.");
+                        break loop;
                     }
-                    if (DB.p[scode].warning == 15) {
-                        if (DB.p[scode].realwr == "undefined") {
-                            DB.p[scode].realwr == Number(0)
-                        }
-                        if (DB.p[scode].realwr == "NaN") {
-                            DB.p[scode].realwr == Number(0)
-                        }
-                        DB.p[scode].realwr++;
-                        replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수가 15회를 초과하여 강퇴경고가 1회 추가되었습니다. 앞으로 5번 더쓰시면 강퇴경고가 한번더 들어갑니다.\n경고 횟수가 3회가 되면 강퇴가 되니 주의 하십시오.")
-                    }
-                    if (DB.p[scode].warning == 20) {
-                        if (DB.p[scode].realwr == "undefined") {
-                            DB.p[scode].realwr == Number(0)
-                        }
-                        if (DB.p[scode].realwr == "NaN") {
-                            DB.p[scode].realwr == Number(0)
-                        }
-                        DB.p[scode].realwr++;
-                        replier.reply("[강퇴 경고 추가]\n[" + sender + DB.p[scode].realwr + "회]\n욕설 횟수를 20회 초과 하셨습니다. " + sender + "님은 강퇴처리 됩니다.")
-                    }
-                    if (DB.p[scode].warning >= 10) {
-                        Api.replyRoom("간부방", "[" + sender + "]\n욕설 사용 횟수:" + DB.p[scode].warning + "회")
-                    }
-                    break;
+                    DB.p[scode].pt -= i;
+                    DB.p[msg.split(" ")[1]].pt += a;
+                    replier.reply("[상점]\n" + sender + " → " + DB.inick[DB.icode.indexOf(msg.split(" ")[1])] + "\n+" + a + "cp (-" + i + "cp) (20% VAT)");
                 }
             }
-        }
-
-        // 상벌점
-        loop: {
-            if (msg.split(" ")[0] == "!상점") {
-                if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
-                    replier.reply("상대의 식별코드가 등록되지 않았습니다.");
-                    break loop;
-                }
-                var a = Number(msg.split(" ")[2])
-                if (isInt(a) == false || a < 0) {
-                    replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
-                    break loop;
-                }
-                if (a < 10) {
-                    replier.reply("10cp부터 이용 가능합니다.");
-                    break loop;
-                }
-                var i = Math.round(a * 1.2);
-                if (DB.p[scode].pt - i < 0) {
-                    var x = i - DB.p[scode].pt;
-                    replier.reply("포인트가 " + x + "cp 부족합니다. VAT 20%를 유의해 주세요.");
-                    break loop;
-                }
-                DB.p[scode].pt -= i;
-                DB.p[msg.split(" ")[1]].pt += a;
-                replier.reply("[상점]\n" + sender + " → " + DB.inick[DB.icode.indexOf(msg.split(" ")[1])] + "\n+" + a + "cp (-" + i + "cp) (20% VAT)");
-            }
-        }
-        loop: {
-            if (msg.split(" ")[0] == "!벌점") {
-                if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
-                    replier.reply("상대의 식별코드가 등록되지 않았습니다.");
-                    break loop;
-                }
-                var a = Number(msg.split(" ")[2])
-                if (isInt(a) == false || a < 0) {
-                    replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
-                    break loop;
-                }
-                if (a < 10) {
-                    replier.reply("10cp부터 이용 가능합니다.");
-                    break loop;
-                }
-                var t = timea - DB.p[scode].pns
-                if (t < 180000) {
-                    var v = 180 - Math.round(t / 1000)
-                    replier.reply("쿨타임 : " + v + "sec")
-                    break loop;
-                }
-                var i = Math.round(a * 1.5);
-                if (DB.p[scode].pt - i < 0) {
-                    var x = i - DB.p[scode].pt;
-                    replier.reply("포인트가 " + x + "cp 부족합니다. VAT 50%를 유의해 주세요.");
-                    break loop;
-                }
-                DB.p[scode].pns = new Date().getTime();
-                DB.p[scode].pt -= i;
-                DB.p[msg.split(" ")[1]].pt -= a;
-                replier.reply("[벌점]\n" + sender + " → " + DB.inick[DB.icode.indexOf(msg.split(" ")[1])] + "\n-" + a + "cp (-" + i + "cp) (50% VAT)");
-            }
-        }
-
-        if (msg == "!코드확인") replier.reply("[" + sender + "]\n식별코드 : " + scode)
-
-        // 식별코드 목록
-        if (msg == "!코드목록") {
-            var ilist = [];
-            for (var i = 0; i < DB.icode.length; i++) {
-                ilist.push(DB.icode[i]);
-                ilist.push(" - ");
-                ilist.push(DB.inick[i]);
-                ilist.push("\n");
-            }
-            rep = ilist.join([separator = '']);
-            replier.reply("식별코드 목록\n▼전체보기 클릭▼" + blank + "\n" + rep);
-        }
-
-
-        //코드변경
-        loop: {
-            if (msg.split(" ")[0] == "!코드변경") {
-                var to = msg.split("!코드변경 ")[1]
-                if (typeof to == "undefined") replier.reply("1000에서 9999까지의 자연수를 입력해 주십시오.");
-                if (! /^[0-9]+$/.test(to) || to.indexOf("0") == 0) {
-                    replier.reply("잘못된 입력입니다.");
-                    break loop;
-                }
-
-                if (DB.p[scode].pt > 499) {
-                    if (isInt(Number(to)) == true && parseInt(to) > 999 && parseInt(to) < 10000) {
-                        if (DB.icode.indexOf(to) != -1) {
-                            replier.reply("이미 사용중인 식별코드입니다.");
-                        } else {
-                            DB.p[to] = DB.p[scode]
-                            delete DB.p[scode]
-                            DB.icode.splice(DB.icode.indexOf(scode), 1, to);
-                            DB.p[to].pt -= 500
-                            replier.reply("식별코드가 변경되었습니다. 500cp가 차감되었습니다.");
-                        }
-                    } else {
-                        replier.reply("1000에서 9999까지의 자연수를 입력해 주십시오.");
+            loop: {
+                if (msg.split(" ")[0] == "!벌점") {
+                    if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
+                        replier.reply("상대의 식별코드가 등록되지 않았습니다.");
+                        break loop;
                     }
-                } else {
-                    var x = 500 - DB.p[scode].pt
-                    replier.reply("포인트가 " + x + "cp 부족합니다.")
+                    var a = Number(msg.split(" ")[2])
+                    if (isInt(a) == false || a < 0) {
+                        replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
+                        break loop;
+                    }
+                    if (a < 10) {
+                        replier.reply("10cp부터 이용 가능합니다.");
+                        break loop;
+                    }
+                    var t = timea - DB.p[scode].pns
+                    if (t < 180000) {
+                        var v = 180 - Math.round(t / 1000)
+                        replier.reply("쿨타임 : " + v + "sec")
+                        break loop;
+                    }
+                    var i = Math.round(a * 1.5);
+                    if (DB.p[scode].pt - i < 0) {
+                        var x = i - DB.p[scode].pt;
+                        replier.reply("포인트가 " + x + "cp 부족합니다. VAT 50%를 유의해 주세요.");
+                        break loop;
+                    }
+                    DB.p[scode].pns = new Date().getTime();
+                    DB.p[scode].pt -= i;
+                    DB.p[msg.split(" ")[1]].pt -= a;
+                    replier.reply("[벌점]\n" + sender + " → " + DB.inick[DB.icode.indexOf(msg.split(" ")[1])] + "\n-" + a + "cp (-" + i + "cp) (50% VAT)");
                 }
-
             }
-        }
 
-        //코드검색
-        loop: {
-            if (msg.split(" ")[0] == "!코드검색") {
-                var key = msg.split(" ")[1];
-                if (key.length <= 1) {
-                    replier.reply("2글자 이상 입력해 주세요.");
-                    break loop;
-                }
-                var list = new Array();
-                list.push("[검색결과]");
+            if (msg == "!코드확인") replier.reply("[" + sender + "]\n식별코드 : " + scode)
+
+            // 식별코드 목록
+            if (msg == "!코드목록") {
+                var ilist = [];
                 for (var i = 0; i < DB.icode.length; i++) {
-                    if (DB.inick[i].toLowerCase().indexOf(key.toLowerCase()) != -1) {
-                        list.push("\n" + DB.icode[i] + " - " + DB.inick[i]);
+                    ilist.push(DB.icode[i]);
+                    ilist.push(" - ");
+                    ilist.push(DB.inick[i]);
+                    ilist.push("\n");
+                }
+                rep = ilist.join([separator = '']);
+                replier.reply("식별코드 목록\n▼전체보기 클릭▼" + blank + "\n" + rep);
+            }
+
+
+            //코드변경
+            loop: {
+                if (msg.split(" ")[0] == "!코드변경") {
+                    var to = msg.split("!코드변경 ")[1]
+                    if (typeof to == "undefined") replier.reply("1000에서 9999까지의 자연수를 입력해 주십시오.");
+                    if (! /^[0-9]+$/.test(to) || to.indexOf("0") == 0) {
+                        replier.reply("잘못된 입력입니다.");
+                        break loop;
                     }
-                }
-                if (list.length == 1) {
-                    replier.reply("검색 결과가 없습니다.");
-                    break loop;
-                }
-                replier.reply(list.join([separator = ""]));
-            }
-        }
 
-        //호출
-        loop: {
-            if (msg.split(" ")[0] == "!호출") {
-                if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
-                    replier.reply("상대의 식별코드가 등록되지 않았습니다.");
-                    break loop;
-                }
-                var o = scode;
-                var s = msg.split(" ")[1];
-                if (DB.p[s].call.indexOf(o) != -1) {
-                    replier.reply("이미 상대를 호출했습니다.")
-                    break loop;
-                }
-                var s = msg.split(" ")[1];
-                var m = msg.substr(9);
-                if (DB.p[s].call[0] == "0000") DB.p[s].call = new Array();
-                DB.p[s].call.push(o);
-                DB.p[s].callmsg.push(escape(m));
-            }
-        }
-
-        loop: {
-            if (msg.split(" ")[0] == "!염탐") {
-                if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
-                    replier.reply("상대의 식별코드가 등록되지 않았습니다.");
-                    break loop;
-                }
-                var x = 50 - DB.p[scode].pt
-                if (x > 0) {
-                    replier.reply("포인트가 " + x + "cp 부족합니다.");
-                    break loop;
-                }
-                DB.p[scode].pt -= 50
-                replier.reply("50cp가 차감됩니다.\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[1])] + "] " + DB.p[msg.split(" ")[1]].pt + "cp")
-            }
-        }
-
-        // 복권
-        loop: {
-            if (msg.split(" ")[0] == "!복권") {
-
-                if (DB.p[scode].lottery == true) {
-                    replier.reply("이미 오늘은 복권에 응모하셨습니다.")
-                    break loop;
-                }
-                var x = 100 - DB.p[scode].pt
-                if (x > 0) {
-                    replier.reply("포인트가 " + x + "cp 부족합니다.");
-                    break loop;
-                }
-                replier.reply("복권에 응모하셨습니다.\n100cp가 차감됩니다.")
-                DB.lottery.push(scode);
-                DB.p[scode].lottery = true
-                DB.p[scode].pt -= 100
-
-            }
-        }
-
-        if (msg.split(" ")[0] == "!가위" || msg.split(" ")[0] == "!바위" || msg.split(" ")[0] == "!보") {
-            if (new Date().getHours() == 12 || new Date().getHours() == 0 || new Date().getHours() == 7 || new Date().getHours() == 22) {
-                if (new Date().getMinutes() >= 30) {
-                    // 가위바위보
-                    loop: {
-                        if (msg.split(" ")[0] == "!가위") {
-                            var i = Number(msg.split(" ")[1]);
-                            if (isInt(i) == false) {
-                                replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
-                                break loop;
-                            }
-                            if (i > 9 && i < 1001) {
-                                var y = DB.p[scode].rps - 4
-                                var x = y * 10 + i - DB.p[scode].pt
-                                if (x > 0) {
-                                    replier.reply("포인트가 " + x + "cp 부족합니다.");
-                                    break loop;
-                                }
-                                if (DB.p[scode].rps == 4) {
-                                    replier.reply("오늘의 마지막 기회입니다.");
-                                }
-                                if (DB.p[scode].rps > 4) {
-                                    break loop;
-                                }
-                                DB.p[scode].rps++
-                                var n = Math.floor(Math.random() * 3);
-                                if (n == 0) {
-                                    replier.reply("보! 승리하셨습니다.\n" + i + "cp를 획득하셨습니다.")
-                                    DB.p[scode].pt += i
-                                }
-                                if (n == 1) {
-                                    replier.reply("가위! 비겼습니다. 포인트가 반환됩니다.")
-                                }
-                                if (n == 2) {
-                                    replier.reply("바위! 이겨버린건가요 ㅋ\n이 포인트는 이제 제껍니다.")
-                                    DB.p[scode].pt -= i
-                                }
+                    if (DB.p[scode].pt > 499) {
+                        if (isInt(Number(to)) == true && parseInt(to) > 999 && parseInt(to) < 10000) {
+                            if (DB.icode.indexOf(to) != -1) {
+                                replier.reply("이미 사용중인 식별코드입니다.");
                             } else {
-                                replier.reply("10에서 1000 사이의 포인트를 입력해 주세요.");
+                                DB.p[to] = DB.p[scode]
+                                delete DB.p[scode]
+                                DB.icode.splice(DB.icode.indexOf(scode), 1, to);
+                                DB.p[to].pt -= 500
+                                replier.reply("식별코드가 변경되었습니다. 500cp가 차감되었습니다.");
                             }
+                        } else {
+                            replier.reply("1000에서 9999까지의 자연수를 입력해 주십시오.");
+                        }
+                    } else {
+                        var x = 500 - DB.p[scode].pt
+                        replier.reply("포인트가 " + x + "cp 부족합니다.")
+                    }
+
+                }
+            }
+
+            //코드검색
+            loop: {
+                if (msg.split(" ")[0] == "!코드검색") {
+                    var key = msg.split(" ")[1];
+                    if (key.length <= 1) {
+                        replier.reply("2글자 이상 입력해 주세요.");
+                        break loop;
+                    }
+                    var list = new Array();
+                    list.push("[검색결과]");
+                    for (var i = 0; i < DB.icode.length; i++) {
+                        if (DB.inick[i].toLowerCase().indexOf(key.toLowerCase()) != -1) {
+                            list.push("\n" + DB.icode[i] + " - " + DB.inick[i]);
                         }
                     }
-                    loop: {
-                        if (msg.split(" ")[0] == "!바위") {
-                            var i = Number(msg.split(" ")[1])
-                            if (isInt(i) == false) {
-                                replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
-                                break loop;
-                            }
-                            if (i > 9 && i < 1001) {
-                                var y = DB.p[scode].rps - 4
-                                var x = y * 10 + i - DB.p[scode].pt
-                                if (x > 0) {
-                                    replier.reply("포인트가 " + x + "cp 부족합니다.");
-                                    break loop;
-                                }
-                                if (DB.p[scode].rps == 4) {
-                                    replier.reply("오늘의 마지막 기회입니다.");
-                                }
-                                if (DB.p[scode].rps > 4) {
-                                    break loop;
-                                }
-                                DB.p[scode].rps++
-                                var n = Math.floor(Math.random() * 3);
-                                if (n == 0) {
-                                    replier.reply("가위! 승리하셨습니다.\n" + i + "cp를 획득하셨습니다.")
-                                    DB.p[scode].pt += i
-                                }
-                                if (n == 1) {
-                                    replier.reply("바위! 비겼습니다. 포인트가 반환됩니다.")
-                                }
-                                if (n == 2) {
-                                    replier.reply("보! 이겨버린건가요 ㅋ\n이 포인트는 이제 제껍니다.")
-                                    DB.p[scode].pt -= i
-                                }
-                            } else {
-                                replier.reply("10에서 1000 사이의 포인트를 입력해 주세요.");
-                            }
-                        }
+                    if (list.length == 1) {
+                        replier.reply("검색 결과가 없습니다.");
+                        break loop;
                     }
-                    loop: {
-                        if (msg.split(" ")[0] == "!보") {
-                            var i = Number(msg.split(" ")[1])
-                            if (isInt(i) == false) {
-                                replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
-                                break loop;
-                            }
-                            if (i > 9 && i < 1001) {
-                                var y = DB.p[scode].rps - 4
-                                var x = y * 10 + i - DB.p[scode].pt
-                                if (x > 0) {
-                                    replier.reply("포인트가 " + x + "cp 부족합니다.");
+                    replier.reply(list.join([separator = ""]));
+                }
+            }
+
+            //호출
+            loop: {
+                if (msg.split(" ")[0] == "!호출") {
+                    if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
+                        replier.reply("상대의 식별코드가 등록되지 않았습니다.");
+                        break loop;
+                    }
+                    var o = scode;
+                    var s = msg.split(" ")[1];
+                    if (DB.p[s].call.indexOf(o) != -1) {
+                        replier.reply("이미 상대를 호출했습니다.")
+                        break loop;
+                    }
+                    var s = msg.split(" ")[1];
+                    var m = msg.substr(9);
+                    if (DB.p[s].call[0] == "0000") DB.p[s].call = new Array();
+                    DB.p[s].call.push(o);
+                    DB.p[s].callmsg.push(escape(m));
+                }
+            }
+
+            loop: {
+                if (msg.split(" ")[0] == "!염탐") {
+                    if (DB.icode.indexOf(msg.split(" ")[1]) == -1) {
+                        replier.reply("상대의 식별코드가 등록되지 않았습니다.");
+                        break loop;
+                    }
+                    var x = 50 - DB.p[scode].pt
+                    if (x > 0) {
+                        replier.reply("포인트가 " + x + "cp 부족합니다.");
+                        break loop;
+                    }
+                    DB.p[scode].pt -= 50
+                    replier.reply("50cp가 차감됩니다.\n[" + DB.inick[DB.icode.indexOf(msg.split(" ")[1])] + "] " + DB.p[msg.split(" ")[1]].pt + "cp")
+                }
+            }
+
+            // 복권
+            loop: {
+                if (msg.split(" ")[0] == "!복권") {
+
+                    if (DB.p[scode].lottery == true) {
+                        replier.reply("이미 오늘은 복권에 응모하셨습니다.")
+                        break loop;
+                    }
+                    var x = 100 - DB.p[scode].pt
+                    if (x > 0) {
+                        replier.reply("포인트가 " + x + "cp 부족합니다.");
+                        break loop;
+                    }
+                    replier.reply("복권에 응모하셨습니다.\n100cp가 차감됩니다.")
+                    DB.lottery.push(scode);
+                    DB.p[scode].lottery = true
+                    DB.p[scode].pt -= 100
+
+                }
+            }
+
+            if (msg.split(" ")[0] == "!가위" || msg.split(" ")[0] == "!바위" || msg.split(" ")[0] == "!보") {
+                if (new Date().getHours() == 12 || new Date().getHours() == 0 || new Date().getHours() == 7 || new Date().getHours() == 22) {
+                    if (new Date().getMinutes() >= 30) {
+                        // 가위바위보
+                        loop: {
+                            if (msg.split(" ")[0] == "!가위") {
+                                var i = Number(msg.split(" ")[1]);
+                                if (isInt(i) == false) {
+                                    replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
                                     break loop;
                                 }
-                                if (DB.p[scode].rps == 4) {
-                                    replier.reply("오늘의 마지막 기회입니다.");
+                                if (i > 9 && i < 1001) {
+                                    var y = DB.p[scode].rps - 4
+                                    var x = y * 10 + i - DB.p[scode].pt
+                                    if (x > 0) {
+                                        replier.reply("포인트가 " + x + "cp 부족합니다.");
+                                        break loop;
+                                    }
+                                    if (DB.p[scode].rps == 4) {
+                                        replier.reply("오늘의 마지막 기회입니다.");
+                                    }
+                                    if (DB.p[scode].rps > 4) {
+                                        break loop;
+                                    }
+                                    DB.p[scode].rps++
+                                    var n = Math.floor(Math.random() * 3);
+                                    if (n == 0) {
+                                        replier.reply("보! 승리하셨습니다.\n" + i + "cp를 획득하셨습니다.")
+                                        DB.p[scode].pt += i
+                                    }
+                                    if (n == 1) {
+                                        replier.reply("가위! 비겼습니다. 포인트가 반환됩니다.")
+                                    }
+                                    if (n == 2) {
+                                        replier.reply("바위! 이겨버린건가요 ㅋ\n이 포인트는 이제 제껍니다.")
+                                        DB.p[scode].pt -= i
+                                    }
+                                } else {
+                                    replier.reply("10에서 1000 사이의 포인트를 입력해 주세요.");
                                 }
-                                if (DB.p[scode].rps > 4) {
-                                    break loop;
-                                }
-                                DB.p[scode].rps++
-                                var n = Math.floor(Math.random() * 3);
-                                if (n == 0) {
-                                    replier.reply("바위! 승리하셨습니다.\n" + i + "cp를 획득하셨습니다.")
-                                    DB.p[scode].pt += i
-                                }
-                                if (n == 1) {
-                                    replier.reply("보! 비겼습니다. 포인트가 반환됩니다.")
-                                }
-                                if (n == 2) {
-                                    replier.reply("가위! 이겨버린건가요 ㅋ\n이 포인트는 이제 제껍니다.")
-                                    DB.p[scode].pt -= i
-                                }
-                            } else {
-                                replier.reply("10에서 1000 사이의 포인트를 입력해 주세요.");
                             }
                         }
+                        loop: {
+                            if (msg.split(" ")[0] == "!바위") {
+                                var i = Number(msg.split(" ")[1])
+                                if (isInt(i) == false) {
+                                    replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
+                                    break loop;
+                                }
+                                if (i > 9 && i < 1001) {
+                                    var y = DB.p[scode].rps - 4
+                                    var x = y * 10 + i - DB.p[scode].pt
+                                    if (x > 0) {
+                                        replier.reply("포인트가 " + x + "cp 부족합니다.");
+                                        break loop;
+                                    }
+                                    if (DB.p[scode].rps == 4) {
+                                        replier.reply("오늘의 마지막 기회입니다.");
+                                    }
+                                    if (DB.p[scode].rps > 4) {
+                                        break loop;
+                                    }
+                                    DB.p[scode].rps++
+                                    var n = Math.floor(Math.random() * 3);
+                                    if (n == 0) {
+                                        replier.reply("가위! 승리하셨습니다.\n" + i + "cp를 획득하셨습니다.")
+                                        DB.p[scode].pt += i
+                                    }
+                                    if (n == 1) {
+                                        replier.reply("바위! 비겼습니다. 포인트가 반환됩니다.")
+                                    }
+                                    if (n == 2) {
+                                        replier.reply("보! 이겨버린건가요 ㅋ\n이 포인트는 이제 제껍니다.")
+                                        DB.p[scode].pt -= i
+                                    }
+                                } else {
+                                    replier.reply("10에서 1000 사이의 포인트를 입력해 주세요.");
+                                }
+                            }
+                        }
+                        loop: {
+                            if (msg.split(" ")[0] == "!보") {
+                                var i = Number(msg.split(" ")[1])
+                                if (isInt(i) == false) {
+                                    replier.reply("사용할 포인트를 자연수로 입력해 주세요.");
+                                    break loop;
+                                }
+                                if (i > 9 && i < 1001) {
+                                    var y = DB.p[scode].rps - 4
+                                    var x = y * 10 + i - DB.p[scode].pt
+                                    if (x > 0) {
+                                        replier.reply("포인트가 " + x + "cp 부족합니다.");
+                                        break loop;
+                                    }
+                                    if (DB.p[scode].rps == 4) {
+                                        replier.reply("오늘의 마지막 기회입니다.");
+                                    }
+                                    if (DB.p[scode].rps > 4) {
+                                        break loop;
+                                    }
+                                    DB.p[scode].rps++
+                                    var n = Math.floor(Math.random() * 3);
+                                    if (n == 0) {
+                                        replier.reply("바위! 승리하셨습니다.\n" + i + "cp를 획득하셨습니다.")
+                                        DB.p[scode].pt += i
+                                    }
+                                    if (n == 1) {
+                                        replier.reply("보! 비겼습니다. 포인트가 반환됩니다.")
+                                    }
+                                    if (n == 2) {
+                                        replier.reply("가위! 이겨버린건가요 ㅋ\n이 포인트는 이제 제껍니다.")
+                                        DB.p[scode].pt -= i
+                                    }
+                                } else {
+                                    replier.reply("10에서 1000 사이의 포인트를 입력해 주세요.");
+                                }
+                            }
+                        }
+                    } else {
+                        replier.reply("0, 7, 12, 22시 30~59분에만 사용 가능합니다.")
                     }
                 } else {
                     replier.reply("0, 7, 12, 22시 30~59분에만 사용 가능합니다.")
                 }
-            } else {
-                replier.reply("0, 7, 12, 22시 30~59분에만 사용 가능합니다.")
             }
-        }
 
-        if (msg == "!견적양식") {
-            replier.reply("[rgb]\n견적 요청 전 생각해봐야할 것들" + blank + "\n\n》자기가 컴퓨터가 왜 필요한지 생각합니다.\n컴퓨터를 구매하는 필요성과 중요도를 파악하고 목적을 정합니다.\nex) 이제 피방 말고 집에서 배그를 하고싶어! 취미로 하던 영상편집도 좀 더 수월하게!\n\n》또 필요한게 없는지 생각해 봅니다. (윈도우, 모니터, 키보드/마우스, 스피커/헤드셋 등)\n운영 체제, 주변 기기와 특수 목적 장비(캡처보드 등)의 구입 필요성을 판단해 봅니다.\nex) 모니터도 144인가? 그걸로 사고, 키마도 지금쓰는 삼성키보드에서 벗어나야지. 윈도우는 내가 예산이 여유롭지 않으니 그냥 직접 설치해야겠어.\n\n》컴퓨터 구입에 사용할 예산과, 컴퓨터 실 구매 예정일을 정합니다.\n자기가 무리하지 않고 지출할 수 있는 적절한 예산과, 그에 연계되는 구매 예정일을 정합니다.\nex) 구매를 미루고 싶지는 않으니.. 일단 지금 수중에 돈이 130정도 있는데, 월말까지 30만원정도 더 모은 후 구매해야겠어.\n예상 구매 예정일이 너무 많이(1달 이상) 남았을 경우 견적은 구매 임박 일자에 짜는 것이 좋습니다. 돈 모으고 계세요.\n\n》자기가 컴퓨터에 바라는 점을 생각합니다.\n예를 들자면\n- 사양 좋게\n- 업글같은거 안하고 한번 사서 오래 쓰게\n이런 단순한 것부터\n- 저소음\n- 내부 부품 품질을 좋게\n이런거나\n- 플루이드 모션!\n이런 것까지 아주 단순한 것부터 복잡한 것까지 최대한 많이 생각해 봅니다.\n\n》견적 양식을 채웁니다.\n")
-            replier.reply("[rgb]\n견적 양식(전체보기-꾹눌러 복사)" + blank + "\n\n1. 구매예정일(구체적!)\n\n2. 용도(자세히!)\n\n3. 구성품(모니터 마우스 헤드셋 등)\n\n3.1. 윈도우 포함 여부\n\n4. 컴퓨터에 바라는 점(최대한 많이)\n\n5. 본체 디자인 신경쓰세요?\n\n6. 예산(대충이라도)\n\n7. 기타 질문?\n")
-        }
-        // 실검
-        if (msg.trim() == "!실검") { //!실검 이면
-            var 실검 = [];
-            for (var abab = 1; abab < 21; abab++) {
-                실검.push(abab + ". " + getHtml("http://rank.search.naver.net/rank.js").replace(/\"/g, "").split("keyword:")[abab].split(",")[0]); //파싱
+            if (msg == "!견적양식") {
+                replier.reply("[rgb]\n견적 요청 전 생각해봐야할 것들" + blank + "\n\n》자기가 컴퓨터가 왜 필요한지 생각합니다.\n컴퓨터를 구매하는 필요성과 중요도를 파악하고 목적을 정합니다.\nex) 이제 피방 말고 집에서 배그를 하고싶어! 취미로 하던 영상편집도 좀 더 수월하게!\n\n》또 필요한게 없는지 생각해 봅니다. (윈도우, 모니터, 키보드/마우스, 스피커/헤드셋 등)\n운영 체제, 주변 기기와 특수 목적 장비(캡처보드 등)의 구입 필요성을 판단해 봅니다.\nex) 모니터도 144인가? 그걸로 사고, 키마도 지금쓰는 삼성키보드에서 벗어나야지. 윈도우는 내가 예산이 여유롭지 않으니 그냥 직접 설치해야겠어.\n\n》컴퓨터 구입에 사용할 예산과, 컴퓨터 실 구매 예정일을 정합니다.\n자기가 무리하지 않고 지출할 수 있는 적절한 예산과, 그에 연계되는 구매 예정일을 정합니다.\nex) 구매를 미루고 싶지는 않으니.. 일단 지금 수중에 돈이 130정도 있는데, 월말까지 30만원정도 더 모은 후 구매해야겠어.\n예상 구매 예정일이 너무 많이(1달 이상) 남았을 경우 견적은 구매 임박 일자에 짜는 것이 좋습니다. 돈 모으고 계세요.\n\n》자기가 컴퓨터에 바라는 점을 생각합니다.\n예를 들자면\n- 사양 좋게\n- 업글같은거 안하고 한번 사서 오래 쓰게\n이런 단순한 것부터\n- 저소음\n- 내부 부품 품질을 좋게\n이런거나\n- 플루이드 모션!\n이런 것까지 아주 단순한 것부터 복잡한 것까지 최대한 많이 생각해 봅니다.\n\n》견적 양식을 채웁니다.\n")
+                replier.reply("[rgb]\n견적 양식(전체보기-꾹눌러 복사)" + blank + "\n\n1. 구매예정일(구체적!)\n\n2. 용도(자세히!)\n\n3. 구성품(모니터 마우스 헤드셋 등)\n\n3.1. 윈도우 포함 여부\n\n4. 컴퓨터에 바라는 점(최대한 많이)\n\n5. 본체 디자인 신경쓰세요?\n\n6. 예산(대충이라도)\n\n7. 기타 질문?\n")
             }
-            replier.reply(실검.join("\n")); //합해서 보내기
-        }
-        // 날씨
-        if (msg == "!날씨") { //!날씨면
-            var data = Utils.getWebText("https://m.search.naver.com/search.naver?query=날씨"); //네이버 검색에서 파싱
-            var data2 = data.split("전국날씨</strong>"); // 자르기
-            var data3 = data2[1].split("특보");
-            var data4 = data3[0].replace(/(<([^>]+)>)/g, "");
-            data4 = data4.trim();
-            data4 = data4.replace(/  /g, ""); //태그 제거
-            data4 = data4.replace(/도씨/g, "℃"); //화씨
-            data4 = data4.replace(/ /g, ", "); //태그제거
-            replier.reply("[현재 날씨]\n" + data4); //보내기
-        }
-        // 음원차트 순위 확인
-        if (msg == "!차트") { //!차트면
-            var charts = [];
-            chart = Utils.getWebText("http://m.music.naver.com/listen/top100.nhn?domain=DOMESTIC")
-            for (var i = 1; i < 51; i++) {
-                var a = chart.split("<span class=\"rank\">")[i].split("</span>")[0];
-                var b = chart.split("<strong class=\"tit\"> ")[i].split("</strong>")[0];
-                var c = chart.split("<span class=\"stit\">")[i].split("</span>")[0];
-                charts.push("순위 : " + a + "\n제목 : " + b + "\n아티스트(앨범) : " + c);
+            // 실검
+            if (msg.trim() == "!실검") { //!실검 이면
+                var 실검 = [];
+                for (var abab = 1; abab < 21; abab++) {
+                    실검.push(abab + ". " + getHtml("http://rank.search.naver.net/rank.js").replace(/\"/g, "").split("keyword:")[abab].split(",")[0]); //파싱
+                }
+                replier.reply(실검.join("\n")); //합해서 보내기
             }
-            replier.reply("▼ 전체보기 클릭 ▼" + blank + charts.join("\n=============\n"))
-        }
-        // 암호화폐 시세 확인
-        if (msg == "!비트코인") { //만약 비트코인이라면
-            bit = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw")).last)
-            bch = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=bch_krw")).last)
-            btg = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btg_krw")).last)
-            eth = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=eth_krw")).last)
-            etc = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=etc_krw")).last)
-            xrp = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=xrp_krw")).last)
-            ltc = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=ltc_krw")).last)
-            zil = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=zil_krw")).last)
-            replier.reply("[암호화폐 시세]\n▣비트코인 :: " + bit + "원\n" + "▣비트코인 캐시 :: " + bch + "원\n" + "▣비트코인 골드 :: " + bit + "원\n" + "▣이더리움 :: " + eth + "원\n" + "▣이더리움 클래식 :: " + etc + "원\n" + "▣리플 :: " + xrp + "원\n" + "▣라이트코인 :: " + ltc + "원\n" + "▣질리카 :: " + zil + "원")
-        }
-        // 단어 검색
-        try {
-            if (msg.indexOf("!단어") == 0) {
-                var u = Utils.getWebText("http://krdic.naver.com/search.nhn?query=" + msg.substr(3));
-                var a = u.split("<ul class=\"lst3\">")
-                var b = a[1].split("</ul>")
-                var c = b[0].replace(/(<([^>]+)>)/g, "");
-                c = c.replace(/발음재생/g, "")
-                c = c.replace(/단어장 저장/g, "")
-                c = c.replace(/매우중요/g, "")
-                c = c.replace(/유의어/g, "\n\n유의어")
-                c = c.trim()
-                c = c.replace(/\n         /g, "")
-                c = c.replace(/  /g, "\n")
-                c = c.replace(/\n\n\n/g, "")
-                replier.reply("[" + msg.substr(3) + " 검색 결과]\n\n" + c)
+            // 날씨
+            if (msg == "!날씨") { //!날씨면
+                var data = Utils.getWebText("https://m.search.naver.com/search.naver?query=날씨"); //네이버 검색에서 파싱
+                var data2 = data.split("전국날씨</strong>"); // 자르기
+                var data3 = data2[1].split("특보");
+                var data4 = data3[0].replace(/(<([^>]+)>)/g, "");
+                data4 = data4.trim();
+                data4 = data4.replace(/  /g, ""); //태그 제거
+                data4 = data4.replace(/도씨/g, "℃"); //화씨
+                data4 = data4.replace(/ /g, ", "); //태그제거
+                replier.reply("[현재 날씨]\n" + data4); //보내기
             }
-        } catch (e) {
-            replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
-        }
-        // 컴퓨터
-        if (msg.indexOf("!컴퓨리 ") == 0) {
-            Api.replyRoom("엘", "[" + sender + "]\n" + msg.substr(5))
-        }
-        // 배그 전적
-        if (msg.indexOf("!배그전적 ") == 0) {
+            // 음원차트 순위 확인
+            if (msg == "!차트") { //!차트면
+                var charts = [];
+                chart = Utils.getWebText("http://m.music.naver.com/listen/top100.nhn?domain=DOMESTIC")
+                for (var i = 1; i < 51; i++) {
+                    var a = chart.split("<span class=\"rank\">")[i].split("</span>")[0];
+                    var b = chart.split("<strong class=\"tit\"> ")[i].split("</strong>")[0];
+                    var c = chart.split("<span class=\"stit\">")[i].split("</span>")[0];
+                    charts.push("순위 : " + a + "\n제목 : " + b + "\n아티스트(앨범) : " + c);
+                }
+                replier.reply("▼ 전체보기 클릭 ▼" + blank + charts.join("\n=============\n"))
+            }
+            // 암호화폐 시세 확인
+            if (msg == "!비트코인") { //만약 비트코인이라면
+                bit = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw")).last)
+                bch = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=bch_krw")).last)
+                btg = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=btg_krw")).last)
+                eth = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=eth_krw")).last)
+                etc = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=etc_krw")).last)
+                xrp = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=xrp_krw")).last)
+                ltc = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=ltc_krw")).last)
+                zil = numberWithCommas(JSON.parse(getHtml("https://api.korbit.co.kr/v1/ticker?currency_pair=zil_krw")).last)
+                replier.reply("[암호화폐 시세]\n▣비트코인 :: " + bit + "원\n" + "▣비트코인 캐시 :: " + bch + "원\n" + "▣비트코인 골드 :: " + bit + "원\n" + "▣이더리움 :: " + eth + "원\n" + "▣이더리움 클래식 :: " + etc + "원\n" + "▣리플 :: " + xrp + "원\n" + "▣라이트코인 :: " + ltc + "원\n" + "▣질리카 :: " + zil + "원")
+            }
+            // 단어 검색
             try {
-                doc = org.jsoup.Jsoup.connect("https://dak.gg/profile/" + msg.substr(6))
-                    .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
-                    .get()
-                solo = doc.select(".solo").select(".rating").select(".value").text()
-                duo = doc.select(".duo").select(".rating").select(".value").text()
-                squad = doc.select(".squad").select(".rating").select(".value").text()
-                if (solo == "") solo = "기록 없음"
-                if (duo == "") duo = "기록 없음"
-                if (squad == "") squad = "기록 없음"
-                if (solo == "기록 없음") {
-                    if (duo == "기록 없음") {
+                if (msg.indexOf("!단어") == 0) {
+                    var u = Utils.getWebText("http://krdic.naver.com/search.nhn?query=" + msg.substr(3));
+                    var a = u.split("<ul class=\"lst3\">")
+                    var b = a[1].split("</ul>")
+                    var c = b[0].replace(/(<([^>]+)>)/g, "");
+                    c = c.replace(/발음재생/g, "")
+                    c = c.replace(/단어장 저장/g, "")
+                    c = c.replace(/매우중요/g, "")
+                    c = c.replace(/유의어/g, "\n\n유의어")
+                    c = c.trim()
+                    c = c.replace(/\n         /g, "")
+                    c = c.replace(/  /g, "\n")
+                    c = c.replace(/\n\n\n/g, "")
+                    replier.reply("[" + msg.substr(3) + " 검색 결과]\n\n" + c)
+                }
+            } catch (e) {
+                replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
+            }
+            // 컴퓨터
+            if (msg.indexOf("!컴퓨리 ") == 0) {
+                Api.replyRoom("엘", "[" + sender + "]\n" + msg.substr(5))
+            }
+            // 배그 전적
+            if (msg.indexOf("!배그전적 ") == 0) {
+                try {
+                    doc = org.jsoup.Jsoup.connect("https://dak.gg/profile/" + msg.substr(6))
+                        .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
+                        .get()
+                    solo = doc.select(".solo").select(".rating").select(".value").text()
+                    duo = doc.select(".duo").select(".rating").select(".value").text()
+                    squad = doc.select(".squad").select(".rating").select(".value").text()
+                    if (solo == "") solo = "기록 없음"
+                    if (duo == "") duo = "기록 없음"
+                    if (squad == "") squad = "기록 없음"
+                    if (solo == "기록 없음") {
                         if (duo == "기록 없음") {
-                            replier.reply("이번 시즌에 플레이를 하지 않았거나 전적정보가 없습니다.")
-                            return;
+                            if (duo == "기록 없음") {
+                                replier.reply("이번 시즌에 플레이를 하지 않았거나 전적정보가 없습니다.")
+                                return;
+                            }
                         }
                     }
+                    replier.reply("[" + msg.substr(6) + "]님의 배그 레이팅 점수는\n솔로 : " + solo + " 듀오 : " + duo + " 스쿼드 : " + squad + " 입니다.")
                 }
-                replier.reply("[" + msg.substr(6) + "]님의 배그 레이팅 점수는\n솔로 : " + solo + " 듀오 : " + duo + " 스쿼드 : " + squad + " 입니다.")
-            }
-            catch (e) {
-                replier.reply("배그 전적 정보가 없습니다.")
-            }
-        }
-        // 롤 전적
-        try {
-            if (msg.indexOf("!롤전적") == 0) {
-                msgi = msg.replace(/ /g, "+"); //메세지 부분에 공백부분을 +로 대체해줍니다 (그냥 띄어쓰기용)
-                var u = Utils.getWebText("http://www.op.gg/summoner/userName=" + msgi.substr(4)); //변수 u는 이링크를 HTML파싱한 값이다
-                if (u.split('<span class="tierRank">')[1].split("</span>")[0] == "Unranked") {
-                    docc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
-                    replier.reply("[" + msg.substr(5) + "]\n티어 : 언랭\n레벨 : " + docc.select(".ProfileIcon").select(".level").text())
-                } else {
-                    docc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
-                    var t = u.split("<span class=\"tierRank\">"); //변수 a는 변수 u에서 HTML에 <span class="tierRank"> 을 자른값 입니다 /이걸로 해서 tierRank부분을 자른겁니다
-                    var w = u.split("<span class=\"wins\">"); //나머지도 마찬가지입니다
-                    var l = u.split("<span class=\"losses\">");
-                    var win = u.split("<span class=\"winratio\">");
-                    var most_1 = docc.select(".ChampionBox:eq(0)").select(".Face").attr("title")
-                    var most_2 = docc.select(".ChampionBox:eq(1)").select(".Face").attr("title")
-                    var most_3 = docc.select(".ChampionBox:eq(2)").select(".Face").attr("title")
-                    var most = most_1 + ", " + most_2 + ", " + most_3
-                    doc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/ajax/mmr/summonerName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
-                    replier.reply("[" + msg.substr(5) + "]\n레벨 : " + docc.select(".ProfileIcon").select(".level").text() + "\n티어 : " + t[1].split("<")[0] + "\n승리 : " + w[1].split("<")[0] + "\n패배 : " + l[1].split("<")[0] + "\n승률 : " + win[1].split("<")[0] + "\n랭크 모스트 챔피언 : " + most + "\n" + doc.select(".TipStatus").text() + "\n예상 MMR은 " + doc.select(".MMR").text() + "점입니다. 티어는 " + doc.select(".TierRankString").text() + "로 예상됩니다.");
+                catch (e) {
+                    replier.reply("배그 전적 정보가 없습니다.")
                 }
             }
-        } catch (e) { //결과값을 찾을수 없으면
-            replier.reply("롤전적 정보가 없습니다");
-        }
-        // 배그 서버 상태
-        if (msg == "!배그서버") {
-            replier.reply("현재 배그 서버의 동접자는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").split('현재 배틀그라운드 동접자: ')[1].split('<a href="/statistics/playing">')[0].trim() + "이며, 서버는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").trim().split('서버:</strong> <span>')[1].split('</span>')[0] + "입니다.")
-        }
-        // 가사 정보
-        try {
-            if (msg.split(" ")[0] == "!가사") {
-                var u = Utils.getWebText("https://m.search.naver.com/search.naver?query=" + encodeURIComponent(msg.substr(4) + "가사"));
-                u = u.replace(/   /g, "");
-                u = u.replace(/<br>/g, "");
-                u = u.replace(/<mark>/g, "");
-                u = u.replace(/<\/mark>/g, "");
-                var a = u.split("<div class=\"lyrics_txt\">");
-                var b = u.split("<strong  class=\"tit\">");
-                var c = u.split("<span class=\"name\">");
-                replier.reply(msg.substr(4) + " 검색결과 입니다\n가수:" + c[2].split("<")[0] + "\n앨범 제목:" + c[1].split("<")[0] + "\n▼전체보기 클릭▼                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               \n가사정보:\n" + a[1].split("<")[0]);
+            // 롤 전적
+            try {
+                if (msg.indexOf("!롤전적") == 0) {
+                    msgi = msg.replace(/ /g, "+"); //메세지 부분에 공백부분을 +로 대체해줍니다 (그냥 띄어쓰기용)
+                    var u = Utils.getWebText("http://www.op.gg/summoner/userName=" + msgi.substr(4)); //변수 u는 이링크를 HTML파싱한 값이다
+                    if (u.split('<span class="tierRank">')[1].split("</span>")[0] == "Unranked") {
+                        docc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
+                        replier.reply("[" + msg.substr(5) + "]\n티어 : 언랭\n레벨 : " + docc.select(".ProfileIcon").select(".level").text())
+                    } else {
+                        docc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
+                        var t = u.split("<span class=\"tierRank\">"); //변수 a는 변수 u에서 HTML에 <span class="tierRank"> 을 자른값 입니다 /이걸로 해서 tierRank부분을 자른겁니다
+                        var w = u.split("<span class=\"wins\">"); //나머지도 마찬가지입니다
+                        var l = u.split("<span class=\"losses\">");
+                        var win = u.split("<span class=\"winratio\">");
+                        var most_1 = docc.select(".ChampionBox:eq(0)").select(".Face").attr("title")
+                        var most_2 = docc.select(".ChampionBox:eq(1)").select(".Face").attr("title")
+                        var most_3 = docc.select(".ChampionBox:eq(2)").select(".Face").attr("title")
+                        var most = most_1 + ", " + most_2 + ", " + most_3
+                        doc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/ajax/mmr/summonerName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
+                        replier.reply("[" + msg.substr(5) + "]\n레벨 : " + docc.select(".ProfileIcon").select(".level").text() + "\n티어 : " + t[1].split("<")[0] + "\n승리 : " + w[1].split("<")[0] + "\n패배 : " + l[1].split("<")[0] + "\n승률 : " + win[1].split("<")[0] + "\n랭크 모스트 챔피언 : " + most + "\n" + doc.select(".TipStatus").text() + "\n예상 MMR은 " + doc.select(".MMR").text() + "점입니다. 티어는 " + doc.select(".TierRankString").text() + "로 예상됩니다.");
+                    }
+                }
+            } catch (e) { //결과값을 찾을수 없으면
+                replier.reply("롤전적 정보가 없습니다");
             }
-        } catch (e) {
-            replier.reply("가사 정보가 없습니다. 다시 입력해보세요.");
-        }
-        if (msg == "!로또") {
-            var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('<p class="number">')[1].trim()
-            var balls = []
-            for (var i = 1; i < 7; i++) {
-                balls.push(ball.split('alt="')[i].split('"/>')[0])
+            // 배그 서버 상태
+            if (msg == "!배그서버") {
+                replier.reply("현재 배그 서버의 동접자는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").split('현재 배틀그라운드 동접자: ')[1].split('<a href="/statistics/playing">')[0].trim() + "이며, 서버는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").trim().split('서버:</strong> <span>')[1].split('</span>')[0] + "입니다.")
             }
-            replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
-        }
-
-        try {
-            if (msg.indexOf("!로또 ") == 0) {
-                var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('<p class="number">')[1].trim()
+            // 가사 정보
+            try {
+                if (msg.split(" ")[0] == "!가사") {
+                    var u = Utils.getWebText("https://m.search.naver.com/search.naver?query=" + encodeURIComponent(msg.substr(4) + "가사"));
+                    u = u.replace(/   /g, "");
+                    u = u.replace(/<br>/g, "");
+                    u = u.replace(/<mark>/g, "");
+                    u = u.replace(/<\/mark>/g, "");
+                    var a = u.split("<div class=\"lyrics_txt\">");
+                    var b = u.split("<strong  class=\"tit\">");
+                    var c = u.split("<span class=\"name\">");
+                    replier.reply(msg.substr(4) + " 검색결과 입니다\n가수:" + c[2].split("<")[0] + "\n앨범 제목:" + c[1].split("<")[0] + "\n▼전체보기 클릭▼                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               \n가사정보:\n" + a[1].split("<")[0]);
+                }
+            } catch (e) {
+                replier.reply("가사 정보가 없습니다. 다시 입력해보세요.");
+            }
+            if (msg == "!로또") {
+                var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('<p class="number">')[1].trim()
                 var balls = []
                 for (var i = 1; i < 7; i++) {
                     balls.push(ball.split('alt="')[i].split('"/>')[0])
                 }
-                replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
+                replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
             }
-        } catch (e) {
-            replier.reply("잘못된 회차입니다. 다시 시도해주십시오.")
-        }
 
-
-        /////////////////////////////////////////////////////////////////
-
-        // 카운터 다차면 공지표시
-        DB.ncounter++;
-        if (DB.ncounter > 299) {
-            DB.ncounter = 0
-            replier.reply(DB.notice)
-            replier.reply("[지비의 주간 뉴스]" + blank + DB.news)
-            DataBase.setDataBase("DB", JSON.stringify(DB));
-            DB.noticetimeb = DB.noticetimea
-            DB.noticetimea = new Date().getTime()
-            var t = DB.noticetimea - DB.noticetimeb
-            replier.reply("FPN : " + Math.round(120000 * 3000 / t) + "°C")
-
-        }
-
-        if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
             try {
-                if (msg.indexOf("!eval ") == 0) {
-                    replier.reply(eval(msg.substring(6)))
+                if (msg.indexOf("!로또 ") == 0) {
+                    var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('<p class="number">')[1].trim()
+                    var balls = []
+                    for (var i = 1; i < 7; i++) {
+                        balls.push(ball.split('alt="')[i].split('"/>')[0])
+                    }
+                    replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
+                }
+            } catch (e) {
+                replier.reply("잘못된 회차입니다. 다시 시도해주십시오.")
+            }
+
+
+            /////////////////////////////////////////////////////////////////
+
+            // 카운터 다차면 공지표시
+            DB.ncounter++;
+            if (DB.ncounter > 299) {
+                DB.ncounter = 0
+                replier.reply(DB.notice)
+                replier.reply("[지비의 주간 뉴스]" + blank + DB.news)
+                DataBase.setDataBase("DB", JSON.stringify(DB));
+                DB.noticetimeb = DB.noticetimea
+                DB.noticetimea = new Date().getTime()
+                var t = DB.noticetimea - DB.noticetimeb
+                replier.reply("FPN : " + Math.round(120000 * 3000 / t) + "°C")
+
+            }
+
+            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
+                try {
+                    if (msg.indexOf("!eval ") == 0) {
+                        replier.reply(eval(msg.substring(6)))
+                    }
+                }
+                catch (e) {
+                    replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
                 }
             }
-            catch (e) {
-                replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
+
+
+            /////////////////////////////////////////////////////////////////
+
+
+            /////////////////////(크롬이 만든거)//////////////////////////////
+            if (msg.indexOf("!8ball ") == 0) {
+                var br = Math.floor(Math.random() * 15) + 1;
+                if (br == 1) {
+                    replier.reply("전망이 좋지 않습니다..");
+                }
+                if (br == 2) {
+                    replier.reply("아니요!");
+                }
+                if (br == 3) {
+                    replier.reply("제 직감으로 봐서는 아닐겁니다!");
+                }
+                if (br == 4) {
+                    replier.reply("제 답변은...아니오입니다!");
+                }
+                if (br == 5) {
+                    replier.reply("그렇지 않을겁니다..");
+                }
+                if (br == 6) {
+                    replier.reply("앗..! 깜빡하고 졸아서 질문을 받지 못하였습니다..");
+                }
+                if (br == 7) {
+                    replier.reply("아앗..집중해서 다시 해보세요!");
+                }
+                if (br == 8) {
+                    replier.reply("예측을..못하겠습니다..!");
+                }
+                if (br == 9) {
+                    replier.reply("아마.. 그렇지 않을까요?");
+                }
+                if (br == 10) {
+                    replier.reply("아마도 그럴겁니다!");
+                }
+                if (br == 11) {
+                    replier.reply("저를 믿어도 좋습니다!");
+                }
+                if (br == 12) {
+                    replier.reply("네!");
+                }
+                if (br == 13) {
+                    replier.reply("의심할 여지 없이 당연합니다!");
+                }
+                if (br == 14) {
+                    replier.reply("확실히 그렇습니다!");
+                }
+                if (br == 15) {
+                    replier.reply("당연히 그럴겁니다!");
+                }
+            }
+
+
+            if (msg == "!크롬") {
+                replier.reply("코딩을 좋아한다 메우")
+            }
+            /////////////////////////////////////////////////////////////////
+
+            var timeb = new Date().getTime();
+            var t = timeb - timea;
+            if (msg == "!응답속도") replier.reply("응답속도 : " + t + "ms")
+            var tt = timea - timeo;
+            var ttt = Math.round(tt / 60000);
+            if (msg == "!동작시간") replier.reply("동작시간 : " + ttt + "min")
+
+        } else {
+            if (msg == "!견적양식") {
+                replier.reply("[rgb]\n견적 요청 전 생각해봐야할 것들" + blank + "\n\n》자기가 컴퓨터가 왜 필요한지 생각합니다.\n컴퓨터를 구매하는 필요성과 중요도를 파악하고 목적을 정합니다.\nex) 이제 피방 말고 집에서 배그를 하고싶어! 취미로 하던 영상편집도 좀 더 수월하게!\n\n》또 필요한게 없는지 생각해 봅니다. (윈도우, 모니터, 키보드/마우스, 스피커/헤드셋 등)\n운영 체제, 주변 기기와 특수 목적 장비(캡처보드 등)의 구입 필요성을 판단해 봅니다.\nex) 모니터도 144인가? 그걸로 사고, 키마도 지금쓰는 삼성키보드에서 벗어나야지. 윈도우는 내가 예산이 여유롭지 않으니 그냥 직접 설치해야겠어.\n\n》컴퓨터 구입에 사용할 예산과, 컴퓨터 실 구매 예정일을 정합니다.\n자기가 무리하지 않고 지출할 수 있는 적절한 예산과, 그에 연계되는 구매 예정일을 정합니다.\nex) 구매를 미루고 싶지는 않으니.. 일단 지금 수중에 돈이 130정도 있는데, 월말까지 30만원정도 더 모은 후 구매해야겠어.\n예상 구매 예정일이 너무 많이(1달 이상) 남았을 경우 견적은 구매 임박 일자에 짜는 것이 좋습니다. 돈 모으고 계세요.\n\n》자기가 컴퓨터에 바라는 점을 생각합니다.\n예를 들자면\n- 사양 좋게\n- 업글같은거 안하고 한번 사서 오래 쓰게\n이런 단순한 것부터\n- 저소음\n- 내부 부품 품질을 좋게\n이런거나\n- 플루이드 모션!\n이런 것까지 아주 단순한 것부터 복잡한 것까지 최대한 많이 생각해 봅니다.\n\n》견적 양식을 채웁니다.\n")
+                replier.reply("[rgb]\n견적 양식(전체보기-꾹눌러 복사)" + blank + "\n\n1. 구매예정일(구체적!)\n\n2. 용도(자세히!)\n\n3. 구성품(모니터 마우스 헤드셋 등)\n\n3.1. 윈도우 포함 여부\n\n4. 컴퓨터에 바라는 점(최대한 많이)\n\n5. 본체 디자인 신경쓰세요?\n\n6. 예산(대충이라도)\n\n7. 기타 질문?\n")
             }
         }
-
-
-        /////////////////////////////////////////////////////////////////
-
-
-        /////////////////////(크롬이 만든거)//////////////////////////////
-        if (msg.indexOf("!8ball ") == 0) {
-            var br = Math.floor(Math.random() * 15) + 1;
-            if (br == 1) {
-                replier.reply("전망이 좋지 않습니다..");
-            }
-            if (br == 2) {
-                replier.reply("아니요!");
-            }
-            if (br == 3) {
-                replier.reply("제 직감으로 봐서는 아닐겁니다!");
-            }
-            if (br == 4) {
-                replier.reply("제 답변은...아니오입니다!");
-            }
-            if (br == 5) {
-                replier.reply("그렇지 않을겁니다..");
-            }
-            if (br == 6) {
-                replier.reply("앗..! 깜빡하고 졸아서 질문을 받지 못하였습니다..");
-            }
-            if (br == 7) {
-                replier.reply("아앗..집중해서 다시 해보세요!");
-            }
-            if (br == 8) {
-                replier.reply("예측을..못하겠습니다..!");
-            }
-            if (br == 9) {
-                replier.reply("아마.. 그렇지 않을까요?");
-            }
-            if (br == 10) {
-                replier.reply("아마도 그럴겁니다!");
-            }
-            if (br == 11) {
-                replier.reply("저를 믿어도 좋습니다!");
-            }
-            if (br == 12) {
-                replier.reply("네!");
-            }
-            if (br == 13) {
-                replier.reply("의심할 여지 없이 당연합니다!");
-            }
-            if (br == 14) {
-                replier.reply("확실히 그렇습니다!");
-            }
-            if (br == 15) {
-                replier.reply("당연히 그럴겁니다!");
-            }
-        }
-
-
-        if (msg == "!크롬") {
-            replier.reply("코딩을 좋아한다 메우")
-        }
-        /////////////////////////////////////////////////////////////////
-
-        var timeb = new Date().getTime();
-        var t = timeb - timea;
-        if (msg == "!응답속도") replier.reply("응답속도 : " + t + "ms")
-        var tt = timea - timeo;
-        var ttt = Math.round(tt / 60000);
-        if (msg == "!동작시간") replier.reply("동작시간 : " + ttt + "min")
-
-    } else {
-        if (msg == "!견적양식") {
-            replier.reply("[rgb]\n견적 요청 전 생각해봐야할 것들" + blank + "\n\n》자기가 컴퓨터가 왜 필요한지 생각합니다.\n컴퓨터를 구매하는 필요성과 중요도를 파악하고 목적을 정합니다.\nex) 이제 피방 말고 집에서 배그를 하고싶어! 취미로 하던 영상편집도 좀 더 수월하게!\n\n》또 필요한게 없는지 생각해 봅니다. (윈도우, 모니터, 키보드/마우스, 스피커/헤드셋 등)\n운영 체제, 주변 기기와 특수 목적 장비(캡처보드 등)의 구입 필요성을 판단해 봅니다.\nex) 모니터도 144인가? 그걸로 사고, 키마도 지금쓰는 삼성키보드에서 벗어나야지. 윈도우는 내가 예산이 여유롭지 않으니 그냥 직접 설치해야겠어.\n\n》컴퓨터 구입에 사용할 예산과, 컴퓨터 실 구매 예정일을 정합니다.\n자기가 무리하지 않고 지출할 수 있는 적절한 예산과, 그에 연계되는 구매 예정일을 정합니다.\nex) 구매를 미루고 싶지는 않으니.. 일단 지금 수중에 돈이 130정도 있는데, 월말까지 30만원정도 더 모은 후 구매해야겠어.\n예상 구매 예정일이 너무 많이(1달 이상) 남았을 경우 견적은 구매 임박 일자에 짜는 것이 좋습니다. 돈 모으고 계세요.\n\n》자기가 컴퓨터에 바라는 점을 생각합니다.\n예를 들자면\n- 사양 좋게\n- 업글같은거 안하고 한번 사서 오래 쓰게\n이런 단순한 것부터\n- 저소음\n- 내부 부품 품질을 좋게\n이런거나\n- 플루이드 모션!\n이런 것까지 아주 단순한 것부터 복잡한 것까지 최대한 많이 생각해 봅니다.\n\n》견적 양식을 채웁니다.\n")
-            replier.reply("[rgb]\n견적 양식(전체보기-꾹눌러 복사)" + blank + "\n\n1. 구매예정일(구체적!)\n\n2. 용도(자세히!)\n\n3. 구성품(모니터 마우스 헤드셋 등)\n\n3.1. 윈도우 포함 여부\n\n4. 컴퓨터에 바라는 점(최대한 많이)\n\n5. 본체 디자인 신경쓰세요?\n\n6. 예산(대충이라도)\n\n7. 기타 질문?\n")
+    } catch (e) {
+        var error = true;
+        if (DataBase.getDataBase("errorchk") == 0) {
+            Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
+            replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
+            DataBase.setDataBase("errorchk", 1)
+            Api.reload();
         }
     }
-} catch (e) {
-    var error = true;
-    if (DataBase.getDataBase("errorchk") == 0) {
-        Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
-        replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
-        DataBase.setDataBase("errorchk", 1)
-        Api.reload();
-    }
-}
 }
 
 
