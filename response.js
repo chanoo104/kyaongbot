@@ -1688,12 +1688,11 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
     } catch (e) {
         var error = true;
         if (DataBase.getDataBase("errorchk") == 0) {
-            Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
+            Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=" + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)) + "&chat_id=338145573")
             replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
             DataBase.setDataBase("errorchk", 1)
             Api.reload();
         }
     }
 }
-
 
