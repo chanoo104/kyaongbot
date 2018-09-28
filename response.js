@@ -1055,7 +1055,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 }
                 for (var n = 0; n < admin.length; n++) {
                 }
-                var msg1 = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, "");
+                var msg1 = msg.replace(/[^(가-힣a-zA-Z)]/gi, "");
                 for (var n = 0; n < words.length; n++) {
                     if (msg1.indexOf(words[n]) != -1) {
                         DB.p[scode].warning++
