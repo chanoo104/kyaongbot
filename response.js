@@ -1517,7 +1517,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             }
             // 주소 단축
             if (msg.indexOf("!단축") == 0) {
-                u = msg.substr(3)
+                u = msg.substr(4)
                 if (checkDetailUrl(u) == true) {
                     org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(u))
                         .get()
