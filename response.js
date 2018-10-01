@@ -117,11 +117,9 @@ function getHtml(text) {
     return str;
 }
 
-function wiki(query) {
-    kiwi = Utils.getWebText('http://49.236.137.7/wiki/' + query)
-    kiwi = kiwi.substring(32)
-    kiwi = kiwi.substring(0, kiwi.length - 17)
-    return kiwi.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "")
+function checkDetailUrl(strUrl) {
+    var expUrl = /^(http\:\/\/)?((\w+)[.])+(asia|biz|cc|cn|com|de|eu|in|info|jobs|jp|kr|mobi|mx|name|net|nz|org|travel|tv|tw|uk|us)(\/(\w*))*$/i;
+    return expUrl.test(strUrl);
 }
 function leadingZeros(n, digits) {
     var zero = '';
@@ -1519,8 +1517,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             }
             // 주소 단축
             if (msg.indexOf("!단축") == 0) {
-                if (msg.indexOf("http") == 0 || msg.indexOf("www") == 0) {
-                    u = msg.substr(3)
+                u = msg.substr(3)
+                if (checkDetailUrl(u)) {
                     org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(u))
                         .get()
                         .text()
