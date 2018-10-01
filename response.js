@@ -1518,10 +1518,11 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             // 주소 단축
             if (msg.indexOf("!단축") == 0) {
                 u = msg.substr(4)
-                if (checkDetailUrl(u) == true) {
-                    org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(u))
+                if (checkDetailUrl(u)) {
+                    c = org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(u))
                         .get()
                         .text()
+                        replier.reply(c)
                 }
                 else replier.reply("정확한 주소를 적어주세요.")
 
