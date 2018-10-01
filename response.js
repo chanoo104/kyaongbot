@@ -1517,6 +1517,17 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     replier.reply("배그 전적 정보가 없습니다.")
                 }
             }
+            // 주소 단축
+            if (msg.split(" "[0]) == "!단축") {
+                if (msg.indexOf("http") || msg.indexOf("www")) {
+                    u = msg.substr(3)
+                    org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(u))
+                        .get()
+                        .text()
+                }
+                else replier.reply("정확한 주소를 적어주세요.\n(www 나 http를 포함시켜주세요.)")
+
+            }
             // 롤 전적
             try {
                 if (msg.indexOf("!롤전적") == 0) {
