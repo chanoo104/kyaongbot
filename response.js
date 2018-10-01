@@ -1523,7 +1523,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                         .get()
                         .text()
                 }
-                else replier.reply("정확한 주소를 적어주세요.\n(www 나 http를 포함시켜주세요.)")
+                else replier.reply("정확한 주소를 적어주세요.")
 
             }
             // 롤 전적
