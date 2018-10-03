@@ -1234,7 +1234,9 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     }
                     replier.reply(list.join([separator = ""]));
                 }
-                else if (msg == "!코드검색") replier.reply("뒤에 코드를 적어주세요.")
+                else if (msg == "!코드검색") {
+                    replier.reply("뒤에 코드를 적어주세요.")
+                }
             }
 
             //호출
