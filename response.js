@@ -97,6 +97,44 @@ UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
         Log.debug(e + " At:" + e.lineNumber);
     }
 };
+function lolStat(nick) {
+    var mmr = true, unranked = false
+    try {
+        var doc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + nick).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get();
+        try {
+            var doc1 = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/ajax/mmr/summonerName=" + nick).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get();
+        } catch (e) { //결과값을 찾을수 없으면
+            mmr = false
+        }
+        if (doc.select('div.Tier').get(0).text() == 'Unranked') unranked = true
+        var arr = [];
+        for (i = 0; i < 3; i++) {
+            if (doc.select('.ChampionBox:eq(' + i + ') a').text() == '') break;
+            arr.push(' ' + doc.select('.ChampionBox:eq(' + i + ') a').text());
+            arr.push(' : ');
+            arr.push(doc.select('.ChampionBox:eq(' + i + ') div.title').text());
+            arr.push(', KDA ');
+            arr.push(doc.select('.ChampionBox:eq(' + i + ') span.KDA').text());
+            arr.push(', ');
+            arr.push(doc.select('.ChampionBox:eq(' + i + ') div[title=승률]').text());
+            arr.push('\n');
+        }
+        var list = arr.join(''), arr = [];
+        arr.push('[' + doc.select("div.SummonerName").text() + ']\n');
+        if (!unranked) arr.push(doc.select('div.LadderRank').text() + '\n');
+        arr.push('| LV ' + doc.select('span[class=Level tip]').text() + ' | ');
+        if (!unranked) { arr.push(doc.select('div.Tier').get(0).text() + ' | ' + doc.select('div.LP').get(0).text() + ' |') } else arr.push('Unranked |')
+        if (doc.select('div div span.Item').text() != '') arr.push('\n[ ' + doc.select('div div span.Item').text() + ' ]');
+        arr.push('\n\n》최근 20게임 전적\n ' + doc.select('div.WinRatioTitle span.win').text() + '승 ' + doc.select('div.WinRatioTitle span.lose').text() + '패, ' + doc.select('div.WinRatioTitle b').text());
+        if (!unranked) arr.push('\n》솔랭 전적\n ' + doc.select('div.WinLose').get(0).text());
+        arr.push('\n》MOST 챔피언\n' + list);
+        if (mmr) arr.push('\n예상 MMR : ' + doc1.select('td.MMR').text() + '\n예상 티어 : ' + doc1.select('td.TierRankString').text());
+        if (mmr) if (doc1.select('div.TipStatus').text() != '') arr.push('\n' + doc1.select('div.TipStatus').text());
+        return arr.join('')
+    } catch (e) { //결과값을 찾을수 없으면
+        return ("전적 정보가 없습니다.");
+    }
+}
 function getByteLength(s, b, i, c) {
     for (b = i = 0; c = s.charCodeAt(i++); b += c >> 11 ? 3 : c >> 7 ? 2 : 1);
     return b;
@@ -1522,30 +1560,11 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 }
             }
             // 롤 전적
-            try {
-                if (msg.indexOf("!롤전적") == 0) {
-                    msgi = msg.replace(/ /g, "+"); //메세지 부분에 공백부분을 +로 대체해줍니다 (그냥 띄어쓰기용)
-                    var u = Utils.getWebText("http://www.op.gg/summoner/userName=" + msgi.substr(4)); //변수 u는 이링크를 HTML파싱한 값이다
-                    if (u.split('<span class="tierRank">')[1].split("</span>")[0] == "Unranked") {
-                        docc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
-                        replier.reply("[" + msg.substr(5) + "]\n티어 : 언랭\n레벨 : " + docc.select(".ProfileIcon").select(".level").text())
-                    } else {
-                        docc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
-                        var t = u.split("<span class=\"tierRank\">"); //변수 a는 변수 u에서 HTML에 <span class="tierRank"> 을 자른값 입니다 /이걸로 해서 tierRank부분을 자른겁니다
-                        var w = u.split("<span class=\"wins\">"); //나머지도 마찬가지입니다
-                        var l = u.split("<span class=\"losses\">");
-                        var win = u.split("<span class=\"winratio\">");
-                        var most_1 = docc.select(".ChampionBox:eq(0)").select(".Face").attr("title")
-                        var most_2 = docc.select(".ChampionBox:eq(1)").select(".Face").attr("title")
-                        var most_3 = docc.select(".ChampionBox:eq(2)").select(".Face").attr("title")
-                        var most = most_1 + ", " + most_2 + ", " + most_3
-                        doc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/ajax/mmr/summonerName=" + msgi.substr(4)).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get()
-                        replier.reply("[" + msg.substr(5) + "]\n레벨 : " + docc.select(".ProfileIcon").select(".level").text() + "\n티어 : " + t[1].split("<")[0] + "\n승리 : " + w[1].split("<")[0] + "\n패배 : " + l[1].split("<")[0] + "\n승률 : " + win[1].split("<")[0] + "\n랭크 모스트 챔피언 : " + most + "\n" + doc.select(".TipStatus").text() + "\n예상 MMR은 " + doc.select(".MMR").text() + "점입니다. 티어는 " + doc.select(".TierRankString").text() + "로 예상됩니다.");
-                    }
-                }
-            } catch (e) { //결과값을 찾을수 없으면
-                replier.reply("롤전적 정보가 없습니다");
+            if (msg.indexOf("!롤전적") == 0) {
+                replier.reply(lolStat(msg.substr(5)))
             }
+
+
             // 배그 서버 상태
             if (msg == "!배그서버") {
                 replier.reply("현재 배그 서버의 동접자는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").split('현재 배틀그라운드 동접자: ')[1].split('<a href="/statistics/playing">')[0].trim() + "이며, 서버는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").trim().split('서버:</strong> <span>')[1].split('</span>')[0] + "입니다.")
@@ -1699,86 +1718,5 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         }
     }
 }
-
-/*
-아이카
-© 2018 Dark Tornado, All rights reserved.
-
-마이카 소스는 공유하지 않는데, 아이카 소스는 공개합니다(?).
-Project M의 2번째 오픈 소스인 미세키가 기반입니다.
-어차피 미세키 내가 만든거니까 원작자 안밝혀도 되겠지(?). (이미 간접적으로 밝힌건 기분탓)
-
-Jelly Brick님이 만드신 카카오톡 봇, Violet XF님이 만드신 메신저 봇과 호환됩니다.
-
-아이카에는 GPL 3.0이 적용되어있습니다.
-
-    <one line to give the program's name and a brief idea of what it does.>
-    Project EA Copyright (C) 2018  Dark Tornado
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-*/
-
-/*상수 선언*/
-const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath(); //내장메모리 최상위 경로
-const COMPRESS = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "; //전체보기 만들기용 투명문자 1000개
-
-/*상수 (객체) 선언*/
-const Miseki = {}; //미세키 관련 객체
-const DB = {}; //파일 입/출력용 객제인데, 이름이 DB인건 기분탓
-const preChat = {}; //도배 방지 구현용
-const lastSender = {}; //보낸 사람 구분용
-const botOn = {}; //봇 on/off 관련 객체
-
-/*Miseki 객체*/
-Miseki.checkWord = function (que, msg) { //적당히 비슷한 말인지 비교
-    var data = msg.split(" "); //수신된 채팅의 어절들 중
-    var flag = false;
-    if (Math.floor(Math.random() * 2) == 0) flag = true; //50% 확률로 이미 한 개가 포함되어 있다고 가정
-    for (var n = 0; n < data.length; n++) { //두 개 이상이 저장된 채팅들에 포함되어 있다면,
-        if (que.indexOf(data[n]) != -1) {
-            if (flag) return true; //대강 비슷하다고 판단
-            else flag = true;
-        }
-    }
-    return false; //아님 말고
-};
-Miseki.getReply = function (msg) { //수신된 채팅에 대한 적당한 답변 반환
-    var data = DataBase.getDataBase("ChatDB"); //저장된 채팅들을 불러옴
-    if (data != null && Math.floor(Math.random() * 20) == 0) { //저장된 채팅이 없거나, 5% 확률이 터진게 아니면, 작동 안함
-        data = data.split("\n"); //냥
-        var result = []; //비슷한 말들이 들어갈 배열
-        for (var n = 0; n < data.length - 1; n++) { //적당하다 싶은 녀석들을
-            if (Miseki.checkWord(data[n], msg)) result.push(data[n + 1]); //배열에 추가
-        }
-        if (result[0] != null) return result[Math.floor(Math.random() * result.length)]; //배열이 빈게 아니라면 아무거나 하나 반환
-    }
-    return null; //일치하는게 없거나, 저장된 채팅이 없거나, 발동할 확률(?)이 아니면, null 반환
-};
-Miseki.isValidData = function (msg) { //배울 만한 채팅인지 구분하는 함수
-    if (msg.charAt(0) == "#") return; //해시태그(#으로 시작)는 학습 X.
-    om() * 6)]);
-}
-}
-
-function formatBytes(bytes) {
-    if (bytes < 1024) return bytes + " Bytes";
-    else if (bytes < 1048576) return (bytes / 1024).toFixed(3) + " KB";
-    else if (bytes < 1073741824) return (bytes / 1048576).toFixed(3) + " MB";
-    else return (bytes / 1073741824).toFixed(3) + " GB";
-};
-function getByteLength(s, b, i, c) {
-    for (b = i = 0; c = s.charCodeAt(i++); b += 1 + (c > 127) + (c > 2047));
-    return b
-}
-formatBytes(getByteLength(DataBase.getDataBase("ChatDB")))
 
 
