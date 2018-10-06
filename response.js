@@ -346,7 +346,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 DB.icode = ta2
 
                 var scode = DB.icode[DB.inick.indexOf(sender)]; // scode: 전송자의 식별코드
-                replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n[신규 코드 등록]\n" + sender + " - " + scode)
+                replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n질문은 질문방에서 부탁드립니다.\nhttps://open.kakao.com/o/gMZcH6T\n[신규 코드 등록]\n" + sender + " - " + scode)
 
                 DB.p[scode] = new Object()
 
