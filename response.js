@@ -1585,8 +1585,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             } catch (e) {
                 replier.reply("가사 정보가 없습니다. 다시 입력해보세요.");
             }
-if(msg.indexOf("니가") == 0) replier.reply("니가??????")
-            if (msg == "!로또") {
+if(msg.indexOf("니가") == 0) replier.reply("니가????????!!!!!???????????????????")
+                if (msg == "!로또") {
                 var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('<p class="number">')[1].trim()
                 var balls = []
                 for (var i = 1; i < 7; i++) {
