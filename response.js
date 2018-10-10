@@ -425,23 +425,23 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             if (DB.p[scode].attendance == false) {
                 DB.attendance++;
                 if (DB.attendance == 1) {
-                    var cp = 300
+                    var cp = 500
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
                 } else if (DB.attendance == 2) {
-                    var cp = 250
+                    var cp = 300
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
                 } else if (DB.attendance > 2 && DB.attendance < 6) {
-                    var cp = 200
-                    DB.p[scode].pt += cp
-                    replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
-                } else if (DB.attendance > 4 && DB.attendance < 11) {
                     var cp = 150
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
-                } else {
+                } else if (DB.attendance > 4 && DB.attendance < 11) {
                     var cp = 100
+                    DB.p[scode].pt += cp
+                    replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
+                } else {
+                    var cp = 75
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
                 }
@@ -1585,8 +1585,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             } catch (e) {
                 replier.reply("가사 정보가 없습니다. 다시 입력해보세요.");
             }
-if(msg.indexOf("니가") == 0) replier.reply("니가???????????????????????????\n흑인분들을 차별하는 거냐!")
-                if (msg == "!로또") {
+            if (msg.indexOf("니가") == 0) replier.reply("니가???????????????????????????\n흑인분들을 차별하는 거냐!")
+            if (msg == "!로또") {
                 var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('<p class="number">')[1].trim()
                 var balls = []
                 for (var i = 1; i < 7; i++) {
