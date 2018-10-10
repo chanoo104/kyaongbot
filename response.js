@@ -563,8 +563,16 @@ function cpSys(params) {
    	replier.reply('✔');
    }}
    loop: {
+   c = '!식별코드'
+   a = 'all'
+   d = '.'
+   if(commandChk(params, c, a, d) == false) break loop;
+   if (msg == c) {
+   	replier.reply(icode);
+   }}
+   loop: {
    c = '!포인트'
-   a = 'admin'
+   a = 'member'
    d = '자신의 포인트를 출력합니다.'
    if(commandChk(params, c, a, d) == false) break loop;
    if (msg == c) {
