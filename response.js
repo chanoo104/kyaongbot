@@ -436,7 +436,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     var cp = 150
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
-                } else if (DB.attendance > 4 && DB.attendance < 11) {
+                } else if (DB.attendance > 4 && DB.attendance < 21) {
                     var cp = 100
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
@@ -1585,7 +1585,9 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             } catch (e) {
                 replier.reply("가사 정보가 없습니다. 다시 입력해보세요.");
             }
-            if (msg.indexOf("니가") == 0) replier.reply("니가???????????????????????????\n흑인분들을 차별하는 거냐!")
+            // 니가
+            if (msg.indexOf("니가") == 0) replier.reply("니가?????????????????????????\n흑인분들을 차별하는 거냐!")
+            // 로또
             if (msg == "!로또") {
                 var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('<p class="number">')[1].trim()
                 var balls = []
@@ -1594,7 +1596,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 }
                 replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
             }
-
+            // 로또 특정 회차
             try {
                 if (msg.indexOf("!로또 ") == 0) {
                     var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('<p class="number">')[1].trim()
@@ -1625,7 +1627,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             }
 
-            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+" || sender == "더러운 시공 녀석") {
+            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+" || sender == "인성터진 시공놈") {
                 try {
                     if (msg.indexOf("!eval ") == 0) {
                         replier.reply(eval(msg.substring(6)))
