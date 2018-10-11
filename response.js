@@ -152,6 +152,15 @@ function getYMDStamp() {
         leadingZeros(d.getDate(), 2)
     return s;
 }
+function getRightURL(n) {
+    var tmpURL = n.replace(cs/g, "")
+    var tmp = tmpURL.toLowerCase();
+    if( tmp.indexOf("http://") == 0 ||
+        tmp.indexOf("https://") == 0)
+            return tmpURL;
+    else
+            return "http://"+tmpURL ;
+}
 function lolStat(nick) {
     var mmr = true, unranked = false
     try {
@@ -348,10 +357,10 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 DB.icode = ta2
 
                 var scode = DB.icode[DB.inick.indexOf(sender)]; // scode: 전송자의 식별코드
-                if (room != "컴퓨톡_잡담방"){
-                replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡 질문방에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n[신규 코드 등록]\n" + sender + " - " + scode)
+                if (room != "컴퓨톡_잡담방") {
+                    replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡 질문방에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n[신규 코드 등록]\n" + sender + " - " + scode)
                 }
-                else{
+                else {
                     replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n질문은 질문방에서 부탁드립니다.\nhttps://open.kakao.com/o/gMZcH6T\n[신규 코드 등록]\n" + sender + " - " + scode)
                 }
                 DB.p[scode] = new Object()
@@ -1568,7 +1577,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     c = org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(u))
                         .get()
                         .text()
-                        replier.reply(c)
+                    replier.reply(c)
                 }
                 else replier.reply("정확한 주소를 적어주세요.")
 
