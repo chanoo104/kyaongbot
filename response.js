@@ -1592,7 +1592,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             }
             // 가사 정보
             try {
-                if (msg.indexOf("가사") == 0) {
+                if (msg.indexOf("!가사") == 0) {
                     var qwep = getHtml("https://cse.google.com/cse/element/v1?rsz=filtered_cse&num=10&hl=ko&source=gcsc&gss=.kr&sig=bc136da7ba6658e11a8ffa8e38396a3a&cx=partner-pub-1354836663865600:1871897532&q=" + encodeURIComponent(msg.substr(4)) + "&cse_tok=AOuiMRapz1pQt1TQ6v3k-kE-6nl0:1539160726662&googlehost=www.google.com&callback=google.search.Search.csqr929").split("formattedUrl");
                     var qwe2 = qwep[1].split('"');
                     if (qwe2[2].indexOf("http") == 0) {
