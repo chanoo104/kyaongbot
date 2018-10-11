@@ -1592,20 +1592,20 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             }
             // 가사 정보
             try {
-                if (msg.split(" ")[0] == "!가사") {
-                    var u = Utils.getWebText("https://m.search.naver.com/search.naver?query=" + encodeURIComponent(msg.substr(4) + "가사"));
-                    u = u.replace(/   /g, "");
-                    u = u.replace(/<br>/g, "");
-                    u = u.replace(/<mark>/g, "");
-                    u = u.replace(/<\/mark>/g, "");
-                    var a = u.split("<div class=\"lyrics_txt\">");
-                    var b = u.split("<strong  class=\"tit\">");
-                    var c = u.split("<span class=\"name\">");
-                    replier.reply(msg.substr(4) + " 검색결과 입니다\n가수:" + c[2].split("<")[0] + "\n앨범 제목:" + c[1].split("<")[0] + "\n▼전체보기 클릭▼                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               \n가사정보:\n" + a[1].split("<")[0]);
+                var qwep = getHtml("https://cse.google.com/cse/element/v1?rsz=filtered_cse&num=10&hl=ko&source=gcsc&gss=.kr&sig=bc136da7ba6658e11a8ffa8e38396a3a&cx=partner-pub-1354836663865600:1871897532&q=" + encodeURIComponent(msg.substr(4)) + "&cse_tok=AOuiMRapz1pQt1TQ6v3k-kE-6nl0:1539160726662&googlehost=www.google.com&callback=google.search.Search.csqr929").split("formattedUrl");
+                var qwe2 = qwep[1].split('"');
+                if (qwe2[2].indexOf("http") == 0){
+                    c = qwe2[2]
                 }
+                else c = "http://" + qwe2[2]
+                doc = org.jsoup.Jsoup.connect(c)
+                .get()
+                
+                replier.reply("▼전체보기 클릭▼" + blank + android.text.Html.fromHtml(doc.select("div.col-md-8").html()))
             } catch (e) {
                 replier.reply("가사 정보가 없습니다. 다시 입력해보세요.");
             }
+            // 로또
             if (msg == "!로또") {
                 var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('<p class="number">')[1].trim()
                 var balls = []
