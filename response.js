@@ -33,7 +33,7 @@ DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n" +
     "활동을 하면 컴퓨톡 포인트(cp)를 부여합니다.\n" +
     "닉네임 변경시 나갔다 들어오신 후 이전 식별코드와 새로 발급된 식별코드를 각각 갠톡(rgbkakao) 또는 [!호출 9999 내용]으로 보내주셔야 데이터를 이전해드립니다.\n\n" +
     "》채팅 1개당 1cp 부여\n" +
-    "》매일 리셋되는 출석체크시 순위에 따라 300~100cp 부여\n" +
+    "》매일 리셋되는 출석체크시 순위에 따라 800~100cp 부여\n" +
     "》채팅 시 1%의 확률로 4~100cp 부여\n" +
     "》욕설 사용시 30cp씩 누적 차감\n\n" +
     "아래 설명에서 <> 안에 들어있는 내용은 직접 채우시는 겁니다.\n\n\n" +
@@ -54,10 +54,12 @@ DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n" +
     "!복권\n》[일 1회 제한|비용:100cp]복권에 응모합니다. 당첨자는 매일 00시 정각에 발표됩니다. (당첨 금액:100+누적 금액, VAT:20%)\n\n\n" +
     "◆[단어 포함 발동 방식]◆\n\n" +
     "ㅇㅈ? / ㅂㅇㄹ / 소라고둥 / 쓰읍\n\n\n" +
-    "◆[유틸리티]◆\n\n!견적생성<엔터키><키워드><엔터키><키워드>...\n" +
+    "◆[유틸리티]◆" +
+    "\n\n!견적생성<엔터키><키워드><엔터키><키워드>...\n" +
     "》스페이스바가 아닌 엔터키를 사용해 각 키워드를 분리합니다. 부품 이름을 엔터키로 구분해 대충 입력하면 다나와 견적으로 만들어 반환합니다.\n" +
     "!비교 <부품1,부품2>\n》(by 시공) 두 부품 이름을 대충 입력하면(되도록 영문으로만) userbenchmarks 사이트에서 비교한 링크를 출력합니다.\n" +
     "!단축 <주소>\n》주소를 단축합니다.\n" +
+    "!나무위키 <내용>\n》나무위키에서 해당 문서를 검색합니다.\n(아직 불완정)\n" +
     "!날씨\n》주요 지역의 날씨를 출력합니다.\n" +
     "!지역날씨 <지역>\n》해당 지역의 날씨를 출력합니다.\n" +
     "!실검\n》네이버 실시간 검색어 차트를 출력합니다.\n" +
@@ -68,7 +70,7 @@ DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n" +
     "!롤전적 <닉네임>\n》정확한 닉네임을 입력하면 해당 닉네임의 전적을 출력합니다.\n" +
     "!단어 <내용>\n》해당 단어의 뜻을 검색합니다.\n" +
     "!차트\n》네이버 뮤직 음원 순위를 출력합니다.\n" +
-    "!가사 <제목>\n》해당 노래의 가사를 출력합니다.\n" +
+    "!가사 <제목>\n》해당 노래의 가사를 출력합니다.\n(현재 고장 사용불가)\n" +
     "!번역 <언어> <내용>\n》내용을 해당 언어로 번역합니다.\n" +
     "◆[기타]◆\n\n!주사위\n》주사위를 굴려 결과값을 출력합니다.\n" +
     "!시간\n》현재 시각을 출력합니다.\n" +
@@ -76,6 +78,7 @@ DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n" +
     "!카운터 전체\n》DB 초기화 이후 올라온 모든 채팅 갯수를 출력합니다.\n" +
     "!카운터 자신\n》DB 초기화 이후 자신이 보낸 모든 채팅 갯수를 출력합니다.\n" +
     "!카운터 공지\n》공지가 출력되기까지 남은 채팅 갯수를 출력합니다. 공지가 출력될때 DB도 같이 저장됩니다.\n" +
+    "!인분\n》자신이 친 채팅을 퍼센트로 출력합니다.\n" +
     "!응답속도\n》캬옹봇의 passive 코드 실행속도를 출력합니다.\n" +
     "!동작시간\n》리로드 이후 현재까지 캬옹봇이 켜져있는 시간을 출력합니다.\n" +
     "!불여우호출 <할말>\n》불여우를 텔레그램으로 호출합니다.(봇이 죽었다던지 할때 사용)\n")
@@ -258,7 +261,8 @@ if ("ncounter" in DB == false) DB.ncounter = 0
 if ("acounter" in DB == false) DB.acounter = 0
 if ("p" in DB == false) DB.p = new Object()
 if ("lottery" in DB == false) DB.lottery = new Array()
-
+// response 시작지점 =============================================================== //
+// ================================================================================ //
 function response(room, msg, sender, isGroupChat, replier, ImageDB) {
     try {
         var timea = new Date().getTime();
@@ -307,7 +311,6 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         // 프사 저장
         if (DataBase.getDataBase(sender + "profile") == undefined) {
             DataBase.setDataBase(sender + "profile", java.lang.String(ImageDB.getProfileImage()).hashCode())
-            replier.reply("[" + sender + "]님의 프로필 사진을 새로 DB에 추가했습니다.\n" + java.lang.String(ImageDB.getProfileImage()).hashCode())
         }
         // 프사 확인
         if (msg == "!프사확인") {
@@ -327,7 +330,6 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         // 프사 변경시 새로 추가
         if (DataBase.getDataBase(sender + "profile") != java.lang.String(ImageDB.getProfileImage()).hashCode()) {
             DataBase.setDataBase(sender + "profile", java.lang.String(ImageDB.getProfileImage()).hashCode())
-            replier.reply("[" + sender + "]님의 프로필 사진이 변경된것 같아 DB에 수정했습니다.\n" + java.lang.String(ImageDB.getProfileImage()).hashCode())
         }
 
         /////////////////////////////////////////////////////////////////
@@ -859,8 +861,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             if (msg == "!인분") {
                 num = Number(DB.p[scode].counter) / Number(DB.acounter) * 100
-                replier.reply("["+sender+"]\n" + num.toFixed(3) + "%\n적용 공식 :: " + DB.p[scode].counter + "개 (" + sender + "님의 카운터) / " + DB.acounter + "개 (전체 카운터) X 100")
-                }
+                replier.reply("[" + sender + "]\n" + num.toFixed(3) + "%\n적용 공식 :: " + DB.p[scode].counter + "개 (" + sender + "님의 카운터) / " + DB.acounter + "개 (전체 카운터) X 100")
+            }
 
             if (msg == "!닉네임") {
                 replier.reply(sender)
@@ -1593,7 +1595,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             try {
                 if (msg.indexOf("!나무위키") == 0) {
                     doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substr(6)).get()
-                    replier.reply("전체보기 클릭" + blank + android.text.Html.fromHtml(replaceAll(doc.select(".wiki-macro-toc").select(".toc-item").toString(), "</span>", "<br>")) + "\n" + android.text.Html.fromHtml(doc.select(".wiki-inner-content").select(".wiki-heading-content")))
+                    replier.reply("▼전체보기 클릭▼" + blank + "☐목차" + android.text.Html.fromHtml(replaceAll(doc.select(".wiki-macro-toc").select(".toc-item").toString(), "</span>", "<br>")) + "\n☐내용" + android.text.Html.fromHtml(doc.select(".wiki-inner-content").select(".wiki-heading-content")))
                 }
             } catch (e) {
                 replier.reply("검색결과가 없습니다. 정확한 문서의 이름을 적어주십시오.");
