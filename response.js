@@ -1,7 +1,7 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.7.9.0"
-var updatecode = "!비트코인"
+var ver = "4.8.9.9.9.9.9.9."
+var updatecode = "지비가 언제쯤 5.0 만들려나"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase("errorchk", 0)
 var off = false
@@ -24,7 +24,7 @@ var DB = JSON.parse(DataBase.getDataBase("DB"));
 DataBase.setDataBase("DB", JSON.stringify(DB));
 */
 var blank = "​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​\n" //이거 유니코드이니까 띄어쓰기로 고치지 마세요 제발 ;;
-var admin = ["불여우", "AMD TR™", "rgb", "K'romium", "케이시", "DEBUG$MODE*NAME+", "GeForce", "핫산", "Yui"]
+var admin = ["불여우", "AMD TR™", "rgb", "K'romium", "케이시", "DEBUG$MODE*NAME+", "GeForce", "핫산", "Yui", "Apz74"]
 DB.notice = ("<공지사항을 숙지해 주시기 바랍니다.>\n\n공지사항: goo.gl/iyP83B\n\n채팅/홍보 이벤트 진행중, 공지사항 참조해주세요!\n\n방장 카카오톡 id : rgbkakao\n\n공식업체: compury.com ('엘' 님)\n\n모바일 메뉴열고 우측상단\nPC 채팅창 방제아래 상단바\n♡->♥ 하트 부탁 드려요")
 DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n" +
     "▼전체보기 클릭▼\n" + blank +
@@ -57,6 +57,7 @@ DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n" +
     "◆[유틸리티]◆\n\n!견적생성<엔터키><키워드><엔터키><키워드>...\n" +
     "》스페이스바가 아닌 엔터키를 사용해 각 키워드를 분리합니다. 부품 이름을 엔터키로 구분해 대충 입력하면 다나와 견적으로 만들어 반환합니다.\n" +
     "!비교 <부품1,부품2>\n》(by 시공) 두 부품 이름을 대충 입력하면(되도록 영문으로만) userbenchmarks 사이트에서 비교한 링크를 출력합니다.\n" +
+    "!단축 <주소>\n》주소를 단축합니다.\n" +
     "!날씨\n》주요 지역의 날씨를 출력합니다.\n" +
     "!지역날씨 <지역>\n》해당 지역의 날씨를 출력합니다.\n" +
     "!실검\n》네이버 실시간 검색어 차트를 출력합니다.\n" +
@@ -69,7 +70,6 @@ DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n" +
     "!차트\n》네이버 뮤직 음원 순위를 출력합니다.\n" +
     "!가사 <제목>\n》해당 노래의 가사를 출력합니다.\n" +
     "!번역 <언어> <내용>\n》내용을 해당 언어로 번역합니다.\n" +
-    "!언어\n》번역에서 사용 가능한 언어를 출력합니다.\n\n\n" +
     "◆[기타]◆\n\n!주사위\n》주사위를 굴려 결과값을 출력합니다.\n" +
     "!시간\n》현재 시각을 출력합니다.\n" +
     "!디지털시계\n》현재 시각을 디지털 시계 형식으로 출력합니다.\n" +
@@ -78,7 +78,7 @@ DB.ncommand = ("◇[캬옹봇 " + ver + "] 명령어 목록◇\n" +
     "!카운터 공지\n》공지가 출력되기까지 남은 채팅 갯수를 출력합니다. 공지가 출력될때 DB도 같이 저장됩니다.\n" +
     "!응답속도\n》캬옹봇의 passive 코드 실행속도를 출력합니다.\n" +
     "!동작시간\n》리로드 이후 현재까지 캬옹봇이 켜져있는 시간을 출력합니다.\n" +
-    "!불여우호출\n》불여우를 텔레그램으로 호출합니다.(봇이 죽었다던지 할때 사용)\n")
+    "!불여우호출 <할말>\n》불여우를 텔레그램으로 호출합니다.(봇이 죽었다던지 할때 사용)\n")
 var startmsg = "▃▄▅▆|KyaongBot|▆▅▄▃"
 var w = "D쥐고,D지고,jot같,tlqkf,wlfkf,ㅁㅈㅎ,ㅁㅊ,ㅁ친,ㅄ,ㅅㄲ네,ㅅㄲ들,ㅅㅋ,ㅅ발,ㅆㄺ,ㅆㅂ,ㅈㄹ,ㅉ질한,凸,가카,간민정음,간철수,갈보,갓치,강된장남,개간년,개같,개같이,개년,개념빠가,개뇬,개독,개독교,개련,개마이,개미친,개부랄,개불알,개빠구리,개뼉다구,개새,개새기,개새끼,개색,개섹,개셈,개쌍도,개쌍디언,개쌔끼,개자석,개자슥,개자식,개저씨,경상디언,계새끼,고무통,고무현,골1빈,골빈,골좁이,관종,괘새끼,구씹,규재찡,그따구,근혜찡,글러먹,기레기,기자레기,김치남,김치녀,까보전,꺼져,껒여,꼬춘쿠키,꼴갑,꼴값,꼴깝,꼴통,낙태충,냄져,넌씨눈,네다보,네다통,네다홍,년놈,노무노무,노미넴,노부엉,노시계,노알라,노운지,노인네,노짱,노친네,뇌물현,뇌텅,눈깔,눈새,느검마,느그애미,느그애비,느그엄마,느금마,늬믜,늬미,니기미,니년,니믜,니미럴,니애미,니애비,니어미,니엄마,닝기리,닥쳐라,닥치세,대가리,대갈빡,대갈통,대굴빡,덜떨어,도라이,도랏,도랐,도른,돌앗구만,돌앗나,돌앗네,돌았구만,돌았나,돌았네,뒈져,뒈진다,뒤져라,뒤져버,뒤져야,뒤져야지,뒤져요,뒤졌,뒤지겠,뒤지고싶,뒤지길,뒤진다,뒤질,등쉰,등신,디져라,디졌,디지고,디질,딴년,딸따뤼,딸따리,딸딸,딸딸이,또라이,또라인,똘아이,똘추,똥멍청,로류,맘충,매춘,머갈,멍청도,몸파는,무현RT,믜칀,믜친,미러링,미시친발,미쳣네,미쳤나,미쳤니,미췬,미칀,미친,미친개,미친새,미친색,박원숭,발정,배때지,별창,병신,병크,보라니,보력지원,보밍,보빨,보슬,보짓,보털,보테크,보혐,부랄,부랄발광,부럴,불알,붸충,븅딱,븅삼,븅쉰,븅신,빙딱,빙삼,빙시,빙신,빠구뤼,빠구리,빠꾸뤼,빠꾸리,빠순이,빠큐,빵즈,뻐규,뻐큐,뻑유,뻑큐,뻨큐,뼈큐,뽀르노,뽀오지,사까쉬,사까시,사새끼,삼일한,상노무,상놈,새1끼,새77ㅣ,새갸,새꺄,새뀌,새끼,새끼라,새끼야,새뤼,새리,새캬,새퀴,새킈,새키,색희,색히,샊기,샊히,생키,샹년,섀키,설라디언,섬숭이,성괴,섹하고,섹하구,섹하자,섹하장,소라넷,솔친,숨쉴한,쉬발,쉬버,쉬빨,쉬뻘,쉬뿔,쉬이바,쉬파,쉬팍,쉬팔,쉬팡,쉬펄,쉬퐁,쉬풀,슈1발,슈발,슈벌,슈우벌,스너프,스댕,스뎅,스발,스벌,스팔,스펄,슴가,싀발,싀밸,싀벌,싀벨,싀봉,싀팍,싀팔,싀펄,싑창,시1발,시미발친,시미친발,시바,시바라지,시바류,시바알,시바앙,시발,시방새,시벌탱,시볼탱,시부럴,시부렬,시부울,시뷰럴,시뷰렬,시빨,시새발끼,시이발,시친발미,시키가,시팔,시펄,십창,십팔,싸갈통,싸까시,싸물어,싸이코,싸카시,쌍너엄,쌍넌,쌍넘,쌍녀언,쌍년,쌍놈,쌍뇬,쌍눔,쌍늠,쌔끼,썅,썅넘,썅년,썅놈,썅뇬,썅눔,썅늠,썌끼,써글,썩을넘,썩을년,썩을놈,썩을뇬,썩을눔,썩을늠,쒸펄,쓰레기새,씌바,씌박,씌발,씌방,씌밸,씌벌,씌벙,씌벨,씌부랄,씌불,씌블,씌빌,씌빨,씌뻘,씌파,씌팍,씌팔,씌팡,씌펄,씌퐈,씌퐝,씝창,씨1발,씨바라,씨바알,씨발,씨방새,씨버럼,씨벌,씨벌탱,씨볼탱,씨부럴,씨부렬,씨뷰럴,씨뷰렬,씨빠빠,씨빨,씨뻘,씨새발끼,씨이발,씨팔,씹귀,씹못,씹뻐럴,씹새끼,씹선비,씹쌔,씹창,씹치,씹치남,씹팔,씹할,아가리,아가지,아갈이,아괄,아구리,아구지,아구창,아굴창,아닥,아오시바,암베,애미뒤,애미터,애비충,앰뒤,앰창,엠뷩신,엠븽신,엠빙신,엠생,엠창,염병,엿같,엿이나,옘병,오유충,운지,욷높,원조가카,은새끼,응딩이,이새끼,일게이,일벤저스,일벤져스,일붸,자1지,자들자들,자릉내,자쥐,자즤,자취냄,자혐,재기찡,재기하다,전땅크,전라디언,절라,젖같,젗같,젠신병자,젼나,젼낰,졀라,졀리,졌같은,졏같,조까,조낸,조온나,조옷,족까,존나,존낙,존내,졸라,좁밥,좃,종나,좆,좆까,좇,좌고라,좌빨,좌음,좌좀,죠낸,죠온나,죤나,죤내,죵나,죶,주둥아리,주둥이,주절먹,죽여 버리고,죽여버리고,죽여불고,죽여뿌고,중력절,줬같은,쥐랄,쥰나,즤랄,지랄,지롤,지인지조,짱깨,짱께,쪽1바리,쪽국,쪽바리,쪽발,쯰질,찌질한,찝째끼,창녀,창년,창놈,챙놈,청웅,쳐먹,쳐받는,쳐발라,취ㅈ,취좃,탈김치,탈라도,통궈,투명애비,피떡갈비,핑좆남,한남,한남또,한남충,할아보지,핵대중,핵펭귄,행게이,호로새끼,호로잡,호뽑뽑요,혼외수,홍팍,화낭년,화냥년,후레,후려,후빨,후장,盧"
 var words = w.split(",");
@@ -97,6 +97,61 @@ UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
         Log.debug(e + " At:" + e.lineNumber);
     }
 };
+function getByteLength(s, b, i, c) {
+    for (b = i = 0; c = s.charCodeAt(i++); b += c >> 11 ? 3 : c >> 7 ? 2 : 1);
+    return b;
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function isInt(x) {
+    return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
+}
+
+function getHtml(text) {
+    var content = new java.io.ByteArrayOutputStream();
+    android.net.http.AndroidHttpClient.newInstance("userAgent").execute(new org.apache.http.client.methods.HttpGet(text)).getEntity().writeTo(content);
+    content.close();
+    var str = String(content.toString());
+    return str;
+}
+
+function checkDetailUrl(strUrl) {
+    var expUrl = /^(http\:\/\/)?((\w+)[.])+(asia|biz|cc|cn|com|de|eu|in|info|jobs|jp|kr|mobi|mx|name|net|nz|org|travel|tv|tw|uk|us)(\/(\w*))*$/i;
+    return expUrl.test(strUrl);
+}
+function leadingZeros(n, digits) {
+    var zero = '';
+    n = n.toString();
+
+    if (n.length < digits) {
+        for (i = 0; i < digits - n.length; i++)
+            zero += '0';
+    }
+    return zero + n;
+}
+function getTimeStamp() {
+    var d = new Date();
+    var s =
+        leadingZeros(d.getFullYear(), 4) + '-' +
+        leadingZeros(d.getMonth() + 1, 2) + '-' +
+        leadingZeros(d.getDate(), 2) + ', ' +
+
+        leadingZeros(d.getHours(), 2) + ':' +
+        leadingZeros(d.getMinutes(), 2) + ':' +
+        leadingZeros(d.getSeconds(), 2);
+
+    return s;
+}
+function getYMDStamp() {
+    var d = new Date();
+    var s =
+        leadingZeros(d.getFullYear(), 4) +
+        leadingZeros(d.getMonth() + 1, 2) +
+        leadingZeros(d.getDate(), 2)
+    return s;
+}
 function lolStat(nick) {
     var mmr = true, unranked = false
     try {
@@ -138,59 +193,6 @@ function lolStat(nick) {
 function getByteLength(s, b, i, c) {
     for (b = i = 0; c = s.charCodeAt(i++); b += c >> 11 ? 3 : c >> 7 ? 2 : 1);
     return b;
-}
-
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-function isInt(x) {
-    return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
-}
-
-function getHtml(text) {
-    var content = new java.io.ByteArrayOutputStream();
-    android.net.http.AndroidHttpClient.newInstance("userAgent").execute(new org.apache.http.client.methods.HttpGet(text)).getEntity().writeTo(content);
-    content.close();
-    var str = String(content.toString());
-    return str;
-}
-
-function wiki(query) {
-    kiwi = Utils.getWebText('http://49.236.137.7/wiki/' + query)
-    kiwi = kiwi.substring(32)
-    kiwi = kiwi.substring(0, kiwi.length - 17)
-    return kiwi.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "")
-}
-function leadingZeros(n, digits) {
-    var zero = '';
-    n = n.toString();
-
-    if (n.length < digits) {
-        for (i = 0; i < digits - n.length; i++)
-            zero += '0';
-    }
-    return zero + n;
-}
-function getTimeStamp() {
-    var d = new Date();
-    var s =
-        leadingZeros(d.getFullYear(), 4) + '-' +
-        leadingZeros(d.getMonth() + 1, 2) + '-' +
-        leadingZeros(d.getDate(), 2) + ', ' +
-
-        leadingZeros(d.getHours(), 2) + ':' +
-        leadingZeros(d.getMinutes(), 2) + ':' +
-        leadingZeros(d.getSeconds(), 2);
-
-    return s;
-}
-function getYMDStamp() {
-    var d = new Date();
-    var s =
-        leadingZeros(d.getFullYear(), 4) +
-        leadingZeros(d.getMonth() + 1, 2) +
-        leadingZeros(d.getDate(), 2)
-    return s;
 }
 
 
@@ -346,8 +348,12 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 DB.icode = ta2
 
                 var scode = DB.icode[DB.inick.indexOf(sender)]; // scode: 전송자의 식별코드
-                replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n질문은 질문방에서 부탁드립니다.\nhttps://open.kakao.com/o/gMZcH6T\n[신규 코드 등록]\n" + sender + " - " + scode)
-
+                if (room != "컴퓨톡_잡담방"){
+                replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡 질문방에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n[신규 코드 등록]\n" + sender + " - " + scode)
+                }
+                else{
+                    replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n질문은 질문방에서 부탁드립니다.\nhttps://open.kakao.com/o/gMZcH6T\n[신규 코드 등록]\n" + sender + " - " + scode)
+                }
                 DB.p[scode] = new Object()
 
                 DB.p[scode].attendance = false
@@ -425,23 +431,23 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             if (DB.p[scode].attendance == false) {
                 DB.attendance++;
                 if (DB.attendance == 1) {
-                    var cp = 500
+                    var cp = 800
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
                 } else if (DB.attendance == 2) {
-                    var cp = 300
+                    var cp = 500
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
                 } else if (DB.attendance > 2 && DB.attendance < 6) {
-                    var cp = 150
+                    var cp = 300
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
                 } else if (DB.attendance > 4 && DB.attendance < 21) {
-                    var cp = 100
+                    var cp = 200
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
                 } else {
-                    var cp = 75
+                    var cp = 100
                     DB.p[scode].pt += cp
                     replier.reply("[" + sender + "]\n" + DB.attendance + "등으로 출석체크!\n" + cp + "cp가 지급됩니다!")
                 }
@@ -1093,7 +1099,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 }
                 for (var n = 0; n < admin.length; n++) {
                 }
-                var msg1 = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, "");
+                var msg1 = msg.replace(/[^(가-힣)]/gi, "");
                 for (var n = 0; n < words.length; n++) {
                     if (msg1.indexOf(words[n]) != -1) {
                         DB.p[scode].warning++
@@ -1252,8 +1258,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             //코드검색
             loop: {
-
-                if (msg.indexOf("!코드검색") == 0) {
+                if (msg.split(" ")[0] == "!코드검색") {
                     var key = msg.split(" ")[1];
                     if (key.length <= 1) {
                         replier.reply("2글자 이상 입력해 주세요.");
@@ -1271,9 +1276,6 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                         break loop;
                     }
                     replier.reply(list.join([separator = ""]));
-                }
-                else if (msg == "!코드검색") {
-                    replier.reply("뒤에 코드를 적어주세요.")
                 }
             }
 
@@ -1559,12 +1561,22 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     replier.reply("배그 전적 정보가 없습니다.")
                 }
             }
+            // 주소 단축
+            if (msg.indexOf("!단축") == 0) {
+                u = msg.substr(4)
+                if (checkDetailUrl(u)) {
+                    c = org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(u))
+                        .get()
+                        .text()
+                        replier.reply(c)
+                }
+                else replier.reply("정확한 주소를 적어주세요.")
+
+            }
             // 롤 전적
             if (msg.indexOf("!롤전적") == 0) {
                 replier.reply(lolStat(msg.substr(5)))
             }
-
-
             // 배그 서버 상태
             if (msg == "!배그서버") {
                 replier.reply("현재 배그 서버의 동접자는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").split('현재 배틀그라운드 동접자: ')[1].split('<a href="/statistics/playing">')[0].trim() + "이며, 서버는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").trim().split('서버:</strong> <span>')[1].split('</span>')[0] + "입니다.")
@@ -1585,9 +1597,6 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             } catch (e) {
                 replier.reply("가사 정보가 없습니다. 다시 입력해보세요.");
             }
-            // 니가
-            if (msg.indexOf("니가") == 0) replier.reply("니가?????????????????????????\n흑인분들을 차별하는 거냐!")
-            // 로또
             if (msg == "!로또") {
                 var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('<p class="number">')[1].trim()
                 var balls = []
@@ -1596,7 +1605,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 }
                 replier.reply("[" + getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin").split('class="result_title"><strong>')[1].split('<')[0].trim() + "회차 로또 당첨 번호]\n" + balls + " + " + ball.split('alt="')[7].split('"/></span>')[0])
             }
-            // 로또 특정 회차
+
             try {
                 if (msg.indexOf("!로또 ") == 0) {
                     var ball = getHtml("http://www.nlotto.co.kr/gameResult.do?method=byWin&drwNo=" + msg.substr(4)).split('<p class="number">')[1].trim()
@@ -1627,7 +1636,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             }
 
-            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+" || sender == "인성터진 시공놈") {
+            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
                 try {
                     if (msg.indexOf("!eval ") == 0) {
                         replier.reply(eval(msg.substring(6)))
@@ -1715,7 +1724,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         var error = true;
         if (DataBase.getDataBase("errorchk") == 0) {
             Utils.getWebText("https://api.telegram.org/bot607216116:AAFhcn0ybpyCw_xwno2ga6pyA-9vF8dOdis/sendmessage?text=" + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)) + "&chat_id=338145573")
-            replier.reply("ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
+            Api.replyRoom("간부방", "ERROR!\nmessage : " + e.message + "\nline no. : " + Number(Number(e.lineNumber) + Number(1)))
             DataBase.setDataBase("errorchk", 1)
             Api.reload();
         }
