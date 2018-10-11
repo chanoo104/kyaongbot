@@ -153,13 +153,13 @@ function getYMDStamp() {
     return s;
 }
 function getRightURL(n) {
-    var tmpURL = n.replace(cs/g, "")
+    var tmpURL = n
     var tmp = tmpURL.toLowerCase();
-    if( tmp.indexOf("http://") == 0 ||
+    if (tmp.indexOf("http://") == 0 ||
         tmp.indexOf("https://") == 0)
-            return tmpURL;
+        return tmpURL;
     else
-            return "http://"+tmpURL ;
+        return "http://" + tmpURL;
 }
 function lolStat(nick) {
     var mmr = true, unranked = false
