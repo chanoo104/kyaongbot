@@ -1595,7 +1595,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             try {
                 if (msg.indexOf("!나무위키") == 0) {
                     doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substr(6)).get()
-                    replier.reply("▼전체보기 클릭▼" + blank + "☐목차" + android.text.Html.fromHtml(replaceAll(doc.select(".wiki-macro-toc").select(".toc-item").toString(), "</span>", "<br>")) + "\n☐내용" + android.text.Html.fromHtml(doc.select(".wiki-inner-content").select(".wiki-heading-content")))
+                    replier.reply("▼전체보기 클릭▼" + blank + "》목차\n" + android.text.Html.fromHtml(replaceAll(doc.select(".wiki-macro-toc").select(".toc-item").toString(), "</span>", "<br>")) + "\n☐내용\n" + android.text.Html.fromHtml(doc.select(".wiki-inner-content").select(".wiki-heading-content")))
                 }
             } catch (e) {
                 replier.reply("검색결과가 없습니다. 정확한 문서의 이름을 적어주십시오.");
