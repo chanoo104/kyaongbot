@@ -1,6 +1,6 @@
 /* [KyaongBot] */
 var timeo = new Date().getTime();
-var ver = "4.8.9.9.9.9.9.9."
+var ver = "4.9.8.9.9.9"
 var updatecode = "지비가 언제쯤 5.0 만들려나"
 var error = false;
 if (typeof DataBase.getDataBase("errorchk") == "undefined") DataBase.setDataBase("errorchk", 0)
@@ -160,6 +160,9 @@ function getRightURL(n) {
         return tmpURL;
     else
         return "http://" + tmpURL;
+}
+function replaceAll(str, searchStr, replaceStr) {
+    return str.split(searchStr).join(replaceStr);
 }
 function lolStat(nick) {
     var mmr = true, unranked = false
@@ -1589,6 +1592,15 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             // 배그 서버 상태
             if (msg == "!배그서버") {
                 replier.reply("현재 배그 서버의 동접자는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").split('현재 배틀그라운드 동접자: ')[1].split('<a href="/statistics/playing">')[0].trim() + "이며, 서버는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").trim().split('서버:</strong> <span>')[1].split('</span>')[0] + "입니다.")
+            }
+            // 나무위키
+            try {
+                if (msg.indexOf("!나무위키") == 0) {
+                    doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substr(6)).get()
+                    replier.reply("전체보기 클릭" + blank + android.text.Html.fromHtml(replaceAll(doc.select(".wiki-macro-toc").select(".toc-item").toString(), "</span>", "<br>")) + "\n" + android.text.Html.fromHtml(doc.select(".wiki-inner-content").select(".wiki-heading-content")))
+                }
+            } catch (e) {
+                replier.reply("검색결과가 없습니다. 정확한 문서의 이름을 적어주십시오.");
             }
             // 가사 정보
             try {
