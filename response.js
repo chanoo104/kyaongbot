@@ -1658,7 +1658,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             }
 
-            if (sender == "rgb" || sender == "불여우" || sender == "DEBUG$MODE*NAME+") {
+            if (sender == "rgb" || sender == "불여우" || sender == "인성터진 시공놈") {
                 try {
                     if (msg.indexOf("!eval ") == 0) {
                         replier.reply(eval(msg.substring(6)))
