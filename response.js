@@ -857,14 +857,10 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
 
             if (msg == "!카운터 자신") replier.reply("[" + sender + "]\n" + DB.p[scode].counter)
 
-            if (msg.split(" ")[0] == "!인분") {
-                if (isInt(msg.split(" ")[1])) {
-                    num = Number(DB.p[scode].counter) / Number(DB.acounter) * msg.split(" ")[1]
-                    replier.reply(sender + "님의 채팅 인분 :: " + num.toFixed(3) + "인분")
+            if (msg == "!인분") {
+                num = Number(DB.p[scode].counter) / Number(DB.acounter) * 100
+                replier.reply("["+sender+"]\n" + num.toFixed(3) + "%\n적용 공식 :: " + DB.p[scode].counter + "개 (" + sender + "님의 카운터) / " + DB.acounter + "개 (전체 카운터) X 100")
                 }
-                else replier.reply("뒤에 현재 방 인원을 적어주세요.")
-            }
-            else if (msg == "!인분") replier.reply("뒤에 현재 방 인원을 적어주세요.")
 
             if (msg == "!닉네임") {
                 replier.reply(sender)
