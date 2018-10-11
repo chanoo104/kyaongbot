@@ -1592,16 +1592,17 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
             }
             // 가사 정보
             try {
-                var qwep = getHtml("https://cse.google.com/cse/element/v1?rsz=filtered_cse&num=10&hl=ko&source=gcsc&gss=.kr&sig=bc136da7ba6658e11a8ffa8e38396a3a&cx=partner-pub-1354836663865600:1871897532&q=" + encodeURIComponent(msg.substr(4)) + "&cse_tok=AOuiMRapz1pQt1TQ6v3k-kE-6nl0:1539160726662&googlehost=www.google.com&callback=google.search.Search.csqr929").split("formattedUrl");
-                var qwe2 = qwep[1].split('"');
-                if (qwe2[2].indexOf("http") == 0){
-                    c = qwe2[2]
+                if (msg == "!가사") {
+                    var qwep = getHtml("https://cse.google.com/cse/element/v1?rsz=filtered_cse&num=10&hl=ko&source=gcsc&gss=.kr&sig=bc136da7ba6658e11a8ffa8e38396a3a&cx=partner-pub-1354836663865600:1871897532&q=" + encodeURIComponent(msg.substr(4)) + "&cse_tok=AOuiMRapz1pQt1TQ6v3k-kE-6nl0:1539160726662&googlehost=www.google.com&callback=google.search.Search.csqr929").split("formattedUrl");
+                    var qwe2 = qwep[1].split('"');
+                    if (qwe2[2].indexOf("http") == 0) {
+                        c = qwe2[2]
+                    }
+                    else c = "http://" + qwe2[2]
+                    doc = org.jsoup.Jsoup.connect(c)
+                        .get()
+                    replier.reply("▼전체보기 클릭▼" + blank + android.text.Html.fromHtml(doc.select("div.col-md-8").html()))
                 }
-                else c = "http://" + qwe2[2]
-                doc = org.jsoup.Jsoup.connect(c)
-                .get()
-                
-                replier.reply("▼전체보기 클릭▼" + blank + android.text.Html.fromHtml(doc.select("div.col-md-8").html()))
             } catch (e) {
                 replier.reply("가사 정보가 없습니다. 다시 입력해보세요.");
             }
