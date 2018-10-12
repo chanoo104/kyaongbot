@@ -100,6 +100,7 @@ UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
         Log.debug(e + " At:" + e.lineNumber);
     }
 };
+
 function getByteLength(s, b, i, c) {
     for (b = i = 0; c = s.charCodeAt(i++); b += c >> 11 ? 3 : c >> 7 ? 2 : 1);
     return b;
@@ -108,6 +109,7 @@ function getByteLength(s, b, i, c) {
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
 function isInt(x) {
     return !isNaN(x) && eval(x).toString().length == parseInt(eval(x)).toString().length
 }
@@ -124,6 +126,7 @@ function checkDetailUrl(strUrl) {
     var expUrl = /^(http\:\/\/)?((\w+)[.])+(asia|biz|cc|cn|com|de|eu|in|info|jobs|jp|kr|mobi|mx|name|net|nz|org|travel|tv|tw|uk|us)(\/(\w*))*$/i;
     return expUrl.test(strUrl);
 }
+
 function leadingZeros(n, digits) {
     var zero = '';
     n = n.toString();
@@ -134,6 +137,7 @@ function leadingZeros(n, digits) {
     }
     return zero + n;
 }
+
 function getTimeStamp() {
     var d = new Date();
     var s =
@@ -147,6 +151,7 @@ function getTimeStamp() {
 
     return s;
 }
+
 function getYMDStamp() {
     var d = new Date();
     var s =
@@ -155,6 +160,7 @@ function getYMDStamp() {
         leadingZeros(d.getDate(), 2)
     return s;
 }
+
 function getRightURL(n) {
     var tmpURL = n
     var tmp = tmpURL.toLowerCase();
@@ -164,11 +170,14 @@ function getRightURL(n) {
     else
         return "http://" + tmpURL;
 }
+
 function replaceAll(str, searchStr, replaceStr) {
     return str.split(searchStr).join(replaceStr);
 }
+
 function lolStat(nick) {
-    var mmr = true, unranked = false
+    var mmr = true,
+        unranked = false
     try {
         var doc = org.jsoup.Jsoup.connect("http://www.op.gg/summoner/userName=" + nick).header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7").get();
         try {
@@ -189,22 +198,27 @@ function lolStat(nick) {
             arr.push(doc.select('.ChampionBox:eq(' + i + ') div[title=승률]').text());
             arr.push('\n');
         }
-        var list = arr.join(''), arr = [];
+        var list = arr.join(''),
+            arr = [];
         arr.push('[' + doc.select("div.SummonerName").text() + ']\n');
         if (!unranked) arr.push(doc.select('div.LadderRank').text() + '\n');
         arr.push('| LV ' + doc.select('span[class=Level tip]').text() + ' | ');
-        if (!unranked) { arr.push(doc.select('div.Tier').get(0).text() + ' | ' + doc.select('div.LP').get(0).text() + ' |') } else arr.push('Unranked |')
+        if (!unranked) {
+            arr.push(doc.select('div.Tier').get(0).text() + ' | ' + doc.select('div.LP').get(0).text() + ' |')
+        } else arr.push('Unranked |')
         if (doc.select('div div span.Item').text() != '') arr.push('\n[ ' + doc.select('div div span.Item').text() + ' ]');
         arr.push('\n\n》최근 20게임 전적\n ' + doc.select('div.WinRatioTitle span.win').text() + '승 ' + doc.select('div.WinRatioTitle span.lose').text() + '패, ' + doc.select('div.WinRatioTitle b').text());
         if (!unranked) arr.push('\n》솔랭 전적\n ' + doc.select('div.WinLose').get(0).text());
         arr.push('\n》MOST 챔피언\n' + list);
         if (mmr) arr.push('\n예상 MMR : ' + doc1.select('td.MMR').text() + '\n예상 티어 : ' + doc1.select('td.TierRankString').text());
-        if (mmr) if (doc1.select('div.TipStatus').text() != '') arr.push('\n' + doc1.select('div.TipStatus').text());
+        if (mmr)
+            if (doc1.select('div.TipStatus').text() != '') arr.push('\n' + doc1.select('div.TipStatus').text());
         return arr.join('')
     } catch (e) { //결과값을 찾을수 없으면
         return ("전적 정보가 없습니다.");
     }
 }
+
 function getByteLength(s, b, i, c) {
     for (b = i = 0; c = s.charCodeAt(i++); b += c >> 11 ? 3 : c >> 7 ? 2 : 1);
     return b;
@@ -323,8 +337,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     replier.reply(sender + '님 프사가 변경 된것으로 보입니다. 변경된것이 맞다면 간부방으로 "!프사변경"이라고 보내주십시오. 만약 변경한게 아니면 무시하시면 됩니다. 그리고 변경 하지 않았는데 뜨시면 역시 간부방에 보내주십시오.\n 그전까진 캬옹봇을 사용하실수 없습니다.')
                     DataBase.setDataBase(sender + "once", "true")
                     return;
-                }
-                else return;
+                } else return;
             }
         }
         // 프사 변경시 새로 추가
@@ -364,8 +377,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 var scode = DB.icode[DB.inick.indexOf(sender)]; // scode: 전송자의 식별코드
                 if (room != "컴퓨톡_잡담방") {
                     replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡 질문방에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n[신규 코드 등록]\n" + sender + " - " + scode)
-                }
-                else {
+                } else {
                     replier.reply(startmsg + "\n자유로운 컴퓨터 커뮤니티 컴퓨톡에 오신 것을 환영합니다.\n!명령어로 명령어를 확인하세요.\n질문은 질문방에서 부탁드립니다.\nhttps://open.kakao.com/o/gMZcH6T\n[신규 코드 등록]\n" + sender + " - " + scode)
                 }
                 DB.p[scode] = new Object()
@@ -710,7 +722,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i] / factor[i]);
                     getDB("pwr", "http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=1928673,5129268,3272823,5615143&quantityList=1,1,1,1&marketPlaceSeq=16&type=print")
                     //1928673,5129268,3272823,5615143
-                    var factor = [1, 1, 1, 1,];
+                    var factor = [1, 1, 1, 1, ];
                     for (var i = 0; i < factor.length; i++) DB.price[DB.cat][i] = Math.round(DB.preprice[DB.cat][i] / factor[i]);
 
                     replier.reply("DB 후처리중...")
@@ -881,7 +893,9 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     ctemp2.push(DB.p[DB.icode[i]].pt)
                 }
                 var ctemp3 = ctemp2.slice()
-                ctemp2.sort(function (f, s) { return s - f; });
+                ctemp2.sort(function (f, s) {
+                    return s - f;
+                });
                 ctemp2 = ctemp2.splice(0, 15);
                 var out = [];
                 out.push("◇[포인트 순위]◇\n▼전체보기 클릭▼\n" + blank + "\n")
@@ -1107,8 +1121,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 for (var n = 0; n < notwords.length; n++) {
                     if (msg.indexOf(notwords[n]) != -1) break loop;
                 }
-                for (var n = 0; n < admin.length; n++) {
-                }
+                for (var n = 0; n < admin.length; n++) {}
                 var msg1 = msg.replace(/[^(가-힣)]/gi, "");
                 for (var n = 0; n < words.length; n++) {
                     if (msg1.indexOf(words[n]) != -1) {
@@ -1239,7 +1252,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                 if (msg.split(" ")[0] == "!코드변경") {
                     var to = msg.split("!코드변경 ")[1]
                     if (typeof to == "undefined") replier.reply("1000에서 9999까지의 자연수를 입력해 주십시오.");
-                    if (! /^[0-9]+$/.test(to) || to.indexOf("0") == 0) {
+                    if (!/^[0-9]+$/.test(to) || to.indexOf("0") == 0) {
                         replier.reply("잘못된 입력입니다.");
                         break loop;
                     }
@@ -1465,7 +1478,8 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                                 }
                             }
                         }
-                    } else {
+                    }
+                    else {
                         replier.reply("0, 7, 12, 22시 30~59분에만 사용 가능합니다.")
                     }
                 } else {
@@ -1566,8 +1580,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                         }
                     }
                     replier.reply("[" + msg.substr(6) + "]님의 배그 레이팅 점수는\n솔로 : " + solo + " 듀오 : " + duo + " 스쿼드 : " + squad + " 입니다.")
-                }
-                catch (e) {
+                } catch (e) {
                     replier.reply("배그 전적 정보가 없습니다.")
                 }
             }
@@ -1579,8 +1592,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                         .get()
                         .text()
                     replier.reply(c)
-                }
-                else replier.reply("정확한 주소를 적어주세요.")
+                } else replier.reply("정확한 주소를 적어주세요.")
 
             }
             // 롤 전적
@@ -1607,8 +1619,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     var qwe2 = qwep[1].split('"');
                     if (qwe2[2].indexOf("http") == 0) {
                         c = qwe2[2]
-                    }
-                    else c = "http://" + qwe2[2]
+                    } else c = "http://" + qwe2[2]
                     doc = org.jsoup.Jsoup.connect(c)
                         .get()
                     replier.reply("▼전체보기 클릭▼" + blank + android.text.Html.fromHtml(doc.select("div.col-md-8").html()))
@@ -1661,8 +1672,7 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
                     if (msg.indexOf("!eval ") == 0) {
                         replier.reply(eval(msg.substring(6)))
                     }
-                }
-                catch (e) {
+                } catch (e) {
                     replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
                 }
             }
@@ -1750,4 +1760,3 @@ function response(room, msg, sender, isGroupChat, replier, ImageDB) {
         }
     }
 }
-
