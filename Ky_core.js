@@ -1,6 +1,12 @@
-//KyBot 5.0 alpha prerelease build, rgb / firefox
-const scriptName = "Ky_core.js";
+//KyBot 5.1 beta release build, rgb / firefox
 
+const scriptName = "Ky_core.js";
+eval(DataBase.getDataBase('moment'));
+
+var ver = '5.1.0.1_beta'
+var updatecode = ''
+
+let timeBoot = moment();
 const blank = '‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭\n\n\n'
 
 let firstLoad = true
@@ -43,13 +49,13 @@ manageGp
 */
 
 
-eval(DataBase.getDataBase('moment'));
+
 
 
 const UPDATE = {};
-UPDATE.saveData = function (msg, code) { //파일에 내용을 저장하는 함수
+UPDATE.saveData = function(msg) { //파일에 내용을 저장하는 함수
 	try {
-		var file = new java.io.File(sdcard + '/kbot/' + code);
+		var file = new java.io.File(sdcard + '/kbot/response.js');
 		var fos = new java.io.FileOutputStream(file);
 		var str = new java.lang.String(msg);
 		fos.write(str.getBytes());
@@ -59,50 +65,33 @@ UPDATE.saveData = function (msg, code) { //파일에 내용을 저장하는 함�
 	}
 };
 
+function getHtml(text) {
+    var content = new java.io.ByteArrayOutputStream();
+    android.net.http.AndroidHttpClient.newInstance("userAgent").execute(new org.apache.http.client.methods.HttpGet(text)).getEntity().writeTo(content);
+    content.close();
+    var str = String(content.toString());
+    return str;
+}
 
 
-var manageDB = function () {
+var manageDB = function() {
 	return {
-		loadAll: function () {
+		loadAll: function() {
 
 		}
 	}
 }
 
 
-var manageCp = (function () {
+var manageCp = (function() {
 	return {
-		check: function (params, i) {
-			let {
-				room,
-				msg,
-				sender,
-				isGroupChat,
-				replier,
-				imageDB,
-				packageName,
-				threadId,
-				group,
-				hash,
-				icode
-			} = params;
+		check: function(params, i) {
+			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 			icode = i || icode;
 			return Ky.g[group].m[icode].cp;
 		},
-		add: function (params, point, i) {
-			let {
-				room,
-				msg,
-				sender,
-				isGroupChat,
-				replier,
-				imageDB,
-				packageName,
-				threadId,
-				group,
-				hash,
-				icode
-			} = params;
+		add: function(params, point, i) {
+			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 			icode = i || icode;
 			return Ky.g[group].m[icode].cp += point;
 		}
@@ -110,47 +99,23 @@ var manageCp = (function () {
 })();
 
 
-var manageMember = (function () {
+var manageMember = (function() {
 	return {
 		//icodeMigration: function(group, sender) {
 
 		//}
-		memberMigration: function (params) {
-			let {
-				room,
-				msg,
-				sender,
-				isGroupChat,
-				replier,
-				imageDB,
-				packageName,
-				threadId,
-				group,
-				hash,
-				icode
-			} = params;
+		memberMigration: function(params) {
+			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 
 		},
-		hashMigration: function (params) {
-			let {
-				room,
-				msg,
-				sender,
-				isGroupChat,
-				replier,
-				imageDB,
-				packageName,
-				threadId,
-				group,
-				hash,
-				icode
-			} = params;
+		hashMigration: function(params) {
+			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 
 		}
 	};
 })();
 
-var miniGame = (function () {
+var miniGame = (function() {
 	return {
 
 	};
@@ -158,19 +123,7 @@ var miniGame = (function () {
 
 
 function getHash(params) {
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	return java.lang.String(imageDB.getProfileImage()).hashCode();
 }
 
@@ -181,7 +134,7 @@ function makeAuthID() {
 	return text;
 }
 
-var Group = (function () { //Group 생성자 | ex) Ky.g[group] = new Group(group);
+var Group = (function() { //Group 생성자 | ex) Ky.g[group] = new Group(group);
 	function Group() {
 		this.counter = new Object();
 		this.counter.total = 0;
@@ -194,21 +147,9 @@ var Group = (function () { //Group 생성자 | ex) Ky.g[group] = new Group(group
 	return Group;
 })();
 
-var Room = (function () { //Room 생성자
+var Room = (function() { //Room 생성자
 	function Room(params) {
-		let {
-			room,
-			msg,
-			sender,
-			isGroupChat,
-			replier,
-			imageDB,
-			packageName,
-			threadId,
-			group,
-			hash,
-			icode
-		} = params
+		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
 		this.groupName = group;
 		Ky.g[group].roomList.push(room);
 	}
@@ -216,25 +157,10 @@ var Room = (function () { //Room 생성자
 	return Room;
 })();
 
-var Member = (function () { //Member 생성자
+var Member = (function() { //Member 생성자
 	function Member(params) {
-		let {
-			room,
-			msg,
-			sender,
-			isGroupChat,
-			replier,
-			imageDB,
-			packageName,
-			threadId,
-			group,
-			hash,
-			icode
-		} = params
-		this.memberData = [
-			[],
-			[]
-		];
+		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
+		this.memberData = [[], []];
 		this.memberData[0].push(sender);
 		this.memberData[1].push(hash);
 		this.counter = new Object();
@@ -248,19 +174,7 @@ var Member = (function () { //Member 생성자
 })();
 
 function randomIcode(params) {
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
 	var possible = "0123456789";
 	while (true) {
 		var text = "";
@@ -271,19 +185,7 @@ function randomIcode(params) {
 }
 
 function memberCounter(params) {
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	var t = moment().format('YYMMDDHH');
 	Ky.g[group].m[icode].counter.timeList = Ky.g[group].m[icode].counter.timeList || new Array();
 	Ky.g[group].m[icode].counter.list = Ky.g[group].m[icode].counter.list || new Array();
@@ -300,19 +202,7 @@ function memberCounter(params) {
 
 
 function memberCount(params, input, code) {
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	icode = code || icode;
 	if (input.indexOf('-') != -1) {
 		var from = moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
@@ -432,9 +322,7 @@ function lolStat(nick) {
 		arr.push('[' + doc.select("div.SummonerName").text() + ']\n');
 		if (!unranked) arr.push(doc.select('div.LadderRank').text() + '\n');
 		arr.push('| LV ' + doc.select('span[class=Level tip]').text() + ' | ');
-		if (!unranked) {
-			arr.push(doc.select('div.Tier').get(0).text() + ' | ' + doc.select('div.LP').get(0).text() + ' |')
-		} else arr.push('Unranked |')
+		if (!unranked) { arr.push(doc.select('div.Tier').get(0).text() + ' | ' + doc.select('div.LP').get(0).text() + ' |') } else arr.push('Unranked |')
 		if (doc.select('div div span.Item').text() != '') arr.push('\n[ ' + doc.select('div div span.Item').text() + ' ]');
 		arr.push('\n\n》최근 20게임 전적\n ' + doc.select('div.WinRatioTitle span.win').text() + '승 ' + doc.select('div.WinRatioTitle span.lose').text() + '패, ' + doc.select('div.WinRatioTitle b').text());
 		if (!unranked) arr.push('\n》솔랭 전적\n ' + doc.select('div.WinLose').get(0).text());
@@ -450,30 +338,14 @@ function lolStat(nick) {
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
 	let params = { //함수용 통합 매개변수
-		get room() {
-			return room;
-		},
-		get msg() {
-			return msg;
-		},
-		get sender() {
-			return sender;
-		},
-		get isGroupChat() {
-			return isGroupChat;
-		},
-		get replier() {
-			return replier;
-		},
-		get imageDB() {
-			return imageDB;
-		},
-		get packageName() {
-			return packageName;
-		},
-		get threadId() {
-			return threadId;
-		}
+		get room() { return room; },
+		get msg() { return msg; },
+		get sender() { return sender; },
+		get isGroupChat() { return isGroupChat; },
+		get replier() { return replier; },
+		get imageDB() { return imageDB; },
+		get packageName() { return packageName; },
+		get threadId() { return threadId; }
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -501,16 +373,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 			replier.reply('ex) 홍길동, a1b2c3 이면 인증방 들어갈때 닉네임을 카카오프렌즈 선택하고 닉네임을 a1b2c3으로 하고, 들어가서 채팅창에 홍길동 엔터');
 		} else if (msg in Ky.g[group].tempM) {
 			if (sender == Ky.g[group].tempM[msg].authID) {
-				Object.defineProperty(params, "group", {
-					get: function () {
-						return group;
-					}
-				});
-				Object.defineProperty(params, "hash", {
-					get: function () {
-						return hash;
-					}
-				});
+				Object.defineProperty(params, "group", { get: function() { return group; } });
+				Object.defineProperty(params, "hash", { get: function() { return hash; } });
 				var icode = randomIcode(params);
 				var hash = Ky.g.tempHash[sender];
 				var authID = sender;
@@ -540,16 +404,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
 
-	Object.defineProperty(params, "group", {
-		get: function () {
-			return group;
-		}
-	});
-	Object.defineProperty(params, "hash", {
-		get: function () {
-			return hash;
-		}
-	});
+	Object.defineProperty(params, "group", { get: function() { return group; } });
+	Object.defineProperty(params, "hash", { get: function() { return hash; } });
 
 	Ky.g[group] = Ky.g[group] || new Group(params);
 	Ky.g[group].r[room] = Ky.g[group].r[room] || new Room(params);
@@ -560,9 +416,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 	}
 
 	var unAuthed = false;
-
+	
 	var exist = false;
-	Object.keys(Ky.g[group].m).map(function (objectKey, index) {
+	Object.keys(Ky.g[group].m).map(function(objectKey, index) {
 		if (Ky.g[group].m[objectKey].memberData[0].indexOf(sender) != -1 && Ky.g[group].m[objectKey].memberData[0].indexOf(sender) == Ky.g[group].m[objectKey].memberData[1].indexOf(hash)) exist = objectKey;
 	});
 	if (exist == false) {
@@ -571,7 +427,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 		if ('mayBe' in Ky.g[group].tempM[sender]) {
 			if (msg == Ky.g[group].tempM[sender].authCode) {
 				Ky.g[group].m[objectKey].memberData[0].push(sender);
-				Ky.g[group].m[objectKey].memberData[1].push(has);
+				Ky.g[group].m[objectKey].memberData[1].push(hash);
 				replier.reply('계정 인증이 완료되었습니다.');
 				delete Ky.g[group].tempM[msg];
 			} else {
@@ -583,11 +439,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 			}
 		} else if (msg.substr(0, 4) == '!인증 ' && Ky.g[group].m[msg.substr(4)] !== undefined) {
 			var aCode = makeAuthID();
-			Ky.g[group].tempM[sender].mayBe = msg;
+			Ky.g[group].tempM[sender].mayBe = msg.substr(4);
 			Ky.g[group].tempM[sender].authCode = aCode;
-			Api.replyRoom(Ky.g[group].m[msg].authID, aCode);
-			Api.replyRoom(group + '_관리방', '[' + sender + '] 인증코드: ' + aCode);
-			replier.reply(aCode);
+			Api.replyRoom(Ky.g[group].m[msg.substr(4)].authID, aCode);
+			Api.replyRoom(group + '_관리방', '[' + sender + ']\n인증코드: ' + aCode);
 
 			replier.reply('인증코드가 인증센터로 전송되었습니다.');
 		} else if (Ky.g[group].tempM[sender].alert == 't') {
@@ -599,12 +454,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 	if (unAuthed == true) {
 		var icode = 'unauth'
 	} else var icode = exist;
-
-	Object.defineProperty(params, "icode", {
-		get: function () {
-			return icode;
-		}
-	});
+	
+	Object.defineProperty(params, "icode", { get: function() { return icode; } });
 
 	if (icode != 'unauth' && Ky.g[group].m[icode].counter.total == 0) replier.reply('[' + sender + ']님,' + group + ' 캬옹봇 인증이 완료되었습니다. 공지 또는 홈페이지에서 명령어를 확인하세요. <!식별코드> 로 식별코드를 확인하세요.')
 
@@ -622,10 +473,15 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 	if (Ky.g[group].enabled.generalSys = true) {
 		generalSys(params);
 	}
-
-	Ky.g[group].enabled.miscSys = Ky.g[group].enabled.miscSys || true;
-	if (Ky.g[group].enabled.miscSys = true) {
-		generalSys(params);
+	
+	Ky.g[group].enabled.manageSys = Ky.g[group].enabled.manageSys || true;
+	if (Ky.g[group].enabled.manageSys = true) {
+		manageSys(params);
+	}
+	
+	Ky.g[group].enabled.pDBSys = Ky.g[group].enabled.pDBSys || true;
+	if (Ky.g[group].enabled.pDBSys = true) {
+		pDBSys(params);
 	}
 
 	Ky.g[group].enabled.cpSys = Ky.g[group].enabled.cpSys || true;
@@ -668,19 +524,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
 function commandChk(params, c, a, d) {
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	if (icode == 'unauth' && a != 'all') {
 		return false;
 	}
@@ -704,19 +548,7 @@ let c, a, d;
 
 function generalSys(params) {
 	//일반 시스템/명령어
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	loop: {
 		c = '!테스트';
 		a = 'all';
@@ -734,19 +566,8 @@ function generalSys(params) {
 
 function manageSys(params) {
 	//관리용 시스템/명령어
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	/*
 	loop: {
 		c = '!업데이트';
 		a = 'admin';
@@ -761,55 +582,43 @@ function manageSys(params) {
 			replier.reply('업데이트 실패..')
 		}
 	}
+*/
+loop: {
+	c = '!리로드';
+	a = 'admin';
+	d = '캬옹봇을 온라인에서 업데이트합니다.';
+	if (commandChk(params, c, a, d) == false) break loop;
+	if (msg == c) {
+		Api.reload();
+		replier.reply('리로드 성공!');
+	}
+}
 
-	loop: {
-		c = '!리로드';
-		a = 'admin';
-		d = '캬옹봇을 온라인에서 업데이트합니다.';
-		if (commandChk(params, c, a, d) == false) break loop;
-		if (msg == c) {
-			Api.reload();
-			replier.reply('리로드 성공!');
-		}
+loop: {
+	c = '!세이브';
+	a = 'admin';
+	d = '캬옹봇을 온라인에서 업데이트합니다.';
+	if (commandChk(params, c, a, d) == false) break loop;
+	if (msg == c) {
+		replier.reply("진행중...");
+		DataBase.setDataBase(JSON.stringify(Ky), "KyBot_backup0");
 	}
-	loop: {
-		c = '!세이브';
-		a = 'admin';
-		d = '캬옹봇을 온라인에서 업데이트합니다.';
-		if (commandChk(params, c, a, d) == false) break loop;
-		if (msg == c) {
-			replier.reply("진행중...");
-			DataBase.setDataBase(JSON.stringify(Ky), "KyBot_backup0");
-		}
+}
+loop: {
+	c = '!로드';
+	a = 'admin';
+	d = '캬옹봇을 온라인에서 업데이트합니다.';
+	if (commandChk(params, c, a, d) == false) break loop;
+	if (msg == c) {
+		replier.reply("백업 진행중...");
+		Ky = JSON.parse(DataBase.getDataBase("KyBot_backup0"));
 	}
-	loop: {
-		c = '!로드';
-		a = 'admin';
-		d = '캬옹봇을 온라인에서 업데이트합니다.';
-		if (commandChk(params, c, a, d) == false) break loop;
-		if (msg == c) {
-			replier.reply("백업 진행중...");
-			Ky = JSON.parse(DataBase.getDataBase("KyBot_backup0"));
-		}
-	}
-
+}
 }
 
 function pDBSys(params) {
 	//미니게임 제외 개인 데이터 관련 시스템/명령어
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	loop: {
 		c = '!식별코드';
 		a = 'member';
@@ -830,19 +639,7 @@ function pDBSys(params) {
 
 function cpSys(params) {
 	//미니게임 제외 포인트 관련 시스템/명령어
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	loop: {
 		c = '.채팅보상';
 		a = 'member';
@@ -864,19 +661,7 @@ function cpSys(params) {
 
 function miniGameSys(params) {
 	//미니게임 관련 시스템/명령어
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	loop: {
 		c = '.랜덤문자';
 		a = 'member';
@@ -901,7 +686,7 @@ function miniGameSys(params) {
 				replier.reply(String.fromCharCode(0) + "[돌발 퀴즈!]\n가장 먼저 주어진 글자를 입력!\n" + temp.hanN[room])
 				temp.hanQuizValid[room] = true;
 				ThreadManager.i[room] = new java.lang.Thread(new java.lang.Runnable() {
-					run: function () {
+					run: function() {
 						try {
 							java.lang.Thread.sleep(30000);
 							replier.reply(String.fromCharCode(0) + '타임어택 종료!');
@@ -922,26 +707,24 @@ function miniGameSys(params) {
 		} else if (msg.indexOf(String.fromCharCode(8237)) != -1 && temp.hanQuizValid[room] == true) {
 			replier.reply("응 복붙충 안속아")
 		}
-
-
 	}
+	/*
+	loop: {
+		c = '!가위 / 바위 / 보';
+		a = 'member';
+		d = '봇과 포인트를 걸고 가위바위보를 합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		let validTime = [0, 7, 12, 22] || validTime;
+		if (validTime.indexOf(new Date().getHours()) != -1 || new Date().getMinutes() < 30) {
+			replier.reply()
+		}
+	}
+	*/
 }
 
 function miscSys(params) {
 	//잡다한 시스템/명령어
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	loop: {
 		c = '!견적생성';
 		a = 'member';
@@ -978,9 +761,8 @@ function miscSys(params) {
 					replier.reply("[" + (i + 2) + "번째 줄] \n잘못된 입력입니다.")
 					break loop;
 				}
-				replier.reply("http://micro.danawa.com/product/wishList?productSeq=" + est.code.join([separator = ',']) + "&count=" + est.quan.join([separator = ',']))
-
 			}
+			replier.reply("http://micro.danawa.com/product/wishList?productSeq=" + est.code.join([separator = ',']) + "&count=" + est.quan.join([separator = ',']))
 		}
 	}
 
@@ -1001,9 +783,7 @@ function miscSys(params) {
 		if (msg == c) {
 			var r = org.jsoup.Jsoup.connect("https://www.naver.com/?mobile").get().select('span[class=ah_k]');
 			var list = [];
-			for (i = 1; i < 21; i++) {
-				list.push(i + '. ' + r.get(i).text() + '\n')
-			}
+			for (i = 1; i < 21; i++) { list.push(i + '. ' + r.get(i).text() + '\n') }
 			replier.reply(list.join('').slice(0, -1))
 		}
 	}
@@ -1067,25 +847,40 @@ function miscSys(params) {
 			replier.reply('https://search.naver.com/search.naver?query=' + msg.substring(c.length + 1));
 		}
 	}
-
+	loop: {
+		c = '!단어';
+		a = 'all';
+		d = '네이버에서 해당 내용을 검색합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.substr(0, c.length + 1) == c + ' ') {
+			try {
+                    var u = Utils.getWebText("http://krdic.naver.com/search.nhn?query=" + msg.substr(c.length + 1));
+                    var a = u.split("<ul class=\"lst3\">")
+                    var b = a[1].split("</ul>")
+                    var c = b[0].replace(/(<([^>]+)>)/g, "");
+                    c = c.replace(/발음재생/g, "")
+                    c = c.replace(/단어장 저장/g, "")
+                    c = c.replace(/매우중요/g, "")
+                    c = c.replace(/유의어/g, "\n\n유의어")
+                    c = c.trim()
+                    c = c.replace(/\n         /g, "")
+                    c = c.replace(/  /g, "\n")
+                    c = c.replace(/\n\n\n/g, "")
+                    replier.reply("[" + msg.substr(3) + " 검색 결과]\n\n" + c)
+                } catch (e) {
+            replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
+            }
+		}
+	}
+	
+	
+	
 
 }
 
 function dateSys(params) {
 	//날짜 관련 시스템/명령어
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 
 }
 
