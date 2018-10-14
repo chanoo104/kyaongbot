@@ -23,7 +23,7 @@ temp.hanQuizValid = new Object();
 temp.hanR = new Object();
 temp.hanN = new Object();
 
-const welcomeMessage = ('\n처음 오신 분이라면 공지를 참조하여 인증하시고,\n기존 멤버인데 프로필을 수정하신 것이라면 !인증 <식별코드> 를 입력해 주세요.(<> 괄호는 제외)\인증을 거치지 않으면 일부 기능 이용이 불가능합니다.')
+const welcomeMessage = ('\n처음 오신 분이라면 공지를 참조하여 인증하시고,\n기존 멤버인데 부계정으로 들어오신 것이거나 프로필을 수정하신 것이라면 원래 계정의 인증센터에 아무 말이나 친 후 !인증 <식별코드> 를 입력해 주세요.(<> 괄호는 제외)\인증을 거치지 않으면 일부 기능 이용이 불가능합니다.')
 
 
 if (DataBase.getDataBase('KyBot') == null) DataBase.setDataBase('KyBot', JSON.stringify(new Object()));
@@ -435,7 +435,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 					delete Ky.g[group].tempM[sender].mayBe;
 					delete Ky.g[group].tempM[sender].authCode;
 					replier.reply('인증이 취소되었습니다.');
-				} else replier.reply('인증센터로 전송된 인증번호를 입력해 주세요. 인증번호를 받을 수 없다면 관리자에게 문의하세요.');
+				} else replier.reply('인증센터로 전송된 인증번호를 입력해 주세요. 인증번호가 오지 않는다면 인증센터에 아무 말이나 친 후 !인증취소 후 재인증해보시고, 그래도 안되거나 다른 문제가 있다면 관리자에게 문의하세요.');
 			}
 		} else if (msg.substr(0, 4) == '!인증 ' && Ky.g[group].m[msg.substr(4)] !== undefined) {
 			var aCode = makeAuthID();
