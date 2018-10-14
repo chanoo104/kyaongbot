@@ -431,7 +431,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 				replier.reply('계정 인증이 완료되었습니다.');
 				delete Ky.g[group].tempM[msg];
 			} else {
-				if (msg == !인증취소) {
+				if (msg == '!인증취소') {
 					delete Ky.g[group].tempM[sender].mayBe;
 					delete Ky.g[group].tempM[sender].authCode;
 					replier.reply('인증이 취소되었습니다.');
