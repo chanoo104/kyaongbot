@@ -426,8 +426,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 		Ky.g[group].tempM[sender].alert = Ky.g[group].tempM[sender].alert || 't';
 		if ('mayBe' in Ky.g[group].tempM[sender]) {
 			if (msg == Ky.g[group].tempM[sender].authCode) {
-				Ky.g[group].m[objectKey].memberData[0].push(sender);
-				Ky.g[group].m[objectKey].memberData[1].push(hash);
+				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData[0].push(sender);
+				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData[1].push(hash);
 				replier.reply('계정 인증이 완료되었습니다.');
 				delete Ky.g[group].tempM[msg];
 			} else {
