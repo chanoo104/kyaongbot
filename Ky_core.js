@@ -388,6 +388,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 					replier.reply('최초 관리자로 등록되었습니다.');
 				}
 				replier.reply('인증 성공. 데이터베이스가 정상적으로 생성되었습니다. 이제 자유로운 캬옹봇 사용이 가능합니다.')
+				replier.reply('■■주의: 이 방에서 나가지 마세요. 추후 인증에 필요합니다. 임시인증은 안나가셔도 됩니다.■■')
 				replier.reply('식별코드: ' + icode)
 				delete Ky.g[group].tempM[msg];
 			} else replier.reply('인증 실패, 다시 시도해 보세요. 캬옹봇은 당신의 닉네임을 [' + sender + ']로 인식하고 있습니다. 현재 사용중인 닉네임과 인식되는 닉네임이 다르다면 나갔다 들어와 보시고, 그래도 똑같다면 관리자에게 연락하세요.')
@@ -429,7 +430,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData[0].push(sender);
 				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData[1].push(hash);
 				replier.reply('계정 인증이 완료되었습니다.');
-				delete Ky.g[group].tempM[msg];
+				delete Ky.g[group].tempM[sender];
 			} else {
 				if (msg == '!인증취소') {
 					delete Ky.g[group].tempM[sender].mayBe;
