@@ -720,11 +720,10 @@ function miniGameSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (cmd.indexOf(msg.split(' ')[0]) != -1) {
 			Ky.g[group].rpsValidTime = Ky.g[group].rpsValidTime || [0, 7, 12, 22];
-			/*
 			if (Ky.g[group].rpsValidTime.indexOf(new Date().getHours()) != -1 || new Date().getMinutes() < 30) {
 				replier.reply('가위바위보 가능 시간이 아닙니다.' + JSON.stringify(Ky.g[group].rpsValidTime) + '시 30분~ 에만 이용 가능합니다.');
 				break loop;
-			}*/
+			}
 			var p = msg.substr(msg.split(' ', 1)[0].length+1);
 			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p<50 || p>1000) {
 				replier.reply('50~1000 사이의 자연수를 입력해 주세요.');
@@ -899,6 +898,16 @@ function miscSys(params) {
             replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
             }
 		}
+	}
+	
+	if (msg == '!명령어') {
+		var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
+		for (i=0; i<commandList.length; i++) {
+			r += '》' + commandList[i] + '\n';
+			r += descriptionList[i];
+			r += '\n';
+		}
+		replier.reply(r)
 	}
 	
 	
