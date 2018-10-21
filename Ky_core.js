@@ -505,7 +505,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 		miscSys(params);
 	}
 
-	Ky.g[group].r[room].enabled.memberCounter == Ky.g[group].r[room].enabled.memberCounter || 'true';
+	Ky.g[group].r[room].enabled.memberCounter = Ky.g[group].r[room].enabled.memberCounter || 'true';
 	if (icode != 'unauth') {
 		if (Ky.g[group].r[room].enabled.memberCounter == 'true') {
 			memberCounter(params);
