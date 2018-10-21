@@ -350,8 +350,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 		get threadId() { return threadId; }
 	}
 	
-	commandList = new Array[];
-	descriptionList = new Array[];
+	commandList = new Array();
+	descriptionList = new Array();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Authentification // 신규 데이터 생성, 인증 발급
@@ -723,7 +723,7 @@ function miniGameSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (cmd.indexOf(msg.split(' ')[0]) != -1) {
 			Ky.g[group].rpsValidTime = Ky.g[group].rpsValidTime || [0, 7, 12, 22];
-			if (Ky.g[group].rpsValidTime.indexOf(new Date().getHours()) != -1 || new Date().getMinutes() < 30) {
+			if (Ky.g[group].rpsValidTime.indexOf(new Date().getHours()) == -1 || new Date().getMinutes() < 30) {
 				replier.reply('가위바위보 가능 시간이 아닙니다.' + JSON.stringify(Ky.g[group].rpsValidTime) + '시 30분~ 에만 이용 가능합니다.');
 				break loop;
 			}
