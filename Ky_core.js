@@ -3,7 +3,7 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.0.1_beta'
+var ver = '5.1.1.0_beta'
 var updatecode = ''
 
 let timeBoot = moment();
@@ -93,7 +93,9 @@ var manageCp = (function() {
 		add: function(params, point, i) {
 			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 			icode = i || icode;
-			return Ky.g[group].m[icode].cp += point;
+			Ky.g[group].m[icode].cp += 0
+			return Ky.g[group].m[icode].cp += Number(point);
+			
 		}
 	};
 })();
@@ -709,18 +711,41 @@ function miniGameSys(params) {
 			replier.reply("응 복붙충 안속아")
 		}
 	}
-	/*
+	
 	loop: {
 		c = '!가위 / 바위 / 보';
+		let cmd = ['!가위', '!바위', '!보'];
 		a = 'member';
 		d = '봇과 포인트를 걸고 가위바위보를 합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
-		let validTime = [0, 7, 12, 22] || validTime;
-		if (validTime.indexOf(new Date().getHours()) != -1 || new Date().getMinutes() < 30) {
-			replier.reply()
+		if (cmd.indexOf(msg.split(' ')[0]) != -1) {
+			Ky.g[group].rpsValidTime = Ky.g[group].rpsValidTime || [0, 7, 12, 22];
+			/*
+			if (Ky.g[group].rpsValidTime.indexOf(new Date().getHours()) != -1 || new Date().getMinutes() < 30) {
+				replier.reply('가위바위보 가능 시간이 아닙니다.' + JSON.stringify(Ky.g[group].rpsValidTime) + '시 30분~ 에만 이용 가능합니다.');
+				break loop;
+			}*/
+			var p = msg.substr(msg.split(' ', 1)[0].length+1);
+			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p<50 || p>1000) {
+				replier.reply('50~1000 사이의 자연수를 입력해 주세요.');
+				break loop;
+			}
+			
+			var r = Math.floor(Math.random()*3)
+			let m = ['가위', '바위', '보', '가위', '바위'];
+			if (r == 0) {
+				replier.reply('[' + sender + '] ' + m[cmd.indexOf(msg.split(' ')[0])+2] + '! 》승리\n+' + p + 'cp');
+				manageCp.add(params, p);
+			}
+			if (r == 1) {
+				replier.reply('[' + sender + '] ' + m[cmd.indexOf(msg.split(' ')[0])+1] + '! 》패배\n-' + p + 'cp');
+				manageCp.add(params, -p);
+			}
+			if (r == 2) {
+				replier.reply('[' + sender + '] ' + m[cmd.indexOf(msg.split(' ')[0])] + '! 》무승부\n포인트가 반환됩니다.');
+			}
 		}
 	}
-	*/
 }
 
 function miscSys(params) {
@@ -776,6 +801,7 @@ function miscSys(params) {
 			replier.reply(lolStat(msg.substring(c.length + 1)));
 		}
 	}
+	
 	loop: {
 		c = '!실검';
 		a = 'all';
@@ -788,6 +814,7 @@ function miscSys(params) {
 			replier.reply(list.join('').slice(0, -1))
 		}
 	}
+	
 	loop: {
 		c = '!날씨';
 		a = 'all';
