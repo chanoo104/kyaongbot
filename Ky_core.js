@@ -473,46 +473,46 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 		replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
 	}
 
-	Ky.g[group].enabled = Ky.g[group].enabled || new Object();
+	Ky.g[group].r[room].enabled = Ky.g[group].r[room].enabled || new Object();
 
-	Ky.g[group].enabled.generalSys = Ky.g[group].enabled.generalSys || true;
-	if (Ky.g[group].enabled.generalSys = true) {
+	Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || true;
+	if (Ky.g[group].r[room].enabled.generalSys = true) {
 		generalSys(params);
 	}
 	
-	Ky.g[group].enabled.manageSys = Ky.g[group].enabled.manageSys || true;
-	if (Ky.g[group].enabled.manageSys = true) {
+	Ky.g[group].r[room].enabled.manageSys = Ky.g[group].r[room].enabled.manageSys || true;
+	if (Ky.g[group].r[room].enabled.manageSys = true) {
 		manageSys(params);
 	}
 	
-	Ky.g[group].enabled.pDBSys = Ky.g[group].enabled.pDBSys || true;
-	if (Ky.g[group].enabled.pDBSys = true) {
+	Ky.g[group].r[room].enabled.pDBSys = Ky.g[group].r[room].enabled.pDBSys || true;
+	if (Ky.g[group].r[room].enabled.pDBSys = true) {
 		pDBSys(params);
 	}
 
-	Ky.g[group].enabled.cpSys = Ky.g[group].enabled.cpSys || true;
-	if (Ky.g[group].enabled.cpSys = true) {
+	Ky.g[group].r[room].enabled.cpSys = Ky.g[group].r[room].enabled.cpSys || true;
+	if (Ky.g[group].r[room].enabled.cpSys = true) {
 		cpSys(params);
 	}
 
-	Ky.g[group].enabled.miniGameSys = Ky.g[group].enabled.miniGameSys || true;
-	if (Ky.g[group].enabled.miniGameSys = true) {
+	Ky.g[group].r[room].enabled.miniGameSys = Ky.g[group].r[room].enabled.miniGameSys || true;
+	if (Ky.g[group].r[room].enabled.miniGameSys = true) {
 		miniGameSys(params);
 	}
 
-	Ky.g[group].enabled.miscSys = Ky.g[group].enabled.miscSys || true;
-	if (Ky.g[group].enabled.miscSys = true) {
+	Ky.g[group].r[room].enabled.miscSys = Ky.g[group].r[room].enabled.miscSys || true;
+	if (Ky.g[group].r[room].enabled.miscSys = true) {
 		miscSys(params);
 	}
 
-	Ky.g[group].enabled.memberCounter = Ky.g[group].enabled.memberCounter || true;
+	Ky.g[group].r[room].enabled.memberCounter = Ky.g[group].r[room].enabled.memberCounter || true;
 	if (icode != 'unauth') {
-		if (Ky.g[group].enabled.memberCounter = true) {
+		if (Ky.g[group].r[room].enabled.memberCounter = true) {
 			memberCounter(params);
 		}
 
-		Ky.g[group].enabled.dateSys = Ky.g[group].enabled.dateSys || true;
-		if (Ky.g[group].enabled.dateSys = true) {
+		Ky.g[group].r[room].enabled.dateSys = Ky.g[group].r[room].enabled.dateSys || true;
+		if (Ky.g[group].r[room].enabled.dateSys = true) {
 			dateSys(params);
 		}
 
@@ -538,8 +538,8 @@ function commandChk(params, c, a, d) {
 		if (a != 'all') {
 			if (userGroup.indexOf(a) < userGroup.indexOf(Ky.g[group].m[icode].type)) return false;
 		}
-		Ky.g[group].enabled[c] = Ky.g[group].enabled[c] || true;
-		if (Ky.g[group].enabled[c] == false) {
+		Ky.g[group].r[room].enabled[c] = Ky.g[group].r[room].enabled[c] || true;
+		if (Ky.g[group].r[room].enabled[c] == false) {
 			return false;
 		}
 	}
