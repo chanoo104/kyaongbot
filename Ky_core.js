@@ -507,7 +507,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 	Ky.g[group].r[room].enabled.memberCounter == Ky.g[group].r[room].enabled.memberCounter || true;
 	if (icode != 'unauth') {
-		if (Ky.g[group].r[room].enabled.memberCounter = true) {
+		if (Ky.g[group].r[room].enabled.memberCounter == true) {
 			memberCounter(params);
 		}
 
