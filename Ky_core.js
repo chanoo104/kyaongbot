@@ -349,6 +349,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 		get packageName() { return packageName; },
 		get threadId() { return threadId; }
 	}
+	
+	commandList = new Array[];
+	descriptionList = new Array[];
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Authentification // 신규 데이터 생성, 인증 발급
