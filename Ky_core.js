@@ -3,7 +3,7 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.1.0_beta'
+var ver = '5.1.2.2_beta'
 var updatecode = ''
 
 let timeBoot = moment();
@@ -23,7 +23,7 @@ temp.hanQuizValid = new Object();
 temp.hanR = new Object();
 temp.hanN = new Object();
 
-const welcomeMessage = ('\n처음 오신 분이라면 공지를 참조하여 인증하시고,\n기존 멤버인데 부계정으로 들어오신 것이거나 프로필을 수정하신 것이라면 원래 계정의 인증센터에 아무 말이나 친 후 !인증 <식별코드> 를 입력해 주세요.(<> 괄호는 제외)\인증을 거치지 않으면 일부 기능 이용이 불가능합니다.')
+const welcomeMessage = ('\n자바스크립트 기반 채팅 봇(bot)인 캬옹봇입니다.\n캬옹봇은 인증을 하지 않아도 사용이 가능하지만, 개인별 DB를 포함한 대부분의 기능의 사용이 제한되어 있습니다.\n현재 사용 가능한 명령어를 확인하시려면 !명령어 라고 입력하세요.\n모든 기능을 사용하고 싶으시다면 간단한 인증이 필요합니다.\n처음 오신 분이라면 공지를 눌러서 새 창에서 펼치면 나오는 설명읆 참조하여 인증하시고,\n기존 멤버인데 부계정으로 들어오신 것이거나 프로필을 수정하신 것이라면 원래 계정의 인증센터에 아무 말이나 친 후 !인증 <식별코드> 를 입력해 주세요.(<> 괄호는 제외).')
 
 
 if (DataBase.getDataBase('KyBot') == null) DataBase.setDataBase('KyBot', JSON.stringify(new Object()));
@@ -328,7 +328,7 @@ function lolStat(nick) {
 		if (doc.select('div div span.Item').text() != '') arr.push('\n[ ' + doc.select('div div span.Item').text() + ' ]');
 		arr.push('\n\n》최근 20게임 전적\n ' + doc.select('div.WinRatioTitle span.win').text() + '승 ' + doc.select('div.WinRatioTitle span.lose').text() + '패, ' + doc.select('div.WinRatioTitle b').text());
 		if (!unranked) arr.push('\n》솔랭 전적\n ' + doc.select('div.WinLose').get(0).text());
-		arr.push('\n》MOST 챔피언\n' + list);
+		if (list.length > 1)arr.push('\n》MOST 챔피언\n' + list);
 		if (mmr) arr.push('\n예상 MMR : ' + doc1.select('td.MMR').text() + '\n예상 티어 : ' + doc1.select('td.TierRankString').text());
 		if (mmr)
 			if (doc1.select('div.TipStatus').text() != '') arr.push('\n' + doc1.select('div.TipStatus').text());
@@ -669,7 +669,7 @@ function miniGameSys(params) {
 	//미니게임 관련 시스템/명령어
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	loop: {
-		c = '.랜덤문자';
+		c = '!랜덤문자';
 		a = 'member';
 		d = '일정 확률로 포인트를 보상으로 하는 글자 입력 퀴즈를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
@@ -811,12 +811,28 @@ function miscSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg == c) {
 			var r = org.jsoup.Jsoup.connect("https://www.naver.com/?mobile").get().select('span[class=ah_k]');
-			var list = [];
-			for (i = 1; i < 21; i++) { list.push(i + '. ' + r.get(i).text() + '\n') }
-			replier.reply(list.join('').slice(0, -1))
+			var list = '';
+			for (i = 1; i < 21; i++) { list += (i + '. ' + r.get(i).text() + '\n') }
+			replier.reply(list.slice(0, -1))
 		}
 	}
 	
+	loop: {
+		c = '!사양';
+		a = 'all';
+		d = '게임 최소/권장사양을 검색합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.split(' ')[0] == c) {
+			var char = 'can+i+run+it+' + msg.substr(msg.split(' ', 1)[0].length+1).replace(/ /gi, '+');
+			var test = Utils.getWebText('https://www.google.co.kr/search?&q=site:https://www.systemrequirementslab.com/cyri/requirements' + char);
+			var ww=test.split('/cyri/requirements');
+			if(ww[1]){
+				var t = org.jsoup.Jsoup.connect("https://www.systemrequirementslab.com/cyri/requirements/league-of-legends/10933").get().select('div[class=list-line-height]').select('ul');
+				replier.reply('■사양■' + blank + '• 최소사양\n' + android.text.Html.fromHtml(t.eq(1)) + '\n\n• 권장사양\n' + android.text.Html.fromHtml(t.eq(1)));
+			} else replier.reply('결과 없음');
+		}
+	}
+
 	loop: {
 		c = '!날씨';
 		a = 'all';
@@ -932,3 +948,17 @@ function onStartCompile() {
 	DataBase.setDataBase('KyBot', JSON.stringify(Ky));
 	Api.gc();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
