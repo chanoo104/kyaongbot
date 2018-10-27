@@ -563,7 +563,9 @@ function commandChk(params, c, a, d) {
 		commandList.push(c);
 		descriptionList.push(d);
 	}
-	if (Ky.g[group].m[icode].status != c) return false;
+	if (Ky.g[group].m[icode].status != c) {
+	return false;
+	}
 	return true;
 }
 let c, a, d;
@@ -612,12 +614,12 @@ function manageSys(params) {
 		a = 'manager';
 		d = 'eval입니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
-		try {
-			if (msg.substr(msg.split(' ', 1)[0].length+1)) == c) {
-				replier.reply(eval(msg.substring(6)))
-			}
-		} catch (e) {
+		if (msg.substr(msg.split(' ')[0]) == c)
+			try {
+				replier.reply(eval(msg.split(' ', 1)[0].length+1)))
+			} catch (e) {
 			replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
+			}
 		}
 	}
 */
