@@ -67,7 +67,12 @@ UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
 		Log.debug(e + ' At:' + e.lineNumber);
 	}
 };
-
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function replaceAll(str, searchStr, replaceStr) {
+    return str.split(searchStr).join(replaceStr);
+}
 function getHtml(text) {
 	var content = new java.io.ByteArrayOutputStream();
 	android.net.http.AndroidHttpClient.newInstance("userAgent").execute(new org.apache.http.client.methods.HttpGet(text)).getEntity().writeTo(content);
@@ -910,7 +915,7 @@ function miscSys(params) {
 		try {
 			if (commandChk(params, c, a, d) == false) break loop;
 			if (msg.substr(0, c.length + 1) == c + ' ') {
-				doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substring(c.length + 1) + "/")
+				doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substr(msg.split(' ', 1)[0].length+1))
 				.get()
 				replier.reply("▼전체보기 클릭▼" + blank + "》목차\n" + android.text.Html.fromHtml(replaceAll(doc.select(".wiki-macro-toc").select(".toc-item").toString(), "</span>", "<br>")) + "\n》내용\n" + android.text.Html.fromHtml(doc.select(".wiki-inner-content").select(".wiki-heading-content")))
 			}
