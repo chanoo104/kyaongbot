@@ -487,9 +487,10 @@ function response(a, b, c, d, e, f, g, h) {
 	Ky.g[group].r[room].enabled = Ky.g[group].r[room].enabled || new Object();
 	
 	//대화형 입력 방식을 위한 프리셋
+	/*
 	Ky.g[group].m[icode].status = Ky.g[group].m[icode].status || 'default'
 	if (msg == '!취소') Ky.g[group].m[icode].status = 'defalut'
-	
+	*/
 	//명령어 세트(set) 실행기
 	Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || 'true';
 	if (Ky.g[group].r[room].enabled.generalSys == 'true') {
@@ -563,9 +564,10 @@ function commandChk(params, c, a, d) {
 		commandList.push(c);
 		descriptionList.push(d);
 	}
+	/*
 	if (Ky.g[group].m[icode].status != c) {
 	return false;
-	}
+	}*/
 	return true;
 }
 let c, a, d;
@@ -668,6 +670,7 @@ function pDBSys(params) {
 			replier.reply('[' + sender + ']\n' + icode);
 		}
 	}
+	/*
 	loop: {
 		c = '!명령어생성';
 		a = 'member';
@@ -682,7 +685,7 @@ function pDBSys(params) {
 			phase++;
 			replier.reply('를 입력해 주세요.');
 		}
-		
+		*/
 		
 	}
 
