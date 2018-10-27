@@ -481,17 +481,16 @@ function response(a, b, c, d, e, f, g, h) {
 	Object.defineProperty(params, "icode", { get: function() { return icode; } });
 
 	if (icode != 'unauth' && Ky.g[group].m[icode].counter.total == 0) replier.reply('[' + sender + ']님,' + group + ' 캬옹봇 인증이 완료되었습니다. 공지 또는 홈페이지에서 명령어를 확인하세요. <!식별코드> 로 식별코드를 확인하세요.')
-
-	try {
-		if (msg.indexOf("!eval ") == 0) {
-			replier.reply(eval(msg.substring(6)))
-		}
-	} catch (e) {
-		replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
-	}
+	
+	
 	
 	Ky.g[group].r[room].enabled = Ky.g[group].r[room].enabled || new Object();
-
+	
+	//대화형 입력 방식을 위한 프리셋
+	Ky.g[group].m[icode].status = Ky.g[group].m[icode].status || 'default'
+	if (msg == '!취소') Ky.g[group].m[icode].status = 'defalut'
+	
+	//명령어 세트(set) 실행기
 	Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || 'true';
 	if (Ky.g[group].r[room].enabled.generalSys == 'true') {
 		generalSys(params);
@@ -564,6 +563,7 @@ function commandChk(params, c, a, d) {
 		commandList.push(c);
 		descriptionList.push(d);
 	}
+	if (Ky.g[group].m[icode].status != c) return false;
 	return true;
 }
 let c, a, d;
@@ -605,6 +605,20 @@ function manageSys(params) {
 		}
 	}
 */
+
+	loop: {
+		c = '!eval';
+		a = 'manager';
+		d = 'eval입니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		try {
+			if (msg.indexOf(c + " ") == 0) {
+				replier.reply(eval(msg.substring(6)))
+			}
+		} catch (e) {
+			replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
+		}
+	}
 	loop: {
 		c = '!리로드';
 		a = 'admin';
@@ -649,6 +663,23 @@ function pDBSys(params) {
 		if (msg == c) {
 			replier.reply('[' + sender + ']\n' + icode);
 		}
+	}
+	loop: {
+		c = '!명령어생성';
+		a = 'member';
+		d = '자신의 식별코드를 확인합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			Ky.g[group].m[icode].status = c;
+			var phase = 0;
+			replier.reply('[' + sender + '] 님의 프로필을 생성합니다.\n를 입력해 주세요.');
+		}
+		if (phase = 0) {
+			phase++;
+			replier.reply('를 입력해 주세요.');
+		}
+		
+		
 	}
 
 
