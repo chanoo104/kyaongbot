@@ -568,7 +568,7 @@ function commandChk(params, c, a, d) {
 	}
 	if (icode != 'unauth') {
 		if (Ky.g[group].m[icode].status !== undefined) {
-			if (Ky.g[group].m[icode].status != c) {
+			if (Ky.g[group].m[icode].status != c && Ky.g[group].m[icode].status != 'default') {
 				return false;
 			}
 		}
