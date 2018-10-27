@@ -1043,8 +1043,6 @@ function onStartCompile() {
 	DataBase.setDataBase('KyBot', JSON.stringify(Ky));
 	Api.gc();
 }
-<<<<<<< HEAD
-=======
 
 
 
@@ -1059,4 +1057,3 @@ function onStartCompile() {
 
 
 
->>>>>>> e23611910ea6c7ab95948ebc8758d30a230d8aed
