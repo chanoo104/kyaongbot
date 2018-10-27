@@ -612,7 +612,7 @@ function manageSys(params) {
 		d = 'eval입니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		try {
-			if (msg.indexOf(c + " ") == 0) {
+			if (msg.substr(msg.split(' ', 1)[0].length+1)) == c) {
 				replier.reply(eval(msg.substring(6)))
 			}
 		} catch (e) {
