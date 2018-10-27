@@ -3,13 +3,15 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.2.2_beta'
-var updatecode = ''
+var ver = '5.1.3.0_beta';
+var updatecode = '';
 
 let timeBoot = moment();
-const blank = '‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭\n\n\n'
+const blank = '‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭\n\n\n';
 
-let firstLoad = true
+var room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode;
+
+let firstLoad = true;
 let command = '';
 let description = '';
 let commandList = new Array();
@@ -162,7 +164,9 @@ var Room = (function() { //Room 생성자
 var Member = (function() { //Member 생성자
 	function Member(params) {
 		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
-		this.memberData = [[], []];
+		this.profileData = [];
+		this.profileData['sender'] = new Array();
+		this.profileData['sender'].push(hash);
 		this.memberData[0].push(sender);
 		this.memberData[1].push(hash);
 		this.counter = new Object();
@@ -338,7 +342,16 @@ function lolStat(nick) {
 	}
 }
 
-function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
+function response(a, b, c, d, e, f, g, h) {
+	room = a;
+	msg = b;
+	sender = c;
+	isGroupChat = d;
+	replier = e;
+	imageDB = f;
+	packageName = g;
+	threadId = h;
+	
 	let params = { //함수용 통합 매개변수
 		get room() { return room; },
 		get msg() { return msg; },
@@ -393,7 +406,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 					replier.reply('최초 관리자로 등록되었습니다.');
 				}
 				replier.reply('인증 성공. 데이터베이스가 정상적으로 생성되었습니다. 이제 자유로운 캬옹봇 사용이 가능합니다.')
-				replier.reply('■■주의: 이 방에서 나가지 마세요. 추후 인증에 필요합니다. 임시인증은 안나가셔도 됩니다.■■')
+				replier.reply('■■주의: 이 방에서 나가지 마세요. 추후 인증에 필요합니다. 임시인증은 나가셔도 됩니다.■■')
 				replier.reply('식별코드: ' + icode)
 				delete Ky.g[group].tempM[msg];
 			} else replier.reply('인증 실패, 다시 시도해 보세요. 캬옹봇은 당신의 닉네임을 [' + sender + ']로 인식하고 있습니다. 현재 사용중인 닉네임과 인식되는 닉네임이 다르다면 나갔다 들어와 보시고, 그래도 똑같다면 관리자에게 연락하세요.')
@@ -425,15 +438,21 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 	
 	var exist = false;
 	Object.keys(Ky.g[group].m).map(function(objectKey, index) {
-		if (Ky.g[group].m[objectKey].memberData[0].indexOf(sender) != -1 && Ky.g[group].m[objectKey].memberData[0].indexOf(sender) == Ky.g[group].m[objectKey].memberData[1].indexOf(hash)) exist = objectKey;
+		try{
+			if (Ky.g[group].m[objectKey].profileData[sender] !== undefined) {
+				if( Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender].indexOf(hash)) exist = objectKey
+			}
+		} catch(e) {};
 	});
 	if (exist == false) {
 		Ky.g[group].tempM[sender] = Ky.g[group].tempM[sender] || new Object();
 		Ky.g[group].tempM[sender].alert = Ky.g[group].tempM[sender].alert || 't';
 		if ('mayBe' in Ky.g[group].tempM[sender]) {
 			if (msg == Ky.g[group].tempM[sender].authCode) {
-				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData[0].push(sender);
-				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData[1].push(hash);
+				delete Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData;
+				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData || [];
+				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData['sender'] = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData['sender'] || new Array();
+				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData['sender'].push(hash);
 				replier.reply('계정 인증이 완료되었습니다.');
 				delete Ky.g[group].tempM[sender];
 			} else {
@@ -472,7 +491,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 	} catch (e) {
 		replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
 	}
-
+	
 	Ky.g[group].r[room].enabled = Ky.g[group].r[room].enabled || new Object();
 
 	Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || 'true';
@@ -510,12 +529,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 		if (Ky.g[group].r[room].enabled.memberCounter == 'true') {
 			memberCounter(params);
 		}
-
-		Ky.g[group].r[room].enabled.dateSys = Ky.g[group].r[room].enabled.dateSys || 'true';
-		if (Ky.g[group].r[room].enabled.dateSys == 'true') {
-			dateSys(params);
-		}
-
+	}
+	
+	Ky.g[group].r[room].enabled.backGroundSys = Ky.g[group].r[room].enabled.backGroundSys || 'true';
+	if (Ky.g[group].r[room].enabled.backGroundSys == 'true') {
+		backGroundSys(params);
 	}
 
 
@@ -589,37 +607,37 @@ function manageSys(params) {
 		}
 	}
 */
-loop: {
-	c = '!리로드';
-	a = 'admin';
-	d = '캬옹봇을 온라인에서 업데이트합니다.';
-	if (commandChk(params, c, a, d) == false) break loop;
-	if (msg == c) {
-		Api.reload();
-		replier.reply('리로드 성공!');
+	loop: {
+		c = '!리로드';
+		a = 'admin';
+		d = '캬옹봇을 온라인에서 업데이트합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			Api.reload();
+			replier.reply('리로드 성공!');
+		}
 	}
-}
-
-loop: {
-	c = '!세이브';
-	a = 'admin';
-	d = '캬옹봇을 온라인에서 업데이트합니다.';
-	if (commandChk(params, c, a, d) == false) break loop;
-	if (msg == c) {
-		replier.reply("진행중...");
-		DataBase.setDataBase(JSON.stringify(Ky), "KyBot_backup0");
+	
+	loop: {
+		c = '!세이브';
+		a = 'admin';
+		d = '캬옹봇을 온라인에서 업데이트합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			replier.reply("진행중...");
+			DataBase.setDataBase("KyBot_backup0", JSON.stringify(Ky));
+		}
 	}
-}
-loop: {
-	c = '!로드';
-	a = 'admin';
-	d = '캬옹봇을 온라인에서 업데이트합니다.';
-	if (commandChk(params, c, a, d) == false) break loop;
-	if (msg == c) {
-		replier.reply("백업 진행중...");
-		Ky = JSON.parse(DataBase.getDataBase("KyBot_backup0"));
+	loop: {
+		c = '!로드';
+		a = 'admin';
+		d = '캬옹봇을 온라인에서 업데이트합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			replier.reply("백업 진행중...");
+			Ky = JSON.parse(DataBase.getDataBase("KyBot_backup0"));
+		}
 	}
-}
 }
 
 function pDBSys(params) {
@@ -826,8 +844,9 @@ function miscSys(params) {
 			var char = 'can+i+run+it+' + msg.substr(msg.split(' ', 1)[0].length+1).replace(/ /gi, '+');
 			var test = Utils.getWebText('https://www.google.co.kr/search?&q=site:https://www.systemrequirementslab.com/cyri/requirements' + char);
 			var ww=test.split('/cyri/requirements');
+			replier.reply(ww[1])
 			if(ww[1]){
-				var t = org.jsoup.Jsoup.connect("https://www.systemrequirementslab.com/cyri/requirements/league-of-legends/10933").get().select('div[class=list-line-height]').select('ul');
+				var t = org.jsoup.Jsoup.connect("https://www.systemrequirementslab.com/cyri/requirements/spec/"+ww[1].split("/")[2].split('"')[0]).get().select('div[class=list-line-height]').select('ul');
 				replier.reply('■사양■' + blank + '• 최소사양\n' + android.text.Html.fromHtml(t.eq(1)) + '\n\n• 권장사양\n' + android.text.Html.fromHtml(t.eq(1)));
 			} else replier.reply('결과 없음');
 		}
@@ -934,7 +953,7 @@ function miscSys(params) {
 
 }
 
-function dateSys(params) {
+function backGroundSys(params) {
 	//날짜 관련 시스템/명령어
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 
