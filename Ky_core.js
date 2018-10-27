@@ -24,6 +24,7 @@ ThreadManager.i = new Object();
 temp.hanQuizValid = new Object();
 temp.hanR = new Object();
 temp.hanN = new Object();
+var skip;
 
 const welcomeMessage = ('\n자바스크립트 기반 채팅 봇(bot)인 캬옹봇입니다.\n캬옹봇은 인증을 하지 않아도 사용이 가능하지만, 개인별 DB를 포함한 대부분의 기능의 사용이 제한되어 있습니다.\n현재 사용 가능한 명령어를 확인하시려면 !명령어 라고 입력하세요.\n모든 기능을 사용하고 싶으시다면 간단한 인증이 필요합니다.\n처음 오신 분이라면 공지를 눌러서 새 창에서 펼치면 나오는 설명읆 참조하여 인증하시고,\n기존 멤버인데 부계정으로 들어오신 것이거나 프로필을 수정하신 것이라면 원래 계정의 인증센터에 아무 말이나 친 후 !인증 <식별코드> 를 입력해 주세요.(<> 괄호는 제외).')
 
@@ -566,11 +567,9 @@ function commandChk(params, c, a, d) {
 		commandList.push(c);
 		descriptionList.push(d);
 	}
-	if (icode != 'unauth') {
-		if (Ky.g[group].m[icode].status !== undefined) {
-			if (Ky.g[group].m[icode].status != c && Ky.g[group].m[icode].status != 'default') {
-				return false;
-			}
+	if (icode != 'unauth' && skip != true) {
+		if (Ky.g[group].m[icode].status != c && Ky.g[group].m[icode].status != 'default') {
+			return false;
 		}
 	}
 	return true;
@@ -584,9 +583,11 @@ function preSys(params) {
 		c = '대화형 명령어 프리셋';
 		a = 'member';
 		d = '';
+		skip = true;
 		if (commandChk(params, c, a, d) == false) break loop;
 		Ky.g[group].m[icode].status = Ky.g[group].m[icode].status || 'default';
 		if (msg == '!취소') Ky.g[group].m[icode].status = 'defalut';
+		skip = false;
 	}
 }
 
