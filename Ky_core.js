@@ -68,10 +68,10 @@ UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
 	}
 };
 function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 function replaceAll(str, searchStr, replaceStr) {
-    return str.split(searchStr).join(replaceStr);
+	return str.split(searchStr).join(replaceStr);
 }
 function getHtml(text) {
 	var content = new java.io.ByteArrayOutputStream();
@@ -747,15 +747,15 @@ function cpSys(params) {
 		a = 'member';
 		d = '이전 DB의 포인트를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
-		try{
-		if (msg == c) {
-			var DB = JSON.parse(DataBase.getDataBase("DB"))
-			var scode = DB.icode[DB.inick.indexOf(sender)];
-			replier.reply("[이전 DB에서의 " + sender + "님의 포인트]\n" + DB.p[scode].pt)
+		try {
+			if (msg == c) {
+				var DB = JSON.parse(DataBase.getDataBase("DB"))
+				var scode = DB.icode[DB.inick.indexOf(sender)];
+				replier.reply("[" + sender + "]\n" + numberWithCommas(DB.p[scode].pt) + "cp\n" + numberWithCommas(Ky.g[group].m[icode].cp) + "cp(현재 포인트) + " + numberWithCommas(DB.p[scode].pt) + "cp = " + numberWithCommas((Number(DB.p[scode].pt) + Number(Ky.g[group].m[icode].cp))) + "cp")
+			}
+		} catch (e) {
+			replier.reply("해당 이름은 존재하지 않습니다.\n[" + sender + "]")
 		}
-	}catch(e) {
-		replier.reply("해당 이름은 존재하지 않습니다.\n[" + sender + "]")
-	}
 	}
 }
 
@@ -915,8 +915,8 @@ function miscSys(params) {
 		try {
 			if (commandChk(params, c, a, d) == false) break loop;
 			if (msg.substr(0, c.length + 1) == c + ' ') {
-				doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substr(msg.split(' ', 1)[0].length+1))
-				.get()
+				doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substr(msg.split(' ', 1)[0].length + 1))
+					.get()
 				replier.reply("▼전체보기 클릭▼" + blank + "》목차\n" + android.text.Html.fromHtml(replaceAll(doc.select(".wiki-macro-toc").select(".toc-item").toString(), "</span>", "<br>")) + "\n》내용\n" + android.text.Html.fromHtml(doc.select(".wiki-inner-content").select(".wiki-heading-content")))
 			}
 		} catch (e) {
@@ -950,24 +950,24 @@ function miscSys(params) {
 			replier.reply(list.slice(0, -1))
 		}
 	}
-/* 오류 뿜어서 일단 주석
-	loop: {
-		c = '!사양';
-		a = 'all';
-		d = '게임 최소/권장사양을 검색합니다.';
-		if (commandChk(params, c, a, d) == false) break loop;
-		if (msg.split(' ')[0] == c) {
-			var char = 'can+i+run+it+' + msg.substr(msg.split(' ', 1)[0].length + 1).replace(/ /gi, '+');
-			var test = Utils.getWebText('https://www.google.co.kr/search?&q=site:https://www.systemrequirementslab.com/cyri/requirements' + char);
-			var ww = test.split('/cyri/requirements');
-			replier.reply(ww[1])
-			if (ww[1]) {
-				var t = org.jsoup.Jsoup.connect("https://www.systemrequirementslab.com/cyri/requirements/spec/" + ww[1].split("/")[2].split('"')[0]).get().select('div[class=list-line-height]').select('ul');
-				replier.reply('■사양■' + blank + '• 최소사양\n' + android.text.Html.fromHtml(t.eq(1)) + '\n\n• 권장사양\n' + android.text.Html.fromHtml(t.eq(1)));
-			} else replier.reply('결과 없음');
+	/* 오류 뿜어서 일단 주석
+		loop: {
+			c = '!사양';
+			a = 'all';
+			d = '게임 최소/권장사양을 검색합니다.';
+			if (commandChk(params, c, a, d) == false) break loop;
+			if (msg.split(' ')[0] == c) {
+				var char = 'can+i+run+it+' + msg.substr(msg.split(' ', 1)[0].length + 1).replace(/ /gi, '+');
+				var test = Utils.getWebText('https://www.google.co.kr/search?&q=site:https://www.systemrequirementslab.com/cyri/requirements' + char);
+				var ww = test.split('/cyri/requirements');
+				replier.reply(ww[1])
+				if (ww[1]) {
+					var t = org.jsoup.Jsoup.connect("https://www.systemrequirementslab.com/cyri/requirements/spec/" + ww[1].split("/")[2].split('"')[0]).get().select('div[class=list-line-height]').select('ul');
+					replier.reply('■사양■' + blank + '• 최소사양\n' + android.text.Html.fromHtml(t.eq(1)) + '\n\n• 권장사양\n' + android.text.Html.fromHtml(t.eq(1)));
+				} else replier.reply('결과 없음');
+			}
 		}
-	}
-	*/
+		*/
 
 	loop: {
 		c = '!날씨';
