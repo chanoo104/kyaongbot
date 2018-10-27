@@ -381,11 +381,11 @@ function response(a, b, c, d, e, f, g, h) {
 			Ky.g[group].tempM[sender].authID = authID;
 			Ky.g.tempAuth[authID] = group;
 			Ky.g.tempHash[authID] = getHash(params);
-			replier.reply('인증코드:');
+			replier.reply('보안코드:');
 			replier.reply(authID);
 			replier.reply('닉네임:');
 			replier.reply(sender);
-			replier.reply('인증코드를 복사해서 공지에 있는 2차 인증센터에 들어갈때 <<카카오프렌즈>> 선택 후 <<닉네임에 붙여넣으세요>>. 방에 입장한 후에는 닉네임을 복사해서 그대로 붙여넣어 채팅을 보내면 인증이 완료됩니다.\n헷갈리지 마세요. <<닉네임을 인증코드로>> 하셔야 합니다. <<닉네임을 인증코드>>. 다시 한번 말하지만 난독하지 마세요. 카카오프렌즈 닉네임을 인증코드로, 들어가서 채팅으로 원래 사용중인 닉네임을 입력하세요. 실수하면 아주 귀찮아집니다.');
+			replier.reply('보안코드를 복사해서 공지에 있는 2차 인증센터에 들어갈때 <<카카오프렌즈>> 선택 후 <<닉네임에 붙여넣으세요>>. 방에 입장한 후에는 닉네임을 복사해서 그대로 붙여넣어 채팅을 보내면 인증이 완료됩니다.\n헷갈리지 마세요. <<닉네임을 보안코드로>> 하셔야 합니다. <<닉네임을 보안코드>>. 다시 한번 말하지만 난독하지 마세요. 카카오프렌즈 닉네임을 보안코드로, 들어가서 채팅으로 원래 사용중인 닉네임을 입력하세요. 실수하면 아주 귀찮아집니다.');
 			replier.reply('ex) 홍길동, a1b2c3 이면 인증방 들어갈때 닉네임을 카카오프렌즈 선택하고 닉네임을 a1b2c3으로 하고, 들어가서 채팅창에 홍길동 엔터');
 		} else if (msg in Ky.g[group].tempM) {
 			if (sender == Ky.g[group].tempM[msg].authID) {
