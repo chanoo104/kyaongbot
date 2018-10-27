@@ -3,7 +3,7 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.3.0_beta';
+var ver = '5.1.3.1_beta';
 var updatecode = '';
 
 let timeBoot = moment();
@@ -164,11 +164,9 @@ var Room = (function() { //Room 생성자
 var Member = (function() { //Member 생성자
 	function Member(params) {
 		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
-		this.profileData = [];
+		this.profileData = new Object();
 		this.profileData['sender'] = new Array();
 		this.profileData['sender'].push(hash);
-		this.memberData[0].push(sender);
-		this.memberData[1].push(hash);
 		this.counter = new Object();
 		this.counter.total = 0;
 		this.type = userGroup[userGroup.length - 1];
@@ -440,7 +438,7 @@ function response(a, b, c, d, e, f, g, h) {
 	Object.keys(Ky.g[group].m).map(function(objectKey, index) {
 		try{
 			if (Ky.g[group].m[objectKey].profileData[sender] !== undefined) {
-				if( Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender].indexOf(hash)) exist = objectKey
+				if( Ky.g[group].m[objectKey].profileData[sender].indexOf(hash) != -1) exist = objectKey
 			}
 		} catch(e) {};
 	});
@@ -450,9 +448,9 @@ function response(a, b, c, d, e, f, g, h) {
 		if ('mayBe' in Ky.g[group].tempM[sender]) {
 			if (msg == Ky.g[group].tempM[sender].authCode) {
 				delete Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData;
-				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData || [];
-				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData['sender'] = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData['sender'] || new Array();
-				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData['sender'].push(hash);
+				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData || new Object();
+				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender] = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender] || new Array();
+				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender].push(hash);
 				replier.reply('계정 인증이 완료되었습니다.');
 				delete Ky.g[group].tempM[sender];
 			} else {
