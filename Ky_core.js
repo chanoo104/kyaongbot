@@ -3,7 +3,7 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.3.2_beta';
+var ver = '5.1.3.3_beta';
 var updatecode = '';
 
 let timeBoot = moment();
@@ -635,7 +635,7 @@ function manageSys(params) {
 		a = 'manager';
 		d = 'eval입니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
-		if (msg.substr(msg.split(' ')[0]) == c) {
+		if (msg.split(' ')[0] == c) {
 			try {
 				replier.reply(eval(msg.split(' ', 1)[0].length+1));
 			} catch (e) {
