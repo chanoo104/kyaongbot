@@ -630,11 +630,11 @@ function manageSys(params) {
 		a = 'manager';
 		d = 'eval입니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
-		if (msg.substr(msg.split(' ')[0]) == c)
+		if (msg.substr(msg.split(' ')[0]) == c) {
 			try {
-				replier.reply(eval(msg.split(' ', 1)[0].length+1)))
+				replier.reply(eval(msg.split(' ', 1)[0].length+1));
 			} catch (e) {
-			replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
+				replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
 			}
 		}
 	}
