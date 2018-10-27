@@ -566,8 +566,10 @@ function commandChk(params, c, a, d) {
 		commandList.push(c);
 		descriptionList.push(d);
 	}
-	if (Ky.g[group].m[icode].status != c) {
-		return false;
+	if (Ky.g[group].m[icode].status !== undefined) {
+		if (Ky.g[group].m[icode].status != c) {
+			return false;
+		}
 	}
 	return true;
 }
