@@ -685,10 +685,10 @@ function pDBSys(params) {
 			phase++;
 			replier.reply('를 입력해 주세요.');
 		}
-		*/
+		
 		
 	}
-
+*/
 
 
 	//이런식으로
