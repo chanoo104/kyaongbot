@@ -56,7 +56,7 @@ manageGp
 
 
 const UPDATE = {};
-UPDATE.saveData = function(msg) { //파일에 내용을 저장하는 함수
+UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
 	try {
 		var file = new java.io.File(sdcard + '/kbot/response.js');
 		var fos = new java.io.FileOutputStream(file);
@@ -69,58 +69,61 @@ UPDATE.saveData = function(msg) { //파일에 내용을 저장하는 함수
 };
 
 function getHtml(text) {
-    var content = new java.io.ByteArrayOutputStream();
-    android.net.http.AndroidHttpClient.newInstance("userAgent").execute(new org.apache.http.client.methods.HttpGet(text)).getEntity().writeTo(content);
-    content.close();
-    var str = String(content.toString());
-    return str;
+	var content = new java.io.ByteArrayOutputStream();
+	android.net.http.AndroidHttpClient.newInstance("userAgent").execute(new org.apache.http.client.methods.HttpGet(text)).getEntity().writeTo(content);
+	content.close();
+	var str = String(content.toString());
+	return str;
 }
 
-
-var manageDB = function() {
+function checkDetailUrl(data) {
+	var regex = /^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?/;
+	return regex.test(data);
+}
+var manageDB = function () {
 	return {
-		loadAll: function() {
+		loadAll: function () {
 
 		}
 	}
 }
 
 
-var manageCp = (function() {
+var manageCp = (function () {
 	return {
-		check: function(params, i) {
+		check: function (params, i) {
 			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 			icode = i || icode;
 			return Ky.g[group].m[icode].cp;
 		},
-		add: function(params, point, i) {
+		add: function (params, point, i) {
 			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 			icode = i || icode;
 			Ky.g[group].m[icode].cp += 0
 			return Ky.g[group].m[icode].cp += Number(point);
-			
+
 		}
 	};
 })();
 
 
-var manageMember = (function() {
+var manageMember = (function () {
 	return {
 		//icodeMigration: function(group, sender) {
 
 		//}
-		memberMigration: function(params) {
+		memberMigration: function (params) {
 			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 
 		},
-		hashMigration: function(params) {
+		hashMigration: function (params) {
 			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 
 		}
 	};
 })();
 
-var miniGame = (function() {
+var miniGame = (function () {
 	return {
 
 	};
@@ -139,7 +142,7 @@ function makeAuthID() {
 	return text;
 }
 
-var Group = (function() { //Group 생성자 | ex) Ky.g[group] = new Group(group);
+var Group = (function () { //Group 생성자 | ex) Ky.g[group] = new Group(group);
 	function Group() {
 		this.counter = new Object();
 		this.counter.total = 0;
@@ -152,7 +155,7 @@ var Group = (function() { //Group 생성자 | ex) Ky.g[group] = new Group(group)
 	return Group;
 })();
 
-var Room = (function() { //Room 생성자
+var Room = (function () { //Room 생성자
 	function Room(params) {
 		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
 		this.groupName = group;
@@ -162,7 +165,7 @@ var Room = (function() { //Room 생성자
 	return Room;
 })();
 
-var Member = (function() { //Member 생성자
+var Member = (function () { //Member 생성자
 	function Member(params) {
 		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
 		this.profileData = new Object();
@@ -211,7 +214,7 @@ function memberCount(params, input, code) {
 	icode = code || icode;
 	if (input.indexOf('-') != -1) {
 		var from = moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
-		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) {} else return '숫자만 입력해 주세요.';
+		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) { } else return '숫자만 입력해 주세요.';
 		var to = moment(input.split('-')[1], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
 		if (to.isValid()) {
 			if (input.split('-')[1].length == 2) to.endOf('year');
@@ -331,7 +334,7 @@ function lolStat(nick) {
 		if (doc.select('div div span.Item').text() != '') arr.push('\n[ ' + doc.select('div div span.Item').text() + ' ]');
 		arr.push('\n\n》최근 20게임 전적\n ' + doc.select('div.WinRatioTitle span.win').text() + '승 ' + doc.select('div.WinRatioTitle span.lose').text() + '패, ' + doc.select('div.WinRatioTitle b').text());
 		if (!unranked) arr.push('\n》솔랭 전적\n ' + doc.select('div.WinLose').get(0).text());
-		if (list.length > 1)arr.push('\n》MOST 챔피언\n' + list);
+		if (list.length > 1) arr.push('\n》MOST 챔피언\n' + list);
 		if (mmr) arr.push('\n예상 MMR : ' + doc1.select('td.MMR').text() + '\n예상 티어 : ' + doc1.select('td.TierRankString').text());
 		if (mmr)
 			if (doc1.select('div.TipStatus').text() != '') arr.push('\n' + doc1.select('div.TipStatus').text());
@@ -350,7 +353,7 @@ function response(a, b, c, d, e, f, g, h) {
 	imageDB = f;
 	packageName = g;
 	threadId = h;
-	
+
 	let params = { //함수용 통합 매개변수
 		get room() { return room; },
 		get msg() { return msg; },
@@ -361,7 +364,7 @@ function response(a, b, c, d, e, f, g, h) {
 		get packageName() { return packageName; },
 		get threadId() { return threadId; }
 	}
-	
+
 	commandList = new Array();
 	descriptionList = new Array();
 
@@ -390,8 +393,8 @@ function response(a, b, c, d, e, f, g, h) {
 			replier.reply('ex) 홍길동, a1b2c3 이면 인증방 들어갈때 닉네임을 카카오프렌즈 선택하고 닉네임을 a1b2c3으로 하고, 들어가서 채팅창에 홍길동 엔터');
 		} else if (msg in Ky.g[group].tempM) {
 			if (sender == Ky.g[group].tempM[msg].authID) {
-				Object.defineProperty(params, "group", { get: function() { return group; } });
-				Object.defineProperty(params, "hash", { get: function() { return hash; } });
+				Object.defineProperty(params, "group", { get: function () { return group; } });
+				Object.defineProperty(params, "hash", { get: function () { return hash; } });
 				var icode = randomIcode(params);
 				var hash = Ky.g.tempHash[sender];
 				var authID = sender;
@@ -422,8 +425,8 @@ function response(a, b, c, d, e, f, g, h) {
 
 
 
-	Object.defineProperty(params, "group", { get: function() { return group; } });
-	Object.defineProperty(params, "hash", { get: function() { return hash; } });
+	Object.defineProperty(params, "group", { get: function () { return group; } });
+	Object.defineProperty(params, "hash", { get: function () { return hash; } });
 
 	Ky.g[group] = Ky.g[group] || new Group(params);
 	Ky.g[group].r[room] = Ky.g[group].r[room] || new Room(params);
@@ -434,14 +437,14 @@ function response(a, b, c, d, e, f, g, h) {
 	}
 
 	var unAuthed = false;
-	
+
 	var exist = false;
-	Object.keys(Ky.g[group].m).map(function(objectKey, index) {
-		try{
+	Object.keys(Ky.g[group].m).map(function (objectKey, index) {
+		try {
 			if (Ky.g[group].m[objectKey].profileData[sender] !== undefined) {
-				if( Ky.g[group].m[objectKey].profileData[sender].indexOf(hash) != -1) exist = objectKey
+				if (Ky.g[group].m[objectKey].profileData[sender].indexOf(hash) != -1) exist = objectKey
 			}
-		} catch(e) {};
+		} catch (e) { };
 	});
 	if (exist == false) {
 		Ky.g[group].tempM[sender] = Ky.g[group].tempM[sender] || new Object();
@@ -478,33 +481,33 @@ function response(a, b, c, d, e, f, g, h) {
 	if (unAuthed == true) {
 		var icode = 'unauth'
 	} else var icode = exist;
-	
-	Object.defineProperty(params, "icode", { get: function() { return icode; } });
+
+	Object.defineProperty(params, "icode", { get: function () { return icode; } });
 
 	if (icode != 'unauth' && Ky.g[group].m[icode].counter.total == 0) replier.reply('[' + sender + ']님,' + group + ' 캬옹봇 인증이 완료되었습니다. 공지 또는 홈페이지에서 명령어를 확인하세요. <!식별코드> 로 식별코드를 확인하세요.')
-	
-	
-	
+
+
+
 	Ky.g[group].r[room].enabled = Ky.g[group].r[room].enabled || new Object();
-	
+
 	//대화형 입력 방식을 위한 프리셋
 	/*
 	
 	*/
 	//명령어 세트(set) 실행기
-	
+
 	preSys(params);
-	
+
 	Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || 'true';
 	if (Ky.g[group].r[room].enabled.generalSys == 'true') {
 		generalSys(params);
 	}
-	
+
 	Ky.g[group].r[room].enabled.manageSys = Ky.g[group].r[room].enabled.manageSys || 'true';
 	if (Ky.g[group].r[room].enabled.manageSys == 'true') {
 		manageSys(params);
 	}
-	
+
 	Ky.g[group].r[room].enabled.pDBSys = Ky.g[group].r[room].enabled.pDBSys || 'true';
 	if (Ky.g[group].r[room].enabled.pDBSys == 'true') {
 		pDBSys(params);
@@ -531,7 +534,7 @@ function response(a, b, c, d, e, f, g, h) {
 			memberCounter(params);
 		}
 	}
-	
+
 	Ky.g[group].r[room].enabled.backGroundSys = Ky.g[group].r[room].enabled.backGroundSys || 'true';
 	if (Ky.g[group].r[room].enabled.backGroundSys == 'true') {
 		backGroundSys(params);
@@ -604,7 +607,7 @@ function generalSys(params) {
 		}
 		if (msg == c) {
 			replier.reply('✔');
-		}		
+		}
 	}
 
 }
@@ -637,7 +640,7 @@ function manageSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.split(' ')[0] == c) {
 			try {
-				replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length+1)));
+				replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
 			} catch (e) {
 				replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
 			}
@@ -654,7 +657,7 @@ function manageSys(params) {
 			replier.reply('리로드 성공!');
 		}
 	}
-	
+
 	loop: {
 		c = '!세이브';
 		a = 'admin';
@@ -703,8 +706,8 @@ function pDBSys(params) {
 			phase++;
 			replier.reply('를 입력해 주세요.');
 		}
-		
-		
+
+
 	}
 
 
@@ -732,6 +735,17 @@ function cpSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg == c) {
 			replier.reply('[' + sender + ']\n' + manageCp.check(params));
+		}
+	}
+	loop: {
+		c = '!이전포인트';
+		a = 'member';
+		d = '이전 DB의 포인트를 출력합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			var DB = JSON.parse(DataBase.getDataBase("DB"))
+			var scode = DB.icode[DB.inick.indexOf(sender)];
+			replier.reply("[이전 DB에서의 " + sender + "님의 포인트]\n" + DB.p[scode].pt)
 		}
 	}
 }
@@ -763,12 +777,12 @@ function miniGameSys(params) {
 				replier.reply(String.fromCharCode(0) + "[돌발 퀴즈!]\n가장 먼저 주어진 글자를 입력!\n" + temp.hanN[room])
 				temp.hanQuizValid[room] = true;
 				ThreadManager.i[room] = new java.lang.Thread(new java.lang.Runnable() {
-					run: function() {
+					run: function () {
 						try {
 							java.lang.Thread.sleep(30000);
 							replier.reply(String.fromCharCode(0) + '타임어택 종료!');
 							temp.hanQuizValid[room] = false;
-						} catch (e) {}
+						} catch (e) { }
 					}
 				});
 				ThreadManager.i[room].start();
@@ -785,7 +799,7 @@ function miniGameSys(params) {
 			replier.reply("응 복붙충 안속아")
 		}
 	}
-	
+
 	loop: {
 		c = '!가위 / 바위 / 보';
 		let cmd = ['!가위', '!바위', '!보'];
@@ -798,20 +812,20 @@ function miniGameSys(params) {
 				replier.reply('가위바위보 가능 시간이 아닙니다.' + JSON.stringify(Ky.g[group].rpsValidTime) + '시 30분~ 에만 이용 가능합니다.');
 				break loop;
 			}
-			var p = msg.substr(msg.split(' ', 1)[0].length+1);
-			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p<50 || p>1000) {
+			var p = msg.substr(msg.split(' ', 1)[0].length + 1);
+			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 50 || p > 1000) {
 				replier.reply('50~1000 사이의 자연수를 입력해 주세요.');
 				break loop;
 			}
-			
-			var r = Math.floor(Math.random()*3)
+
+			var r = Math.floor(Math.random() * 3)
 			let m = ['가위', '바위', '보', '가위', '바위'];
 			if (r == 0) {
-				replier.reply('[' + sender + '] ' + m[cmd.indexOf(msg.split(' ')[0])+2] + '! 》승리\n+' + p + 'cp');
+				replier.reply('[' + sender + '] ' + m[cmd.indexOf(msg.split(' ')[0]) + 2] + '! 》승리\n+' + p + 'cp');
 				manageCp.add(params, p);
 			}
 			if (r == 1) {
-				replier.reply('[' + sender + '] ' + m[cmd.indexOf(msg.split(' ')[0])+1] + '! 》패배\n-' + p + 'cp');
+				replier.reply('[' + sender + '] ' + m[cmd.indexOf(msg.split(' ')[0]) + 1] + '! 》패배\n-' + p + 'cp');
 				manageCp.add(params, -p);
 			}
 			if (r == 2) {
@@ -874,7 +888,44 @@ function miscSys(params) {
 			replier.reply(lolStat(msg.substring(c.length + 1)));
 		}
 	}
-	
+	loop: {
+		c = '!배그서버';
+		a = 'all';
+		d = '현재 배그 서버 상태를 출력합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			replier.reply("현재 배그 서버의 동접자는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").split('현재 배틀그라운드 동접자: ')[1].split('<a href="/statistics/playing">')[0].trim() + "이며, 서버는 " + Utils.getWebText("https://dak.gg/?hl=ko-KR").trim().split('서버:</strong> <span>')[1].split('</span>')[0] + "입니다.")
+		}
+	}
+	loop: {
+		c = '!나무위키';
+		a = 'all';
+		d = '나무위키의 문서를 검색합니다.';
+		try {
+			if (commandChk(params, c, a, d) == false) break loop;
+			if (msg.substr(0, c.length + 1) == c + ' ') {
+				doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substring(c.length + 1)).get()
+				replier.reply("▼전체보기 클릭▼" + blank + "》목차\n" + android.text.Html.fromHtml(replaceAll(doc.select(".wiki-macro-toc").select(".toc-item").toString(), "</span>", "<br>")) + "\n》내용\n" + android.text.Html.fromHtml(doc.select(".wiki-inner-content").select(".wiki-heading-content")))
+			}
+		} catch (e) {
+			replier.reply("검색결과가 없습니다. 정확한 문서의 이름을 적어주십시오.");
+		}
+	}
+	loop: {
+		c = '!단축';
+		a = 'member';
+		d = '주소를 단축합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.substr(0, c.length + 1) == c + ' ') {
+			if (checkDetailUrl(msg.substring(c.length + 1))) {
+				short = org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(msg.substring(c.length + 1)))
+					.get()
+					.text()
+				replier.reply(short)
+			} else replier.reply("정확한 주소를 적어주세요.")
+
+		}
+	}
 	loop: {
 		c = '!실검';
 		a = 'all';
@@ -887,19 +938,19 @@ function miscSys(params) {
 			replier.reply(list.slice(0, -1))
 		}
 	}
-	
+
 	loop: {
 		c = '!사양';
 		a = 'all';
 		d = '게임 최소/권장사양을 검색합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.split(' ')[0] == c) {
-			var char = 'can+i+run+it+' + msg.substr(msg.split(' ', 1)[0].length+1).replace(/ /gi, '+');
+			var char = 'can+i+run+it+' + msg.substr(msg.split(' ', 1)[0].length + 1).replace(/ /gi, '+');
 			var test = Utils.getWebText('https://www.google.co.kr/search?&q=site:https://www.systemrequirementslab.com/cyri/requirements' + char);
-			var ww=test.split('/cyri/requirements');
+			var ww = test.split('/cyri/requirements');
 			replier.reply(ww[1])
-			if(ww[1]){
-				var t = org.jsoup.Jsoup.connect("https://www.systemrequirementslab.com/cyri/requirements/spec/"+ww[1].split("/")[2].split('"')[0]).get().select('div[class=list-line-height]').select('ul');
+			if (ww[1]) {
+				var t = org.jsoup.Jsoup.connect("https://www.systemrequirementslab.com/cyri/requirements/spec/" + ww[1].split("/")[2].split('"')[0]).get().select('div[class=list-line-height]').select('ul');
 				replier.reply('■사양■' + blank + '• 최소사양\n' + android.text.Html.fromHtml(t.eq(1)) + '\n\n• 권장사양\n' + android.text.Html.fromHtml(t.eq(1)));
 			} else replier.reply('결과 없음');
 		}
@@ -972,37 +1023,37 @@ function miscSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
 			try {
-                    var u = Utils.getWebText("http://krdic.naver.com/search.nhn?query=" + msg.substr(c.length + 1));
-                    var a = u.split("<ul class=\"lst3\">")
-                    var b = a[1].split("</ul>")
-                    var c = b[0].replace(/(<([^>]+)>)/g, "");
-                    c = c.replace(/발음재생/g, "")
-                    c = c.replace(/단어장 저장/g, "")
-                    c = c.replace(/매우중요/g, "")
-                    c = c.replace(/유의어/g, "\n\n유의어")
-                    c = c.trim()
-                    c = c.replace(/\n         /g, "")
-                    c = c.replace(/  /g, "\n")
-                    c = c.replace(/\n\n\n/g, "")
-                    replier.reply("[" + msg.substr(3) + " 검색 결과]\n\n" + c)
-                } catch (e) {
-            replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
-            }
+				var u = Utils.getWebText("http://krdic.naver.com/search.nhn?query=" + msg.substr(c.length + 1));
+				var a = u.split("<ul class=\"lst3\">")
+				var b = a[1].split("</ul>")
+				var c = b[0].replace(/(<([^>]+)>)/g, "");
+				c = c.replace(/발음재생/g, "")
+				c = c.replace(/단어장 저장/g, "")
+				c = c.replace(/매우중요/g, "")
+				c = c.replace(/유의어/g, "\n\n유의어")
+				c = c.trim()
+				c = c.replace(/\n         /g, "")
+				c = c.replace(/  /g, "\n")
+				c = c.replace(/\n\n\n/g, "")
+				replier.reply("[" + msg.substr(3) + " 검색 결과]\n\n" + c)
+			} catch (e) {
+				replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
+			}
 		}
 	}
-	
+
 	if (msg == '!명령어') {
 		var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
-		for (i=0; i<commandList.length; i++) {
+		for (i = 0; i < commandList.length; i++) {
 			r += '》' + commandList[i] + '\n';
 			r += descriptionList[i];
 			r += '\n';
 		}
 		replier.reply(r)
 	}
-	
-	
-	
+
+
+
 
 }
 
@@ -1020,8 +1071,6 @@ function onStartCompile() {
 	DataBase.setDataBase('KyBot', JSON.stringify(Ky));
 	Api.gc();
 }
-
-
 
 
 
