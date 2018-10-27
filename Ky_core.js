@@ -606,6 +606,7 @@ function manageSys(params) {
 	}
 */
 
+/*
 	loop: {
 		c = '!eval';
 		a = 'manager';
@@ -619,6 +620,7 @@ function manageSys(params) {
 			replier.reply("eval 실행 중 오류 발생!\n오류 메시지 : " + e.message)
 		}
 	}
+*/
 	loop: {
 		c = '!리로드';
 		a = 'admin';
