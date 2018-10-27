@@ -3,7 +3,7 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.3.3_beta';
+var ver = '5.1.4_beta';
 var updatecode = '';
 
 let timeBoot = moment();
@@ -742,13 +742,19 @@ function cpSys(params) {
 		a = 'member';
 		d = '이전 DB의 포인트를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
+		try{
 		if (msg == c) {
 			var DB = JSON.parse(DataBase.getDataBase("DB"))
 			var scode = DB.icode[DB.inick.indexOf(sender)];
 			replier.reply("[이전 DB에서의 " + sender + "님의 포인트]\n" + DB.p[scode].pt)
 		}
+	}catch(e) {
+		replier.reply("해당 이름은 존재하지 않습니다.\n[" + sender + "]")
+	}
 	}
 }
+
+
 
 function miniGameSys(params) {
 	//미니게임 관련 시스템/명령어
@@ -904,7 +910,8 @@ function miscSys(params) {
 		try {
 			if (commandChk(params, c, a, d) == false) break loop;
 			if (msg.substr(0, c.length + 1) == c + ' ') {
-				doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substring(c.length + 1)).get()
+				doc = org.jsoup.Jsoup.connect("https://namu.wiki/w/" + msg.substring(c.length + 1) + "/")
+				.get()
 				replier.reply("▼전체보기 클릭▼" + blank + "》목차\n" + android.text.Html.fromHtml(replaceAll(doc.select(".wiki-macro-toc").select(".toc-item").toString(), "</span>", "<br>")) + "\n》내용\n" + android.text.Html.fromHtml(doc.select(".wiki-inner-content").select(".wiki-heading-content")))
 			}
 		} catch (e) {
@@ -938,7 +945,7 @@ function miscSys(params) {
 			replier.reply(list.slice(0, -1))
 		}
 	}
-
+/* 오류 뿜어서 일단 주석
 	loop: {
 		c = '!사양';
 		a = 'all';
@@ -955,6 +962,7 @@ function miscSys(params) {
 			} else replier.reply('결과 없음');
 		}
 	}
+	*/
 
 	loop: {
 		c = '!날씨';
