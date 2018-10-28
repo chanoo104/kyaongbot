@@ -1,6 +1,6 @@
 const admin = ["불여우", "rgb"]
 const UPDATE = {};
-
+const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
 function getHtml(text) {
     var content = new java.io.ByteArrayOutputStream();
     android.net.http.AndroidHttpClient.newInstance("userAgent").execute(new org.apache.http.client.methods.HttpGet(text)).getEntity().writeTo(content);
