@@ -533,7 +533,7 @@ function response(a, b, c, d, e, f, g, h) {
 		miscSys(params);
 	}
 	
-	replier.reply(JSON.stringify(params))
+	
 	Ky.g[group].r[room].enabled.memberCounter = Ky.g[group].r[room].enabled.memberCounter || 'true';
 	if (icode != 'unauth') {
 		if (Ky.g[group].r[room].enabled.memberCounter == 'true') {
