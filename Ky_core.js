@@ -174,8 +174,8 @@ var Member = (function () { //Member 생성자
 	function Member(params) {
 		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
 		this.profileData = new Object();
-		this.profileData['sender'] = new Array();
-		this.profileData['sender'].push(hash);
+		this.profileData[sender] = new Array();
+		this.profileData[sender].push(hash);
 		this.counter = new Object();
 		this.counter.total = 0;
 		this.type = userGroup[userGroup.length - 1];
@@ -698,22 +698,44 @@ function pDBSys(params) {
 			replier.reply('[' + sender + ']\n' + icode);
 		}
 	}
+	
+	
 	loop: {
-		c = '!명령어생성';
+		c = '!프로필생성';
 		a = 'member';
-		d = '자신의 식별코드를 확인합니다.';
+		d = '프로필을 생성합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg = '!스킵' && Ky.g[group].m[icode].status == c) {
+			Ky.g[group].m[icode].customProfile.push('');
+			phase++;
+		}
 		if (msg == c) {
 			Ky.g[group].m[icode].status = c;
-			var phase = 0;
-			replier.reply('[' + sender + '] 님의 프로필을 생성합니다.\n를 입력해 주세요.');
-		}
-		if (phase = 0) {
+			Ky.g[group].m[icode].phase = 0;
+			replier.reply('[' + sender + '] 님의 프로필을 생성합니다.\n!취소 로 취소, !스킵 으로 스킵\n간단한 자기소개(별명, 한줄요약 등)를 입력해 주세요.');
+			Ky.g[group].m[icode].customProfile = new Array();
+		} else if (Ky.g[group].m[icode].phase = 0) {
+			Ky.g[group].m[icode].customProfile.push(msg);
 			phase++;
-			replier.reply('를 입력해 주세요.');
+			replier.reply('취미/흥미/관심사 등을 적어주세요.');
+		} else if (Ky.g[group].m[icode].phase = 1) {
+			Ky.g[group].m[icode].customProfile.push(msg);
+			phase++;
+			replier.reply('개인정보를 입력해 주세요.');
+		} else if (Ky.g[group].m[icode].phase = 2) {
+			Ky.g[group].m[icode].customProfile.push(msg);
+			phase++;
+			replier.reply('자신의 컴퓨터 사양을 적어주세요.');
+		} else if (Ky.g[group].m[icode].phase = 3) {
+			Ky.g[group].m[icode].customProfile.push(msg);
+			phase++;
+			replier.reply('기타 하고싶은 말을 입력해 주세요.');
+		} else if (Ky.g[group].m[icode].phase = 4) {
+			Ky.g[group].m[icode].customProfile.push(msg);
+			phase++;
+			replier.reply('생성 완료.');
 		}
-
-
+		
 	}
 
 
