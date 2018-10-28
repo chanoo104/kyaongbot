@@ -3,7 +3,7 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.2.0_beta';
+var ver = '5.1.4.0_beta';
 var updatecode = '';
 
 let timeBoot = moment();
@@ -358,6 +358,10 @@ function response(a, b, c, d, e, f, g, h) {
 	imageDB = f;
 	packageName = g;
 	threadId = h;
+	
+	msg = msg.trim();
+	room = room.trim();
+	sender = sender.trim();
 
 	let params = { //함수용 통합 매개변수
 		get room() { return room; },
@@ -532,7 +536,6 @@ function response(a, b, c, d, e, f, g, h) {
 	if (Ky.g[group].r[room].enabled.miscSys == 'true') {
 		miscSys(params);
 	}
-	
 	
 	Ky.g[group].r[room].enabled.memberCounter = Ky.g[group].r[room].enabled.memberCounter || 'true';
 	if (icode != 'unauth') {
@@ -752,7 +755,7 @@ function cpSys(params) {
 	loop: {
 		c = '.채팅보상';
 		a = 'member';
-		d = '채팅 1개당 포인트를 1씩 증가시킵니다.';
+		d = '';
 		if (commandChk(params, c, a, d) == false) break loop;
 		Ky.g[group].m[icode].cp++;
 	}
@@ -1044,6 +1047,7 @@ function miscSys(params) {
 			replier.reply("[암호화폐 시세]\n▣비트코인 :: " + btc + "원\n" + "▣비트코인 캐시 :: " + bch + "원\n" + "▣비트코인 골드 :: " + btg + "원\n" + "▣이더리움 :: " + eth + "원\n" + "▣이더리움 클래식 :: " + etc + "원\n" + "▣리플 :: " + xrp + "원\n" + "▣라이트코인 :: " + ltc + "원\n" + "▣질리카 :: " + zil + "원")
 		}
 	}
+	
 	loop: {
 		c = '!네이버';
 		a = 'all';
@@ -1053,6 +1057,25 @@ function miscSys(params) {
 			replier.reply('https://search.naver.com/search.naver?query=' + msg.substring(c.length + 1));
 		}
 	}
+	loop: {
+		c = '!구글';
+		a = 'all';
+		d = '구글에서 해당 내용을 검색합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.substr(0, c.length + 1) == c + ' ') {
+			replier.reply('https://www.google.co.kr/search?q=' + msg.substring(c.length + 1));
+		}
+	}
+	loop: {
+		c = '!유튜브';
+		a = 'all';
+		d = '유튜브에서 해당 내용을 검색합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.substr(0, c.length + 1) == c + ' ') {
+			replier.reply('https://www.youtube.com/results?search_query=' + msg.substring(c.length + 1));
+		}
+	}
+	
 	loop: {
 		c = '!단어';
 		a = 'all';
