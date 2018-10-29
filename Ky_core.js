@@ -208,7 +208,6 @@ function memberCounter(params) {
 	Ky.g[group].m[icode].counter.list[timeList.indexOf(t)]++;
 	Ky.g[group].m[icode].counter.total = Ky.g[group].m[icode].counter.total || 0;
 	Ky.g[group].m[icode].counter.total++;
-	Ky.g[group].counter.total++;
 	//replier.reply(Ky.g[group].m[icode].counter.total);
 }
 
@@ -547,9 +546,15 @@ function response(a, b, c, d, e, f, g, h) {
 	if (Ky.g[group].r[room].enabled.backGroundSys == 'true') {
 		backGroundSys(params);
 	}
-
-
-
+	
+	var t = moment().format('YYMMDDHH');
+	Ky.g[group].counter.timeList = Ky.g[group].counter.timeList || new Array();
+	Ky.g[group].counter.list = Ky.g[group].counter.list || new Array();
+	var timeList = Ky.g[group].counter.timeList;
+	if (timeList.indexOf(t) == -1) timeList.push(t);
+	Ky.g[group].counter.list[timeList.indexOf(t)] = Ky.g[group].counter.list[timeList.indexOf(t)] || 0;
+	Ky.g[group].counter.list[timeList.indexOf(t)]++;
+	
 	firstLoad = false;
 
 
