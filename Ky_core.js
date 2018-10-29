@@ -3,7 +3,7 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.4.0_beta';
+var ver = '5.1.4.1_beta';
 var updatecode = '';
 
 let timeBoot = moment();
@@ -493,7 +493,7 @@ function response(a, b, c, d, e, f, g, h) {
 
 	Object.defineProperty(params, "icode", { get: function () { return icode; } });
 
-	if (icode != 'unauth' && Ky.g[group].m[icode].counter.total == 0) replier.reply('[' + sender + ']님,' + group + ' 캬옹봇 인증이 완료되었습니다. 공지 또는 홈페이지에서 명령어를 확인하세요. <!식별코드> 로 식별코드를 확인하세요.')
+	if (icode != 'unauth' && Ky.g[group].m[icode].counter.total == 0) replier.reply('[' + sender + ']님,' + group + ' 캬옹봇 인증이 완료되었습니다. <!명령어>로 명령어를 확인하세요. <!식별코드> 로 식별코드를 확인하세요.')
 
 
 
@@ -694,13 +694,57 @@ function pDBSys(params) {
 	//미니게임 제외 개인 데이터 관련 시스템/명령어
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	loop: {
-		c = '!식별코드';
+		c = '!카운터';
 		a = 'member';
+		d = '자신의 특정 기간 동안의 채팅 카운터를 확인합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			replier.reply(memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1));
+		}
+	}
+	loop: {
+		c = '!식별코드';
+		a = 'all';
 		d = '자신의 식별코드를 확인합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg == c) {
 			replier.reply('[' + sender + ']\n' + icode);
 		}
+	}
+	loop: {
+		c = '!순위';
+		a = 'member';
+		d = '특정 기간 동안의 채팅 카운터 순위를 출력합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.split(" ")[0] == c) {
+loop:{
+		var arr=[];
+var length = Object.keys(Ky.g[group].m).length;
+//replier.reply(length)
+		for (n=0; n<length; n++){
+			
+if (n == 3 && length > 9) var t = new Date().getTime();
+if (n == 6 && length > 9) replier.reply(length + '명의 로그 분석중... 예상 소요 시간: ' + Math.round((new Date().getTime()-t) / 3000 * (length-6)) + '초');
+var counted = [Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].member, memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1), Object.keys(Ky.g[group].m)[n])];
+	arr.push(counted);
+if (isNaN(counted[1])) {
+var a= counted[1];
+break loop;
+}
+	}
+//replier.reply(arr.length)
+//replier.reply(JSON.stringify(arr));
+function soort (a,b) {
+ return b[1]-a[1];
+}
+arr.sort(soort);
+var a="[채팅량 순위]\n" + msg.split(" ")[1] + "​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​\n\n";
+for (i=0; i<arr.length; i++){
+a += (i+1) + '. ' + arr[i][0] + '\n 》' + arr[i][1] + '\n\n';
+	}
+}
+	replier.reply(a);
+}
 	}
 	
 	
@@ -766,7 +810,7 @@ function cpSys(params) {
 		d = '자신의 포인트를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg == c) {
-			replier.reply('[' + sender + ']\n' + manageCp.check(params));
+			replier.reply('[' + sender + ']\n' + manageCp.check(params) + 'cp');
 		}
 	}
 	loop: {
