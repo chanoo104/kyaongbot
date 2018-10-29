@@ -299,7 +299,7 @@ function memberCount(params, input, code) {
 	var list = Ky.g[group].m[icode].counter.list;
 	for (i = start; i < end + 1; i++) {
 		result += list[i];
-		//replier.reply(timeList[i]);
+		replier.reply(timeList[i]);
 	}
 	//replier.reply('hi')
 
@@ -734,7 +734,7 @@ function pDBSys(params) {
 		}
 	}
 	loop: {
-		c = '!순위';
+		c = ';
 		a = 'member';
 		d = '특정 기간 동안의 채팅 카운터 순위를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
