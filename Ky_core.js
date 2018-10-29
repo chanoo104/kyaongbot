@@ -699,7 +699,7 @@ function pDBSys(params) {
 		d = '자신의 특정 기간 동안의 채팅 카운터를 확인합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg == c) {
-			replier.reply(memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1));
+			replier.reply(memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1)));
 		}
 	}
 	loop: {
@@ -717,7 +717,7 @@ function pDBSys(params) {
 		d = '특정 기간 동안의 채팅 카운터 순위를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.split(" ")[0] == c) {
-loop:{
+sloop:{
 		var arr=[];
 var length = Object.keys(Ky.g[group].m).length;
 //replier.reply(length)
@@ -729,7 +729,7 @@ var counted = [Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].member, memberCount(
 	arr.push(counted);
 if (isNaN(counted[1])) {
 var a= counted[1];
-break loop;
+break sloop;
 }
 	}
 //replier.reply(arr.length)
