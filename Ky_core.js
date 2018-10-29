@@ -602,7 +602,29 @@ function preSys(params) {
 		if (msg == '!취소') Ky.g[group].m[icode].status = 'defalut';
 		skip = false;
 	}
+	loop: {
+		c = 'lastActive 프리셋';
+		a = 'member';
+		d = '';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (Ky.g[group].m[icode].lastActive === undefined) {
+			Ky.g[group].m[icode].lastActive = [];
+		}
+		var p = Ky.g[group].m[icode].lastActive.indexOf(sender);
+		if (p == -1 && p != 0) Ky.g[group].m[icode].lastActive.unshift(sender);
+		if (p != -1 && p != 0) {
+			Ky.g[group].m[icode].lastActive.splice(p, 1);
+			Ky.g[group].m[icode].lastActive.unshift(sender);
+		}
+		if (msg == '!취소') Ky.g[group].m[icode].status = 'defalut';
+	}
 }
+
+
+
+
+
+
 
 function generalSys(params) {
 	//일반 시스템/명령어
@@ -698,8 +720,8 @@ function pDBSys(params) {
 		a = 'member';
 		d = '자신의 특정 기간 동안의 채팅 카운터를 확인합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
-		if (msg == c) {
-			replier.reply(memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1)));
+		if (msg.split(" ")[0] == c) {
+			replier.reply('[' + sender + ']\n' + memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1)));
 		}
 	}
 	loop: {
@@ -725,7 +747,7 @@ var length = Object.keys(Ky.g[group].m).length;
 			
 if (n == 3 && length > 9) var t = new Date().getTime();
 if (n == 6 && length > 9) replier.reply(length + '명의 로그 분석중... 예상 소요 시간: ' + Math.round((new Date().getTime()-t) / 3000 * (length-6)) + '초');
-var counted = [Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].member, memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1), Object.keys(Ky.g[group].m)[n])];
+var counted = [Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].profileData[0], memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1), Object.keys(Ky.g[group].m)[n])];
 	arr.push(counted);
 if (isNaN(counted[1])) {
 var a= counted[1];
