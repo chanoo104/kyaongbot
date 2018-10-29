@@ -368,6 +368,8 @@ function response(a, b, c, d, e, f, g, h) {
 		get packageName() { return packageName; },
 		get threadId() { return threadId; }
 	}
+	Ky.g[group].counter = Ky.g[group].counter || {};
+	Ky.g[group].counter.total = Ky.g[group].counter.total || 0;
 
 	commandList = new Array();
 	descriptionList = new Array();
