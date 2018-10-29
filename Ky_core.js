@@ -240,16 +240,19 @@ function memberCount(params, input, code) {
 
 	var result = 0;
 	var timeList = Ky.g[group].m[icode].counter.timeList || new Array();
-	var t = from.format('YYMMDDHH');
+	var tt = from.format('YYMMDDHH');
 	//replier.reply(t)
+	/*
 	var a1 = Number(t.slice(0, 2));
 	var a2 = Number(t.slice(2, 4));
 	var a3 = Number(t.slice(4, 6));
 	var a4 = Number(t.slice(6, 8));
+	*/
 	//var a0 = Number(t.slice(0,6));
 	for (i = 0; i < timeList.length; i++) {
 		var t = timeList[i];
 		//replier.reply(t)
+		/*
 		var b1 = Number(t.slice(0, 2));
 		var b2 = Number(t.slice(2, 4));
 		var b3 = Number(t.slice(4, 6));
@@ -265,34 +268,26 @@ function memberCount(params, input, code) {
 				}
 			}
 		}
+		*/
+		if (tt <= t) {
+			var start = i;
+			break;
+		}
 	}
 	if (typeof start == 'undefined') start = -1;
 	if (start == -1) return 0;
 	var n = start += 0
-	var t = to.format('YYMMDDHH')
-	var a1 = Number(t.slice(0, 2));
-	var a2 = Number(t.slice(2, 4));
-	var a3 = Number(t.slice(4, 6));
-	var a4 = Number(t.slice(6, 8));
+	var tt = to.format('YYMMDDHH')
+	replier.reply('to: ' + tt)
 	for (i = n; i < timeList.length; i++) {
 		var t = timeList[i];
 		//replier.reply('t')
-		var b1 = Number(t.slice(0, 2));
-		var b2 = Number(t.slice(2, 4));
-		var b3 = Number(t.slice(4, 6));
-		var b4 = Number(t.slice(6, 8));
-		if (a1 <= b1) {
-			if (a2 <= b2) {
-				if (a3 <= b3) {
-					if (a4 <= b4) {
-						var end = i
-						break;
-					}
-				}
-			}
+		if (tt <= t) {
+			var end = i -1;
+			break;
 		}
 	}
-	//replier.reply('end: ' + end)
+	replier.reply('end: ' + end)
 	if (typeof end == 'undefined') end = timeList.length - 1;
 	//replier.reply('start: ' + start);
 	//replier.reply('end: ' + end)
@@ -735,7 +730,7 @@ function pDBSys(params) {
 	}
 	loop: {
 		c = '!순위';
-		a = 'member';
+		a = 'all';
 		d = '특정 기간 동안의 채팅 카운터 순위를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.split(" ")[0] == c) {
