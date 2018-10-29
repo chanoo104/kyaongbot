@@ -587,8 +587,10 @@ function commandChk(params, c, a, d) {
 			return false;
 		}
 	}
-	Ky.g[group].counter[c] = Ky.g[group].counter[c] || 0;
-	Ky.g[group].counter[c]++;
+	if (msg.indexOf(c) == 0) {
+		Ky.g[group].counter[c] = Ky.g[group].counter[c] || 0;
+		Ky.g[group].counter[c]++;
+	}
 	return true;
 }
 let c, a, d;
