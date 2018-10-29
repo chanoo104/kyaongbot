@@ -747,7 +747,7 @@ var length = Object.keys(Ky.g[group].m).length;
 			
 if (n == 3 && length > 9) var t = new Date().getTime();
 if (n == 6 && length > 9) replier.reply(length + '명의 로그 분석중... 예상 소요 시간: ' + Math.round((new Date().getTime()-t) / 3000 * (length-6)) + '초');
-if (Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].lastActive[0] !== undefined) var ttt = Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].lastActive[0];
+if (Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].lastActive !== undefined) var ttt = Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].lastActive[0];
 var counted = [ttt, memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1), Object.keys(Ky.g[group].m)[n])];
 	arr.push(counted);
 if (isNaN(counted[1])) {
