@@ -234,8 +234,8 @@ function memberCount(params, input, code) {
 		if (moment(input, ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) {
 			var from = moment(input, ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
 		} else return '숫자만 입력해 주세요.';
-		var to = moment();
-		if (to.diff(from) < 0) return '시작 시간은 현재 시간 이전이여야 합니다.';
+		var to = moment().add(1, 'hour');
+		if (to.diff(from, 'hours') < 1) return '시작 시간은 현재 시간 이전이여야 합니다.';
 	}
 
 	var result = 0;
@@ -1118,7 +1118,7 @@ function miscSys(params) {
 		d = '네이버에서 해당 내용을 검색합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			replier.reply('https://search.naver.com/search.naver?query=' + msg.substring(c.length + 1));
+			replier.reply('https://search.naver.com/search.naver?query=' + encodeURI(msg.substring(c.length + 1)));
 		}
 	}
 	loop: {
@@ -1127,7 +1127,7 @@ function miscSys(params) {
 		d = '구글에서 해당 내용을 검색합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			replier.reply('https://www.google.co.kr/search?q=' + msg.substring(c.length + 1));
+			replier.reply('https://www.google.co.kr/search?q=' + encodeURI(msg.substring(c.length + 1)));
 		}
 	}
 	loop: {
@@ -1136,7 +1136,7 @@ function miscSys(params) {
 		d = '유튜브에서 해당 내용을 검색합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			replier.reply('https://www.youtube.com/results?search_query=' + msg.substring(c.length + 1));
+			replier.reply('https://www.youtube.com/results?search_query=' + encodeURI(msg.substring(c.length + 1)));
 		}
 	}
 	
