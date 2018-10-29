@@ -734,7 +734,7 @@ function pDBSys(params) {
 		}
 	}
 	loop: {
-		c = ';
+		c = '!순위';
 		a = 'member';
 		d = '특정 기간 동안의 채팅 카운터 순위를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
