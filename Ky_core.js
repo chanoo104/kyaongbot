@@ -225,9 +225,9 @@ function memberCount(params, input, code) {
 			if (input.split('-')[1].length == 2) to.endOf('year');
 			if (input.split('-')[1].length == 4) to.endOf('month');
 			if (input.split('-')[1].length == 6) to.endOf('day');
-			if (input.split('-')[1].length == 8) to.endOf('hour');
+			if (input.split('-')[1].length == 8) to.add(1, 'hour');
 		} else return '숫자만 입력해 주세요.';
-		if (to.diff(from) < 0) return '시작 시간, 종료 시간 순으로 입력해 주세요.';
+		if (to.diff(from, 'hours') < 1) return '시작 시간, 종료 시간 순으로 입력해 주세요.';
 		if (to.diff(from.add(1, 'y')) > 0) return '최대 구간 길이는 1년입니다.';
 		from.add(-1, 'y');
 	} else {
@@ -278,7 +278,7 @@ function memberCount(params, input, code) {
 	if (start == -1) return 0;
 	var n = start += 0
 	var tt = to.format('YYMMDDHH')
-	replier.reply('to: ' + tt)
+	//replier.reply('to: ' + tt)
 	for (i = n; i < timeList.length; i++) {
 		var t = timeList[i];
 		//replier.reply('t')
@@ -287,14 +287,14 @@ function memberCount(params, input, code) {
 			break;
 		}
 	}
-	replier.reply('end: ' + end)
+	//replier.reply('end: ' + end)
 	if (typeof end == 'undefined') end = timeList.length - 1;
 	//replier.reply('start: ' + start);
 	//replier.reply('end: ' + end)
 	var list = Ky.g[group].m[icode].counter.list;
 	for (i = start; i < end + 1; i++) {
 		result += list[i];
-		replier.reply(timeList[i]);
+		//replier.reply(timeList[i]);
 	}
 	//replier.reply('hi')
 
