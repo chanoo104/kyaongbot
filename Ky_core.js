@@ -208,6 +208,7 @@ function memberCounter(params) {
 	Ky.g[group].m[icode].counter.list[timeList.indexOf(t)]++;
 	Ky.g[group].m[icode].counter.total = Ky.g[group].m[icode].counter.total || 0;
 	Ky.g[group].m[icode].counter.total++;
+	Ky.g[group].counter.total++;
 	//replier.reply(Ky.g[group].m[icode].counter.total);
 }
 
@@ -572,8 +573,6 @@ function commandChk(params, c, a, d) {
 			return false;
 		}
 	}
-	Ky.g[group].counter[c] = Ky.g[group].counter[c] || 0;
-	Ky.g[group].counter[c]++;
 	if (msg == '!명령어' && d.length > 0) {
 		commandList.push(c);
 		descriptionList.push(d);
@@ -583,6 +582,8 @@ function commandChk(params, c, a, d) {
 			return false;
 		}
 	}
+	Ky.g[group].counter[c] = Ky.g[group].counter[c] || 0;
+	Ky.g[group].counter[c]++;
 	return true;
 }
 let c, a, d;
