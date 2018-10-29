@@ -368,8 +368,7 @@ function response(a, b, c, d, e, f, g, h) {
 		get packageName() { return packageName; },
 		get threadId() { return threadId; }
 	}
-	Ky.g[group].counter = Ky.g[group].counter || {};
-	Ky.g[group].counter.total = Ky.g[group].counter.total || 0;
+	
 
 	commandList = new Array();
 	descriptionList = new Array();
@@ -491,6 +490,8 @@ function response(a, b, c, d, e, f, g, h) {
 	Object.defineProperty(params, "icode", { get: function () { return icode; } });
 
 	if (icode != 'unauth' && Ky.g[group].m[icode].counter.total == 0) replier.reply('[' + sender + ']님,' + group + ' 캬옹봇 인증이 완료되었습니다. <!명령어>로 명령어를 확인하세요. <!식별코드> 로 식별코드를 확인하세요.')
+	Ky.g[group].counter = Ky.g[group].counter || {};
+	Ky.g[group].counter.total = Ky.g[group].counter.total || 0;
 
 
 
