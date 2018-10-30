@@ -36,7 +36,7 @@ Ky.g = Ky.g || new Object(); //Group 객체
 Ky.g.tempAuth = Ky.g.tempAuth || new Object(); //임시 인증 데이터
 Ky.g.tempHash = Ky.g.tempHash || new Object(); //임시 인증 데이터
 Ky.c = Ky.c || new Object(); //Core 객체
-
+Ky.t = Ky.t || new Object();
 
 /*아이디어노트
 
@@ -898,11 +898,11 @@ function miniGameSys(params) {
 				temp.hanN[room] = hanram.join('')
 				
 				
-				var reward = 999 + Ky.g[group].miniGame.randomWord.preActive;
+				Ky.t.rwReward = 999 + Ky.g[group].miniGame.randomWord.preActive;
 				Ky.g[group].miniGame.randomWord.preActive = 0;
 				
 				
-				replier.reply(String.fromCharCode(0) + "[보상: " + reward + "cp]\n가장 먼저 주어진 글자를 입력!\n" + temp.hanN[room])
+				replier.reply(String.fromCharCode(0) + "[보상: " + Ky.t.rwReward + "cp]\n가장 먼저 주어진 글자를 입력!\n" + temp.hanN[room])
 				temp.hanQuizValid[room] = true;
 				ThreadManager.i[room] = new java.lang.Thread(new java.lang.Runnable() {
 					run: function () {
@@ -921,7 +921,7 @@ function miniGameSys(params) {
 		if (msg == temp.hanR[room] && temp.hanQuizValid[room] == true) {
 			ThreadManager.i[room].interrupt();
 			temp.hanQuizValid[room] = false
-			replier.reply("[" + sender + "]\n정답!\n+" + reward + 'cp')
+			replier.reply("[" + sender + "]\n정답!\n+" + Ky.t.rwReward + 'cp')
 			manageCp.add(params, p);
 		} else if (msg.indexOf(String.fromCharCode(8237)) != -1 && temp.hanQuizValid[room] == true) {
 			replier.reply("응 복붙충 안속아")
