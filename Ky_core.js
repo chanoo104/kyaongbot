@@ -879,6 +879,8 @@ function miniGameSys(params) {
 		//이거 나중에 변수 통합시키는게 좋을듯
 		//출력 랜덤이랑 일반 구분, 포인트 랜덤으로 퀴즈맞춘후에 돌려서 주기
 		temp.hanQuizValid[room] = temp.hanQuizValid[room] || false
+		
+		Ky.g[group].miniGame.randomWord = Ky.g[group].miniGame.randomWord.preActive || {};
 		Ky.g[group].miniGame.randomWord.preActive = Ky.g[group].miniGame.randomWord.preActive || 0;
 				Ky.g[group].miniGame.randomWord.preActive++;
 		if (Math.floor(Math.random() * 300) == 123 || msg == 'rkt...') {
