@@ -898,7 +898,7 @@ function miniGameSys(params) {
 				temp.hanN[room] = hanram.join('')
 				
 				
-				var reward = 999 + preActive
+				var reward = 999 + Ky.g[group].miniGame.randomWord.preActive;
 				Ky.g[group].miniGame.randomWord.preActive = 0;
 				
 				
