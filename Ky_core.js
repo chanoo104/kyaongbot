@@ -902,7 +902,7 @@ function miniGameSys(params) {
 				Ky.g[group].miniGame.randomWord.preActive = 0;
 				
 				
-				replier.reply(String.fromCharCode(0) + "[보상: " +  + "cp]\n가장 먼저 주어진 글자를 입력!\n" + temp.hanN[room])
+				replier.reply(String.fromCharCode(0) + "[보상: " + reward + "cp]\n가장 먼저 주어진 글자를 입력!\n" + temp.hanN[room])
 				temp.hanQuizValid[room] = true;
 				ThreadManager.i[room] = new java.lang.Thread(new java.lang.Runnable() {
 					run: function () {
