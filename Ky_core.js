@@ -3,7 +3,7 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.4.1_beta';
+var ver = '5.1.4.3_beta';
 var updatecode = '';
 
 let timeBoot = moment();
@@ -504,6 +504,7 @@ function response(a, b, c, d, e, f, g, h) {
 	//명령어 세트(set) 실행기
 
 	preSys(params);
+	Ky.g[group].miniGame = Ky.g[group].miniGame || {};
 
 	Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || 'true';
 	if (Ky.g[group].r[room].enabled.generalSys == 'true') {
@@ -587,8 +588,8 @@ function commandChk(params, c, a, d) {
 			return false;
 		}
 	}
+	Ky.g[group].counter[c] = Ky.g[group].counter[c] || 0;
 	if (msg.indexOf(c) == 0) {
-		Ky.g[group].counter[c] = Ky.g[group].counter[c] || 0;
 		Ky.g[group].counter[c]++;
 	}
 	return true;
@@ -866,15 +867,21 @@ function cpSys(params) {
 function miniGameSys(params) {
 	//미니게임 관련 시스템/명령어
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	
+	
+	
+	
 	loop: {
-		c = '!랜덤문자';
+		c = '.랜덤문자';
 		a = 'member';
-		d = '일정 확률로 포인트를 보상으로 하는 글자 입력 퀴즈를 출력합니다.';
+		d = '랜덤 출력되며, 일정 확률로 포인트를 보상으로 하는 글자 입력 퀴즈를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		//이거 나중에 변수 통합시키는게 좋을듯
 		//출력 랜덤이랑 일반 구분, 포인트 랜덤으로 퀴즈맞춘후에 돌려서 주기
 		temp.hanQuizValid[room] = temp.hanQuizValid[room] || false
-		if (msg == '!랜덤문자') {
+		Ky.g[group].miniGame.randomWord.preActive = Ky.g[group].miniGame.randomWord.preActive || 0;
+				Ky.g[group].miniGame.randomWord.preActive++;
+		if (Math.floor(Math.random() * 300) == 123 || msg == 'rkt...') {
 			var ram = Math.floor(Math.random() * 55);
 			if (temp.hanQuizValid[room] == false) {
 				var hanram = [];
@@ -887,7 +894,13 @@ function miniGameSys(params) {
 				temp.hanR[room] = hanram.join('').replace(/[^\uAC00-\uD7AF\u1100-\u11FF\u3130-\u318F]/gi, "")
 
 				temp.hanN[room] = hanram.join('')
-				replier.reply(String.fromCharCode(0) + "[돌발 퀴즈!]\n가장 먼저 주어진 글자를 입력!\n" + temp.hanN[room])
+				
+				
+				var reward = 999 + preActive
+				Ky.g[group].miniGame.randomWord.preActive = 0;
+				
+				
+				replier.reply(String.fromCharCode(0) + "[보상: " +  + "cp]\n가장 먼저 주어진 글자를 입력!\n" + temp.hanN[room])
 				temp.hanQuizValid[room] = true;
 				ThreadManager.i[room] = new java.lang.Thread(new java.lang.Runnable() {
 					run: function () {
@@ -906,8 +919,8 @@ function miniGameSys(params) {
 		if (msg == temp.hanR[room] && temp.hanQuizValid[room] == true) {
 			ThreadManager.i[room].interrupt();
 			temp.hanQuizValid[room] = false
-			replier.reply("[" + sender + "]\n정답!")
-			// DB.p[scode].pt += 100
+			replier.reply("[" + sender + "]\n정답!\n+" + reward + 'cp')
+			manageCp.add(params, p);
 		} else if (msg.indexOf(String.fromCharCode(8237)) != -1 && temp.hanQuizValid[room] == true) {
 			replier.reply("응 복붙충 안속아")
 		}
