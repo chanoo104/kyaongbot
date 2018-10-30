@@ -922,7 +922,7 @@ function miniGameSys(params) {
 			ThreadManager.i[room].interrupt();
 			temp.hanQuizValid[room] = false
 			replier.reply("[" + sender + "]\n정답!\n+" + Ky.t.rwReward + 'cp')
-			manageCp.add(params, p);
+			manageCp.add(params, Ky.t.rwReward);
 		} else if (msg.indexOf(String.fromCharCode(8237)) != -1 && temp.hanQuizValid[room] == true) {
 			replier.reply("응 복붙충 안속아")
 		}
