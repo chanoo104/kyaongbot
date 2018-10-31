@@ -3,7 +3,7 @@
 const scriptName = "Ky_core.js";
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.4.3_beta';
+var ver = '5.1.4.3.1_beta';
 var updatecode = '';
 
 let timeBoot = moment();
@@ -474,7 +474,7 @@ function response(a, b, c, d, e, f, g, h) {
 			Ky.g[group].tempM[sender].mayBe = msg.substr(4);
 			Ky.g[group].tempM[sender].authCode = aCode;
 			Api.replyRoom(Ky.g[group].m[msg.substr(4)].authID, aCode);
-			Api.replyRoom(group + '_관리방', '[' + sender + ']\n인증코드: ' + aCode);
+			Api.replyRoom(group + '_관리방', '[' + sender + ']\n인증코드: ' + aCode + '\n보안코드: ' + Ky.g[group].m[msg.substr(4)].authID);
 
 			replier.reply('인증코드가 인증센터로 전송되었습니다.');
 		} else if (Ky.g[group].tempM[sender].alert == 't') {
@@ -742,7 +742,7 @@ function pDBSys(params) {
 	}
 	loop: {
 		c = '!순위';
-		a = 'all';
+		a = 'member';
 		d = '특정 기간 동안의 채팅 카운터 순위를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.split(" ")[0] == c) {
@@ -883,7 +883,7 @@ function miniGameSys(params) {
 		Ky.g[group].miniGame.randomWord = Ky.g[group].miniGame.randomWord || {};
 		Ky.g[group].miniGame.randomWord.preActive = Ky.g[group].miniGame.randomWord.preActive || 0;
 				Ky.g[group].miniGame.randomWord.preActive++;
-		if (Math.floor(Math.random() * 300) == 123 || msg == 'rkt...') {
+		if (Math.floor(Math.random() * 1000) == 123) {
 			var ram = Math.floor(Math.random() * 55);
 			if (temp.hanQuizValid[room] == false) {
 				var hanram = [];
@@ -898,7 +898,7 @@ function miniGameSys(params) {
 				temp.hanN[room] = hanram.join('')
 				
 				
-				Ky.t.rwReward = 999 + Ky.g[group].miniGame.randomWord.preActive;
+				Ky.t.rwReward = 500 + Math.round(Ky.g[group].miniGame.randomWord.preActive/2);
 				Ky.g[group].miniGame.randomWord.preActive = 0;
 				
 				
@@ -945,6 +945,10 @@ function miniGameSys(params) {
 				replier.reply('50~1000 사이의 자연수를 입력해 주세요.');
 				break loop;
 			}
+			if (manageCp.check(params) < p) {
+				replier.reply('잔액이 부족합니다.')
+				break loop;
+			}
 
 			var r = Math.floor(Math.random() * 3)
 			let m = ['가위', '바위', '보', '가위', '바위'];
@@ -961,6 +965,46 @@ function miniGameSys(params) {
 			}
 		}
 	}
+	
+	
+	loop: {
+		c = '!복권';
+		a = 'member';
+		d = '매일 정각 추첨되는 복권에 응모합니다. 숫자범위: 1~100, 가격: 100cp';
+		var price = '200'
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (cmd.indexOf(msg.split(' ')[0]) != -1) {
+			var p = msg.substr(msg.split(' ', 1)[0].length + 1);
+			Ky.g[group].miniGame.lottery = Ky.g[group].miniGame.lottery || {};
+			Ky.g[group].miniGame.lottery.queue = Ky.g[group].miniGame.lottery.queue || [];
+			Ky.g[group].miniGame.lottery.cQueue = Ky.g[group].miniGame.lottery.cQueue || [];
+			Ky.g[group].miniGame.lottery.reward = Ky.g[group].miniGame.lottery.reward || 0;
+			Ky.g[group].m[icode].miniGame.lottery = Ky.g[group].m[icode].miniGame.lottery || {};
+			if (Ky.g[group].m[icode].miniGame.lottery.today === undefined) Ky.g[group].m[icode].miniGame.lottery.today = false;
+			
+			var p = msg.substr(msg.split(' ', 1)[0].length + 1);
+			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 1 || p > 100) {
+				replier.reply('1~100 사이의 자연수를 입력해 주세요.');
+				break loop;
+			}
+			if (Ky.g[group].m[icode].miniGame.lottery.today != false) {
+				replier.reply('이미 응모하셨습니다.')
+				break loop;
+			}
+			if (manageCp.check(params) < price) {
+				replier.reply('잔액이 부족합니다.')
+				break loop;
+			}
+			manageCp.add(params, -price);
+			Ky.g[group].miniGame.lottery.queue.push(icode);
+			Ky.g[group].miniGame.lottery.cQueue.push(p);
+			Ky.g[group].miniGame.lottery.reward += Math.round(price/2);
+			Ky.g[group].m[icode].miniGame.lottery.today = true;
+			replier.reply('[' + sender + ']\n응모 완료.\n현재 누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp');
+		}
+	}
+	
+	
 }
 
 function miscSys(params) {
@@ -1210,7 +1254,8 @@ function miscSys(params) {
 function backGroundSys(params) {
 	//날짜 관련 시스템/명령어
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
-
+	
+	
 }
 
 
