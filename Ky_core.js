@@ -845,6 +845,11 @@ function cpSys(params) {
 		if (msg == c) {
 			replier.reply('[' + sender + ']\n' + manageCp.check(params) + 'cp');
 		}
+		Ky.g[group].m[icode].attacked = Ky.g[group].m[icode].attacked || 0;
+		if (Ky.g[group].m[icode].attacked > 0) {
+			replier.reply("[누적 벌점]\n→ -" + Ky.g[group].m[icode].attacked + "cp");
+			Ky.g[group].m[icode].attacked = 0;
+		}
 	}
 	loop: {
 		c = '!이전포인트';
@@ -927,7 +932,8 @@ function cpSys(params) {
 		    manageCp.add(params, -i);
 			manageCp.add(params, -p, msg.split(' ')[1]);
 			Ky.g[group].m[icode].pns = new Date().getTime();
-		    replier.reply("[벌점]\n→ " + Ky.g[group].m[msg.split(' ')[1]].lastActive[0] + "\n+-" + p + "cp (-" + i + "cp) (20% VAT)");
+			Ky.g[group].m[icode].attacked = Ky.g[group].m[icode].attacked || 0;
+			Ky.g[group].m[icode].attacked += Number(p);
 		}
 	}
 	
