@@ -844,11 +844,11 @@ function cpSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg == c) {
 			replier.reply('[' + sender + ']\n' + manageCp.check(params) + 'cp');
-		}
-		Ky.g[group].m[icode].attacked = Ky.g[group].m[icode].attacked || 0;
-		if (Ky.g[group].m[icode].attacked > 0) {
-			replier.reply("[누적 벌점]\n→ -" + Ky.g[group].m[icode].attacked + "cp");
-			Ky.g[group].m[icode].attacked = 0;
+			Ky.g[group].m[icode].attacked = Ky.g[group].m[icode].attacked || 0;
+			if (Ky.g[group].m[icode].attacked > 0) {
+				replier.reply("[누적 벌점]\n→ -" + Ky.g[group].m[icode].attacked + "cp");
+				Ky.g[group].m[icode].attacked = 0;
+			}
 		}
 	}
 	loop: {
