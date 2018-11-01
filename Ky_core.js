@@ -865,7 +865,7 @@ function cpSys(params) {
 	loop: {
 		c = '!상점';
 		a = 'member';
-		d = '자신의 특정 기간 동안의 채팅 카운터를 확인합니다.';
+		d = '특정인에게 cp를 전송합니다. VAT: 20%';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.split(" ")[0] == c) {
 			if(msg.split(" ").length != 3) {
@@ -890,6 +890,44 @@ function cpSys(params) {
 		    manageCp.add(params, -i);
 			manageCp.add(params, p, msg.split(' ')[1]);
 		    replier.reply("[상점]\n" + sender + " → " + Ky.g[group].m[msg.split(' ')[1]].lastActive[0] + "\n+" + p + "cp (-" + i + "cp) (20% VAT)");
+		}
+	}
+	loop: {
+		c = '!벌점';
+		a = 'member';
+		d = '특정인의 cp를 차감합니다. VAT: 50%';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.split(" ")[0] == c) {
+			Ky.g[group].m[icode].pns = Ky.g[group].m[icode].pns || 0;
+			var t = new Date().getTime() - Ky.g[group].m[icode].pns
+		    if (t < 180000) {
+		        var v = 180 - Math.round(t / 1000)
+		    	replier.reply("쿨타임 : " + v + "sec")
+		    break loop;
+		    }
+			if(msg.split(" ").length != 3) {
+				replier.reply('잘못된 입력 형식입니다.')
+				break loop;
+			}
+			if (Ky.g[group].m[msg.split(' ')[1]] === undefined) {
+				replier.reply('존재하지 않는 식별코드입니다.')
+				break loop;
+			}
+			var p = msg.split(' ')[2];
+			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 50) {
+				replier.reply('50 이상의 자연수를 입력해 주세요.');
+				break loop;
+			}
+			var i = Math.round(p * 1.5);
+		    if (manageCp.check(params, icode) - i < 0) {
+		        var x = i - manageCp.check(params, icode);
+		        replier.reply("포인트가 " + x + "cp 부족합니다. VAT 50%를 유의해 주세요.");
+		        break loop;
+		    }
+		    manageCp.add(params, -i);
+			manageCp.add(params, -p, msg.split(' ')[1]);
+			Ky.g[group].m[icode].pns = new Date().getTime();
+		    replier.reply("[벌점]\n→ " + Ky.g[group].m[msg.split(' ')[1]].lastActive[0] + "\n+-" + p + "cp (-" + i + "cp) (20% VAT)");
 		}
 	}
 	
