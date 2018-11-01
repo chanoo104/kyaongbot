@@ -900,7 +900,7 @@ function cpSys(params) {
 	loop: {
 		c = '!벌점';
 		a = 'member';
-		d = '특정인의 cp를 차감합니다. VAT: 50%';
+		d = '특정인의 cp를 차감합니다. 실행 성공 시 별도의 메세지가 출력되지 않습니다. VAT: 50%';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.split(" ")[0] == c) {
 			Ky.g[group].m[icode].pns = Ky.g[group].m[icode].pns || 0;
@@ -932,8 +932,8 @@ function cpSys(params) {
 		    manageCp.add(params, -i);
 			manageCp.add(params, -p, msg.split(' ')[1]);
 			Ky.g[group].m[icode].pns = new Date().getTime();
-			Ky.g[group].m[icode].attacked = Ky.g[group].m[icode].attacked || 0;
-			Ky.g[group].m[icode].attacked += Number(p);
+			Ky.g[group].m[msg.split(' ')[1]].attacked = Ky.g[group].m[msg.split(' ')[1]].attacked || 0;
+			Ky.g[group].m[msg.split(' ')[1]].attacked += Number(p);
 		}
 	}
 	
