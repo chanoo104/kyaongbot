@@ -52,25 +52,27 @@ manageGp
 */
 
 //한글 분리 함수
-eval(function (p, a, c, k, e, r) {
-	e = function (c) {
-		return c.toString(a)
-	};
-	if (!''.replace(/^/, String)) {
-		while (c--) r[e(c)] = k[c] || e(c);
-		k = [function (e) {
-			return r[e]
-		}];
-		e = function () {
-			return '\\w+'
-		};
-		c = 1
-	};
-	while (c--)
-		if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
-	return p
-}('q.o.t=l(){c a=[‘ㄱ’,‘ㄲ’,‘ㄴ’,‘ㄷ’,‘ㄸ’,‘ㄹ’,‘ㅁ’,‘ㅂ’,‘ㅃ’,‘ㅅ’,‘ㅆ’,‘ㅇ’,‘ㅈ’,‘ㅉ’,‘ㅊ’,‘ㅋ’,‘ㅌ’,‘ㅍ’,‘ㅎ’],e=[‘ㅏ’,‘ㅐ’,‘ㅑ’,‘ㅒ’,‘ㅓ’,‘ㅔ’,‘ㅕ’,‘ㅖ’,‘ㅗ’,‘ㅘ’,‘ㅙ’,‘ㅚ’,‘ㅛ’,‘ㅜ’,‘ㅝ’,‘ㅞ’,‘ㅟ’,‘ㅠ’,‘ㅡ’,‘ㅢ’,‘ㅣ’],5=[‘’,‘ㄱ’,‘ㄲ’,‘ㄳ’,‘ㄴ’,‘ㄵ’,‘ㄶ’,‘ㄷ’,‘ㄹ’,‘ㄺ’,‘ㄻ’,‘ㄼ’,‘ㄽ’,‘ㄾ’,‘ㄿ’,‘ㅀ’,‘ㅁ’,‘ㅂ’,‘ㅄ’,‘ㅅ’,‘ㅆ’,‘ㅇ’,‘ㅈ’,‘ㅊ’,‘ㅋ’,‘ㅌ’,‘ㅍ’,‘ㅎ’],6,4,2;c b=k,j=b.n,3=[],1;s(c i=0;i<j;i++){1=b.d(i);8(1==m){f}8(1<g||1>p){3.9(b.r(i));f}1=b.d(i)—g;2=1%7;4=((1—2)/7)%h;6=(((1—2)/7)—4)/h;3.9(a[6],e[4]);8(5[2]!==‘’){3.9(5[2])}}u 3}', 31, 31, '|cCode|jong|chars|jung|cJong|cho|28|if|push|||var|charCodeAt|cJung|continue|0xAC00|21||cnt|this|function|32|length|prototype|0xD7A3|String|charAt|for|toKorChars|return'.split('|'), 0, {}))
-
+String.prototype.toKorChars = function() { 
+    var cCho = [ 'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ], cJung = [ 'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ' ], cJong = [ '', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ], cho, jung, jong; 
+    var str = this, cnt = str.length, chars = [], cCode; 
+    for (var i = 0; i < cnt; i++) { 
+       cCode = str.charCodeAt(i); 
+       if (cCode == 32) { continue; } // 한글이 아닌 경우 
+       if (cCode < 0xAC00 || cCode > 0xD7A3) {
+            chars.push(str.charAt(i)); 
+            continue; 
+       } 
+       cCode = str.charCodeAt(i) - 0xAC00; 
+       jong = cCode % 28; // 종성 
+       jung = ((cCode - jong) / 28 ) % 21; // 중성 
+       cho = (((cCode - jong) / 28 ) - jung ) / 21; // 초성 
+       chars.push(cCho[cho], cJung[jung]); 
+       if (cJong[jong] !== '') { 
+          chars.push(cJong[jong]); 
+       } 
+    }
+    return chars; 
+}
 
 const UPDATE = {};
 UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
