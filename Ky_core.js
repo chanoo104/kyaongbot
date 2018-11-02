@@ -52,7 +52,24 @@ manageGp
 */
 
 //한글 분리 함수
-eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('q.o.t=l(){c a=[‘ㄱ’,‘ㄲ’,‘ㄴ’,‘ㄷ’,‘ㄸ’,‘ㄹ’,‘ㅁ’,‘ㅂ’,‘ㅃ’,‘ㅅ’,‘ㅆ’,‘ㅇ’,‘ㅈ’,‘ㅉ’,‘ㅊ’,‘ㅋ’,‘ㅌ’,‘ㅍ’,‘ㅎ’],e=[‘ㅏ’,‘ㅐ’,‘ㅑ’,‘ㅒ’,‘ㅓ’,‘ㅔ’,‘ㅕ’,‘ㅖ’,‘ㅗ’,‘ㅘ’,‘ㅙ’,‘ㅚ’,‘ㅛ’,‘ㅜ’,‘ㅝ’,‘ㅞ’,‘ㅟ’,‘ㅠ’,‘ㅡ’,‘ㅢ’,‘ㅣ’],5=[‘’,‘ㄱ’,‘ㄲ’,‘ㄳ’,‘ㄴ’,‘ㄵ’,‘ㄶ’,‘ㄷ’,‘ㄹ’,‘ㄺ’,‘ㄻ’,‘ㄼ’,‘ㄽ’,‘ㄾ’,‘ㄿ’,‘ㅀ’,‘ㅁ’,‘ㅂ’,‘ㅄ’,‘ㅅ’,‘ㅆ’,‘ㅇ’,‘ㅈ’,‘ㅊ’,‘ㅋ’,‘ㅌ’,‘ㅍ’,‘ㅎ’],6,4,2;c b=k,j=b.n,3=[],1;s(c i=0;i<j;i++){1=b.d(i);8(1==m){f}8(1<g||1>p){3.9(b.r(i));f}1=b.d(i)—g;2=1%7;4=((1—2)/7)%h;6=(((1—2)/7)—4)/h;3.9(a[6],e[4]);8(5[2]!==‘’){3.9(5[2])}}u 3}',31,31,'|cCode|jong|chars|jung|cJong|cho|28|if|push|||var|charCodeAt|cJung|continue|0xAC00|21||cnt|this|function|32|length|prototype|0xD7A3|String|charAt|for|toKorChars|return'.split('|'),0,{}))
+eval(function (p, a, c, k, e, r) {
+	e = function (c) {
+		return c.toString(a)
+	};
+	if (!''.replace(/^/, String)) {
+		while (c--) r[e(c)] = k[c] || e(c);
+		k = [function (e) {
+			return r[e]
+		}];
+		e = function () {
+			return '\\w+'
+		};
+		c = 1
+	};
+	while (c--)
+		if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+	return p
+}('q.o.t=l(){c a=[‘ㄱ’,‘ㄲ’,‘ㄴ’,‘ㄷ’,‘ㄸ’,‘ㄹ’,‘ㅁ’,‘ㅂ’,‘ㅃ’,‘ㅅ’,‘ㅆ’,‘ㅇ’,‘ㅈ’,‘ㅉ’,‘ㅊ’,‘ㅋ’,‘ㅌ’,‘ㅍ’,‘ㅎ’],e=[‘ㅏ’,‘ㅐ’,‘ㅑ’,‘ㅒ’,‘ㅓ’,‘ㅔ’,‘ㅕ’,‘ㅖ’,‘ㅗ’,‘ㅘ’,‘ㅙ’,‘ㅚ’,‘ㅛ’,‘ㅜ’,‘ㅝ’,‘ㅞ’,‘ㅟ’,‘ㅠ’,‘ㅡ’,‘ㅢ’,‘ㅣ’],5=[‘’,‘ㄱ’,‘ㄲ’,‘ㄳ’,‘ㄴ’,‘ㄵ’,‘ㄶ’,‘ㄷ’,‘ㄹ’,‘ㄺ’,‘ㄻ’,‘ㄼ’,‘ㄽ’,‘ㄾ’,‘ㄿ’,‘ㅀ’,‘ㅁ’,‘ㅂ’,‘ㅄ’,‘ㅅ’,‘ㅆ’,‘ㅇ’,‘ㅈ’,‘ㅊ’,‘ㅋ’,‘ㅌ’,‘ㅍ’,‘ㅎ’],6,4,2;c b=k,j=b.n,3=[],1;s(c i=0;i<j;i++){1=b.d(i);8(1==m){f}8(1<g||1>p){3.9(b.r(i));f}1=b.d(i)—g;2=1%7;4=((1—2)/7)%h;6=(((1—2)/7)—4)/h;3.9(a[6],e[4]);8(5[2]!==‘’){3.9(5[2])}}u 3}', 31, 31, '|cCode|jong|chars|jung|cJong|cho|28|if|push|||var|charCodeAt|cJung|continue|0xAC00|21||cnt|this|function|32|length|prototype|0xD7A3|String|charAt|for|toKorChars|return'.split('|'), 0, {}))
 
 
 const UPDATE = {};
@@ -67,18 +84,22 @@ UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
 		Log.debug(e + ' At:' + e.lineNumber);
 	}
 };
+
 function shortURL(text) {
 	short = org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(text))
 		.get()
 		.text()
 	return short;
 }
+
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
 function replaceAll(str, searchStr, replaceStr) {
 	return str.split(searchStr).join(replaceStr);
 }
+
 function getHtml(text) {
 	var content = new java.io.ByteArrayOutputStream();
 	android.net.http.AndroidHttpClient.newInstance("userAgent").execute(new org.apache.http.client.methods.HttpGet(text)).getEntity().writeTo(content);
@@ -103,12 +124,36 @@ var manageDB = function () {
 var manageCp = (function () {
 	return {
 		check: function (params, i) {
-			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+			let {
+				room,
+				msg,
+				sender,
+				isGroupChat,
+				replier,
+				imageDB,
+				packageName,
+				threadId,
+				group,
+				hash,
+				icode
+			} = params;
 			icode = i || icode;
 			return Ky.g[group].m[icode].cp;
 		},
 		add: function (params, point, i) {
-			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+			let {
+				room,
+				msg,
+				sender,
+				isGroupChat,
+				replier,
+				imageDB,
+				packageName,
+				threadId,
+				group,
+				hash,
+				icode
+			} = params;
 			icode = i || icode;
 			Ky.g[group].m[icode].cp += 0
 			return Ky.g[group].m[icode].cp += Number(point);
@@ -124,11 +169,35 @@ var manageMember = (function () {
 
 		//}
 		memberMigration: function (params) {
-			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+			let {
+				room,
+				msg,
+				sender,
+				isGroupChat,
+				replier,
+				imageDB,
+				packageName,
+				threadId,
+				group,
+				hash,
+				icode
+			} = params;
 
 		},
 		hashMigration: function (params) {
-			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+			let {
+				room,
+				msg,
+				sender,
+				isGroupChat,
+				replier,
+				imageDB,
+				packageName,
+				threadId,
+				group,
+				hash,
+				icode
+			} = params;
 
 		}
 	};
@@ -142,7 +211,19 @@ var miniGame = (function () {
 
 
 function getHash(params) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	return java.lang.String(imageDB.getProfileImage()).hashCode();
 }
 
@@ -168,7 +249,19 @@ var Group = (function () { //Group 생성자 | ex) Ky.g[group] = new Group(group
 
 var Room = (function () { //Room 생성자
 	function Room(params) {
-		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
+		let {
+			room,
+			msg,
+			sender,
+			isGroupChat,
+			replier,
+			imageDB,
+			packageName,
+			threadId,
+			group,
+			hash,
+			icode
+		} = params
 		this.groupName = group;
 		Ky.g[group].roomList.push(room);
 	}
@@ -178,7 +271,19 @@ var Room = (function () { //Room 생성자
 
 var Member = (function () { //Member 생성자
 	function Member(params) {
-		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
+		let {
+			room,
+			msg,
+			sender,
+			isGroupChat,
+			replier,
+			imageDB,
+			packageName,
+			threadId,
+			group,
+			hash,
+			icode
+		} = params
 		this.profileData = new Object();
 		this.profileData[sender] = new Array();
 		this.profileData[sender].push(hash);
@@ -193,7 +298,19 @@ var Member = (function () { //Member 생성자
 })();
 
 function randomIcode(params) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params
 	var possible = "0123456789";
 	while (true) {
 		var text = "";
@@ -204,7 +321,19 @@ function randomIcode(params) {
 }
 
 function memberCounter(params) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	var t = moment().format('YYMMDDHH');
 	Ky.g[group].m[icode].counter.timeList = Ky.g[group].m[icode].counter.timeList || new Array();
 	Ky.g[group].m[icode].counter.list = Ky.g[group].m[icode].counter.list || new Array();
@@ -221,11 +350,23 @@ function memberCounter(params) {
 
 
 function memberCount(params, input, code) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	icode = code || icode;
 	if (input.indexOf('-') != -1) {
 		var from = moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
-		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) { } else return '숫자만 입력해 주세요.';
+		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) {} else return '숫자만 입력해 주세요.';
 		var to = moment(input.split('-')[1], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
 		if (to.isValid()) {
 			if (input.split('-')[1].length == 2) to.endOf('year');
@@ -289,7 +430,7 @@ function memberCount(params, input, code) {
 		var t = timeList[i];
 		//replier.reply('t')
 		if (tt <= t) {
-			var end = i -1;
+			var end = i - 1;
 			break;
 		}
 	}
@@ -336,7 +477,9 @@ function lolStat(nick) {
 		arr.push('[' + doc.select("div.SummonerName").text() + ']\n');
 		if (!unranked) arr.push(doc.select('div.LadderRank').text() + '\n');
 		arr.push('| LV ' + doc.select('span[class=Level tip]').text() + ' | ');
-		if (!unranked) { arr.push(doc.select('div.Tier').get(0).text() + ' | ' + doc.select('div.LP').get(0).text() + ' |') } else arr.push('Unranked |')
+		if (!unranked) {
+			arr.push(doc.select('div.Tier').get(0).text() + ' | ' + doc.select('div.LP').get(0).text() + ' |')
+		} else arr.push('Unranked |')
 		if (doc.select('div div span.Item').text() != '') arr.push('\n[ ' + doc.select('div div span.Item').text() + ' ]');
 		arr.push('\n\n》최근 20게임 전적\n ' + doc.select('div.WinRatioTitle span.win').text() + '승 ' + doc.select('div.WinRatioTitle span.lose').text() + '패, ' + doc.select('div.WinRatioTitle b').text());
 		if (!unranked) arr.push('\n》솔랭 전적\n ' + doc.select('div.WinLose').get(0).text());
@@ -359,22 +502,38 @@ function response(a, b, c, d, e, f, g, h) {
 	imageDB = f;
 	packageName = g;
 	threadId = h;
-	
+
 	msg = msg.trim();
 	room = room.trim();
 	sender = sender.trim();
 
 	let params = { //함수용 통합 매개변수
-		get room() { return room; },
-		get msg() { return msg; },
-		get sender() { return sender; },
-		get isGroupChat() { return isGroupChat; },
-		get replier() { return replier; },
-		get imageDB() { return imageDB; },
-		get packageName() { return packageName; },
-		get threadId() { return threadId; }
+		get room() {
+			return room;
+		},
+		get msg() {
+			return msg;
+		},
+		get sender() {
+			return sender;
+		},
+		get isGroupChat() {
+			return isGroupChat;
+		},
+		get replier() {
+			return replier;
+		},
+		get imageDB() {
+			return imageDB;
+		},
+		get packageName() {
+			return packageName;
+		},
+		get threadId() {
+			return threadId;
+		}
 	}
-	
+
 
 	commandList = new Array();
 	descriptionList = new Array();
@@ -404,8 +563,16 @@ function response(a, b, c, d, e, f, g, h) {
 			replier.reply('ex) 홍길동, a1b2c3 이면 인증방 들어갈때 닉네임을 카카오프렌즈 선택하고 닉네임을 a1b2c3으로 하고, 들어가서 채팅창에 홍길동 엔터');
 		} else if (msg in Ky.g[group].tempM) {
 			if (sender == Ky.g[group].tempM[msg].authID) {
-				Object.defineProperty(params, "group", { get: function () { return group; } });
-				Object.defineProperty(params, "hash", { get: function () { return hash; } });
+				Object.defineProperty(params, "group", {
+					get: function () {
+						return group;
+					}
+				});
+				Object.defineProperty(params, "hash", {
+					get: function () {
+						return hash;
+					}
+				});
 				var icode = randomIcode(params);
 				var hash = Ky.g.tempHash[sender];
 				var authID = sender;
@@ -436,8 +603,16 @@ function response(a, b, c, d, e, f, g, h) {
 
 
 
-	Object.defineProperty(params, "group", { get: function () { return group; } });
-	Object.defineProperty(params, "hash", { get: function () { return hash; } });
+	Object.defineProperty(params, "group", {
+		get: function () {
+			return group;
+		}
+	});
+	Object.defineProperty(params, "hash", {
+		get: function () {
+			return hash;
+		}
+	});
 
 	Ky.g[group] = Ky.g[group] || new Group(params);
 	Ky.g[group].r[room] = Ky.g[group].r[room] || new Room(params);
@@ -455,7 +630,7 @@ function response(a, b, c, d, e, f, g, h) {
 			if (Ky.g[group].m[objectKey].profileData[sender] !== undefined) {
 				if (Ky.g[group].m[objectKey].profileData[sender].indexOf(hash) != -1) exist = objectKey
 			}
-		} catch (e) { };
+		} catch (e) {};
 	});
 	if (exist == false) {
 		Ky.g[group].tempM[sender] = Ky.g[group].tempM[sender] || new Object();
@@ -493,7 +668,11 @@ function response(a, b, c, d, e, f, g, h) {
 		var icode = 'unauth'
 	} else var icode = exist;
 
-	Object.defineProperty(params, "icode", { get: function () { return icode; } });
+	Object.defineProperty(params, "icode", {
+		get: function () {
+			return icode;
+		}
+	});
 
 	if (icode != 'unauth' && Ky.g[group].m[icode].counter.total == 0) replier.reply('[' + sender + ']님,' + group + ' 캬옹봇 인증이 완료되었습니다. <!명령어>로 명령어를 확인하세요. <!식별코드> 로 식별코드를 확인하세요.')
 	Ky.g[group].counter = Ky.g[group].counter || {};
@@ -541,7 +720,7 @@ function response(a, b, c, d, e, f, g, h) {
 	if (Ky.g[group].r[room].enabled.miscSys == 'true') {
 		miscSys(params);
 	}
-	
+
 	Ky.g[group].r[room].enabled.memberCounter = Ky.g[group].r[room].enabled.memberCounter || 'true';
 	if (icode != 'unauth') {
 		if (Ky.g[group].r[room].enabled.memberCounter == 'true') {
@@ -553,7 +732,7 @@ function response(a, b, c, d, e, f, g, h) {
 	if (Ky.g[group].r[room].enabled.backGroundSys == 'true') {
 		backGroundSys(params);
 	}
-	
+
 	var t = moment().format('YYMMDDHH');
 	Ky.g[group].counter.timeList = Ky.g[group].counter.timeList || new Array();
 	Ky.g[group].counter.list = Ky.g[group].counter.list || new Array();
@@ -561,7 +740,7 @@ function response(a, b, c, d, e, f, g, h) {
 	if (timeList.indexOf(t) == -1) timeList.push(t);
 	Ky.g[group].counter.list[timeList.indexOf(t)] = Ky.g[group].counter.list[timeList.indexOf(t)] || 0;
 	Ky.g[group].counter.list[timeList.indexOf(t)]++;
-	
+
 	firstLoad = false;
 
 
@@ -572,7 +751,19 @@ function response(a, b, c, d, e, f, g, h) {
 
 
 function commandChk(params, c, a, d) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	if (icode == 'unauth' && a != 'all') {
 		return false;
 	}
@@ -604,7 +795,19 @@ let c, a, d;
 
 function preSys(params) {
 	//일반 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '대화형 명령어 프리셋';
 		a = 'member';
@@ -641,7 +844,19 @@ function preSys(params) {
 
 function generalSys(params) {
 	//일반 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '!테스트';
 		a = 'all';
@@ -659,7 +874,19 @@ function generalSys(params) {
 
 function manageSys(params) {
 	//관리용 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	/*
 	loop: {
 		c = '!업데이트';
@@ -727,7 +954,19 @@ function manageSys(params) {
 
 function pDBSys(params) {
 	//미니게임 제외 개인 데이터 관련 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '!카운터';
 		a = 'member';
@@ -752,39 +991,39 @@ function pDBSys(params) {
 		d = '특정 기간 동안의 채팅 카운터 순위를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.split(" ")[0] == c) {
-sloop:{
-		var arr=[];
-var length = Object.keys(Ky.g[group].m).length;
-//replier.reply(length)
-		for (n=0; n<length; n++){
-			
-if (n == 3 && length > 9) var t = new Date().getTime();
-if (n == 6 && length > 9) replier.reply(length + '명의 로그 분석중... 예상 소요 시간: ' + Math.round((new Date().getTime()-t) / 3000 * (length-6)) + '초');
-if (Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].lastActive !== undefined) {
-var ttt = Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].lastActive[0]
-} else var ttt = '닉네임 데이터 미생성'  
-var counted = [ttt, memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1), Object.keys(Ky.g[group].m)[n])];
-	arr.push(counted);
-if (isNaN(counted[1])) {
-var a= counted[1];
-break sloop;
-}
+			sloop: {
+				var arr = [];
+				var length = Object.keys(Ky.g[group].m).length;
+				//replier.reply(length)
+				for (n = 0; n < length; n++) {
+
+					if (n == 3 && length > 9) var t = new Date().getTime();
+					if (n == 6 && length > 9) replier.reply(length + '명의 로그 분석중... 예상 소요 시간: ' + Math.round((new Date().getTime() - t) / 3000 * (length - 6)) + '초');
+					if (Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].lastActive !== undefined) {
+						var ttt = Ky.g[group].m[Object.keys(Ky.g[group].m)[n]].lastActive[0]
+					} else var ttt = '닉네임 데이터 미생성'
+					var counted = [ttt, memberCount(params, msg.substr(msg.split(' ', 1)[0].length + 1), Object.keys(Ky.g[group].m)[n])];
+					arr.push(counted);
+					if (isNaN(counted[1])) {
+						var a = counted[1];
+						break sloop;
+					}
+				}
+				//replier.reply(arr.length)
+				//replier.reply(JSON.stringify(arr));
+				function soort(a, b) {
+					return b[1] - a[1];
+				}
+				arr.sort(soort);
+				var a = "[채팅량 순위]\n" + msg.split(" ")[1] + blank;
+				for (i = 0; i < arr.length; i++) {
+					a += (i + 1) + '. ' + arr[i][0] + '\n 》' + arr[i][1] + '\n\n';
+				}
+			}
+			replier.reply(a);
+		}
 	}
-//replier.reply(arr.length)
-//replier.reply(JSON.stringify(arr));
-function soort (a,b) {
- return b[1]-a[1];
-}
-arr.sort(soort);
-var a="[채팅량 순위]\n" + msg.split(" ")[1] + blank;
-for (i=0; i<arr.length; i++){
-a += (i+1) + '. ' + arr[i][0] + '\n 》' + arr[i][1] + '\n\n';
-	}
-}
-	replier.reply(a);
-}
-	}
-	
+
 	/*
 	loop: {
 		c = '!프로필생성';
@@ -834,7 +1073,19 @@ a += (i+1) + '. ' + arr[i][0] + '\n 》' + arr[i][1] + '\n\n';
 
 function cpSys(params) {
 	//미니게임 제외 포인트 관련 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '.채팅보상';
 		a = 'member';
@@ -872,14 +1123,14 @@ function cpSys(params) {
 			replier.reply("해당 이름은 존재하지 않습니다.\n[" + sender + "]")
 		}
 	}
-	
+
 	loop: {
 		c = '!상점';
 		a = 'member';
 		d = '특정인에게 cp를 전송합니다. VAT: 20%';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.split(" ")[0] == c) {
-			if(msg.split(" ").length != 3) {
+			if (msg.split(" ").length != 3) {
 				replier.reply('잘못된 입력 형식입니다.')
 				break loop;
 			}
@@ -888,19 +1139,19 @@ function cpSys(params) {
 				break loop;
 			}
 			var p = msg.split(' ')[2];
-			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 50) {
+			if (!/^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 50) {
 				replier.reply('50 이상의 자연수를 입력해 주세요.');
 				break loop;
 			}
 			var i = Math.round(p * 1.2);
-		    if (manageCp.check(params, icode) - i < 0) {
-		        var x = i - manageCp.check(params, icode);
-		        replier.reply("포인트가 " + x + "cp 부족합니다. VAT 20%를 유의해 주세요.");
-		        break loop;
-		    }
-		    manageCp.add(params, -i);
+			if (manageCp.check(params, icode) - i < 0) {
+				var x = i - manageCp.check(params, icode);
+				replier.reply("포인트가 " + x + "cp 부족합니다. VAT 20%를 유의해 주세요.");
+				break loop;
+			}
+			manageCp.add(params, -i);
 			manageCp.add(params, p, msg.split(' ')[1]);
-		    replier.reply("[상점]\n" + sender + " → " + Ky.g[group].m[msg.split(' ')[1]].lastActive[0] + "\n+" + p + "cp (-" + i + "cp) (20% VAT)");
+			replier.reply("[상점]\n" + sender + " → " + Ky.g[group].m[msg.split(' ')[1]].lastActive[0] + "\n+" + p + "cp (-" + i + "cp) (20% VAT)");
 		}
 	}
 	loop: {
@@ -911,12 +1162,12 @@ function cpSys(params) {
 		if (msg.split(" ")[0] == c) {
 			Ky.g[group].m[icode].pns = Ky.g[group].m[icode].pns || 0;
 			var t = new Date().getTime() - Ky.g[group].m[icode].pns
-		    if (t < 180000) {
-		        var v = 180 - Math.round(t / 1000)
-		    	replier.reply("쿨타임 : " + v + "sec")
-		    break loop;
-		    }
-			if(msg.split(" ").length != 3) {
+			if (t < 180000) {
+				var v = 180 - Math.round(t / 1000)
+				replier.reply("쿨타임 : " + v + "sec")
+				break loop;
+			}
+			if (msg.split(" ").length != 3) {
 				replier.reply('잘못된 입력 형식입니다.')
 				break loop;
 			}
@@ -925,34 +1176,46 @@ function cpSys(params) {
 				break loop;
 			}
 			var p = msg.split(' ')[2];
-			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 50) {
+			if (!/^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 50) {
 				replier.reply('50 이상의 자연수를 입력해 주세요.');
 				break loop;
 			}
 			var i = Math.round(p * 1.5);
-		    if (manageCp.check(params, icode) - i < 0) {
-		        var x = i - manageCp.check(params, icode);
-		        replier.reply("포인트가 " + x + "cp 부족합니다. VAT 50%를 유의해 주세요.");
-		        break loop;
-		    }
-		    manageCp.add(params, -i);
+			if (manageCp.check(params, icode) - i < 0) {
+				var x = i - manageCp.check(params, icode);
+				replier.reply("포인트가 " + x + "cp 부족합니다. VAT 50%를 유의해 주세요.");
+				break loop;
+			}
+			manageCp.add(params, -i);
 			manageCp.add(params, -p, msg.split(' ')[1]);
 			Ky.g[group].m[icode].pns = new Date().getTime();
 			Ky.g[group].m[msg.split(' ')[1]].attacked = Ky.g[group].m[msg.split(' ')[1]].attacked || 0;
 			Ky.g[group].m[msg.split(' ')[1]].attacked += Number(p);
 		}
 	}
-	
+
 }
 
 
 
 function miniGameSys(params) {
 	//미니게임 관련 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
-	
-	
-		
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
+
+
+
 	loop: {
 		c = '.랜덤문자';
 		a = 'member';
@@ -961,10 +1224,10 @@ function miniGameSys(params) {
 		//이거 나중에 변수 통합시키는게 좋을듯
 		//출력 랜덤이랑 일반 구분, 포인트 랜덤으로 퀴즈맞춘후에 돌려서 주기
 		temp.hanQuizValid[room] = temp.hanQuizValid[room] || false
-		
+
 		Ky.g[group].miniGame.randomWord = Ky.g[group].miniGame.randomWord || {};
 		Ky.g[group].miniGame.randomWord.preActive = Ky.g[group].miniGame.randomWord.preActive || 0;
-				Ky.g[group].miniGame.randomWord.preActive++;
+		Ky.g[group].miniGame.randomWord.preActive++;
 		if (Math.floor(Math.random() * 1000) == 123) {
 			var ram = Math.floor(Math.random() * 55);
 			if (temp.hanQuizValid[room] == false) {
@@ -978,12 +1241,12 @@ function miniGameSys(params) {
 				temp.hanR[room] = hanram.join('').replace(/[^\uAC00-\uD7AF\u1100-\u11FF\u3130-\u318F]/gi, "")
 
 				temp.hanN[room] = hanram.join('')
-				
-				
-				Ky.t.rwReward = 500 + Math.round(Ky.g[group].miniGame.randomWord.preActive/2);
+
+
+				Ky.t.rwReward = 500 + Math.round(Ky.g[group].miniGame.randomWord.preActive / 2);
 				Ky.g[group].miniGame.randomWord.preActive = 0;
-				
-				
+
+
 				replier.reply(String.fromCharCode(0) + "[보상: " + Ky.t.rwReward + "cp]\n가장 먼저 주어진 글자를 입력!\n" + temp.hanN[room])
 				temp.hanQuizValid[room] = true;
 				ThreadManager.i[room] = new java.lang.Thread(new java.lang.Runnable() {
@@ -992,7 +1255,7 @@ function miniGameSys(params) {
 							java.lang.Thread.sleep(30000);
 							replier.reply(String.fromCharCode(0) + '타임어택 종료!');
 							temp.hanQuizValid[room] = false;
-						} catch (e) { }
+						} catch (e) {}
 					}
 				});
 				ThreadManager.i[room].start();
@@ -1023,7 +1286,7 @@ function miniGameSys(params) {
 				break loop;
 			}
 			var p = msg.substr(msg.split(' ', 1)[0].length + 1);
-			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 50 || p > 1000) {
+			if (!/^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 50 || p > 1000) {
 				replier.reply('50~1000 사이의 자연수를 입력해 주세요.');
 				break loop;
 			}
@@ -1047,8 +1310,8 @@ function miniGameSys(params) {
 			}
 		}
 	}
-	
-	
+
+
 	loop: {
 		c = '!복권';
 		a = 'member';
@@ -1063,9 +1326,9 @@ function miniGameSys(params) {
 			Ky.g[group].miniGame.lottery.reward = Ky.g[group].miniGame.lottery.reward || 0;
 			Ky.g[group].m[icode].miniGame.lottery = Ky.g[group].m[icode].miniGame.lottery || {};
 			if (Ky.g[group].m[icode].miniGame.lottery.today === undefined) Ky.g[group].m[icode].miniGame.lottery.today = false;
-			
+
 			var p = msg.substr(msg.split(' ', 1)[0].length + 1);
-			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 1 || p > 100) {
+			if (!/^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 1 || p > 100) {
 				replier.reply('1~100 사이의 자연수를 입력해 주세요.');
 				break loop;
 			}
@@ -1080,18 +1343,30 @@ function miniGameSys(params) {
 			manageCp.add(params, -price);
 			Ky.g[group].miniGame.lottery.queue.push(icode);
 			Ky.g[group].miniGame.lottery.cQueue.push(p);
-			Ky.g[group].miniGame.lottery.reward += Math.round(price/2);
+			Ky.g[group].miniGame.lottery.reward += Math.round(price / 2);
 			Ky.g[group].m[icode].miniGame.lottery.today = true;
 			replier.reply('[' + sender + ']\n응모 완료.\n현재 누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp');
 		}
 	}
-	
-	
+
+
 }
 
 function miscSys(params) {
 	//잡다한 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '!견적생성';
 		a = 'member';
@@ -1186,7 +1461,9 @@ function miscSys(params) {
 		if (msg == c) {
 			var r = org.jsoup.Jsoup.connect("https://www.naver.com/?mobile").get().select('span[class=ah_k]');
 			var list = '';
-			for (i = 1; i < 21; i++) { list += (i + '. ' + r.get(i).text() + '\n') }
+			for (i = 1; i < 21; i++) {
+				list += (i + '. ' + r.get(i).text() + '\n')
+			}
 			replier.reply(list.slice(0, -1))
 		}
 	}
@@ -1260,7 +1537,7 @@ function miscSys(params) {
 			replier.reply("[암호화폐 시세]\n▣비트코인 :: " + btc + "원\n" + "▣비트코인 캐시 :: " + bch + "원\n" + "▣비트코인 골드 :: " + btg + "원\n" + "▣이더리움 :: " + eth + "원\n" + "▣이더리움 클래식 :: " + etc + "원\n" + "▣리플 :: " + xrp + "원\n" + "▣라이트코인 :: " + ltc + "원\n" + "▣질리카 :: " + zil + "원")
 		}
 	}
-	
+
 	loop: {
 		c = '!네이버';
 		a = 'all';
@@ -1285,63 +1562,75 @@ function miscSys(params) {
 		d = '유튜브에서 해당 내용을 검색합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			replier.reply(shortURL('https://www.youtube.com/results?search_query=' + encodeURI(msg.substring(c.length + 1)));
-		}
-	}
-	
-	loop: {
-		c = '!단어';
-		a = 'all';
-		d = '네이버에서 해당 내용을 검색합니다.';
-		if (commandChk(params, c, a, d) == false) break loop;
-		if (msg.substr(0, c.length + 1) == c + ' ') {
-			try {
-				var u = Utils.getWebText("http://krdic.naver.com/search.nhn?query=" + msg.substr(c.length + 1));
-				var a = u.split("<ul class=\"lst3\">")
-				var b = a[1].split("</ul>")
-				var c = b[0].replace(/(<([^>]+)>)/g, "");
-				c = c.replace(/발음재생/g, "")
-				c = c.replace(/단어장 저장/g, "")
-				c = c.replace(/매우중요/g, "")
-				c = c.replace(/유의어/g, "\n\n유의어")
-				c = c.trim()
-				c = c.replace(/\n         /g, "")
-				c = c.replace(/  /g, "\n")
-				c = c.replace(/\n\n\n/g, "")
-				replier.reply("[" + msg.substr(3) + " 검색 결과]\n\n" + c)
-			} catch (e) {
-				replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
+			replier.reply(shortURL('https://www.youtube.com/results?search_query=' + encodeURI(msg.substring(c.length + 1))))
 			}
 		}
-	}
 
-	if (msg == '!명령어') {
-		var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
-		for (i = 0; i < commandList.length; i++) {
-			r += '》' + commandList[i] + '\n';
-			r += descriptionList[i];
-			r += '\n';
+		loop: {
+			c = '!단어';
+			a = 'all';
+			d = '네이버에서 해당 내용을 검색합니다.';
+			if (commandChk(params, c, a, d) == false) break loop;
+			if (msg.substr(0, c.length + 1) == c + ' ') {
+				try {
+					var u = Utils.getWebText("http://krdic.naver.com/search.nhn?query=" + msg.substr(c.length + 1));
+					var a = u.split("<ul class=\"lst3\">")
+					var b = a[1].split("</ul>")
+					var c = b[0].replace(/(<([^>]+)>)/g, "");
+					c = c.replace(/발음재생/g, "")
+					c = c.replace(/단어장 저장/g, "")
+					c = c.replace(/매우중요/g, "")
+					c = c.replace(/유의어/g, "\n\n유의어")
+					c = c.trim()
+					c = c.replace(/\n         /g, "")
+					c = c.replace(/  /g, "\n")
+					c = c.replace(/\n\n\n/g, "")
+					replier.reply("[" + msg.substr(3) + " 검색 결과]\n\n" + c)
+				} catch (e) {
+					replier.reply("단어 정보가 없습니다. 다시 입력해보세요.");
+				}
+			}
 		}
-		replier.reply(r)
+
+		if (msg == '!명령어') {
+			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
+			for (i = 0; i < commandList.length; i++) {
+				r += '》' + commandList[i] + '\n';
+				r += descriptionList[i];
+				r += '\n';
+			}
+			replier.reply(r)
+		}
+
+
+
+
+	}
+
+	function backGroundSys(params) {
+		//날짜 관련 시스템/명령어
+		let {
+			room,
+			msg,
+			sender,
+			isGroupChat,
+			replier,
+			imageDB,
+			packageName,
+			threadId,
+			group,
+			hash,
+			icode
+		} = params;
+
+
 	}
 
 
 
-
-}
-
-function backGroundSys(params) {
-	//날짜 관련 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
-	
-	
-}
-
-
-
-function onStartCompile() {
-	/*컴파일 또는 Api.reload호출시, 컴파일 되기 이전에 호출되는 함수입니다.
-	 *제안하는 용도: 리로드시 자동 백업*/
-	DataBase.setDataBase('KyBot', JSON.stringify(Ky));
-	Api.gc();
-}
+	function onStartCompile() {
+		/*컴파일 또는 Api.reload호출시, 컴파일 되기 이전에 호출되는 함수입니다.
+		 *제안하는 용도: 리로드시 자동 백업*/
+		DataBase.setDataBase('KyBot', JSON.stringify(Ky));
+		Api.gc();
+	}
