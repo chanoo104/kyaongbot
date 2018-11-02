@@ -51,8 +51,8 @@ manageGp
 
 */
 
-
-
+//한글 분리 함수
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('q.o.t=l(){c a=[‘ㄱ’,‘ㄲ’,‘ㄴ’,‘ㄷ’,‘ㄸ’,‘ㄹ’,‘ㅁ’,‘ㅂ’,‘ㅃ’,‘ㅅ’,‘ㅆ’,‘ㅇ’,‘ㅈ’,‘ㅉ’,‘ㅊ’,‘ㅋ’,‘ㅌ’,‘ㅍ’,‘ㅎ’],e=[‘ㅏ’,‘ㅐ’,‘ㅑ’,‘ㅒ’,‘ㅓ’,‘ㅔ’,‘ㅕ’,‘ㅖ’,‘ㅗ’,‘ㅘ’,‘ㅙ’,‘ㅚ’,‘ㅛ’,‘ㅜ’,‘ㅝ’,‘ㅞ’,‘ㅟ’,‘ㅠ’,‘ㅡ’,‘ㅢ’,‘ㅣ’],5=[‘’,‘ㄱ’,‘ㄲ’,‘ㄳ’,‘ㄴ’,‘ㄵ’,‘ㄶ’,‘ㄷ’,‘ㄹ’,‘ㄺ’,‘ㄻ’,‘ㄼ’,‘ㄽ’,‘ㄾ’,‘ㄿ’,‘ㅀ’,‘ㅁ’,‘ㅂ’,‘ㅄ’,‘ㅅ’,‘ㅆ’,‘ㅇ’,‘ㅈ’,‘ㅊ’,‘ㅋ’,‘ㅌ’,‘ㅍ’,‘ㅎ’],6,4,2;c b=k,j=b.n,3=[],1;s(c i=0;i<j;i++){1=b.d(i);8(1==m){f}8(1<g||1>p){3.9(b.r(i));f}1=b.d(i)—g;2=1%7;4=((1—2)/7)%h;6=(((1—2)/7)—4)/h;3.9(a[6],e[4]);8(5[2]!==‘’){3.9(5[2])}}u 3}',31,31,'|cCode|jong|chars|jung|cJong|cho|28|if|push|||var|charCodeAt|cJung|continue|0xAC00|21||cnt|this|function|32|length|prototype|0xD7A3|String|charAt|for|toKorChars|return'.split('|'),0,{}))
 
 
 const UPDATE = {};
@@ -67,6 +67,12 @@ UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
 		Log.debug(e + ' At:' + e.lineNumber);
 	}
 };
+function shortURL(text) {
+	short = org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(text))
+		.get()
+		.text()
+	return short;
+}
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -1167,10 +1173,7 @@ function miscSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
 			if (checkDetailUrl(msg.substring(c.length + 1))) {
-				short = org.jsoup.Jsoup.connect("http://is.gd/create.php?format=simple&url=" + encodeURIComponent(msg.substring(c.length + 1)))
-					.get()
-					.text()
-				replier.reply(short)
+				replier.reply(shortURL(msg.substring(c.length + 1)))
 			} else replier.reply("정확한 주소를 적어주세요.")
 
 		}
@@ -1264,7 +1267,7 @@ function miscSys(params) {
 		d = '네이버에서 해당 내용을 검색합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			replier.reply('https://search.naver.com/search.naver?query=' + encodeURI(msg.substring(c.length + 1)));
+			replier.reply(shortURL('https://search.naver.com/search.naver?query=' + encodeURI(msg.substring(c.length + 1))))
 		}
 	}
 	loop: {
@@ -1273,7 +1276,7 @@ function miscSys(params) {
 		d = '구글에서 해당 내용을 검색합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			replier.reply('https://www.google.co.kr/search?q=' + encodeURI(msg.substring(c.length + 1)));
+			replier.reply(shortURL('https://www.google.co.kr/search?q=' + encodeURI(msg.substring(c.length + 1))))
 		}
 	}
 	loop: {
@@ -1282,7 +1285,7 @@ function miscSys(params) {
 		d = '유튜브에서 해당 내용을 검색합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			replier.reply('https://www.youtube.com/results?search_query=' + encodeURI(msg.substring(c.length + 1)));
+			replier.reply(shortURL('https://www.youtube.com/results?search_query=' + encodeURI(msg.substring(c.length + 1)));
 		}
 	}
 	
