@@ -544,7 +544,7 @@ function response(a, b, c, d, e, f, g, h) {
 	//Authentification // 신규 데이터 생성, 인증 발급
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+ 
 	//개인톡 인증
 	if (isGroupChat == false) {
 		if (msg in Ky.g) {
@@ -1567,6 +1567,17 @@ function miscSys(params) {
 			replier.reply(shortURL('https://www.youtube.com/results?search_query=' + encodeURI(msg.substring(c.length + 1))))
 			}
 		}
+		loop: {
+			c = '.음슴체 감지';
+			a = 'all';
+			d = '유튜브에서 해당 내용을 검색합니다.';
+			if (commandChk(params, c, a, d) == false) break loop;
+			if (sender == "rgb" || sender == "지비") {
+				if (msg.toKorChars().slice(-1)[0] == "ㅁ"){
+				replier.reply("● 《존대/욕설 관련 규칙》 ●\n욕설: 금지\n존대: 질문방 경어체 필수, 잡담방 음슴체까지(말놓기 X)\n\n지비 음슴체 쓰는거임?????")
+				}
+			}
+			}
 
 		loop: {
 			c = '!단어';
