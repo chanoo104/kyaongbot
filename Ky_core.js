@@ -21,6 +21,7 @@ let userGroup = ['admin', 'manager', 'member'];
 let temp = {};
 let ThreadManager = new Object();
 ThreadManager.i = new Object();
+let threadInterrupt = false;
 temp.hanQuizValid = new Object();
 temp.hanR = new Object();
 temp.hanN = new Object();
@@ -692,6 +693,7 @@ function response(a, b, c, d, e, f, g, h) {
 
 	preSys(params);
 	Ky.g[group].miniGame = Ky.g[group].miniGame || {};
+	Ky.g[group].m[icode].miniGame = Ky.g[group].m[icode].miniGame || {};
 
 	Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || 'true';
 	if (Ky.g[group].r[room].enabled.generalSys == 'true') {
@@ -1328,9 +1330,9 @@ function miniGameSys(params) {
 			Ky.g[group].miniGame.lottery.reward = Ky.g[group].miniGame.lottery.reward || 0;
 			Ky.g[group].m[icode].miniGame.lottery = Ky.g[group].m[icode].miniGame.lottery || {};
 			if (Ky.g[group].m[icode].miniGame.lottery.today === undefined) Ky.g[group].m[icode].miniGame.lottery.today = false;
-
+			
 			var p = msg.substr(msg.split(' ', 1)[0].length + 1);
-			if (!/^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 1 || p > 100) {
+			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 1 || p > 100) {
 				replier.reply('1~100 사이의 자연수를 입력해 주세요.');
 				break loop;
 			}
@@ -1345,7 +1347,7 @@ function miniGameSys(params) {
 			manageCp.add(params, -price);
 			Ky.g[group].miniGame.lottery.queue.push(icode);
 			Ky.g[group].miniGame.lottery.cQueue.push(p);
-			Ky.g[group].miniGame.lottery.reward += Math.round(price / 2);
+			Ky.g[group].miniGame.lottery.reward += Math.round(price/2);
 			Ky.g[group].m[icode].miniGame.lottery.today = true;
 			replier.reply('[' + sender + ']\n응모 완료.\n현재 누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp');
 		}
@@ -1621,29 +1623,40 @@ function miscSys(params) {
 	}
 
 	function backGroundSys(params) {
-		//날짜 관련 시스템/명령어
-		let {
-			room,
-			msg,
-			sender,
-			isGroupChat,
-			replier,
-			imageDB,
-			packageName,
-			threadId,
-			group,
-			hash,
-			icode
-		} = params;
-
-
+	//날짜 관련 시스템/명령어
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	Ky.g[group].dateClock = Ky.g[group].dateClock || new Date().getDate() - 1;
+	Ky.g[group].dateClockChecker = Ky.g[group].dateClockChecker || 0;
+	ThreadManager.clock = new Object();
+	if (ThreadManager.clock[group] === undefined) {
+		ThreadManager.clock[group] = new java.lang.Thread(new java.lang.Runnable() {
+			run: function () {
+				try {
+					while (true) {
+						if (new Date().getDate() != Ky.g[group].dateClock){
+							Ky.g[group].dateClock = new Date().getDate();
+							dateChanger();
+						}
+						Ky.g[group].dateClockChecker = new Date().getTime();
+						if (threadInterrupt == true) this.interrupt();
+						java.lang.Thread.sleep(1000);
+						//replier.reply('✔');
+					}
+				} catch (e) { }
+			}
+		});
 	}
+	if (new Date().getTime() - Ky.g[group].dateClockChecker > 2000) ThreadManager.clock[group].start();
+}
 
+function dateChanger() {
+	replier.reply('날짜가 변경되었답니다. 깔깔');
+}
 
-
-	function onStartCompile() {
-		/*컴파일 또는 Api.reload호출시, 컴파일 되기 이전에 호출되는 함수입니다.
-		 *제안하는 용도: 리로드시 자동 백업*/
-		DataBase.setDataBase('KyBot', JSON.stringify(Ky));
-		Api.gc();
-	}
+function onStartCompile() {
+	/*컴파일 또는 Api.reload호출시, 컴파일 되기 이전에 호출되는 함수입니다.
+	 *제안하는 용도: 리로드시 자동 백업*/
+	threadInterrupt = true
+	DataBase.setDataBase('KyBot', JSON.stringify(Ky));
+	Api.gc();
+}
