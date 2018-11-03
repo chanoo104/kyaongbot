@@ -422,6 +422,7 @@ function response(a, b, c, d, e, f, g, h) {
  
 	//개인톡 인증
 	if (isGroupChat == false) {
+		replier.reply('캬옹봇 인식 닉네임: [' + sender + ']\n현재 사용중인 닉네임과 인식되는 닉네임이 다르다면 나갔다 들어와 보시고, 그래도 똑같다면 관리자에게 연락하세요.')
 		if (msg in Ky.g) {
 			var group = msg;
 		} else if (sender in Ky.g.tempAuth) {
