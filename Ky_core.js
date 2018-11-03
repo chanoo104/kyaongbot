@@ -3,7 +3,7 @@
 const scriptName = 'Ky_core.js';
 eval(DataBase.getDataBase('moment'));
 
-var ver = '5.1.4.3.1_beta';
+var ver = '5.1.5.1_beta';
 var updatecode = '';
 
 let timeBoot = moment();
@@ -1100,8 +1100,8 @@ function miniGameSys(params) {
 	loop: {
 		c = '!복권';
 		a = 'member';
-		d = '매일 정각 추첨되는 복권에 응모합니다. 숫자범위: 1~100, 가격: 100cp';
-		var price = '200'
+		d = '매일 정각 추첨되는 복권에 응모합니다. 숫자범위: 1~100, 가격: 150cp';
+		var price = '150'
 		if (commandChk(params, c, a, d) == false) break loop;
 		Ky.g[group].miniGame.lottery = Ky.g[group].miniGame.lottery || {};
 		Ky.g[group].miniGame.lottery.queue = Ky.g[group].miniGame.lottery.queue || [];
@@ -1514,8 +1514,12 @@ function dateChanger(params) {
 	Object.keys(Ky.g[group].m).map(function (objectKey, index) {
 		try {
 			Ky.g[group].m[objectKey].attendance.yesterday = Ky.g[group].m[objectKey].attendance.today;
+		} catch (e) {};
+		try {
 			Ky.g[group].m[objectKey].attendance.today = false;
-			Ky.g[group].m[icode].miniGame.lottery.today = false;
+		} catch (e) {};
+		try {
+			Ky.g[group].m[objectKey].miniGame.lottery.today = false;
 		} catch (e) {};
 	});
 }
