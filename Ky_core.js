@@ -711,18 +711,36 @@ function generalSys(params) {
 			if (n>Ky.g[group].r[room].recentLog.icode.length-1) n = Ky.g[group].r[room].recentLog.icode.length-1;
 			var char = ('▼전체보기 클릭▼' + blank);
 			for (i=n; i>=0; i--) {
-				char += '\n》'
+				char += '\n》';
 				if (Ky.g[group].r[room].recentLog.icode[i] != 'unauth') {
 					char += Ky.g[group].m[Ky.g[group].r[room].recentLog.icode[i]].lastActive[0];
 				} else char += Ky.g[group].r[room].recentLog.sender[i];
-				char += '\n'
+				char += '\n';
 				char += Ky.g[group].r[room].recentLog.msg[i];
-				char += '\n'
+				char += '\n';
 			}
 			replier.reply(char);
 		}
 	}
-		1
+	loop: {
+		c = '!최근코드';
+		a = 'all';
+		d = '최근 대화 인원의 코드 출력 명령어';
+		if (msg == c) {
+			var char = [];
+			for (i=14; i>=0; i--) {
+				if (char.indexOf(Ky.g[group].r[room].recentLog.icode[i]) == -1) {
+					char.push(Ky.g[group].r[room].recentLog.icode[i]);
+					char.push(' - ')
+					if (Ky.g[group].r[room].recentLog.icode[i] != 'unauth') {
+						char.push(Ky.g[group].m[Ky.g[group].r[room].recentLog.icode[i]].lastActive[0]);
+					} else char += Ky.g[group].r[room].recentLog.sender[i];
+					char.push('\n')
+				}
+			}
+			replier.reply(char.join('').slice(0, -1));
+		}
+	}
 }
 
 function manageSys(params) {
@@ -1383,15 +1401,7 @@ function miscSys(params) {
 			}
 		}
 
-		if (msg == '!명령어') {
-			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
-			for (i = 0; i < commandList.length; i++) {
-				r += '》' + commandList[i] + '\n';
-				r += descriptionList[i];
-				r += '\n';
-			}
-			replier.reply(r)
-		}
+		
 
 
 
@@ -1485,7 +1495,7 @@ function miscSys(params) {
 			var q = Math.floor(Math.random() * 800 + 200) / 100;
 			var i = Math.round(p * q);
 			manageCp.add(params, i);
-			replier.reply("[" + sender + "]\n럭키 포인트! " + i + "cp");
+			replier.reply("[" + sender + "]\n럭키 포인트! +" + i + "cp");
 		}
 	}
 	
@@ -1578,6 +1588,15 @@ function dateChanger(params) {
 			} catch (e) {};
 		});
 	}
+	if (msg == '!명령어') {
+			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
+			for (i = 0; i < commandList.length; i++) {
+				r += '》' + commandList[i] + '\n';
+				r += descriptionList[i];
+				r += '\n';
+			}
+			replier.reply(r)
+		}
 }
 
 function onStartCompile() {
