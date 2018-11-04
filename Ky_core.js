@@ -1482,7 +1482,16 @@ function miscSys(params) {
 			//포인트 지급
 			manageCp.add(params, reward);
 			replier.reply('[' + sender +']\n' + Ky.g[group].attendance.todayCount + '위, 연속 '+ Ky.g[group].m[icode].attendance.succeed +'일\n+' + reward + 'cp');
-		}		
+		}
+		if (msg == '!명령어') {
+			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
+			for (i = 0; i < commandList.length; i++) {
+				r += '》' + commandList[i] + '\n';
+				r += descriptionList[i];
+				r += '\n';
+			}
+			replier.reply(r)
+		}
 	}
 	
 	loop: {
@@ -1588,15 +1597,7 @@ function dateChanger(params) {
 			} catch (e) {};
 		});
 	}
-	if (msg == '!명령어') {
-			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
-			for (i = 0; i < commandList.length; i++) {
-				r += '》' + commandList[i] + '\n';
-				r += descriptionList[i];
-				r += '\n';
-			}
-			replier.reply(r)
-		}
+	
 }
 
 function onStartCompile() {
