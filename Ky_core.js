@@ -1164,7 +1164,7 @@ function miniGameSys(params) {
 			manageCp.add(params, -price);
 			Ky.g[group].miniGame.lottery.queue.push(icode);
 			Ky.g[group].miniGame.lottery.cQueue.push(p);
-			Ky.g[group].miniGame.lottery.reward += Math.round(price/2);
+			Ky.g[group].miniGame.lottery.reward += Math.round(100);
 			Ky.g[group].m[icode].miniGame.lottery.today = true;
 			replier.reply('[' + sender + ']\n응모 완료.\n현재 누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp');
 		}
