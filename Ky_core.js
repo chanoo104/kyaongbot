@@ -616,7 +616,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 function commandChk(params, c, a, d) {
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	if (icode == 'unauth' && a != 'all') {
-		replier.reply('인증이 필요합니다. 인증 방법은 공지사항을 참조하세요.');
+		//replier.reply('이 기능을 사용하려면 인증이 필요합니다. 인증 방법은 공지사항을 참조하세요.');
 		return false;
 	}
 	if (icode != 'unauth') {
@@ -625,7 +625,7 @@ function commandChk(params, c, a, d) {
 		}
 		Ky.g[group].r[room].enabled[c] = Ky.g[group].r[room].enabled[c] || 'true';
 		if (Ky.g[group].r[room].enabled[c] == 'false') {
-			replier.reply('이 방에서 사용이 제한된 기능입니다.');
+			//replier.reply('이 방에서 사용이 제한된 기능입니다.');
 			return false;
 		}
 	}
