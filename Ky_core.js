@@ -1556,7 +1556,7 @@ function dateChanger(params) {
 	replyAllRoom(params, '[날짜변경]\n' + new Date().getFullYear() + '년 ' + (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일');
 	
 	//복권추첨!
-	if (Ky.g[group].enabled['!복권'] == 'true') {
+	if (Ky.g[group].r[room].enabled['!복권'] == 'true') {
 		var winningNum = Math.round(Math.random() * 100 + 1);
 		var winner = [];
 		while (true) {
@@ -1583,7 +1583,7 @@ function dateChanger(params) {
 		delete Ky.g[group].miniGame.lottery.cQueue;
 	}
 	
-	if (Ky.g[group].enabled['.출석체크'] == 'true') {
+	if (Ky.g[group].r[room].enabled['.출석체크'] == 'true') {
 		//출석 사람 수 0명으로
 		Ky.g[group].attendance.todayCount = 0;
 		//map로 일괄초기화 >> today를 yesterday로
