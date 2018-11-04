@@ -386,15 +386,7 @@ function lolStat(nick) {
 	}
 }
 
-function response(a, b, c, d, e, f, g, h) {
-	room = a;
-	msg = b;
-	sender = c;
-	isGroupChat = d;
-	replier = e;
-	imageDB = f;
-	packageName = g;
-	threadId = h;
+function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
 
 	msg = msg.trim();
 	room = room.trim();
@@ -560,7 +552,7 @@ function response(a, b, c, d, e, f, g, h) {
 
 	preSys(params);
 	Ky.g[group].miniGame = Ky.g[group].miniGame || {};
-	Ky.g[group].m[icode].miniGame = Ky.g[group].m[icode].miniGame || {};
+	if (icode != 'unauth') Ky.g[group].m[icode].miniGame = Ky.g[group].m[icode].miniGame || {};
 
 	Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || 'true';
 	if (Ky.g[group].r[room].enabled.generalSys == 'true') {
@@ -705,6 +697,32 @@ function generalSys(params) {
 		}
 	}
 
+	loop: {
+		c = '!최근로그';
+		a = 'all';
+		d = '채팅삭제 박제용 명령어';
+		if (msg.split(' ')[0] == c) {
+			var n = msg.substr(msg.split(' ', 1)[0].length + 1);
+			if (!/^[0-9]+$/.test(n) || n.indexOf('0') == 0 || n > 50) {
+				replier.reply('50 이하의 자연수를 입력해 주세요.');
+				break loop;
+			}
+			n --;
+			if (n>Ky.g[group].r[room].recentLog.icode.length-1) n = Ky.g[group].r[room].recentLog.icode.length-1;
+			var char = ('▼전체보기 클릭▼' + blank);
+			for (i=n; i>=0; i--) {
+				char += '\n》'
+				if (Ky.g[group].r[room].recentLog.icode[i] != 'unauth') {
+					char += Ky.g[group].m[Ky.g[group].r[room].recentLog.icode[i]].lastActive[0];
+				} else char += Ky.g[group].r[room].recentLog.sender[i];
+				char += '\n'
+				char += Ky.g[group].r[room].recentLog.msg[i];
+				char += '\n'
+			}
+			replier.reply(char);
+		}
+	}
+		1
 }
 
 function manageSys(params) {
@@ -1408,50 +1426,69 @@ function miscSys(params) {
 	}
 	if (new Date().getTime() - Ky.g[group].dateClockChecker > 2000) ThreadManager.clock[group].start();
 	
-	
-	//이것은 출첵입니다
-	Ky.g[group].attendance = Ky.g[group].attendance || new Object();
-	Ky.g[group].attendance.todayCount = Ky.g[group].attendance.todayCount || 0;
-	
-	Ky.g[group].m[icode].attendance = Ky.g[group].m[icode].attendance || new Object();
-	Ky.g[group].m[icode].attendance.today = Ky.g[group].m[icode].attendance.today || false;
-	Ky.g[group].m[icode].attendance.yesterday = Ky.g[group].m[icode].attendance.yesterday || false;
-	Ky.g[group].m[icode].attendance.succeed = Ky.g[group].m[icode].attendance.succeed || 0;
-	
-	if (Ky.g[group].m[icode].attendance.today == false) {
-		//오늘 출석 true
-		Ky.g[group].m[icode].attendance.today = true;
-		//만약 어제 출석 안했으면 연속출석 초기화, 했으면 ++
-		if (Ky.g[group].m[icode].attendance.yesterday == false) {
-			Ky.g[group].m[icode].attendance.succeed = 0;
-		} else {
-			Ky.g[group].m[icode].attendance.succeed++;
-		}
-		//오늘 출석 등수 ++
-		Ky.g[group].attendance.todayCount++;
-		//등수보상
-		var reward = 0;
-		var count = Ky.g[group].attendance.todayCount;
-		if (count == 1) {
-			reward += 300;
-		} else if (count <=3) {
-			reward += 250;
-		} else if (count <=5) {
-			reward += 200;
-		} else if (count <=10) {
-			reward += 150;
-		} else {
-			reward += 100;
-		}
-		//연속출석보상
-		if (Ky.g[group].m[icode].attendance.succeed <= 10) {
-			reward += 10 * Ky.g[group].m[icode].attendance.succeed;
-		} else reward += 100
-		//포인트 지급
-		manageCp.add(params, reward);
+	loop: {
+		c = '.출석체크';
+		a = 'member';
+		d = '출석체크 순위에 따라 보상을 지급합니다. 연속 개근 시 보너스가 있습니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		//이것은 출첵입니다
+		Ky.g[group].attendance = Ky.g[group].attendance || new Object();
+		Ky.g[group].attendance.todayCount = Ky.g[group].attendance.todayCount || 0;
 		
-		replier.reply('[' + sender +']\n' + Ky.g[group].attendance.todayCount + '위, 연속 '+ Ky.g[group].m[icode].attendance.succeed +'일\n+' + reward + 'cp');
+		Ky.g[group].m[icode].attendance = Ky.g[group].m[icode].attendance || new Object();
+		Ky.g[group].m[icode].attendance.today = Ky.g[group].m[icode].attendance.today || false;
+		Ky.g[group].m[icode].attendance.yesterday = Ky.g[group].m[icode].attendance.yesterday || false;
+		Ky.g[group].m[icode].attendance.succeed = Ky.g[group].m[icode].attendance.succeed || 0;
+		
+		if (Ky.g[group].m[icode].attendance.today == false) {
+			//오늘 출석 true
+			Ky.g[group].m[icode].attendance.today = true;
+			//만약 어제 출석 안했으면 연속출석 초기화, 했으면 ++
+			if (Ky.g[group].m[icode].attendance.yesterday == false) {
+				Ky.g[group].m[icode].attendance.succeed = 0;
+			} else {
+				Ky.g[group].m[icode].attendance.succeed++;
+			}
+			//오늘 출석 등수 ++
+			Ky.g[group].attendance.todayCount++;
+			//등수보상
+			var reward = 0;
+			var count = Ky.g[group].attendance.todayCount;
+			if (count == 1) {
+				reward += 300;
+			} else if (count <=3) {
+				reward += 250;
+			} else if (count <=5) {
+				reward += 200;
+			} else if (count <=10) {
+				reward += 150;
+			} else {
+				reward += 100;
+			}
+			//연속출석보상
+			if (Ky.g[group].m[icode].attendance.succeed <= 10) {
+				reward += 10 * Ky.g[group].m[icode].attendance.succeed;
+			} else reward += 100
+			//포인트 지급
+			manageCp.add(params, reward);
+			replier.reply('[' + sender +']\n' + Ky.g[group].attendance.todayCount + '위, 연속 '+ Ky.g[group].m[icode].attendance.succeed +'일\n+' + reward + 'cp');
+		}		
 	}
+	
+	loop: {
+		c = '.럭키포인트';
+		a = 'member';
+		d = '특정 확률로 랜덤 포인트를 지급합니다.';
+		var r = Math.floor(Math.random() * 100);
+		if (r == 50) {
+			var p = Math.floor(Math.random() * 800 + 200) / 100;
+			var q = Math.floor(Math.random() * 800 + 200) / 100;
+			var i = Math.round(p * q);
+			manageCp.add(params, i);
+			replier.reply("[" + sender + "]\n럭키 포인트! " + i + "cp");
+		}
+	}
+	
 	loop: {
 		c = '.음슴체 감지';
 		a = 'all';
@@ -1460,7 +1497,7 @@ function miscSys(params) {
 		var tempT = new Date().getTime();
 		temp.lastWordWarning = temp.lastWordWarning || 0;
 		if (tempT - temp.lastWordWarning > 3000 ) {
-			var m = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z) ]/gi, '');
+			var m = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, '');
 			var sliced = m.split(' ');
 			var violation = false;
 			if (m.toKorChars().slice(-1)[0] == 'ㅁ') violation = true;
@@ -1474,6 +1511,23 @@ function miscSys(params) {
 		}
 	}
 	
+	loop: {
+		c = '.최근로거';
+		a = 'all';
+		d = '';
+		Ky.g[group].r[room].recentLog = Ky.g[group].r[room].recentLog || {};
+		Ky.g[group].r[room].recentLog.msg = Ky.g[group].r[room].recentLog.msg || [];
+		Ky.g[group].r[room].recentLog.icode = Ky.g[group].r[room].recentLog.icode || [];
+		Ky.g[group].r[room].recentLog.sender = Ky.g[group].r[room].recentLog.sender || [];
+		if (msg.split(' ')[0] != '!벌점') {
+			Ky.g[group].r[room].recentLog.msg.unshift(msg);
+		} else Ky.g[group].r[room].recentLog.msg.unshift('');
+		if (Ky.g[group].r[room].recentLog.msg.length > 50) Ky.g[group].r[room].recentLog.msg.pop;
+		Ky.g[group].r[room].recentLog.icode.unshift(icode);
+		if (Ky.g[group].r[room].recentLog.icode.length > 50) Ky.g[group].r[room].recentLog.icode.pop;
+		Ky.g[group].r[room].recentLog.sender.unshift(sender);
+		if (Ky.g[group].r[room].recentLog.sender.length > 50) Ky.g[group].r[room].recentLog.sender.pop;
+	}		
 }
 
 function dateChanger(params) {
@@ -1481,47 +1535,49 @@ function dateChanger(params) {
 	replyAllRoom(params, '[날짜변경]\n' + new Date().getFullYear() + '년 ' + (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일');
 	
 	//복권추첨!
-	var winningNum = Math.round(Math.random() * 100 + 1);
-	var winner = [];
-	while (true) {
-		var w = Ky.g[group].miniGame.lottery.cQueue.indexOf(String(winningNum));
-		if (w != -1) {
-			winner.push(Ky.g[group].miniGame.lottery.queue[w]);
-			delete Ky.g[group].miniGame.lottery.cQueue[w];
-		} else break;
-	}
-	if (winner.length == 0) {
-		Ky.g[group].miniGame.lottery.reward = Math.round(Ky.g[group].miniGame.lottery.reward * 1.1);
-		replyAllRoom(params, '[복권 추첨]\n당첨 번호: ' + winningNum + '\n당첨자 없음\n\n누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp')
-	} else {
-		reward = Math.round(Ky.g[group].miniGame.lottery.reward / winner.length);
-		winnerName = [];
-		for (i = 0; i < winner.length; i++) {
-			manageCp.add(params, reward, winner[i]);
-			winnerName.push(Ky.g[group].m[winner[i]].lastActive[0]);
+	if (Ky.g[group].enabled['!복권'] == 'true') {
+		var winningNum = Math.round(Math.random() * 100 + 1);
+		var winner = [];
+		while (true) {
+			var w = Ky.g[group].miniGame.lottery.cQueue.indexOf(String(winningNum));
+			if (w != -1) {
+				winner.push(Ky.g[group].miniGame.lottery.queue[w]);
+				delete Ky.g[group].miniGame.lottery.cQueue[w];
+			} else break;
 		}
-		replyAllRoom(params, '[복권 추첨]\n당첨 번호: ' + winningNum + '\n누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp\n\n당첨자: ' + winnerName + '\n1인당 당첨금: ' + reward + 'cp');
-		delete Ky.g[group].miniGame.lottery.reward;
+		if (winner.length == 0) {
+			Ky.g[group].miniGame.lottery.reward = Math.round(Ky.g[group].miniGame.lottery.reward * 1.1);
+			replyAllRoom(params, '[복권 추첨]\n당첨 번호: ' + winningNum + '\n당첨자 없음\n\n누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp')
+		} else {
+			reward = Math.round(Ky.g[group].miniGame.lottery.reward / winner.length);
+			winnerName = [];
+			for (i = 0; i < winner.length; i++) {
+				manageCp.add(params, reward, winner[i]);
+				winnerName.push(Ky.g[group].m[winner[i]].lastActive[0]);
+			}
+			replyAllRoom(params, '[복권 추첨]\n당첨 번호: ' + winningNum + '\n누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp\n\n당첨자: ' + winnerName + '\n1인당 당첨금: ' + reward + 'cp');
+			delete Ky.g[group].miniGame.lottery.reward;
+		}
+		delete Ky.g[group].miniGame.lottery.queue;
+		delete Ky.g[group].miniGame.lottery.cQueue;
 	}
-	delete Ky.g[group].miniGame.lottery.queue;
-	delete Ky.g[group].miniGame.lottery.cQueue;
 	
-	
-	
-	//출석 사람 수 0명으로
-	Ky.g[group].attendance.todayCount = 0;
-	//map로 일괄초기화 >> today를 yesterday로
-	Object.keys(Ky.g[group].m).map(function (objectKey, index) {
-		try {
-			Ky.g[group].m[objectKey].attendance.yesterday = Ky.g[group].m[objectKey].attendance.today;
-		} catch (e) {};
-		try {
-			Ky.g[group].m[objectKey].attendance.today = false;
-		} catch (e) {};
-		try {
-			Ky.g[group].m[objectKey].miniGame.lottery.today = false;
-		} catch (e) {};
-	});
+	if (Ky.g[group].enabled['.출석체크'] == 'true') {
+		//출석 사람 수 0명으로
+		Ky.g[group].attendance.todayCount = 0;
+		//map로 일괄초기화 >> today를 yesterday로
+		Object.keys(Ky.g[group].m).map(function (objectKey, index) {
+			try {
+				Ky.g[group].m[objectKey].attendance.yesterday = Ky.g[group].m[objectKey].attendance.today;
+			} catch (e) {};
+			try {
+				Ky.g[group].m[objectKey].attendance.today = false;
+			} catch (e) {};
+			try {
+				Ky.g[group].m[objectKey].miniGame.lottery.today = false;
+			} catch (e) {};
+		});
+	}
 }
 
 function onStartCompile() {
