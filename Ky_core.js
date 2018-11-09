@@ -91,7 +91,7 @@ function reboot()
       Log.e("루트 권한 얻기 실패");
       return;
    }
-   if(!uid.toString().contains("uid=0"))
+   if(uid.indexOf("uid=0") == -1)
    {
       Log.e("루트 권한 거부됨 " + uid);
       return;
@@ -816,7 +816,7 @@ function manageSys(params) {
 		d = '캬옹봇을 리부팅합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg == c) {
-			replier.reply('리부팅을 시작합니다.\n예상 소요시간 20초');
+			replier.reply('리부팅을 시작합니다.\n예상 소요시간 최대 2분');
 			Api.reload('Ky_core.js')
 			reboot()
 		}
