@@ -91,7 +91,7 @@ function reboot()
       Log.e("루트 권한 얻기 실패");
       return;
    }
-   if(!uid.contains("uid=0"))
+   if(!uid.toString().contains("uid=0"))
    {
       Log.e("루트 권한 거부됨 " + uid);
       return;
