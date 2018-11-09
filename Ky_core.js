@@ -78,7 +78,27 @@ String.prototype.toKorChars = function() {
     }
     return chars; 
 }
-
+function reboot()
+{
+   var su = java.lang.Runtime.getRuntime().exec("su");
+   var dos = new java.io.DataOutputStream(su.getOutputStream());
+   var dis = new java.io.DataInputStream(su.getInputStream());
+   dos.writeBytes("id\n");
+   dos.flush();
+   var uid = dis.readLine();
+   if(!uid)
+   {
+      Log.e("루트 권한 얻기 실패");
+      return;
+   }
+   if(!uid.contains("uid=0"))
+   {
+      Log.e("루트 권한 거부됨 " + uid);
+      return;
+   }
+   dos.writeBytes("reboot\n");
+   dos.flush();
+}
 const UPDATE = {};
 UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
 	try {
@@ -790,6 +810,18 @@ function manageSys(params) {
 			replier.reply('리로드 성공!');
 		}
 	}
+	loop: {
+		c = '!리부팅';
+		a = 'admin';
+		d = '캬옹봇을 리부팅합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			replier.reply('리부팅을 시작합니다.\n예상 소요시간 20초');
+			Api.reload('Ky_core.js')
+			reboot()
+		}
+	}
+	
 
 	loop: {
 		c = '!세이브';
