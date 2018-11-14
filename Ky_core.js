@@ -123,11 +123,6 @@ function numberWithCommas(n) {   
 	return parts[0].replace(/\B(?=(\d{3}) (?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
 	}
 
-
-function numberWithCommas(x) {
-	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
 function replaceAll(str, searchStr, replaceStr) {
 	return str.split(searchStr).join(replaceStr);
 }
@@ -1274,7 +1269,7 @@ function miscSys(params) {
 		if (msg == c) {
 			doc = org.jsoup.Jsoup.connect('https://wallet.blood.land/api/mining/miner/pool').ignoreContentType(true).get()
 			doc1 = JSON.parse(android.text.Html.fromHtml(doc)).data
-			replier.reply("블러드 코인\n◇총 채굴자 수(접속 기기 수) : " + doc1.workerCount + " (" + doc1.connectionCount +")\n채굴 난이도 : " + numberWithCommas(doc1.difficulty) + "\n총 해쉬레이트 : " + numberWithCommas(doc1.totalHashrate) + " KH\n총 보상 : " + numberWithCommas((Number(doc1.totalReward) + Number(doc1.totalDistributed))) + " BLOOD");
+			replier.reply("블러드 코인\n총 채굴자 수(접속 기기 수) : " + doc1.workerCount + " (" + doc1.connectionCount +")\n채굴 난이도 : " + numberWithCommas(doc1.difficulty).toFixed(5) + "\n총 해쉬레이트 : " + numberWithCommas(doc1.totalHashrate).toFixed(5) + " KH\n총 보상 : " + numberWithCommas((Number(doc1.totalReward) + Number(doc1.totalDistributed))).toFixed(5) + " BLOOD");
 		}
 	}
 	loop: {
