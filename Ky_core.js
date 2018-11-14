@@ -118,10 +118,24 @@ function shortURL(text) {
 		.text()
 	return short;
 }
-function numberWithCommas(n) {   
-	var parts=n.toString().split(".");   
-	return parts[0].replace(/\B(?=(\d{3}) (?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
-	}
+Number.prototype.format = function(){
+    if(this==0) return 0;
+
+    var reg = /(^[+-]?\d+)(\d{3})/;
+    var n = (this + '');
+
+    while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+
+    return n;
+};
+
+// 문자열 타입에서 쓸 수 있도록 format() 함수 추가
+String.prototype.format = function(){
+    var num = parseFloat(this);
+    if( isNaN(num) ) return "0";
+
+    return num.format();
+};
 
 function replaceAll(str, searchStr, replaceStr) {
 	return str.split(searchStr).join(replaceStr);
@@ -986,7 +1000,7 @@ function cpSys(params) {
 			if (msg == c) {
 				var DB = JSON.parse(DataBase.getDataBase('DB'))
 				var scode = DB.icode[DB.inick.indexOf(sender)];
-				replier.reply('[' + sender + ']\n' + numberWithCommas(DB.p[scode].pt) + 'cp\n' + numberWithCommas(Ky.g[group].m[icode].cp) + 'cp(현재 포인트) + ' + numberWithCommas(DB.p[scode].pt) + 'cp = ' + numberWithCommas((Number(DB.p[scode].pt) + Number(Ky.g[group].m[icode].cp))) + 'cp')
+				replier.reply('[' + sender + ']\n' + DB.p[scode].pt.format() + 'cp\n' + Ky.g[group].m[icode].cp.format() + 'cp(현재 포인트) + ' + DB.p[scode].pt.format() + 'cp = ' + (Number(DB.p[scode].pt) + Number(Ky.g[group].m[icode].cp)).format() + 'cp')
 			}
 		} catch (e) {
 			replier.reply('해당 이름은 존재하지 않습니다.\n[' + sender + ']')
@@ -1269,7 +1283,7 @@ function miscSys(params) {
 		if (msg == c) {
 			doc = org.jsoup.Jsoup.connect('https://wallet.blood.land/api/mining/miner/pool').ignoreContentType(true).get()
 			doc1 = JSON.parse(android.text.Html.fromHtml(doc)).data
-			replier.reply("블러드 코인\n총 채굴자 수(접속 기기 수) : " + doc1.workerCount + " (" + doc1.connectionCount +")\n채굴 난이도 : " + numberWithCommas(doc1.difficulty).toFixed(5) + "\n총 해쉬레이트 : " + numberWithCommas(doc1.totalHashrate).toFixed(5) + " KH\n총 보상 : " + numberWithCommas((Number(doc1.totalReward) + Number(doc1.totalDistributed))).toFixed(5) + " BLOOD");
+			replier.reply("블러드 코인\n총 채굴자 수(접속 기기 수) : " + doc1.workerCount + " (" + doc1.connectionCount +")\n채굴 난이도 : " + doc1.difficulty.toFixed(5).format() + "\n총 해쉬레이트 : " + doc1.totalHashrate.toFixed(5).format() + " KH\n총 보상 : " + (Number(doc1.totalReward) + Number(doc1.totalDistributed)).toFixed(5).format() + " BLOOD");
 		}
 	}
 	loop: {
@@ -1381,14 +1395,14 @@ function miscSys(params) {
 		d = '주요 암호화폐의 KorBit 기준 시세를 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg == c) {
-			btc = numberWithCommas(JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw')).last)
-			bch = numberWithCommas(JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=bch_krw')).last)
-			btg = numberWithCommas(JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=btg_krw')).last)
-			eth = numberWithCommas(JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=eth_krw')).last)
-			etc = numberWithCommas(JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=etc_krw')).last)
-			xrp = numberWithCommas(JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=xrp_krw')).last)
-			ltc = numberWithCommas(JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=ltc_krw')).last)
-			zil = numberWithCommas(JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=zil_krw')).last)
+			btc = JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw')).last.format()
+			bch = JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=bch_krw')).last.format()
+			btg = JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=btg_krw')).last.format()
+			eth = JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=eth_krw')).last.format()
+			etc = JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=etc_krw')).last.format()
+			xrp = JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=xrp_krw')).last.format()
+			ltc = JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=ltc_krw')).last.format()
+			zil = JSON.parse(getHtml('https://api.korbit.co.kr/v1/ticker?currency_pair=zil_krw')).last.format()
 			replier.reply('[암호화폐 시세]\n▣비트코인 :: ' + btc + '원\n' + '▣비트코인 캐시 :: ' + bch + '원\n' + '▣비트코인 골드 :: ' + btg + '원\n' + '▣이더리움 :: ' + eth + '원\n' + '▣이더리움 클래식 :: ' + etc + '원\n' + '▣리플 :: ' + xrp + '원\n' + '▣라이트코인 :: ' + ltc + '원\n' + '▣질리카 :: ' + zil + '원')
 		}
 	}
