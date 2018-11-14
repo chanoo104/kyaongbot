@@ -1283,7 +1283,7 @@ function miscSys(params) {
 		if (msg == c) {
 			doc = org.jsoup.Jsoup.connect('https://wallet.blood.land/api/mining/miner/pool').ignoreContentType(true).get()
 			doc1 = JSON.parse(android.text.Html.fromHtml(doc)).data
-			replier.reply("◇블러드 코인\n총 채굴자 수(접속 기기 수) : " + doc1.workerCount + " (" + doc1.connectionCount +")\n채굴 난이도 : " + doc1.difficulty + "\n총 해쉬레이트 : " + doc1.totalHashrate.toFixed(5).format() + " KH\n총 보상 : " + (Number(doc1.totalReward) + Number(doc1.totalDistributed)).toFixed(5).format() + " BLOOD");
+			replier.reply("◇블러드 코인\n총 채굴자 수(접속 기기 수) : " + doc1.workerCount + " (" + doc1.connectionCount +")\n채굴 난이도 : " + doc1.difficulty + "\n총 해쉬레이트 : " + doc1.totalHashrate.format() + " KH\n총 보상 : " + (Number(doc1.totalReward) + Number(doc1.totalDistributed)).toFixed(5).format() + " BLOOD");
 		}
 	}
 	loop: {
