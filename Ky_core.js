@@ -118,6 +118,29 @@ function shortURL(text) {
 		.text()
 	return short;
 }
+function numberFormatFloat(val, fp) {
+	var tmp = toFloor(val, fp);
+	var arr_number = tmp.toString().split('.');
+	var number = arr_number[0];
+ 
+	if(arr_number.length > 1) {
+		var numberFloat = '.' + arr_number[1];
+	}else{
+		var numberFloat = '';
+	}
+ 
+	var gap = number.length % 3 || 3;
+	var str = number.slice(0, gap);
+ 
+	number = number.slice(gap);
+	while (number) {
+		str += ',' + number.slice(0, 3);
+		number = number.slice(3);
+	}
+ 
+	return str + numberFloat;
+}
+
 
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -1258,6 +1281,18 @@ function miscSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
 			replier.reply(lolStat(msg.substring(c.length + 1)));
+		}
+	}
+
+	loop: {
+		c = '!블러드';
+		a = 'all';
+		d = '현재 블러드의 상태를 출력합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			doc = org.jsoup.Jsoup.connect('https://wallet.blood.land/api/mining/miner/pool').ignoreContentType(true).get()
+			doc1 = JSON.parse(android.text.Html.fromHtml(doc)).data
+			replier.reply("블러드 코인\n◇총 채굴자 수(접속 기기 수) : " + doc1.workerCount + " (" + doc1.connectionCount +")\n채굴 난이도 : " + numberFormatFloat(doc1.difficulty, 5) + "\n총 해쉬레이트 : " + numberFormatFloat(doc1.totalHashrate, 5) + " KH\n총 보상 : " + numberFormatFloat((Number(doc1.totalReward) + Number(doc1.totalDistributed)), 5) + " BLOOD");
 		}
 	}
 	loop: {
