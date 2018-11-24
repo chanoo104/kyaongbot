@@ -1287,6 +1287,21 @@ function miscSys(params) {
 		}
 	}
 	loop: {
+		c = '!로아';
+		a = 'all';
+		d = '현재 로스트 아크의 대기열 상태를 출력합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg == c) {
+			doc = org.jsoup.Jsoup.connect("http://loaq.kr/")
+			.get()
+			.select(".status")
+			doc1 = android.text.Html.fromHtml(doc).toString()
+			replier.reply("로스트 아크 대기열 현황\n" + doc1.replace(/[0-9]분 전 채팅» /g, "\n").trim())
+		}
+	}
+
+
+	loop: {
 		c = '!배그서버';
 		a = 'all';
 		d = '현재 배그 서버 상태를 출력합니다.';
