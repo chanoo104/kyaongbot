@@ -57,47 +57,44 @@ manageGp
 
 
 //한글 분리 함수
-String.prototype.toKorChars = function() { 
-    var cCho = [ 'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ], cJung = [ 'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ' ], cJong = [ '', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ], cho, jung, jong; 
-    var str = this, cnt = str.length, chars = [], cCode; 
-    for (var i = 0; i < cnt; i++) { 
-       cCode = str.charCodeAt(i); 
-       if (cCode == 32) { continue; } // 한글이 아닌 경우 
-       if (cCode < 0xAC00 || cCode > 0xD7A3) {
-            chars.push(str.charAt(i)); 
-            continue; 
-       } 
-       cCode = str.charCodeAt(i) - 0xAC00; 
-       jong = cCode % 28; // 종성 
-       jung = ((cCode - jong) / 28 ) % 21; // 중성 
-       cho = (((cCode - jong) / 28 ) - jung ) / 21; // 초성 
-       chars.push(cCho[cho], cJung[jung]); 
-       if (cJong[jong] !== '') { 
-          chars.push(cJong[jong]); 
-       } 
-    }
-    return chars; 
+String.prototype.toKorChars = function () {
+	var cCho = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'], cJung = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'], cJong = ['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'], cho, jung, jong;
+	var str = this, cnt = str.length, chars = [], cCode;
+	for (var i = 0; i < cnt; i++) {
+		cCode = str.charCodeAt(i);
+		if (cCode == 32) { continue; } // 한글이 아닌 경우 
+		if (cCode < 0xAC00 || cCode > 0xD7A3) {
+			chars.push(str.charAt(i));
+			continue;
+		}
+		cCode = str.charCodeAt(i) - 0xAC00;
+		jong = cCode % 28; // 종성 
+		jung = ((cCode - jong) / 28) % 21; // 중성 
+		cho = (((cCode - jong) / 28) - jung) / 21; // 초성 
+		chars.push(cCho[cho], cJung[jung]);
+		if (cJong[jong] !== '') {
+			chars.push(cJong[jong]);
+		}
+	}
+	return chars;
 }
-function reboot()
-{
-   var su = java.lang.Runtime.getRuntime().exec("su");
-   var dos = new java.io.DataOutputStream(su.getOutputStream());
-   var dis = new java.io.DataInputStream(su.getInputStream());
-   dos.writeBytes("id\n");
-   dos.flush();
-   var uid = dis.readLine();
-   if(!uid)
-   {
-      Log.e("루트 권한 얻기 실패");
-      return;
-   }
-   if(uid.indexOf("uid=0") == -1)
-   {
-      Log.e("루트 권한 거부됨 " + uid);
-      return;
-   }
-   dos.writeBytes("reboot\n");
-   dos.flush();
+function reboot() {
+	var su = java.lang.Runtime.getRuntime().exec("su");
+	var dos = new java.io.DataOutputStream(su.getOutputStream());
+	var dis = new java.io.DataInputStream(su.getInputStream());
+	dos.writeBytes("id\n");
+	dos.flush();
+	var uid = dis.readLine();
+	if (!uid) {
+		Log.e("루트 권한 얻기 실패");
+		return;
+	}
+	if (uid.indexOf("uid=0") == -1) {
+		Log.e("루트 권한 거부됨 " + uid);
+		return;
+	}
+	dos.writeBytes("reboot\n");
+	dos.flush();
 }
 const UPDATE = {};
 UPDATE.saveData = function (msg) { //파일에 내용을 저장하는 함수
@@ -118,23 +115,23 @@ function shortURL(text) {
 		.text()
 	return short;
 }
-Number.prototype.format = function(){
-    if(this==0) return 0;
+Number.prototype.format = function () {
+	if (this == 0) return 0;
 
-    var reg = /(^[+-]?\d+)(\d{3})/;
-    var n = (this + '');
+	var reg = /(^[+-]?\d+)(\d{3})/;
+	var n = (this + '');
 
-    while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+	while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
 
-    return n;
+	return n;
 };
 
 // 문자열 타입에서 쓸 수 있도록 format() 함수 추가
-String.prototype.format = function(){
-    var num = parseFloat(this);
-    if( isNaN(num) ) return "0";
+String.prototype.format = function () {
+	var num = parseFloat(this);
+	if (isNaN(num)) return "0";
 
-    return num.format();
+	return num.format();
 };
 
 function replaceAll(str, searchStr, replaceStr) {
@@ -163,7 +160,7 @@ var manageDB = function () {
 
 function replyAllRoom(params, m) {
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
-	for (i=0; i<Ky.g[group].roomList.length; i++) {
+	for (i = 0; i < Ky.g[group].roomList.length; i++) {
 		Api.replyRoom(group + '_' + Ky.g[group].roomList[i], m);
 	}
 }
@@ -293,7 +290,7 @@ function memberCount(params, input, code) {
 	icode = code || icode;
 	if (input.indexOf('-') != -1) {
 		var from = moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
-		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) {} else return '숫자만 입력해 주세요.';
+		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) { } else return '숫자만 입력해 주세요.';
 		var to = moment(input.split('-')[1], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
 		if (to.isValid()) {
 			if (input.split('-')[1].length == 2) to.endOf('year');
@@ -445,7 +442,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 	//Authentification // 신규 데이터 생성, 인증 발급
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
- 
+
 	//개인톡 인증
 	if (isGroupChat == false) {
 		replier.reply('캬옹봇 인식 닉네임: [' + sender + ']\n현재 사용중인 닉네임과 인식되는 닉네임이 다르다면 나갔다 들어와 보시고, 그래도 똑같다면 관리자에게 연락하세요.')
@@ -526,7 +523,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 			if (Ky.g[group].m[objectKey].profileData[sender] !== undefined) {
 				if (Ky.g[group].m[objectKey].profileData[sender].indexOf(hash) != -1) exist = objectKey
 			}
-		} catch (e) {};
+		} catch (e) { };
 	});
 	if (exist == false) {
 		Ky.g[group].tempM[sender] = Ky.g[group].tempM[sender] || new Object();
@@ -743,10 +740,10 @@ function generalSys(params) {
 				replier.reply('50 이하의 자연수를 입력해 주세요.');
 				break loop;
 			}
-			n --;
-			if (n>Ky.g[group].r[room].recentLog.icode.length-1) n = Ky.g[group].r[room].recentLog.icode.length-1;
+			n--;
+			if (n > Ky.g[group].r[room].recentLog.icode.length - 1) n = Ky.g[group].r[room].recentLog.icode.length - 1;
 			var char = ('▼전체보기 클릭▼' + blank);
-			for (i=n; i>=0; i--) {
+			for (i = n; i >= 0; i--) {
 				char += '\n》';
 				if (Ky.g[group].r[room].recentLog.icode[i] != 'unauth') {
 					char += Ky.g[group].m[Ky.g[group].r[room].recentLog.icode[i]].lastActive[0];
@@ -764,7 +761,7 @@ function generalSys(params) {
 		d = '최근 대화 인원의 코드 출력 명령어';
 		if (msg == c) {
 			var char = [];
-			for (i=14; i>=0; i--) {
+			for (i = 14; i >= 0; i--) {
 				if (char.indexOf(Ky.g[group].r[room].recentLog.icode[i]) == -1) {
 					char.push(Ky.g[group].r[room].recentLog.icode[i]);
 					char.push(' - ')
@@ -835,7 +832,7 @@ function manageSys(params) {
 			reboot()
 		}
 	}
-	
+
 
 	loop: {
 		c = '!세이브';
@@ -1124,7 +1121,7 @@ function miniGameSys(params) {
 							java.lang.Thread.sleep(30000);
 							replier.reply(String.fromCharCode(0) + '타임어택 종료!');
 							temp.hanQuizValid[room] = false;
-						} catch (e) {}
+						} catch (e) { }
 					}
 				});
 				ThreadManager.i[room].start();
@@ -1195,7 +1192,7 @@ function miniGameSys(params) {
 		if (msg.split(' ')[0] == c) {
 			var p = msg.substr(msg.split(' ', 1)[0].length + 1);
 			if (Ky.g[group].m[icode].miniGame.lottery.today === undefined) Ky.g[group].m[icode].miniGame.lottery.today = false;
-			
+
 			var p = msg.substr(msg.split(' ', 1)[0].length + 1);
 			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 1 || p > 100) {
 				replier.reply('1~100 사이의 자연수를 입력해 주세요.');
@@ -1283,7 +1280,7 @@ function miscSys(params) {
 		if (msg == c) {
 			doc = org.jsoup.Jsoup.connect('https://wallet.blood.land/api/mining/miner/pool').ignoreContentType(true).get()
 			doc1 = JSON.parse(android.text.Html.fromHtml(doc)).data
-			replier.reply("◇블러드 코인\n총 채굴자 수(접속 기기 수) : " + doc1.workerCount + " (" + doc1.connectionCount +")\n채굴 난이도 : " + doc1.difficulty + "\n총 해쉬레이트 : " + doc1.totalHashrate.format() + " KH\n총 보상 : " + (Number(doc1.totalReward) + Number(doc1.totalDistributed)).toFixed(5).format() + " BLOOD");
+			replier.reply("◇블러드 코인\n총 채굴자 수(접속 기기 수) : " + doc1.workerCount + " (" + doc1.connectionCount + ")\n채굴 난이도 : " + doc1.difficulty + "\n총 해쉬레이트 : " + doc1.totalHashrate.format() + " KH\n총 보상 : " + (Number(doc1.totalReward) + Number(doc1.totalDistributed)).toFixed(5).format() + " BLOOD");
 		}
 	}
 	loop: {
@@ -1293,8 +1290,8 @@ function miscSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg == c) {
 			doc = org.jsoup.Jsoup.connect("http://loaq.kr/")
-			.get()
-			.select(".status")
+				.get()
+				.select(".status")
 			doc1 = android.text.Html.fromHtml(doc).toString()
 			replier.reply("로스트 아크 대기열 현황\n" + doc1.replace(/[0-9]분 전 채팅» /g, "\n").trim())
 		}
@@ -1447,46 +1444,39 @@ function miscSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
 			replier.reply(shortURL('https://www.youtube.com/results?search_query=' + encodeURI(msg.substring(c.length + 1))))
-			}
 		}
-
-		loop: {
-			c = '!단어';
-			a = 'all';
-			d = '네이버에서 해당 내용을 검색합니다.';
-			if (commandChk(params, c, a, d) == false) break loop;
-			if (msg.substr(0, c.length + 1) == c + ' ') {
-				try {
-					var u = Utils.getWebText('http://krdic.naver.com/search.nhn?query=' + msg.substr(c.length + 1));
-					var a = u.split('<ul class=\'lst3\'>')
-					var b = a[1].split('</ul>')
-					var c = b[0].replace(/(<([^>]+)>)/g, '');
-					c = c.replace(/발음재생/g, '')
-					c = c.replace(/단어장 저장/g, '')
-					c = c.replace(/매우중요/g, '')
-					c = c.replace(/유의어/g, '\n\n유의어')
-					c = c.trim()
-					c = c.replace(/\n         /g, '')
-					c = c.replace(/  /g, '\n')
-					c = c.replace(/\n\n\n/g, '')
-					replier.reply('[' + msg.substr(3) + ' 검색 결과]\n\n' + c)
-				} catch (e) {
-					replier.reply('단어 정보가 없습니다. 다시 입력해보세요.');
-				}
-			}
-		}
-
-		
-
-
-
-
 	}
 
-	function backGroundSys(params) {
+	loop: {
+		c = '!단어';
+		a = 'all';
+		d = '네이버 지식백과에서 해당 내용을 검색합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.substr(0, c.length + 1) == c + ' ') {
+			try{
+			doc = org.jsoup.Jsoup.connect("https://openapi.naver.com/v1/search/encyc?query=" + encodeURI(msg.substring(c.length + 1)))
+				.header("X-Naver-Client-Id", "3EIiDQKffqUICWcDv2AY")
+				.header("X-Naver-Client-Secret", "N_Nrj3Svrq")
+				.ignoreContentType(true)
+				.get()
+				.text()
+			searchlist = []
+			for (i = 0; i < 3; i++) {
+				searchlist.push(JSON.parse(doc).items[i].description + "\n링크 : " + shortURL(JSON.parse(doc).items[i].link))
+			}
+			replier.reply(JSON.parse(doc).items.title + "에 대한 검색 결과\n\n" + searchlist.join("\n\n"))
+	} catch (e) {
+		replier.reply('검색결과가 없습니다. 정확한 단어를 적어주십시오.');
+	}
+	}
+
+
+}
+
+function backGroundSys(params) {
 	//날짜 관련 시스템/명령어
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
-	
+
 	//이것은 날짜변경기입니다
 	Ky.g[group].dateClock = Ky.g[group].dateClock || new Date().getDate() - 1;
 	Ky.g[group].dateClockChecker = Ky.g[group].dateClockChecker || 0;
@@ -1497,7 +1487,7 @@ function miscSys(params) {
 				try {
 					while (true) {
 						java.lang.Thread.sleep(1000);
-						if (new Date().getDate() != Ky.g[group].dateClock){
+						if (new Date().getDate() != Ky.g[group].dateClock) {
 							Ky.g[group].dateClock = new Date().getDate();
 							dateChanger(params);
 						}
@@ -1510,7 +1500,7 @@ function miscSys(params) {
 		});
 	}
 	if (new Date().getTime() - Ky.g[group].dateClockChecker > 2000) ThreadManager.clock[group].start();
-	
+
 	loop: {
 		c = '.출석체크';
 		a = 'member';
@@ -1519,12 +1509,12 @@ function miscSys(params) {
 		//이것은 출첵입니다
 		Ky.g[group].attendance = Ky.g[group].attendance || new Object();
 		Ky.g[group].attendance.todayCount = Ky.g[group].attendance.todayCount || 0;
-		
+
 		Ky.g[group].m[icode].attendance = Ky.g[group].m[icode].attendance || new Object();
 		Ky.g[group].m[icode].attendance.today = Ky.g[group].m[icode].attendance.today || false;
 		Ky.g[group].m[icode].attendance.yesterday = Ky.g[group].m[icode].attendance.yesterday || false;
 		Ky.g[group].m[icode].attendance.succeed = Ky.g[group].m[icode].attendance.succeed || 0;
-		
+
 		if (Ky.g[group].m[icode].attendance.today == false) {
 			//오늘 출석 true
 			Ky.g[group].m[icode].attendance.today = true;
@@ -1541,11 +1531,11 @@ function miscSys(params) {
 			var count = Ky.g[group].attendance.todayCount;
 			if (count == 1) {
 				reward += 300;
-			} else if (count <=3) {
+			} else if (count <= 3) {
 				reward += 250;
-			} else if (count <=5) {
+			} else if (count <= 5) {
 				reward += 200;
-			} else if (count <=10) {
+			} else if (count <= 10) {
 				reward += 150;
 			} else {
 				reward += 100;
@@ -1556,7 +1546,7 @@ function miscSys(params) {
 			} else reward += 100
 			//포인트 지급
 			manageCp.add(params, reward);
-			replier.reply('[' + sender +']\n' + Ky.g[group].attendance.todayCount + '위, 연속 '+ Ky.g[group].m[icode].attendance.succeed +'일\n+' + reward + 'cp');
+			replier.reply('[' + sender + ']\n' + Ky.g[group].attendance.todayCount + '위, 연속 ' + Ky.g[group].m[icode].attendance.succeed + '일\n+' + reward + 'cp');
 		}
 		if (msg == '!명령어') {
 			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
@@ -1568,7 +1558,7 @@ function miscSys(params) {
 			replier.reply(r)
 		}
 	}
-	
+
 	loop: {
 		c = '.럭키포인트';
 		a = 'member';
@@ -1582,7 +1572,7 @@ function miscSys(params) {
 			replier.reply("[" + sender + "]\n럭키 포인트! +" + i + "cp");
 		}
 	}
-	
+
 	loop: {
 		c = '.음슴체 감지';
 		a = 'all';
@@ -1590,21 +1580,21 @@ function miscSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		var tempT = new Date().getTime();
 		temp.lastWordWarning = temp.lastWordWarning || 0;
-		if (tempT - temp.lastWordWarning > 3000 ) {
+		if (tempT - temp.lastWordWarning > 3000) {
 			var m = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, '');
 			var sliced = m.split(' ');
 			var violation = false;
 			if (m.toKorChars().slice(-1)[0] == 'ㅁ') violation = true;
-			if (m.substr(m.length-1, 1) == '님') violation = false;
-			if (m.substr(m.length-3, 3) == ' 아님') violation = true;
-			if ((sliced.length < 2 || sliced[sliced.length-1].length < 2) && m.length<4) violation = false;
+			if (m.substr(m.length - 1, 1) == '님') violation = false;
+			if (m.substr(m.length - 3, 3) == ' 아님') violation = true;
+			if ((sliced.length < 2 || sliced[sliced.length - 1].length < 2) && m.length < 4) violation = false;
 			if (violation) {
 				replier.reply('이 방에서는 음슴체가 금지되어 있습니다.')
 				temp.lastWordWarning = tempT;
 			}
 		}
 	}
-	
+
 	loop: {
 		c = '.최근로거';
 		a = 'all';
@@ -1621,13 +1611,13 @@ function miscSys(params) {
 		if (Ky.g[group].r[room].recentLog.icode.length > 50) Ky.g[group].r[room].recentLog.icode.pop;
 		Ky.g[group].r[room].recentLog.sender.unshift(sender);
 		if (Ky.g[group].r[room].recentLog.sender.length > 50) Ky.g[group].r[room].recentLog.sender.pop;
-	}		
+	}
 }
 
 function dateChanger(params) {
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	replyAllRoom(params, '[날짜변경]\n' + new Date().getFullYear() + '년 ' + (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일');
-	
+
 	//복권추첨!
 	if (Ky.g[group].r[room].enabled['!복권'] == 'true') {
 		var winningNum = Math.round(Math.random() * 100 + 1);
@@ -1655,7 +1645,7 @@ function dateChanger(params) {
 		delete Ky.g[group].miniGame.lottery.queue;
 		delete Ky.g[group].miniGame.lottery.cQueue;
 	}
-	
+
 	if (Ky.g[group].r[room].enabled['.출석체크'] == 'true') {
 		//출석 사람 수 0명으로
 		Ky.g[group].attendance.todayCount = 0;
@@ -1663,16 +1653,16 @@ function dateChanger(params) {
 		Object.keys(Ky.g[group].m).map(function (objectKey, index) {
 			try {
 				Ky.g[group].m[objectKey].attendance.yesterday = Ky.g[group].m[objectKey].attendance.today;
-			} catch (e) {};
+			} catch (e) { };
 			try {
 				Ky.g[group].m[objectKey].attendance.today = false;
-			} catch (e) {};
+			} catch (e) { };
 			try {
 				Ky.g[group].m[objectKey].miniGame.lottery.today = false;
-			} catch (e) {};
+			} catch (e) { };
 		});
 	}
-	
+
 }
 
 function onStartCompile() {
