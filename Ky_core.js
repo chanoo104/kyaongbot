@@ -1464,7 +1464,7 @@ function miscSys(params) {
 				for (i = 0; i < 3; i++) {
 					searchlist.push(JSON.parse(doc).items[i].description + "\n링크 : " + shortURL(JSON.parse(doc).items[i].link))
 				}
-				replier.reply(JSON.parse(doc).items.title + "에 대한 검색 결과\n\n" + searchlist.join("\n\n"))
+				replier.reply("▼ 전체보기 클릭 ▼" + blank + JSON.parse(doc).items[0].title + "에 대한 검색 결과\n\n" + searchlist.join("\n\n"))
 			} catch (e) {
 				replier.reply('검색결과가 없습니다. 정확한 단어를 적어주십시오.');
 			}
