@@ -1461,9 +1461,7 @@ function miscSys(params) {
 					.get()
 					.text()
 				searchlist = []
-				for (i = 0; i < 3; i++) {
-					searchlist.push(JSON.parse(doc).items[i].description + "\n링크 : " + shortURL(JSON.parse(doc).items[i].link))
-				}
+				searchlist.push(JSON.parse(doc).items[0].description + "\n링크 : " + shortURL(JSON.parse(doc).items[0].link))
 				replier.reply("▼ 전체보기 클릭 ▼" + blank + JSON.parse(doc).items[0].title + "에 대한 검색 결과\n\n" + searchlist.join("\n\n"))
 			} catch (e) {
 				replier.reply('검색결과가 없습니다. 정확한 단어를 적어주십시오.');
@@ -1472,203 +1470,203 @@ function miscSys(params) {
 	}
 }
 
-	function backGroundSys(params) {
-		//날짜 관련 시스템/명령어
-		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+function backGroundSys(params) {
+	//날짜 관련 시스템/명령어
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 
-		//이것은 날짜변경기입니다
-		Ky.g[group].dateClock = Ky.g[group].dateClock || new Date().getDate() - 1;
-		Ky.g[group].dateClockChecker = Ky.g[group].dateClockChecker || 0;
-		ThreadManager.clock = new Object();
-		if (ThreadManager.clock[group] === undefined) {
-			ThreadManager.clock[group] = new java.lang.Thread(new java.lang.Runnable() {
-				run: function () {
-					try {
-						while (true) {
-							java.lang.Thread.sleep(1000);
-							if (new Date().getDate() != Ky.g[group].dateClock) {
-								Ky.g[group].dateClock = new Date().getDate();
-								dateChanger(params);
-							}
-							Ky.g[group].dateClockChecker = new Date().getTime();
-							if (threadInterrupt == true) this.interrupt();
-							//replier.reply('✔');
+	//이것은 날짜변경기입니다
+	Ky.g[group].dateClock = Ky.g[group].dateClock || new Date().getDate() - 1;
+	Ky.g[group].dateClockChecker = Ky.g[group].dateClockChecker || 0;
+	ThreadManager.clock = new Object();
+	if (ThreadManager.clock[group] === undefined) {
+		ThreadManager.clock[group] = new java.lang.Thread(new java.lang.Runnable() {
+			run: function () {
+				try {
+					while (true) {
+						java.lang.Thread.sleep(1000);
+						if (new Date().getDate() != Ky.g[group].dateClock) {
+							Ky.g[group].dateClock = new Date().getDate();
+							dateChanger(params);
 						}
-					} catch (e) { }
-				}
-			});
-		}
-		if (new Date().getTime() - Ky.g[group].dateClockChecker > 2000) ThreadManager.clock[group].start();
-
-		loop: {
-			c = '.출석체크';
-			a = 'member';
-			d = '출석체크 순위에 따라 보상을 지급합니다. 연속 개근 시 보너스가 있습니다.';
-			if (commandChk(params, c, a, d) == false) break loop;
-			//이것은 출첵입니다
-			Ky.g[group].attendance = Ky.g[group].attendance || new Object();
-			Ky.g[group].attendance.todayCount = Ky.g[group].attendance.todayCount || 0;
-
-			Ky.g[group].m[icode].attendance = Ky.g[group].m[icode].attendance || new Object();
-			Ky.g[group].m[icode].attendance.today = Ky.g[group].m[icode].attendance.today || false;
-			Ky.g[group].m[icode].attendance.yesterday = Ky.g[group].m[icode].attendance.yesterday || false;
-			Ky.g[group].m[icode].attendance.succeed = Ky.g[group].m[icode].attendance.succeed || 0;
-
-			if (Ky.g[group].m[icode].attendance.today == false) {
-				//오늘 출석 true
-				Ky.g[group].m[icode].attendance.today = true;
-				//만약 어제 출석 안했으면 연속출석 초기화, 했으면 ++
-				if (Ky.g[group].m[icode].attendance.yesterday == false) {
-					Ky.g[group].m[icode].attendance.succeed = 0;
-				} else {
-					Ky.g[group].m[icode].attendance.succeed++;
-				}
-				//오늘 출석 등수 ++
-				Ky.g[group].attendance.todayCount++;
-				//등수보상
-				var reward = 0;
-				var count = Ky.g[group].attendance.todayCount;
-				if (count == 1) {
-					reward += 300;
-				} else if (count <= 3) {
-					reward += 250;
-				} else if (count <= 5) {
-					reward += 200;
-				} else if (count <= 10) {
-					reward += 150;
-				} else {
-					reward += 100;
-				}
-				//연속출석보상
-				if (Ky.g[group].m[icode].attendance.succeed <= 10) {
-					reward += 10 * Ky.g[group].m[icode].attendance.succeed;
-				} else reward += 100
-				//포인트 지급
-				manageCp.add(params, reward);
-				replier.reply('[' + sender + ']\n' + Ky.g[group].attendance.todayCount + '위, 연속 ' + Ky.g[group].m[icode].attendance.succeed + '일\n+' + reward + 'cp');
+						Ky.g[group].dateClockChecker = new Date().getTime();
+						if (threadInterrupt == true) this.interrupt();
+						//replier.reply('✔');
+					}
+				} catch (e) { }
 			}
-			if (msg == '!명령어') {
-				var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
-				for (i = 0; i < commandList.length; i++) {
-					r += '》' + commandList[i] + '\n';
-					r += descriptionList[i];
-					r += '\n';
-				}
-				replier.reply(r)
-			}
-		}
-
-		loop: {
-			c = '.럭키포인트';
-			a = 'member';
-			d = '특정 확률로 랜덤 포인트를 지급합니다.';
-			var r = Math.floor(Math.random() * 100);
-			if (r == 50) {
-				var p = Math.floor(Math.random() * 800 + 200) / 100;
-				var q = Math.floor(Math.random() * 800 + 200) / 100;
-				var i = Math.round(p * q);
-				manageCp.add(params, i);
-				replier.reply("[" + sender + "]\n럭키 포인트! +" + i + "cp");
-			}
-		}
-
-		loop: {
-			c = '.음슴체 감지';
-			a = 'all';
-			d = '음슴체를 감지해서 경고문을 출력합니다.';
-			if (commandChk(params, c, a, d) == false) break loop;
-			var tempT = new Date().getTime();
-			temp.lastWordWarning = temp.lastWordWarning || 0;
-			if (tempT - temp.lastWordWarning > 3000) {
-				var m = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, '');
-				var sliced = m.split(' ');
-				var violation = false;
-				if (m.toKorChars().slice(-1)[0] == 'ㅁ') violation = true;
-				if (m.substr(m.length - 1, 1) == '님') violation = false;
-				if (m.substr(m.length - 3, 3) == ' 아님') violation = true;
-				if ((sliced.length < 2 || sliced[sliced.length - 1].length < 2) && m.length < 4) violation = false;
-				if (violation) {
-					replier.reply('이 방에서는 음슴체가 금지되어 있습니다.')
-					temp.lastWordWarning = tempT;
-				}
-			}
-		}
-
-		loop: {
-			c = '.최근로거';
-			a = 'all';
-			d = '';
-			Ky.g[group].r[room].recentLog = Ky.g[group].r[room].recentLog || {};
-			Ky.g[group].r[room].recentLog.msg = Ky.g[group].r[room].recentLog.msg || [];
-			Ky.g[group].r[room].recentLog.icode = Ky.g[group].r[room].recentLog.icode || [];
-			Ky.g[group].r[room].recentLog.sender = Ky.g[group].r[room].recentLog.sender || [];
-			if (msg.split(' ')[0] != '!벌점') {
-				Ky.g[group].r[room].recentLog.msg.unshift(msg);
-			} else Ky.g[group].r[room].recentLog.msg.unshift('');
-			if (Ky.g[group].r[room].recentLog.msg.length > 50) Ky.g[group].r[room].recentLog.msg.pop;
-			Ky.g[group].r[room].recentLog.icode.unshift(icode);
-			if (Ky.g[group].r[room].recentLog.icode.length > 50) Ky.g[group].r[room].recentLog.icode.pop;
-			Ky.g[group].r[room].recentLog.sender.unshift(sender);
-			if (Ky.g[group].r[room].recentLog.sender.length > 50) Ky.g[group].r[room].recentLog.sender.pop;
-		}
+		});
 	}
+	if (new Date().getTime() - Ky.g[group].dateClockChecker > 2000) ThreadManager.clock[group].start();
 
-	function dateChanger(params) {
-		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
-		replyAllRoom(params, '[날짜변경]\n' + new Date().getFullYear() + '년 ' + (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일');
+	loop: {
+		c = '.출석체크';
+		a = 'member';
+		d = '출석체크 순위에 따라 보상을 지급합니다. 연속 개근 시 보너스가 있습니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		//이것은 출첵입니다
+		Ky.g[group].attendance = Ky.g[group].attendance || new Object();
+		Ky.g[group].attendance.todayCount = Ky.g[group].attendance.todayCount || 0;
 
-		//복권추첨!
-		if (Ky.g[group].r[room].enabled['!복권'] == 'true') {
-			var winningNum = Math.round(Math.random() * 100 + 1);
-			var winner = [];
-			while (true) {
-				var w = Ky.g[group].miniGame.lottery.cQueue.indexOf(String(winningNum));
-				if (w != -1) {
-					winner.push(Ky.g[group].miniGame.lottery.queue[w]);
-					delete Ky.g[group].miniGame.lottery.cQueue[w];
-				} else break;
-			}
-			if (winner.length == 0) {
-				Ky.g[group].miniGame.lottery.reward = Math.round(Ky.g[group].miniGame.lottery.reward * 1.1);
-				replyAllRoom(params, '[복권 추첨]\n당첨 번호: ' + winningNum + '\n당첨자 없음\n\n누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp')
+		Ky.g[group].m[icode].attendance = Ky.g[group].m[icode].attendance || new Object();
+		Ky.g[group].m[icode].attendance.today = Ky.g[group].m[icode].attendance.today || false;
+		Ky.g[group].m[icode].attendance.yesterday = Ky.g[group].m[icode].attendance.yesterday || false;
+		Ky.g[group].m[icode].attendance.succeed = Ky.g[group].m[icode].attendance.succeed || 0;
+
+		if (Ky.g[group].m[icode].attendance.today == false) {
+			//오늘 출석 true
+			Ky.g[group].m[icode].attendance.today = true;
+			//만약 어제 출석 안했으면 연속출석 초기화, 했으면 ++
+			if (Ky.g[group].m[icode].attendance.yesterday == false) {
+				Ky.g[group].m[icode].attendance.succeed = 0;
 			} else {
-				reward = Math.round(Ky.g[group].miniGame.lottery.reward / winner.length);
-				winnerName = [];
-				for (i = 0; i < winner.length; i++) {
-					manageCp.add(params, reward, winner[i]);
-					winnerName.push(Ky.g[group].m[winner[i]].lastActive[0]);
-				}
-				replyAllRoom(params, '[복권 추첨]\n당첨 번호: ' + winningNum + '\n누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp\n\n당첨자: ' + winnerName + '\n1인당 당첨금: ' + reward + 'cp');
-				delete Ky.g[group].miniGame.lottery.reward;
+				Ky.g[group].m[icode].attendance.succeed++;
 			}
-			delete Ky.g[group].miniGame.lottery.queue;
-			delete Ky.g[group].miniGame.lottery.cQueue;
+			//오늘 출석 등수 ++
+			Ky.g[group].attendance.todayCount++;
+			//등수보상
+			var reward = 0;
+			var count = Ky.g[group].attendance.todayCount;
+			if (count == 1) {
+				reward += 300;
+			} else if (count <= 3) {
+				reward += 250;
+			} else if (count <= 5) {
+				reward += 200;
+			} else if (count <= 10) {
+				reward += 150;
+			} else {
+				reward += 100;
+			}
+			//연속출석보상
+			if (Ky.g[group].m[icode].attendance.succeed <= 10) {
+				reward += 10 * Ky.g[group].m[icode].attendance.succeed;
+			} else reward += 100
+			//포인트 지급
+			manageCp.add(params, reward);
+			replier.reply('[' + sender + ']\n' + Ky.g[group].attendance.todayCount + '위, 연속 ' + Ky.g[group].m[icode].attendance.succeed + '일\n+' + reward + 'cp');
 		}
-
-		if (Ky.g[group].r[room].enabled['.출석체크'] == 'true') {
-			//출석 사람 수 0명으로
-			Ky.g[group].attendance.todayCount = 0;
-			//map로 일괄초기화 >> today를 yesterday로
-			Object.keys(Ky.g[group].m).map(function (objectKey, index) {
-				try {
-					Ky.g[group].m[objectKey].attendance.yesterday = Ky.g[group].m[objectKey].attendance.today;
-				} catch (e) { };
-				try {
-					Ky.g[group].m[objectKey].attendance.today = false;
-				} catch (e) { };
-				try {
-					Ky.g[group].m[objectKey].miniGame.lottery.today = false;
-				} catch (e) { };
-			});
+		if (msg == '!명령어') {
+			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
+			for (i = 0; i < commandList.length; i++) {
+				r += '》' + commandList[i] + '\n';
+				r += descriptionList[i];
+				r += '\n';
+			}
+			replier.reply(r)
 		}
-
 	}
 
-	function onStartCompile() {
-		/*컴파일 또는 Api.reload호출시, 컴파일 되기 이전에 호출되는 함수입니다.
-		 *제안하는 용도: 리로드시 자동 백업*/
-		threadInterrupt = true
-		DataBase.setDataBase('KyBot', JSON.stringify(Ky));
-		Api.gc();
+	loop: {
+		c = '.럭키포인트';
+		a = 'member';
+		d = '특정 확률로 랜덤 포인트를 지급합니다.';
+		var r = Math.floor(Math.random() * 100);
+		if (r == 50) {
+			var p = Math.floor(Math.random() * 800 + 200) / 100;
+			var q = Math.floor(Math.random() * 800 + 200) / 100;
+			var i = Math.round(p * q);
+			manageCp.add(params, i);
+			replier.reply("[" + sender + "]\n럭키 포인트! +" + i + "cp");
+		}
 	}
+
+	loop: {
+		c = '.음슴체 감지';
+		a = 'all';
+		d = '음슴체를 감지해서 경고문을 출력합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		var tempT = new Date().getTime();
+		temp.lastWordWarning = temp.lastWordWarning || 0;
+		if (tempT - temp.lastWordWarning > 3000) {
+			var m = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, '');
+			var sliced = m.split(' ');
+			var violation = false;
+			if (m.toKorChars().slice(-1)[0] == 'ㅁ') violation = true;
+			if (m.substr(m.length - 1, 1) == '님') violation = false;
+			if (m.substr(m.length - 3, 3) == ' 아님') violation = true;
+			if ((sliced.length < 2 || sliced[sliced.length - 1].length < 2) && m.length < 4) violation = false;
+			if (violation) {
+				replier.reply('이 방에서는 음슴체가 금지되어 있습니다.')
+				temp.lastWordWarning = tempT;
+			}
+		}
+	}
+
+	loop: {
+		c = '.최근로거';
+		a = 'all';
+		d = '';
+		Ky.g[group].r[room].recentLog = Ky.g[group].r[room].recentLog || {};
+		Ky.g[group].r[room].recentLog.msg = Ky.g[group].r[room].recentLog.msg || [];
+		Ky.g[group].r[room].recentLog.icode = Ky.g[group].r[room].recentLog.icode || [];
+		Ky.g[group].r[room].recentLog.sender = Ky.g[group].r[room].recentLog.sender || [];
+		if (msg.split(' ')[0] != '!벌점') {
+			Ky.g[group].r[room].recentLog.msg.unshift(msg);
+		} else Ky.g[group].r[room].recentLog.msg.unshift('');
+		if (Ky.g[group].r[room].recentLog.msg.length > 50) Ky.g[group].r[room].recentLog.msg.pop;
+		Ky.g[group].r[room].recentLog.icode.unshift(icode);
+		if (Ky.g[group].r[room].recentLog.icode.length > 50) Ky.g[group].r[room].recentLog.icode.pop;
+		Ky.g[group].r[room].recentLog.sender.unshift(sender);
+		if (Ky.g[group].r[room].recentLog.sender.length > 50) Ky.g[group].r[room].recentLog.sender.pop;
+	}
+}
+
+function dateChanger(params) {
+	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	replyAllRoom(params, '[날짜변경]\n' + new Date().getFullYear() + '년 ' + (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일');
+
+	//복권추첨!
+	if (Ky.g[group].r[room].enabled['!복권'] == 'true') {
+		var winningNum = Math.round(Math.random() * 100 + 1);
+		var winner = [];
+		while (true) {
+			var w = Ky.g[group].miniGame.lottery.cQueue.indexOf(String(winningNum));
+			if (w != -1) {
+				winner.push(Ky.g[group].miniGame.lottery.queue[w]);
+				delete Ky.g[group].miniGame.lottery.cQueue[w];
+			} else break;
+		}
+		if (winner.length == 0) {
+			Ky.g[group].miniGame.lottery.reward = Math.round(Ky.g[group].miniGame.lottery.reward * 1.1);
+			replyAllRoom(params, '[복권 추첨]\n당첨 번호: ' + winningNum + '\n당첨자 없음\n\n누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp')
+		} else {
+			reward = Math.round(Ky.g[group].miniGame.lottery.reward / winner.length);
+			winnerName = [];
+			for (i = 0; i < winner.length; i++) {
+				manageCp.add(params, reward, winner[i]);
+				winnerName.push(Ky.g[group].m[winner[i]].lastActive[0]);
+			}
+			replyAllRoom(params, '[복권 추첨]\n당첨 번호: ' + winningNum + '\n누적 당첨금: ' + Ky.g[group].miniGame.lottery.reward + 'cp\n\n당첨자: ' + winnerName + '\n1인당 당첨금: ' + reward + 'cp');
+			delete Ky.g[group].miniGame.lottery.reward;
+		}
+		delete Ky.g[group].miniGame.lottery.queue;
+		delete Ky.g[group].miniGame.lottery.cQueue;
+	}
+
+	if (Ky.g[group].r[room].enabled['.출석체크'] == 'true') {
+		//출석 사람 수 0명으로
+		Ky.g[group].attendance.todayCount = 0;
+		//map로 일괄초기화 >> today를 yesterday로
+		Object.keys(Ky.g[group].m).map(function (objectKey, index) {
+			try {
+				Ky.g[group].m[objectKey].attendance.yesterday = Ky.g[group].m[objectKey].attendance.today;
+			} catch (e) { };
+			try {
+				Ky.g[group].m[objectKey].attendance.today = false;
+			} catch (e) { };
+			try {
+				Ky.g[group].m[objectKey].miniGame.lottery.today = false;
+			} catch (e) { };
+		});
+	}
+
+}
+
+function onStartCompile() {
+	/*컴파일 또는 Api.reload호출시, 컴파일 되기 이전에 호출되는 함수입니다.
+	 *제안하는 용도: 리로드시 자동 백업*/
+	threadInterrupt = true
+	DataBase.setDataBase('KyBot', JSON.stringify(Ky));
+	Api.gc();
+}
 
