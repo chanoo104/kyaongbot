@@ -1575,6 +1575,7 @@ function backGroundSys(params) {
 		a = 'all';
 		d = '음슴체를 감지해서 경고문을 출력합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
+		if (room == group + "_잡담방") break loop;
 		var tempT = new Date().getTime();
 		temp.lastWordWarning = temp.lastWordWarning || 0;
 		if (tempT - temp.lastWordWarning > 3000) {
