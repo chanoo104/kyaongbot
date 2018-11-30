@@ -1615,6 +1615,10 @@ function backGroundSys(params) {
 function dateChanger(params) {
 	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
 	replyAllRoom(params, '[날짜변경]\n' + new Date().getFullYear() + '년 ' + (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일');
+	DataBase.setDataBase('KyBot', JSON.stringify(Ky));
+	Api.gc();
+	replyAllRoom("DB가 세이브 되었습니다.")
+	
 
 	//복권추첨!
 	if (Ky.g[group].r[room].enabled['!복권'] == 'true') {
