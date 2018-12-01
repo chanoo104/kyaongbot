@@ -1435,11 +1435,15 @@ function miscSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (room != "잡담방") break loop;
 		pat = /^[a-zA-Z\s]+$/
+		pat2 = /^[가-힣\s]+$/
+		engtokorea = engToKor(msg)
+		if (pat2.test.engtokorea){
 		if (msg.length >= 3) {
 			if (pat.test(msg)) {
-				replier.reply(engToKor(msg))
+				replier.reply(engtokorea)
 			}
 		}
+	}
 	}
 	loop: {
 		c = '!구글';
