@@ -1455,6 +1455,17 @@ function miscSys(params) {
 		}
 	}
 	loop: {
+		c = '!핑프';
+		a = 'all';
+		d = '컴퓨터를 제대로 활용 못하는 이를 위해.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.substr(0, c.length + 1) == c + ' ') {
+			replier.reply(shortURL('http://ko.lmgtfy.com/?q=' + encodeURI(msg.substring(c.length + 1))))
+			replier.reply("전체보기 클릭" + blank + "1. 브라우저를 키고 구글(google.co.kr)에 들어가세요.\n2.궁금한 내용(" + msg.substring(c.length + 1)+ ")을 입력하세요.\n3.검색 버튼을 누르세요.\n참 쉽죠?")
+		}
+	}
+	
+	loop: {
 		c = '!유튜브';
 		a = 'all';
 		d = '유튜브에서 해당 내용을 검색합니다.';
