@@ -1461,7 +1461,7 @@ function miscSys(params) {
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
 			replier.reply(shortURL('http://ko.lmgtfy.com/?iie=1&q=' + encodeURI(msg.substring(c.length + 1))))
-			replier.reply("전체보기 클릭" + blank + "1. 브라우저를 키고 구글(google.co.kr)에 들어가세요.\n2.궁금한 내용(" + msg.substring(c.length + 1)+ ")을 입력하세요.\n3.검색 버튼을 누르세요.\n참 쉽죠?")
+			replier.reply("전체보기 클릭" + blank + "1. 브라우저를 켜고 구글(google.co.kr)에 들어가세요.\n2.궁금한 내용(" + msg.substring(c.length + 1)+ ")을 입력하세요.\n3.검색 버튼을 누르세요.\n참 쉽죠?")
 		}
 	}
 	
