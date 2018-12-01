@@ -1437,13 +1437,13 @@ function miscSys(params) {
 		pat = /^[a-zA-Z\s]+$/
 		pat2 = /^[가-힣\s]+$/
 		engtokorea = engToKor(msg)
-		if (pat2.test.engtokorea){
-		if (msg.length >= 3) {
-			if (pat.test(msg)) {
-				replier.reply(engtokorea)
+		if (pat2.test(engtokorea)) {
+			if (msg.length >= 3) {
+				if (pat.test(msg)) {
+					replier.reply(engtokorea)
+				}
 			}
 		}
-	}
 	}
 	loop: {
 		c = '!구글';
