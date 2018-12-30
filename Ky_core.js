@@ -1584,15 +1584,16 @@ function backGroundSys(params) {
 			manageCp.add(params, reward);
 			replier.reply('[' + sender + ']\n' + Ky.g[group].attendance.todayCount + '위, 연속 ' + Ky.g[group].m[icode].attendance.succeed + '일\n+' + reward + 'cp');
 		}
-		if (msg == '!명령어') {
-			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
-			for (i = 0; i < commandList.length; i++) {
-				r += '》' + commandList[i] + '\n';
-				r += descriptionList[i];
-				r += '\n';
-			}
-			replier.reply(r)
+	}
+
+	if (msg == '!명령어') {
+		var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
+		for (i = 0; i < commandList.length; i++) {
+			r += '》' + commandList[i] + '\n';
+			r += descriptionList[i];
+			r += '\n';
 		}
+		replier.reply(r)
 	}
 
 	loop: {
@@ -1617,7 +1618,7 @@ function backGroundSys(params) {
 		if (room == "잡담방") break loop;
 		var tempT = new Date().getTime();
 		temp.lastWordWarning = temp.lastWordWarning || 0;
-		if (tempT - temp.lastWordWarning > 3000) {
+		if (tempT - temp.lastWordWarning > 30000) {
 			var m = msg.replace(/[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi, '');
 			var sliced = m.split(' ');
 			var violation = false;
