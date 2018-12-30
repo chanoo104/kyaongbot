@@ -417,7 +417,7 @@ function lolStat(nick) {
 	}
 }
 
-function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
+function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) { try {
 
 	msg = msg.trim();
 	room = room.trim();
@@ -639,6 +639,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
 
+} catch (e) {
+	replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+}
 }
 
 
@@ -806,7 +809,7 @@ function manageSys(params) {
 			try {
 				replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
 			} catch (e) {
-				replier.reply('eval 실행 중 오류 발생!\n오류 메시지 : ' + e.message)
+				replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
 			}
 		}
 	}
@@ -1586,15 +1589,15 @@ function backGroundSys(params) {
 		}
 	}
 
-	if (msg == '!명령어') {
-		var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
-		for (i = 0; i < commandList.length; i++) {
-			r += '》' + commandList[i] + '\n';
-			r += descriptionList[i];
-			r += '\n';
+		if (msg == '!명령어') {
+			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
+			for (i = 0; i < commandList.length; i++) {
+				r += '》' + commandList[i] + '\n';
+				r += descriptionList[i];
+				r += '\n';
+			}
+			replier.reply(r)
 		}
-		replier.reply(r)
-	}
 
 	loop: {
 		c = '.럭키포인트';
