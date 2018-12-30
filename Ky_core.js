@@ -1603,6 +1603,7 @@ function backGroundSys(params) {
 		c = '.럭키포인트';
 		a = 'member';
 		d = '특정 확률로 랜덤 포인트를 지급합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
 		var r = Math.floor(Math.random() * 100);
 		if (r == 50) {
 			var p = Math.floor(Math.random() * 800 + 200) / 100;
