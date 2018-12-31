@@ -1436,7 +1436,6 @@ function miscSys(params) {
 		a = 'all';
 		d = '자동으로 영어를 한글로 변경';
 		if (commandChk(params, c, a, d) == false) break loop;
-		if (room != "잡담방") break loop;
 		pat = /^[a-zA-Z\s]+$/
 		pat2 = /^[가-힣\s]+$/
 		engtokorea = engToKor(msg)
