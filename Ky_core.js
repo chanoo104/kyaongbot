@@ -1568,13 +1568,13 @@ function backGroundSys(params) {
 			var reward = 0;
 			var count = Ky.g[group].attendance.todayCount;
 			if (count == 1) {
-				reward += 1500;
+				reward += 300;
 			} else if (count <= 3) {
-				reward += 1000;
+				reward += 250;
 			} else if (count <= 5) {
-				reward += 700;
+				reward += 200;
 			} else if (count <= 10) {
-				reward += 450;
+				reward += 150;
 			} else {
 				reward += 100;
 			}
