@@ -58,11 +58,19 @@ manageGp
 
 //한글 분리 함수
 String.prototype.toKorChars = function () {
-	var cCho = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'], cJung = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'], cJong = ['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'], cho, jung, jong;
-	var str = this, cnt = str.length, chars = [], cCode;
+	var cCho = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'],
+		cJung = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'],
+		cJong = ['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'],
+		cho, jung, jong;
+	var str = this,
+		cnt = str.length,
+		chars = [],
+		cCode;
 	for (var i = 0; i < cnt; i++) {
 		cCode = str.charCodeAt(i);
-		if (cCode == 32) { continue; } // 한글이 아닌 경우 
+		if (cCode == 32) {
+			continue;
+		} // 한글이 아닌 경우 
 		if (cCode < 0xAC00 || cCode > 0xD7A3) {
 			chars.push(str.charAt(i));
 			continue;
@@ -78,6 +86,7 @@ String.prototype.toKorChars = function () {
 	}
 	return chars;
 }
+
 function reboot() {
 	var su = java.lang.Runtime.getRuntime().exec("su");
 	var dos = new java.io.DataOutputStream(su.getOutputStream());
@@ -159,7 +168,19 @@ var manageDB = function () {
 }
 
 function replyAllRoom(params, m) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	for (i = 0; i < Ky.g[group].roomList.length; i++) {
 		Api.replyRoom(group + '_' + Ky.g[group].roomList[i], m);
 	}
@@ -168,12 +189,36 @@ function replyAllRoom(params, m) {
 var manageCp = (function () {
 	return {
 		check: function (params, i) {
-			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+			let {
+				room,
+				msg,
+				sender,
+				isGroupChat,
+				replier,
+				imageDB,
+				packageName,
+				threadId,
+				group,
+				hash,
+				icode
+			} = params;
 			icode = i || icode;
 			return Ky.g[group].m[icode].cp;
 		},
 		add: function (params, point, i) {
-			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+			let {
+				room,
+				msg,
+				sender,
+				isGroupChat,
+				replier,
+				imageDB,
+				packageName,
+				threadId,
+				group,
+				hash,
+				icode
+			} = params;
 			icode = i || icode;
 			Ky.g[group].m[icode].cp += 0
 			return Ky.g[group].m[icode].cp += Number(point);
@@ -189,11 +234,35 @@ var manageMember = (function () {
 
 		//}
 		memberMigration: function (params) {
-			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+			let {
+				room,
+				msg,
+				sender,
+				isGroupChat,
+				replier,
+				imageDB,
+				packageName,
+				threadId,
+				group,
+				hash,
+				icode
+			} = params;
 
 		},
 		hashMigration: function (params) {
-			let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+			let {
+				room,
+				msg,
+				sender,
+				isGroupChat,
+				replier,
+				imageDB,
+				packageName,
+				threadId,
+				group,
+				hash,
+				icode
+			} = params;
 
 		}
 	};
@@ -207,7 +276,19 @@ var miniGame = (function () {
 
 
 function getHash(params) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	return java.lang.String(imageDB.getProfileImage()).hashCode();
 }
 
@@ -233,7 +314,19 @@ var Group = (function () { //Group 생성자 | ex) Ky.g[group] = new Group(group
 
 var Room = (function () { //Room 생성자
 	function Room(params) {
-		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+		let {
+			room,
+			msg,
+			sender,
+			isGroupChat,
+			replier,
+			imageDB,
+			packageName,
+			threadId,
+			group,
+			hash,
+			icode
+		} = params;
 		this.groupName = group;
 		Ky.g[group].roomList.push(room);
 	}
@@ -243,7 +336,19 @@ var Room = (function () { //Room 생성자
 
 var Member = (function () { //Member 생성자
 	function Member(params) {
-		let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+		let {
+			room,
+			msg,
+			sender,
+			isGroupChat,
+			replier,
+			imageDB,
+			packageName,
+			threadId,
+			group,
+			hash,
+			icode
+		} = params;
 		this.profileData = new Object();
 		this.profileData[sender] = new Array();
 		this.profileData[sender].push(hash);
@@ -256,9 +361,194 @@ var Member = (function () { //Member 생성자
 	};
 	return Member;
 })();
-var 영어타이핑 = "rRseEfaqQtTdwWczxvgkoiOjpuPhynbml", 한글타이핑 = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎㅏㅐㅑㅒㅓㅔㅕㅖㅗㅛㅜㅠㅡㅣ", 초성모음 = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ", 중성모음 = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ", 종성모음 = "ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ"; function 한글조합하기(r) { if (null == r) return ""; var e = { "사용한글자수": r.length }; switch (r.length) { case 0: e.조합된한글 = r; break; case 1: e.조합된한글 = convert영한(r); break; case 2: var n = r.charAt(0), t = r.charAt(1); if (is자음(n) && is자음(t)) (o = 자음결합하기(convert영한(n), convert영한(t))) ? e.조합된한글 = o : e = 한글조합하기(r.substring(1, 2)); else if (is자음(n) && is모음(t)) e.조합된한글 = combine한글(convert영한(n), convert영한(t)); else if (is모음(n) && is모음(t)) { (a = 모음결합하기(convert영한(n), convert영한(t))) ? e.조합된한글 = a : e = 한글조합하기(r.substring(1, 2)) } else e = 한글조합하기(r.substring(1, 2)); break; case 3: n = r.charAt(0), t = r.charAt(1); var c = r.charAt(2); if (is자음(n) && is모음(t) && is자음(c)) e.조합된한글 = combine한글(convert영한(n), convert영한(t), convert영한(c)); else if (is자음(n) && is모음(t) && is모음(c)) { (a = 모음결합하기(convert영한(t), convert영한(c))) ? e.조합된한글 = combine한글(convert영한(n), a) : e = 한글조합하기(r.substring(1, 3)) } else e = 한글조합하기(r.substring(1, 3)); break; case 4: n = r.charAt(0), t = r.charAt(1), c = r.charAt(2); var i = r.charAt(3); if (is자음(n) && is모음(t) && is자음(c) && is자음(i)) (o = 자음결합하기(convert영한(c), convert영한(i))) ? e.조합된한글 = combine한글(convert영한(n), convert영한(t), o) : e = 한글조합하기(r.substring(1, 4)); else if (is자음(n) && is모음(t) && is모음(c) && is자음(i)) { (a = 모음결합하기(convert영한(t), convert영한(c))) ? e.조합된한글 = combine한글(convert영한(n), a, convert영한(i)) : e = 한글조합하기(r.substring(1, 4)) } else e = 한글조합하기(r.substring(1, 4)); break; case 5: n = r.charAt(0), t = r.charAt(1), c = r.charAt(2), i = r.charAt(3); var s = r.charAt(4); if (is자음(n) && is모음(t) && is모음(c) && is자음(i) && is자음(s)) { var a = 모음결합하기(convert영한(t), convert영한(c)), o = 자음결합하기(convert영한(i), convert영한(s)); a && o ? e.조합된한글 = combine한글(convert영한(n), a, o) : e = 한글조합하기(r.substring(1, 5)) } else e = 한글조합하기(r.substring(1, 5)) }return e } function korToEng(r) { var e = ""; if (0 == r.length) return e; for (var n = 0; n < r.length; n++) { var t, c, i, s = r.charAt(n), a = s.charCodeAt(0); if (44032 <= a && a <= 55203) a -= 44032, t = 초성모음.charAt(Math.floor(a / 588)), c = 중성모음.charAt(Math.floor(a / 28) % 21), i = 종성모음.charAt(a % 28 - 1), e += convert한영(t), e += convert한영(모음분해하기(c) || c), e += convert한영(자음분해하기(i) || i); else if (-1 < 초성모음.indexOf(s)) e += convert한영(s); else if (-1 < 중성모음.indexOf(s)) { e += convert한영(모음분해하기(s) || s) } else if (-1 < 종성모음.indexOf(s)) { e += convert한영(자음분해하기(s) || s) } else e += s } return e } function convert영한(r) { for (var e = "", n = 0; n < r.length; n++) { var t = r.charAt(n), c = 영어타이핑.indexOf(t); e += 0 <= c ? 한글타이핑.charAt(c) : t } return e } function convert한영(r) { for (var e = "", n = 0; n < r.length; n++) { var t = r.charAt(n), c = 한글타이핑.indexOf(t); e += 0 <= c ? 영어타이핑.charAt(c) : t } return e } function is영어타이핑(r) { return 0 <= 영어타이핑.indexOf(r) } function is모음(r) { return 19 <= 영어타이핑.indexOf(r) } function is자음(r) { return 영어타이핑.indexOf(r) < 19 && 0 <= 영어타이핑.indexOf(r) } function engToKor(r) { var e = ""; if (0 == r.length) return e; for (var n = 0; n < r.length; n++) { var t = 한글조합하기(r.slice(Math.max(r.length - 5 - n, 0), r.length - n)); n += t.사용한글자수 - 1, e = t.조합된한글 + e } return e } function combine한글(r, e, n) { return String.fromCharCode(44032 + 21 * 초성모음.indexOf(r) * 28 + 28 * 중성모음.indexOf(e) + 종성모음.indexOf(n) + 1) } function 모음결합하기(r, e) { var n = null; return "ㅗ" == r && "ㅏ" == e ? n = "ㅘ" : "ㅗ" == r && "ㅐ" == e ? n = "ㅙ" : "ㅗ" == r && "ㅣ" == e ? n = "ㅚ" : "ㅜ" == r && "ㅓ" == e ? n = "ㅝ" : "ㅜ" == r && "ㅔ" == e ? n = "ㅞ" : "ㅜ" == r && "ㅣ" == e ? n = "ㅟ" : "ㅡ" == r && "ㅣ" == e && (n = "ㅢ"), n } function 모음분해하기(r) { switch (r) { case "ㅘ": return "ㅗㅏ"; case "ㅙ": return "ㅗㅐ"; case "ㅚ": return "ㅗㅣ"; case "ㅝ": return "ㅜㅓ"; case "ㅞ": return "ㅜㅔ"; case "ㅟ": return "ㅜㅣ"; case "ㅢ": return "ㅡㅣ" }return null } function 자음결합하기(r, e) { var n = null; return "ㄱ" == r && "ㅅ" == e ? n = "ㄳ" : "ㄴ" == r && "ㅈ" == e ? n = "ㄵ" : "ㄴ" == r && "ㅎ" == e ? n = "ㄶ" : "ㄹ" == r && "ㄱ" == e ? n = "ㄺ" : "ㄹ" == r && "ㅁ" == e ? n = "ㄻ" : "ㄹ" == r && "ㅂ" == e ? n = "ㄼ" : "ㄹ" == r && "ㅅ" == e ? n = "ㄽ" : "ㄹ" == r && "ㅌ" == e ? n = "ㄾ" : "ㄹ" == r && "ㅍ" == e ? n = "ㄿ" : "ㄹ" == r && "ㅎ" == e ? n = "ㅀ" : "ㅂ" == r && "ㅅ" == e && (n = "ㅄ"), n } function 자음분해하기(r) { switch (r) { case "ㄳ": return "ㄱㅅ"; case "ㄵ": return "ㄴㅈ"; case "ㄶ": return "ㄴㅎ"; case "ㄺ": return "ㄹㄱ"; case "ㄻ": return "ㄹㅁ"; case "ㄼ": return "ㄹㅂ"; case "ㄽ": return "ㄹㅅ"; case "ㄾ": return "ㄹㅌ"; case "ㄿ": return "ㄹㅍ"; case "ㅀ": return "ㄹㅎ"; case "ㅄ": return "ㅂㅅ" }return null }
+var 영어타이핑 = "rRseEfaqQtTdwWczxvgkoiOjpuPhynbml",
+	한글타이핑 = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎㅏㅐㅑㅒㅓㅔㅕㅖㅗㅛㅜㅠㅡㅣ",
+	초성모음 = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ",
+	중성모음 = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ",
+	종성모음 = "ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ";
+
+function 한글조합하기(r) {
+	if (null == r) return "";
+	var e = {
+		"사용한글자수": r.length
+	};
+	switch (r.length) {
+		case 0:
+			e.조합된한글 = r;
+			break;
+		case 1:
+			e.조합된한글 = convert영한(r);
+			break;
+		case 2:
+			var n = r.charAt(0),
+				t = r.charAt(1);
+			if (is자음(n) && is자음(t))(o = 자음결합하기(convert영한(n), convert영한(t))) ? e.조합된한글 = o : e = 한글조합하기(r.substring(1, 2));
+			else if (is자음(n) && is모음(t)) e.조합된한글 = combine한글(convert영한(n), convert영한(t));
+			else if (is모음(n) && is모음(t)) {
+				(a = 모음결합하기(convert영한(n), convert영한(t))) ? e.조합된한글 = a: e = 한글조합하기(r.substring(1, 2))
+			} else e = 한글조합하기(r.substring(1, 2));
+			break;
+		case 3:
+			n = r.charAt(0), t = r.charAt(1);
+			var c = r.charAt(2);
+			if (is자음(n) && is모음(t) && is자음(c)) e.조합된한글 = combine한글(convert영한(n), convert영한(t), convert영한(c));
+			else if (is자음(n) && is모음(t) && is모음(c)) {
+				(a = 모음결합하기(convert영한(t), convert영한(c))) ? e.조합된한글 = combine한글(convert영한(n), a): e = 한글조합하기(r.substring(1, 3))
+			} else e = 한글조합하기(r.substring(1, 3));
+			break;
+		case 4:
+			n = r.charAt(0), t = r.charAt(1), c = r.charAt(2);
+			var i = r.charAt(3);
+			if (is자음(n) && is모음(t) && is자음(c) && is자음(i))(o = 자음결합하기(convert영한(c), convert영한(i))) ? e.조합된한글 = combine한글(convert영한(n), convert영한(t), o) : e = 한글조합하기(r.substring(1, 4));
+			else if (is자음(n) && is모음(t) && is모음(c) && is자음(i)) {
+				(a = 모음결합하기(convert영한(t), convert영한(c))) ? e.조합된한글 = combine한글(convert영한(n), a, convert영한(i)): e = 한글조합하기(r.substring(1, 4))
+			} else e = 한글조합하기(r.substring(1, 4));
+			break;
+		case 5:
+			n = r.charAt(0), t = r.charAt(1), c = r.charAt(2), i = r.charAt(3);
+			var s = r.charAt(4);
+			if (is자음(n) && is모음(t) && is모음(c) && is자음(i) && is자음(s)) {
+				var a = 모음결합하기(convert영한(t), convert영한(c)),
+					o = 자음결합하기(convert영한(i), convert영한(s));
+				a && o ? e.조합된한글 = combine한글(convert영한(n), a, o) : e = 한글조합하기(r.substring(1, 5))
+			} else e = 한글조합하기(r.substring(1, 5))
+	}
+	return e
+}
+
+function korToEng(r) {
+	var e = "";
+	if (0 == r.length) return e;
+	for (var n = 0; n < r.length; n++) {
+		var t, c, i, s = r.charAt(n),
+			a = s.charCodeAt(0);
+		if (44032 <= a && a <= 55203) a -= 44032, t = 초성모음.charAt(Math.floor(a / 588)), c = 중성모음.charAt(Math.floor(a / 28) % 21), i = 종성모음.charAt(a % 28 - 1), e += convert한영(t), e += convert한영(모음분해하기(c) || c), e += convert한영(자음분해하기(i) || i);
+		else if (-1 < 초성모음.indexOf(s)) e += convert한영(s);
+		else if (-1 < 중성모음.indexOf(s)) {
+			e += convert한영(모음분해하기(s) || s)
+		} else if (-1 < 종성모음.indexOf(s)) {
+			e += convert한영(자음분해하기(s) || s)
+		} else e += s
+	}
+	return e
+}
+
+function convert영한(r) {
+	for (var e = "", n = 0; n < r.length; n++) {
+		var t = r.charAt(n),
+			c = 영어타이핑.indexOf(t);
+		e += 0 <= c ? 한글타이핑.charAt(c) : t
+	}
+	return e
+}
+
+function convert한영(r) {
+	for (var e = "", n = 0; n < r.length; n++) {
+		var t = r.charAt(n),
+			c = 한글타이핑.indexOf(t);
+		e += 0 <= c ? 영어타이핑.charAt(c) : t
+	}
+	return e
+}
+
+function is영어타이핑(r) {
+	return 0 <= 영어타이핑.indexOf(r)
+}
+
+function is모음(r) {
+	return 19 <= 영어타이핑.indexOf(r)
+}
+
+function is자음(r) {
+	return 영어타이핑.indexOf(r) < 19 && 0 <= 영어타이핑.indexOf(r)
+}
+
+function engToKor(r) {
+	var e = "";
+	if (0 == r.length) return e;
+	for (var n = 0; n < r.length; n++) {
+		var t = 한글조합하기(r.slice(Math.max(r.length - 5 - n, 0), r.length - n));
+		n += t.사용한글자수 - 1, e = t.조합된한글 + e
+	}
+	return e
+}
+
+function combine한글(r, e, n) {
+	return String.fromCharCode(44032 + 21 * 초성모음.indexOf(r) * 28 + 28 * 중성모음.indexOf(e) + 종성모음.indexOf(n) + 1)
+}
+
+function 모음결합하기(r, e) {
+	var n = null;
+	return "ㅗ" == r && "ㅏ" == e ? n = "ㅘ" : "ㅗ" == r && "ㅐ" == e ? n = "ㅙ" : "ㅗ" == r && "ㅣ" == e ? n = "ㅚ" : "ㅜ" == r && "ㅓ" == e ? n = "ㅝ" : "ㅜ" == r && "ㅔ" == e ? n = "ㅞ" : "ㅜ" == r && "ㅣ" == e ? n = "ㅟ" : "ㅡ" == r && "ㅣ" == e && (n = "ㅢ"), n
+}
+
+function 모음분해하기(r) {
+	switch (r) {
+		case "ㅘ":
+			return "ㅗㅏ";
+		case "ㅙ":
+			return "ㅗㅐ";
+		case "ㅚ":
+			return "ㅗㅣ";
+		case "ㅝ":
+			return "ㅜㅓ";
+		case "ㅞ":
+			return "ㅜㅔ";
+		case "ㅟ":
+			return "ㅜㅣ";
+		case "ㅢ":
+			return "ㅡㅣ"
+	}
+	return null
+}
+
+function 자음결합하기(r, e) {
+	var n = null;
+	return "ㄱ" == r && "ㅅ" == e ? n = "ㄳ" : "ㄴ" == r && "ㅈ" == e ? n = "ㄵ" : "ㄴ" == r && "ㅎ" == e ? n = "ㄶ" : "ㄹ" == r && "ㄱ" == e ? n = "ㄺ" : "ㄹ" == r && "ㅁ" == e ? n = "ㄻ" : "ㄹ" == r && "ㅂ" == e ? n = "ㄼ" : "ㄹ" == r && "ㅅ" == e ? n = "ㄽ" : "ㄹ" == r && "ㅌ" == e ? n = "ㄾ" : "ㄹ" == r && "ㅍ" == e ? n = "ㄿ" : "ㄹ" == r && "ㅎ" == e ? n = "ㅀ" : "ㅂ" == r && "ㅅ" == e && (n = "ㅄ"), n
+}
+
+function 자음분해하기(r) {
+	switch (r) {
+		case "ㄳ":
+			return "ㄱㅅ";
+		case "ㄵ":
+			return "ㄴㅈ";
+		case "ㄶ":
+			return "ㄴㅎ";
+		case "ㄺ":
+			return "ㄹㄱ";
+		case "ㄻ":
+			return "ㄹㅁ";
+		case "ㄼ":
+			return "ㄹㅂ";
+		case "ㄽ":
+			return "ㄹㅅ";
+		case "ㄾ":
+			return "ㄹㅌ";
+		case "ㄿ":
+			return "ㄹㅍ";
+		case "ㅀ":
+			return "ㄹㅎ";
+		case "ㅄ":
+			return "ㅂㅅ"
+	}
+	return null
+}
+
 function randomIcode(params) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	var possible = '0123456789';
 	while (true) {
 		var text = '';
@@ -269,7 +559,19 @@ function randomIcode(params) {
 }
 
 function memberCounter(params) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	var t = moment().format('YYMMDDHH');
 	Ky.g[group].m[icode].counter.timeList = Ky.g[group].m[icode].counter.timeList || new Array();
 	Ky.g[group].m[icode].counter.list = Ky.g[group].m[icode].counter.list || new Array();
@@ -286,11 +588,23 @@ function memberCounter(params) {
 
 
 function memberCount(params, input, code) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	icode = code || icode;
 	if (input.indexOf('-') != -1) {
 		var from = moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
-		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) { } else return '숫자만 입력해 주세요.';
+		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) {} else return '숫자만 입력해 주세요.';
 		var to = moment(input.split('-')[1], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
 		if (to.isValid()) {
 			if (input.split('-')[1].length == 2) to.endOf('year');
@@ -417,238 +731,275 @@ function lolStat(nick) {
 	}
 }
 
-function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) { try {
+function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
+	try {
 
-	msg = msg.trim();
-	room = room.trim();
-	sender = sender.trim();
+		msg = msg.trim();
+		room = room.trim();
+		sender = sender.trim();
 
-	let params = { //함수용 통합 매개변수
-		get room() { return room },
-		get msg() { return msg },
-		get sender() { return sender },
-		get isGroupChat() { return isGroupChat },
-		get replier() { return replier },
-		get imageDB() { return imageDB },
-		get packageName() { return packageName },
-		get threadId() { return threadId }
-	}
+		let params = { //함수용 통합 매개변수
+			get room() {
+				return room
+			},
+			get msg() {
+				return msg
+			},
+			get sender() {
+				return sender
+			},
+			get isGroupChat() {
+				return isGroupChat
+			},
+			get replier() {
+				return replier
+			},
+			get imageDB() {
+				return imageDB
+			},
+			get packageName() {
+				return packageName
+			},
+			get threadId() {
+				return threadId
+			}
+		}
 
 
-	commandList = new Array();
-	descriptionList = new Array();
+		commandList = new Array();
+		descriptionList = new Array();
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//Authentification // 신규 데이터 생성, 인증 발급
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Authentification // 신규 데이터 생성, 인증 발급
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-	//개인톡 인증
-	if (isGroupChat == false) {
-		replier.reply('캬옹봇 인식 닉네임: [' + sender + ']\n현재 사용중인 닉네임과 인식되는 닉네임이 다르다면 나갔다 들어와 보시고, 그래도 똑같다면 관리자에게 연락하세요.')
-		if (msg in Ky.g) {
-			var group = msg;
-		} else if (sender in Ky.g.tempAuth) {
-			var group = Ky.g.tempAuth[sender];
-		} else return;
-		if (sender in Ky.g[group].tempM) {
-			var authID = makeAuthID();
-			Ky.g[group].tempM[sender].authID = authID;
-			Ky.g.tempAuth[authID] = group;
-			Ky.g.tempHash[authID] = getHash(params);
-			replier.reply('보안코드:');
-			replier.reply(authID);
-			replier.reply('닉네임:');
-			replier.reply(sender);
-			replier.reply('보안코드를 복사해서 공지에 있는 2차 인증센터에 들어갈때 <<카카오프렌즈>> 선택 후 <<닉네임에 붙여넣으세요>>. 방에 입장한 후에는 닉네임을 복사해서 그대로 붙여넣어 채팅을 보내면 인증이 완료됩니다.\n헷갈리지 마세요. <<닉네임을 보안코드로>> 하셔야 합니다. <<닉네임을 보안코드>>. 다시 한번 말하지만 난독하지 마세요. 카카오프렌즈 닉네임을 보안코드로, 들어가서 채팅으로 원래 사용중인 닉네임을 입력하세요. 실수하면 아주 귀찮아집니다.');
-			replier.reply('ex) 홍길동, a1b2c3 이면 인증방 들어갈때 닉네임을 카카오프렌즈 선택하고 닉네임을 a1b2c3으로 하고, 들어가서 채팅창에 홍길동 엔터');
-		} else if (msg in Ky.g[group].tempM) {
-			if (sender == Ky.g[group].tempM[msg].authID) {
-				Object.defineProperty(params, 'group', {
-					get: function () {
-						return group;
-					}
-				});
-				Object.defineProperty(params, 'hash', {
-					get: function () {
-						return hash;
-					}
-				});
-				var icode = randomIcode(params);
-				var hash = Ky.g.tempHash[sender];
-				var authID = sender;
-				sender = msg;
+		//개인톡 인증
+		if (isGroupChat == false) {
+			replier.reply('캬옹봇 인식 닉네임: [' + sender + ']\n현재 사용중인 닉네임과 인식되는 닉네임이 다르다면 나갔다 들어와 보시고, 그래도 똑같다면 관리자에게 연락하세요.')
+			if (msg in Ky.g) {
+				var group = msg;
+			} else if (sender in Ky.g.tempAuth) {
+				var group = Ky.g.tempAuth[sender];
+			} else return;
+			if (sender in Ky.g[group].tempM) {
+				var authID = makeAuthID();
+				Ky.g[group].tempM[sender].authID = authID;
+				Ky.g.tempAuth[authID] = group;
+				Ky.g.tempHash[authID] = getHash(params);
+				replier.reply('보안코드:');
+				replier.reply(authID);
+				replier.reply('닉네임:');
 				replier.reply(sender);
-				Ky.g[group].m[icode] = new Member(params);
-				Ky.g[group].m[icode].authID = authID;
-				Ky.g[group] = Ky.g[group] || new Object(params);
-				if (Object.keys(Ky.g[group].m).length == 1) {
-					Ky.g[group].m[icode].type = userGroup[0];
-					replier.reply('최초 관리자로 등록되었습니다.');
+				replier.reply('보안코드를 복사해서 공지에 있는 2차 인증센터에 들어갈때 <<카카오프렌즈>> 선택 후 <<닉네임에 붙여넣으세요>>. 방에 입장한 후에는 닉네임을 복사해서 그대로 붙여넣어 채팅을 보내면 인증이 완료됩니다.\n헷갈리지 마세요. <<닉네임을 보안코드로>> 하셔야 합니다. <<닉네임을 보안코드>>. 다시 한번 말하지만 난독하지 마세요. 카카오프렌즈 닉네임을 보안코드로, 들어가서 채팅으로 원래 사용중인 닉네임을 입력하세요. 실수하면 아주 귀찮아집니다.');
+				replier.reply('ex) 홍길동, a1b2c3 이면 인증방 들어갈때 닉네임을 카카오프렌즈 선택하고 닉네임을 a1b2c3으로 하고, 들어가서 채팅창에 홍길동 엔터');
+			} else if (msg in Ky.g[group].tempM) {
+				if (sender == Ky.g[group].tempM[msg].authID) {
+					Object.defineProperty(params, 'group', {
+						get: function () {
+							return group;
+						}
+					});
+					Object.defineProperty(params, 'hash', {
+						get: function () {
+							return hash;
+						}
+					});
+					var icode = randomIcode(params);
+					var hash = Ky.g.tempHash[sender];
+					var authID = sender;
+					sender = msg;
+					replier.reply(sender);
+					Ky.g[group].m[icode] = new Member(params);
+					Ky.g[group].m[icode].authID = authID;
+					Ky.g[group] = Ky.g[group] || new Object(params);
+					if (Object.keys(Ky.g[group].m).length == 1) {
+						Ky.g[group].m[icode].type = userGroup[0];
+						replier.reply('최초 관리자로 등록되었습니다.');
+					}
+					replier.reply('인증 성공. 데이터베이스가 정상적으로 생성되었습니다. 이제 자유로운 캬옹봇 사용이 가능합니다.')
+					replier.reply('■■주의: 이 방에서 나가지 마세요. 추후 인증에 필요합니다. 임시인증은 나가셔도 됩니다.■■')
+					replier.reply('식별코드: ' + icode)
+					delete Ky.g[group].tempM[msg];
+				} else replier.reply('인증 실패, 다시 시도해 보세요. 캬옹봇은 당신의 닉네임을 [' + sender + ']로 인식하고 있습니다. 현재 사용중인 닉네임과 인식되는 닉네임이 다르다면 나갔다 들어와 보시고, 그래도 똑같다면 관리자에게 연락하세요.')
+			}
+			return;
+		}
+
+		//단체톡 시작
+		var roomFullName = room;
+		var group = room.split('_')[0];
+		var room = roomFullName.split('_')[1];
+		var hash = getHash(params);
+
+
+
+
+		Object.defineProperty(params, 'group', {
+			get: function () {
+				return group
+			}
+		});
+		Object.defineProperty(params, 'hash', {
+			get: function () {
+				return hash
+			}
+		});
+
+		Ky.g[group] = Ky.g[group] || new Group(params);
+		Ky.g[group].r[room] = Ky.g[group].r[room] || new Room(params);
+		if (Ky.g[group].roomList.indexOf(room) == -1) Ky.g[group].roomList.push(room);
+
+		for (i = 0; i < Ky.g[group].roomList[i]; i++) {
+			if (Ky.g[group].r[Ky.g[group].roomList[i]].botOn == false) return;
+		}
+
+		var unAuthed = false;
+
+		var exist = false;
+		Object.keys(Ky.g[group].m).map(function (objectKey, index) {
+			try {
+				if (Ky.g[group].m[objectKey].profileData[sender] !== undefined) {
+					if (Ky.g[group].m[objectKey].profileData[sender].indexOf(hash) != -1) exist = objectKey
 				}
-				replier.reply('인증 성공. 데이터베이스가 정상적으로 생성되었습니다. 이제 자유로운 캬옹봇 사용이 가능합니다.')
-				replier.reply('■■주의: 이 방에서 나가지 마세요. 추후 인증에 필요합니다. 임시인증은 나가셔도 됩니다.■■')
-				replier.reply('식별코드: ' + icode)
-				delete Ky.g[group].tempM[msg];
-			} else replier.reply('인증 실패, 다시 시도해 보세요. 캬옹봇은 당신의 닉네임을 [' + sender + ']로 인식하고 있습니다. 현재 사용중인 닉네임과 인식되는 닉네임이 다르다면 나갔다 들어와 보시고, 그래도 똑같다면 관리자에게 연락하세요.')
-		}
-		return;
-	}
+			} catch (e) {};
+		});
+		if (exist == false) {
+			Ky.g[group].tempM[sender] = Ky.g[group].tempM[sender] || new Object();
+			Ky.g[group].tempM[sender].alert = Ky.g[group].tempM[sender].alert || 't';
+			if ('mayBe' in Ky.g[group].tempM[sender]) {
+				if (msg == Ky.g[group].tempM[sender].authCode) {
+					delete Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData;
+					Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData || new Object();
+					Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender] = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender] || new Array();
+					Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender].push(hash);
+					replier.reply('계정 인증이 완료되었습니다.');
+					delete Ky.g[group].tempM[sender];
+				} else {
+					if (msg == '!인증취소') {
+						delete Ky.g[group].tempM[sender].mayBe;
+						delete Ky.g[group].tempM[sender].authCode;
+						replier.reply('인증이 취소되었습니다.');
+					} else replier.reply('인증센터로 전송된 인증번호를 입력해 주세요. 인증번호가 오지 않는다면 인증센터에 아무 말이나 친 후 !인증취소 후 재인증해보시고, 그래도 안되거나 다른 문제가 있다면 관리자에게 문의하세요.');
+				}
+			} else if (msg.substr(0, 4) == '!인증 ' && Ky.g[group].m[msg.substr(4)] !== undefined) {
+				var aCode = makeAuthID();
+				Ky.g[group].tempM[sender].mayBe = msg.substr(4);
+				Ky.g[group].tempM[sender].authCode = aCode;
+				Api.replyRoom(Ky.g[group].m[msg.substr(4)].authID, aCode);
+				Api.replyRoom(group + '_관리방', '[' + sender + ']\n인증코드: ' + aCode + '\n보안코드: ' + Ky.g[group].m[msg.substr(4)].authID);
 
-	//단체톡 시작
-	var roomFullName = room;
-	var group = room.split('_')[0];
-	var room = roomFullName.split('_')[1];
-	var hash = getHash(params);
-
-
-
-
-	Object.defineProperty(params, 'group', { get: function () { return group } });
-	Object.defineProperty(params, 'hash', { get: function () { return hash } });
-
-	Ky.g[group] = Ky.g[group] || new Group(params);
-	Ky.g[group].r[room] = Ky.g[group].r[room] || new Room(params);
-	if (Ky.g[group].roomList.indexOf(room) == -1) Ky.g[group].roomList.push(room);
-
-	for (i = 0; i < Ky.g[group].roomList[i]; i++) {
-		if (Ky.g[group].r[Ky.g[group].roomList[i]].botOn == false) return;
-	}
-
-	var unAuthed = false;
-
-	var exist = false;
-	Object.keys(Ky.g[group].m).map(function (objectKey, index) {
-		try {
-			if (Ky.g[group].m[objectKey].profileData[sender] !== undefined) {
-				if (Ky.g[group].m[objectKey].profileData[sender].indexOf(hash) != -1) exist = objectKey
+				replier.reply('인증코드가 인증센터로 전송되었습니다.');
+			} else if (Ky.g[group].tempM[sender].alert == 't') {
+				replier.reply('[' + sender + ']님 어서오세요.\n아래 내용을 펼쳐 안내를 확인하세요.' + blank + welcomeMessage);
+				Ky.g[group].tempM[sender].alert = 'f';
 			}
-		} catch (e) { };
-	});
-	if (exist == false) {
-		Ky.g[group].tempM[sender] = Ky.g[group].tempM[sender] || new Object();
-		Ky.g[group].tempM[sender].alert = Ky.g[group].tempM[sender].alert || 't';
-		if ('mayBe' in Ky.g[group].tempM[sender]) {
-			if (msg == Ky.g[group].tempM[sender].authCode) {
-				delete Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].memberData;
-				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData || new Object();
-				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender] = Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender] || new Array();
-				Ky.g[group].m[Ky.g[group].tempM[sender].mayBe].profileData[sender].push(hash);
-				replier.reply('계정 인증이 완료되었습니다.');
-				delete Ky.g[group].tempM[sender];
-			} else {
-				if (msg == '!인증취소') {
-					delete Ky.g[group].tempM[sender].mayBe;
-					delete Ky.g[group].tempM[sender].authCode;
-					replier.reply('인증이 취소되었습니다.');
-				} else replier.reply('인증센터로 전송된 인증번호를 입력해 주세요. 인증번호가 오지 않는다면 인증센터에 아무 말이나 친 후 !인증취소 후 재인증해보시고, 그래도 안되거나 다른 문제가 있다면 관리자에게 문의하세요.');
+			var unAuthed = true;
+		}
+		if (unAuthed == true) {
+			var icode = 'unauth'
+		} else var icode = exist;
+
+		Object.defineProperty(params, 'icode', {
+			get: function () {
+				return icode;
 			}
-		} else if (msg.substr(0, 4) == '!인증 ' && Ky.g[group].m[msg.substr(4)] !== undefined) {
-			var aCode = makeAuthID();
-			Ky.g[group].tempM[sender].mayBe = msg.substr(4);
-			Ky.g[group].tempM[sender].authCode = aCode;
-			Api.replyRoom(Ky.g[group].m[msg.substr(4)].authID, aCode);
-			Api.replyRoom(group + '_관리방', '[' + sender + ']\n인증코드: ' + aCode + '\n보안코드: ' + Ky.g[group].m[msg.substr(4)].authID);
+		});
 
-			replier.reply('인증코드가 인증센터로 전송되었습니다.');
-		} else if (Ky.g[group].tempM[sender].alert == 't') {
-			replier.reply('[' + sender + ']님 어서오세요.\n아래 내용을 펼쳐 안내를 확인하세요.' + blank + welcomeMessage);
-			Ky.g[group].tempM[sender].alert = 'f';
-		}
-		var unAuthed = true;
-	}
-	if (unAuthed == true) {
-		var icode = 'unauth'
-	} else var icode = exist;
-
-	Object.defineProperty(params, 'icode', {
-		get: function () {
-			return icode;
-		}
-	});
-
-	if (icode != 'unauth' && Ky.g[group].m[icode].counter.total == 0) replier.reply('[' + sender + ']님,' + group + ' 캬옹봇 인증이 완료되었습니다. <!명령어>로 명령어를 확인하세요. <!식별코드> 로 식별코드를 확인하세요.')
-	Ky.g[group].counter = Ky.g[group].counter || {};
-	Ky.g[group].counter.total = Ky.g[group].counter.total || 0;
+		if (icode != 'unauth' && Ky.g[group].m[icode].counter.total == 0) replier.reply('[' + sender + ']님,' + group + ' 캬옹봇 인증이 완료되었습니다. <!명령어>로 명령어를 확인하세요. <!식별코드> 로 식별코드를 확인하세요.')
+		Ky.g[group].counter = Ky.g[group].counter || {};
+		Ky.g[group].counter.total = Ky.g[group].counter.total || 0;
 
 
 
-	Ky.g[group].r[room].enabled = Ky.g[group].r[room].enabled || new Object();
+		Ky.g[group].r[room].enabled = Ky.g[group].r[room].enabled || new Object();
 
-	//대화형 입력 방식을 위한 프리셋
-	/*
+		//대화형 입력 방식을 위한 프리셋
+		/*
 	
-	*/
-	//명령어 세트(set) 실행기
+		*/
+		//명령어 세트(set) 실행기
 
-	preSys(params);
-	Ky.g[group].miniGame = Ky.g[group].miniGame || {};
-	if (icode != 'unauth') Ky.g[group].m[icode].miniGame = Ky.g[group].m[icode].miniGame || {};
+		preSys(params);
+		Ky.g[group].miniGame = Ky.g[group].miniGame || {};
+		if (icode != 'unauth') Ky.g[group].m[icode].miniGame = Ky.g[group].m[icode].miniGame || {};
 
-	Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || 'true';
-	if (Ky.g[group].r[room].enabled.generalSys == 'true') {
-		generalSys(params);
-	}
-
-	Ky.g[group].r[room].enabled.manageSys = Ky.g[group].r[room].enabled.manageSys || 'true';
-	if (Ky.g[group].r[room].enabled.manageSys == 'true') {
-		manageSys(params);
-	}
-
-	Ky.g[group].r[room].enabled.pDBSys = Ky.g[group].r[room].enabled.pDBSys || 'true';
-	if (Ky.g[group].r[room].enabled.pDBSys == 'true') {
-		pDBSys(params);
-	}
-
-	Ky.g[group].r[room].enabled.cpSys = Ky.g[group].r[room].enabled.cpSys || 'true';
-	if (Ky.g[group].r[room].enabled.cpSys == 'true') {
-		cpSys(params);
-	}
-
-	Ky.g[group].r[room].enabled.miniGameSys = Ky.g[group].r[room].enabled.miniGameSys || 'true';
-	if (Ky.g[group].r[room].enabled.miniGameSys == 'true') {
-		miniGameSys(params);
-	}
-
-	Ky.g[group].r[room].enabled.miscSys = Ky.g[group].r[room].enabled.miscSys || 'true';
-	if (Ky.g[group].r[room].enabled.miscSys == 'true') {
-		miscSys(params);
-	}
-
-	Ky.g[group].r[room].enabled.memberCounter = Ky.g[group].r[room].enabled.memberCounter || 'true';
-	if (icode != 'unauth') {
-		if (Ky.g[group].r[room].enabled.memberCounter == 'true') {
-			memberCounter(params);
+		Ky.g[group].r[room].enabled.generalSys = Ky.g[group].r[room].enabled.generalSys || 'true';
+		if (Ky.g[group].r[room].enabled.generalSys == 'true') {
+			generalSys(params);
 		}
+
+		Ky.g[group].r[room].enabled.manageSys = Ky.g[group].r[room].enabled.manageSys || 'true';
+		if (Ky.g[group].r[room].enabled.manageSys == 'true') {
+			manageSys(params);
+		}
+
+		Ky.g[group].r[room].enabled.pDBSys = Ky.g[group].r[room].enabled.pDBSys || 'true';
+		if (Ky.g[group].r[room].enabled.pDBSys == 'true') {
+			pDBSys(params);
+		}
+
+		Ky.g[group].r[room].enabled.cpSys = Ky.g[group].r[room].enabled.cpSys || 'true';
+		if (Ky.g[group].r[room].enabled.cpSys == 'true') {
+			cpSys(params);
+		}
+
+		Ky.g[group].r[room].enabled.miniGameSys = Ky.g[group].r[room].enabled.miniGameSys || 'true';
+		if (Ky.g[group].r[room].enabled.miniGameSys == 'true') {
+			miniGameSys(params);
+		}
+
+		Ky.g[group].r[room].enabled.miscSys = Ky.g[group].r[room].enabled.miscSys || 'true';
+		if (Ky.g[group].r[room].enabled.miscSys == 'true') {
+			miscSys(params);
+		}
+
+		Ky.g[group].r[room].enabled.memberCounter = Ky.g[group].r[room].enabled.memberCounter || 'true';
+		if (icode != 'unauth') {
+			if (Ky.g[group].r[room].enabled.memberCounter == 'true') {
+				memberCounter(params);
+			}
+		}
+
+		Ky.g[group].r[room].enabled.backGroundSys = Ky.g[group].r[room].enabled.backGroundSys || 'true';
+		if (Ky.g[group].r[room].enabled.backGroundSys == 'true') {
+			backGroundSys(params);
+		}
+
+		var t = moment().format('YYMMDDHH');
+		Ky.g[group].counter.timeList = Ky.g[group].counter.timeList || new Array();
+		Ky.g[group].counter.list = Ky.g[group].counter.list || new Array();
+		var timeList = Ky.g[group].counter.timeList;
+		if (timeList.indexOf(t) == -1) timeList.push(t);
+		Ky.g[group].counter.list[timeList.indexOf(t)] = Ky.g[group].counter.list[timeList.indexOf(t)] || 0;
+		Ky.g[group].counter.list[timeList.indexOf(t)]++;
+
+		firstLoad = false;
+
+
+
+	} catch (e) {
+		replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
 	}
-
-	Ky.g[group].r[room].enabled.backGroundSys = Ky.g[group].r[room].enabled.backGroundSys || 'true';
-	if (Ky.g[group].r[room].enabled.backGroundSys == 'true') {
-		backGroundSys(params);
-	}
-
-	var t = moment().format('YYMMDDHH');
-	Ky.g[group].counter.timeList = Ky.g[group].counter.timeList || new Array();
-	Ky.g[group].counter.list = Ky.g[group].counter.list || new Array();
-	var timeList = Ky.g[group].counter.timeList;
-	if (timeList.indexOf(t) == -1) timeList.push(t);
-	Ky.g[group].counter.list[timeList.indexOf(t)] = Ky.g[group].counter.list[timeList.indexOf(t)] || 0;
-	Ky.g[group].counter.list[timeList.indexOf(t)]++;
-
-	firstLoad = false;
-
-
-
-} catch (e) {
-	replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
-}
 }
 
 
 
 
 function commandChk(params, c, a, d) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	if (icode == 'unauth' && a != 'all') {
 		//replier.reply('이 기능을 사용하려면 인증이 필요합니다. 인증 방법은 공지사항을 참조하세요.');
 		return false;
@@ -682,7 +1033,19 @@ let c, a, d;
 
 function preSys(params) {
 	//일반 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '대화형 명령어 프리셋';
 		a = 'member';
@@ -719,7 +1082,19 @@ function preSys(params) {
 
 function generalSys(params) {
 	//일반 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '!테스트';
 		a = 'all';
@@ -781,7 +1156,19 @@ function generalSys(params) {
 
 function manageSys(params) {
 	//관리용 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	/*
 	loop: {
 		c = '!업데이트';
@@ -861,7 +1248,19 @@ function manageSys(params) {
 
 function pDBSys(params) {
 	//미니게임 제외 개인 데이터 관련 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '!카운터';
 		a = 'member';
@@ -968,7 +1367,19 @@ function pDBSys(params) {
 
 function cpSys(params) {
 	//미니게임 제외 포인트 관련 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '.채팅보상';
 		a = 'member';
@@ -1077,13 +1488,67 @@ function cpSys(params) {
 		}
 	}
 
+	loop: {
+		c = '!포인트순위';
+		a = 'member';
+		d = '컴퓨톡의 cp순위를 출력합니다.';
+		//by 시공, 불여우
+
+		//오브젝트 생성 및 배열 생성
+		final = new Object();
+		var temp1 = new Array();
+		var temp2 = new Object();
+		//정보 객체에 넣기
+		for (var ud = 1111; ud < 10000; ud++) {
+			try {
+				temp2 = new Object();
+				temp2.name = Ky.g[group].m[ud].lastActive[0];
+				temp2.cp = Ky.g[group].m[ud].cp;
+				temp1.push(temp2);
+			} catch (e) {}
+		}
+		//합치기
+		final.member = temp1;
+		//출력
+		var sortingField = "cp";
+		final.member.sort(function (a, b) { // 내림차순
+			return b[sortingField] - a[sortingField];
+		});
+		//JSON.stringify(final);
+		var char = "▼전체보기 클릭▼";
+		char += blank;
+		char += "포인트 순위\n\n";
+		for (var i = 0; i < 20; i++) {
+			char += (i + 1);
+			char += ". ";
+			char += final.member[i].name;
+			char += "\n 》 ";
+			char += final.member[i].cp;
+			char += "cp\n\n";
+		}
+		//1. GeForce
+		// 》42085
+		replier.reply(char)
+	}
 }
 
 
 
 function miniGameSys(params) {
 	//미니게임 관련 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 
 	loop: {
 		c = '.랜덤문자';
@@ -1124,7 +1589,7 @@ function miniGameSys(params) {
 							java.lang.Thread.sleep(30000);
 							replier.reply(String.fromCharCode(0) + '타임어택 종료!');
 							temp.hanQuizValid[room] = false;
-						} catch (e) { }
+						} catch (e) {}
 					}
 				});
 				ThreadManager.i[room].start();
@@ -1197,7 +1662,7 @@ function miniGameSys(params) {
 			if (Ky.g[group].m[icode].miniGame.lottery.today === undefined) Ky.g[group].m[icode].miniGame.lottery.today = false;
 
 			var p = msg.substr(msg.split(' ', 1)[0].length + 1);
-			if (! /^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 1 || p > 100) {
+			if (!/^[0-9]+$/.test(p) || p.indexOf('0') == 0 || p < 1 || p > 100) {
 				replier.reply('1~100 사이의 자연수를 입력해 주세요.');
 				break loop;
 			}
@@ -1223,7 +1688,19 @@ function miniGameSys(params) {
 
 function miscSys(params) {
 	//잡다한 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	loop: {
 		c = '!견적생성';
 		a = 'member';
@@ -1462,8 +1939,8 @@ function miscSys(params) {
 		d = '컴퓨터를 제대로 활용 못하는 이를 위해.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			replier.reply('['+msg.substring(c.length + 1)+']\n' + shortURL('http://ko.lmgtfy.com/?q=' + encodeURI(msg.substring(c.length + 1))))
-			replier.reply("전체보기 클릭" + blank + "1. 브라우저를 켜고 구글(google.co.kr)에 들어가세요.\n2.궁금한 내용(" + msg.substring(c.length + 1)+ ")을 입력하세요.\n3.검색 버튼을 누르세요.\n\n참 쉽죠?")
+			replier.reply('[' + msg.substring(c.length + 1) + ']\n' + shortURL('http://ko.lmgtfy.com/?q=' + encodeURI(msg.substring(c.length + 1))))
+			replier.reply("전체보기 클릭" + blank + "1. 브라우저를 켜고 구글(google.co.kr)에 들어가세요.\n2.궁금한 내용(" + msg.substring(c.length + 1) + ")을 입력하세요.\n3.검색 버튼을 누르세요.\n\n참 쉽죠?")
 		}
 	}
 	loop: {
@@ -1472,12 +1949,12 @@ function miscSys(params) {
 		d = '컴퓨터를 제대로 활용 못하는 이를 위해.';
 		if (commandChk(params, c, a, d) == false) break loop;
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			replier.reply('['+msg.substring(c.length + 1)+']\n' + shortURL('http://ko.lmgtfy.com/?iie=1&q=' + encodeURI(msg.substring(c.length + 1))))
-			replier.reply("전체보기 클릭" + blank + "1. 브라우저를 켜고 구글(google.co.kr)에 들어가세요.\n2.궁금한 내용(" + msg.substring(c.length + 1)+ ")을 입력하세요.\n3.검색 버튼을 누르세요.\n\n참 쉽죠?")
-		
+			replier.reply('[' + msg.substring(c.length + 1) + ']\n' + shortURL('http://ko.lmgtfy.com/?iie=1&q=' + encodeURI(msg.substring(c.length + 1))))
+			replier.reply("전체보기 클릭" + blank + "1. 브라우저를 켜고 구글(google.co.kr)에 들어가세요.\n2.궁금한 내용(" + msg.substring(c.length + 1) + ")을 입력하세요.\n3.검색 버튼을 누르세요.\n\n참 쉽죠?")
+
 		}
 	}
-	
+
 	loop: {
 		c = '!유튜브';
 		a = 'all';
@@ -1513,7 +1990,19 @@ function miscSys(params) {
 
 function backGroundSys(params) {
 	//날짜 관련 시스템/명령어
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 
 	//이것은 날짜변경기입니다
 	Ky.g[group].dateClock = Ky.g[group].dateClock || new Date().getDate() - 1;
@@ -1533,7 +2022,7 @@ function backGroundSys(params) {
 						if (threadInterrupt == true) this.interrupt();
 						//replier.reply('✔');
 					}
-				} catch (e) { }
+				} catch (e) {}
 			}
 		});
 	}
@@ -1588,15 +2077,15 @@ function backGroundSys(params) {
 		}
 	}
 
-		if (msg == '!명령어') {
-			var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
-			for (i = 0; i < commandList.length; i++) {
-				r += '》' + commandList[i] + '\n';
-				r += descriptionList[i];
-				r += '\n';
-			}
-			replier.reply(r)
+	if (msg == '!명령어') {
+		var r = String('》KyaongBot_' + ver + '\n■명령어 목록■' + blank);
+		for (i = 0; i < commandList.length; i++) {
+			r += '》' + commandList[i] + '\n';
+			r += descriptionList[i];
+			r += '\n';
 		}
+		replier.reply(r)
+	}
 
 	loop: {
 		c = '.럭키포인트';
@@ -1656,7 +2145,19 @@ function backGroundSys(params) {
 }
 
 function dateChanger(params) {
-	let { room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId, group, hash, icode } = params;
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
 	replyAllRoom(params, '[날짜변경]\n' + new Date().getFullYear() + '년 ' + (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일');
 	//복권추첨!
 	if (Ky.g[group].r[room].enabled['!복권'] == 'true') {
@@ -1693,13 +2194,13 @@ function dateChanger(params) {
 		Object.keys(Ky.g[group].m).map(function (objectKey, index) {
 			try {
 				Ky.g[group].m[objectKey].attendance.yesterday = Ky.g[group].m[objectKey].attendance.today;
-			} catch (e) { };
+			} catch (e) {};
 			try {
 				Ky.g[group].m[objectKey].attendance.today = false;
-			} catch (e) { };
+			} catch (e) {};
 			try {
 				Ky.g[group].m[objectKey].miniGame.lottery.today = false;
-			} catch (e) { };
+			} catch (e) {};
 		});
 	}
 
@@ -1712,4 +2213,3 @@ function onStartCompile() {
 	DataBase.setDataBase('KyBot', JSON.stringify(Ky));
 	Api.gc();
 }
-
