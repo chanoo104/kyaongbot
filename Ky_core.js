@@ -1487,48 +1487,49 @@ function cpSys(params) {
 			Ky.g[group].m[msg.split(' ')[1]].attacked += Number(p);
 		}
 	}
-
 	loop: {
 		c = '!포인트순위';
 		a = 'member';
-		d = '컴퓨톡의 cp순위를 출력합니다.';
-		//by 시공, 불여우
+		d = '보유 포인트 순위를 20위까지 출력합니다.';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.split(' ')[0] == c) {
 
-		//오브젝트 생성 및 배열 생성
-		final = new Object();
-		var temp1 = new Array();
-		var temp2 = new Object();
-		//정보 객체에 넣기
-		for (var ud = 1111; ud < 10000; ud++) {
-			try {
-				temp2 = new Object();
-				temp2.name = Ky.g[group].m[ud].lastActive[0];
-				temp2.cp = Ky.g[group].m[ud].cp;
-				temp1.push(temp2);
-			} catch (e) {}
+			//오브젝트 생성 및 배열 생성
+			final = new Object();
+			var temp1 = new Array();
+			var temp2 = new Object();
+			//정보 넣기
+			for (var ud = 1111; ud < 10000; ud++) {
+				try {
+					temp2 = new Object();
+					temp2.name = Ky.g[group].m[ud].lastActive[0];
+					temp2.cp = Ky.g[group].m[ud].cp;
+					temp1.push(temp2);
+				} catch (e) {}
+			}
+			//합치기
+			final.member = temp1;
+			//출력
+			var sortingField = "cp";
+			final.member.sort(function (a, b) { // 내림차순
+				return b[sortingField] - a[sortingField];
+				// 44, 25, 21, 13
+			});
+			//JSON.stringify(final);
+			var char = "▼전체보기 클릭▼";
+			char += blank;
+			char += "포인트 순위\n\n";
+			for (var i = 0; i < 20; i++) {
+				char += (i + 1);
+				char += ". ";
+				char += final.member[i].name;
+				char += "\n 》 ";
+				char += final.member[i].cp;
+				char += "cp\n\n";
+			}
+			//1. GeForce
+			// 》42085
 		}
-		//합치기
-		final.member = temp1;
-		//출력
-		var sortingField = "cp";
-		final.member.sort(function (a, b) { // 내림차순
-			return b[sortingField] - a[sortingField];
-		});
-		//JSON.stringify(final);
-		var char = "▼전체보기 클릭▼";
-		char += blank;
-		char += "포인트 순위\n\n";
-		for (var i = 0; i < 20; i++) {
-			char += (i + 1);
-			char += ". ";
-			char += final.member[i].name;
-			char += "\n 》 ";
-			char += final.member[i].cp;
-			char += "cp\n\n";
-		}
-		//1. GeForce
-		// 》42085
-		replier.reply(char)
 	}
 }
 
