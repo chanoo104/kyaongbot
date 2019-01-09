@@ -1529,6 +1529,7 @@ function cpSys(params) {
 			}
 			//1. GeForce
 			// 》42085
+			replier.reply(char)
 		}
 	}
 }
