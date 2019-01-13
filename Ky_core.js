@@ -382,10 +382,10 @@ function 한글조합하기(r) {
 		case 2:
 			var n = r.charAt(0),
 				t = r.charAt(1);
-			if (is자음(n) && is자음(t))(o = 자음결합하기(convert영한(n), convert영한(t))) ? e.조합된한글 = o : e = 한글조합하기(r.substring(1, 2));
+			if (is자음(n) && is자음(t)) (o = 자음결합하기(convert영한(n), convert영한(t))) ? e.조합된한글 = o : e = 한글조합하기(r.substring(1, 2));
 			else if (is자음(n) && is모음(t)) e.조합된한글 = combine한글(convert영한(n), convert영한(t));
 			else if (is모음(n) && is모음(t)) {
-				(a = 모음결합하기(convert영한(n), convert영한(t))) ? e.조합된한글 = a: e = 한글조합하기(r.substring(1, 2))
+				(a = 모음결합하기(convert영한(n), convert영한(t))) ? e.조합된한글 = a : e = 한글조합하기(r.substring(1, 2))
 			} else e = 한글조합하기(r.substring(1, 2));
 			break;
 		case 3:
@@ -393,15 +393,15 @@ function 한글조합하기(r) {
 			var c = r.charAt(2);
 			if (is자음(n) && is모음(t) && is자음(c)) e.조합된한글 = combine한글(convert영한(n), convert영한(t), convert영한(c));
 			else if (is자음(n) && is모음(t) && is모음(c)) {
-				(a = 모음결합하기(convert영한(t), convert영한(c))) ? e.조합된한글 = combine한글(convert영한(n), a): e = 한글조합하기(r.substring(1, 3))
+				(a = 모음결합하기(convert영한(t), convert영한(c))) ? e.조합된한글 = combine한글(convert영한(n), a) : e = 한글조합하기(r.substring(1, 3))
 			} else e = 한글조합하기(r.substring(1, 3));
 			break;
 		case 4:
 			n = r.charAt(0), t = r.charAt(1), c = r.charAt(2);
 			var i = r.charAt(3);
-			if (is자음(n) && is모음(t) && is자음(c) && is자음(i))(o = 자음결합하기(convert영한(c), convert영한(i))) ? e.조합된한글 = combine한글(convert영한(n), convert영한(t), o) : e = 한글조합하기(r.substring(1, 4));
+			if (is자음(n) && is모음(t) && is자음(c) && is자음(i)) (o = 자음결합하기(convert영한(c), convert영한(i))) ? e.조합된한글 = combine한글(convert영한(n), convert영한(t), o) : e = 한글조합하기(r.substring(1, 4));
 			else if (is자음(n) && is모음(t) && is모음(c) && is자음(i)) {
-				(a = 모음결합하기(convert영한(t), convert영한(c))) ? e.조합된한글 = combine한글(convert영한(n), a, convert영한(i)): e = 한글조합하기(r.substring(1, 4))
+				(a = 모음결합하기(convert영한(t), convert영한(c))) ? e.조합된한글 = combine한글(convert영한(n), a, convert영한(i)) : e = 한글조합하기(r.substring(1, 4))
 			} else e = 한글조합하기(r.substring(1, 4));
 			break;
 		case 5:
@@ -604,7 +604,7 @@ function memberCount(params, input, code) {
 	icode = code || icode;
 	if (input.indexOf('-') != -1) {
 		var from = moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
-		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) {} else return '숫자만 입력해 주세요.';
+		if (moment(input.split('-')[0], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true).isValid()) { } else return '숫자만 입력해 주세요.';
 		var to = moment(input.split('-')[1], ['YYMMDDHH', 'YYMMDD', 'YYDD', 'YY'], true);
 		if (to.isValid()) {
 			if (input.split('-')[1].length == 2) to.endOf('year');
@@ -862,7 +862,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 				if (Ky.g[group].m[objectKey].profileData[sender] !== undefined) {
 					if (Ky.g[group].m[objectKey].profileData[sender].indexOf(hash) != -1) exist = objectKey
 				}
-			} catch (e) {};
+			} catch (e) { };
 		});
 		if (exist == false) {
 			Ky.g[group].tempM[sender] = Ky.g[group].tempM[sender] || new Object();
@@ -1505,7 +1505,7 @@ function cpSys(params) {
 					temp2.name = Ky.g[group].m[ud].lastActive[0];
 					temp2.cp = Ky.g[group].m[ud].cp;
 					temp1.push(temp2);
-				} catch (e) {}
+				} catch (e) { }
 			}
 			//합치기
 			final.member = temp1;
@@ -1591,7 +1591,7 @@ function miniGameSys(params) {
 							java.lang.Thread.sleep(30000);
 							replier.reply(String.fromCharCode(0) + '타임어택 종료!');
 							temp.hanQuizValid[room] = false;
-						} catch (e) {}
+						} catch (e) { }
 					}
 				});
 				ThreadManager.i[room].start();
@@ -1817,6 +1817,21 @@ function miscSys(params) {
 		}
 	}
 	loop: {
+		c = '!태보해';
+		a = 'all';
+		d = '@==(^0^)@';
+		if (commandChk(params, c, a, d) == false) break loop;
+		if (msg.substr(0, c.length + 1) == c + ' ') {
+			if (checkDetailUrl(msg.substring(c.length + 1))) {
+				d = getHtml("https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=oIa3BFBHJFI&key=AIzaSyDX6GiTOXOykyqLiD038XMm6skAEvqGoes")
+				df = JSON.parse(d)
+				Object.keys(df.items).length;
+				replier.reply("@=(^0^)@\n@(^0^)=@\n\n현재 자막갯수 : " + df + "https://www.youtube.com/watch?v=oIa3BFBHJFI")
+			}
+
+		}
+	}
+	loop: {
 		c = '!실검';
 		a = 'all';
 		d = '네이버 실시간검색어 1-20위를 출력합니다.';
@@ -2024,7 +2039,7 @@ function backGroundSys(params) {
 						if (threadInterrupt == true) this.interrupt();
 						//replier.reply('✔');
 					}
-				} catch (e) {}
+				} catch (e) { }
 			}
 		});
 	}
@@ -2196,13 +2211,13 @@ function dateChanger(params) {
 		Object.keys(Ky.g[group].m).map(function (objectKey, index) {
 			try {
 				Ky.g[group].m[objectKey].attendance.yesterday = Ky.g[group].m[objectKey].attendance.today;
-			} catch (e) {};
+			} catch (e) { };
 			try {
 				Ky.g[group].m[objectKey].attendance.today = false;
-			} catch (e) {};
+			} catch (e) { };
 			try {
 				Ky.g[group].m[objectKey].miniGame.lottery.today = false;
-			} catch (e) {};
+			} catch (e) { };
 		});
 	}
 
