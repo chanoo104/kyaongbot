@@ -1825,7 +1825,7 @@ function miscSys(params) {
 				d = getHtml("https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=oIa3BFBHJFI&key=AIzaSyDX6GiTOXOykyqLiD038XMm6skAEvqGoes")
 				df = JSON.parse(d)
 				Object.keys(df.items).length;
-				replier.reply("@=(^0^)@\n@(^0^)=@\n\n현재 자막갯수 : " + Object.keys(df.items).length + "개!\nhttps://www.youtube.com/watch?v=oIa3BFBHJFI")
+				replier.reply("@=(^0^)@\n@(^0^)=@\n\n절 대 태 보 해\n현재 자막갯수 : " + Object.keys(df.items).length + "개!\nhttps://www.youtube.com/watch?v=oIa3BFBHJFI")
 
 		}
 	}
