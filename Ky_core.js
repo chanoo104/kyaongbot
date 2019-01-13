@@ -1821,13 +1821,11 @@ function miscSys(params) {
 		a = 'all';
 		d = '@==(^0^)@';
 		if (commandChk(params, c, a, d) == false) break loop;
-		if (msg.substr(0, c.length + 1) == c + ' ') {
-			if (checkDetailUrl(msg.substring(c.length + 1))) {
+		if (msg == c) {
 				d = getHtml("https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=oIa3BFBHJFI&key=AIzaSyDX6GiTOXOykyqLiD038XMm6skAEvqGoes")
 				df = JSON.parse(d)
 				Object.keys(df.items).length;
-				replier.reply("@=(^0^)@\n@(^0^)=@\n\n현재 자막갯수 : " + Object.keys(df.items).length + "https://www.youtube.com/watch?v=oIa3BFBHJFI")
-			}
+				replier.reply("@=(^0^)@\n@(^0^)=@\n\n현재 자막갯수 : " + Object.keys(df.items).length + "개!\nhttps://www.youtube.com/watch?v=oIa3BFBHJFI")
 
 		}
 	}
