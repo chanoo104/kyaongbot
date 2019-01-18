@@ -1884,15 +1884,15 @@ function miscSys(params) {
 		a = 'all';
 		d = '옆방(잡담방)에 도움을 요청합니다.';
 		if (commandChk(params, c, a, d) == false) break loop;
+		if (room == "잡담방") {
+			replier.reply('이 방에서는 사용하실 수 없습니다.\n사용 가능 방 : 질문방')
+			break loop
+		}
 		if (msg == c) {
 			replier.reply('잘못된 사용 방법입니다.\n!호출 [할말]')
 			break loop
 		}
 		if (msg.substr(0, c.length + 1) == c + ' ') {
-			if (room == group + "_잡담방") {
-				replier.reply('이 방에서는 사용하실 수 없습니다.\n사용 가능 방 : 질문방')
-				break loop
-			}
 			replier.reply("호출하였습니다.")
 			Api.replyRoom(group + '_잡담방', '질문방에서 ' + sender + '님이 호출하였습니다.\n\n' + msg.substring(c.length + 1))
 		}
