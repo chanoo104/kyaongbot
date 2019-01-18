@@ -28,8 +28,7 @@ temp.hanR = new Object();
 temp.hanN = new Object();
 var skip;
 
-const welcomeMessage = ('\n자바스크립트 기반 채팅 봇(bot)인 캬옹봇입니다.\n캬옹봇은 인증을 하지 않아도 사용이 가능하지만, 개인별 DB를 포함한 대부분의 기능의 사용이 제한되어 있습니다.\n현재 사용 가능한 명령어를 확인하시려면 !명령어 라고 입력하세요.\n모든 기능을 사용하고 싶으시다면 간단한 인증이 필요합니다.\n처음 오신 분이라면 공지를 눌러서 새 창에서 펼치면 나오는 설명읆 참조하여 인증하시고,\n기존 멤버인데 부계정으로 들어오신 것이거나 프로필을 수정하신 것이라면 원래 계정의 인증센터에 아무 말이나 친 후 !인증 <식별코드> 를 입력해 주세요.(<> 괄호는 제외).')
-
+const welcomeMessage = ('만약 질문방에 사람이 없으시다면, !호출 [할말]로 옆방(잡담방에서)호출하셔서 질문하시길 바랍니다.\n\n\n질문만 하시러 오신거면 밑은 무시하셔도 됩니다.\n\n\n자바스크립트 기반 채팅 봇(bot)인 캬옹봇입니다.\n캬옹봇은 인증을 하지 않아도 사용이 가능하지만, 개인별 DB를 포함한 대부분의 기능의 사용이 제한되어 있습니다.\n현재 사용 가능한 명령어를 확인하시려면 !명령어 라고 입력하세요.\n모든 기능을 사용하고 싶으시다면 간단한 인증이 필요합니다.\n처음 오신 분이라면 공지를 눌러서 새 창에서 펼치면 나오는 설명을 참조하여 인증하시고,\n기존 멤버인데 부계정으로 들어오신 것이거나 프로필을 수정하신 것이라면 원래 계정의 인증센터에 아무 말이나 친 후 !인증 <식별코드> 를 입력해 주세요.(<> 괄호는 제외).')
 
 if (DataBase.getDataBase('KyBot') == null) DataBase.setDataBase('KyBot', JSON.stringify(new Object()));
 const Ky = JSON.parse(DataBase.getDataBase('KyBot'));
@@ -1895,7 +1894,7 @@ function miscSys(params) {
 				break loop
 			}
 			replier.reply("호출하였습니다.")
-			Api.replyRoom(group + '_잡담방', '질문방에서 ' + sender + '님이 호출하였습니다.\n' + msg.substring(c.length + 1))
+			Api.replyRoom(group + '_잡담방', '질문방에서 ' + sender + '님이 호출하였습니다.\n\n' + msg.substring(c.length + 1))
 		}
 	}
 	loop: {
