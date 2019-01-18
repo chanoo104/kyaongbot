@@ -773,7 +773,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 		//Authentification // 신규 데이터 생성, 인증 발급
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+		if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply("앱에서 견적 공유시 카카오톡으로 보내기 말고 URL 복사를 이용해 주시기 바랍니다. PC버전에서 안보여요.")
+		//귀찮아서 여기넣는다 지비 ㅅㄱㅂ
 		//개인톡 인증
 		if (isGroupChat == false) {
 			replier.reply('캬옹봇 인식 닉네임: [' + sender + ']\n현재 사용중인 닉네임과 인식되는 닉네임이 다르다면 나갔다 들어와 보시고, 그래도 똑같다면 관리자에게 연락하세요.')
