@@ -1957,7 +1957,7 @@ function miscSys(params) {
 		if (pat2.test(engtokorea)) {
 			if (msg.length >= 3) {
 				if (pat.test(msg)) {
-					replier.reply(engtokorea)
+					replier.reply("(여우아님 : " + engtokorea)
 				}
 			}
 		}
