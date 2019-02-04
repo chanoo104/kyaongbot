@@ -53,7 +53,9 @@ manageGp
 */
 
 
+// 알송 파싱용 XML
 
+TEMPLATE = '\<?xml version="1.0" encoding="UTF-8"?>\n<SOAP-ENV:Envelope\nxmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"\nxmlns:SOAP-ENC="http://www.w3.org/2003/05/soap-encoding"\nxmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\nxmlns:xsd="http://www.w3.org/2001/XMLSchema"\nxmlns:ns2="ALSongWebServer/Service1Soap"\nxmlns:ns1="ALSongWebServer"\nxmlns:ns3="ALSongWebServer/Service1Soap12">\n<SOAP-ENV:Body><ns1:GetResembleLyric2>\<ns1:stQuery>\n<ns1:strTitle>{title}</ns1:strTitle>\n<ns1:strArtistName>{artist_name}</ns1:strArtistName>\n<ns1:nCurPage>{page}</ns1:nCurPage>\n</ns1:stQuery>\n</ns1:GetResembleLyric2>\n</SOAP-ENV:Body>\n</SOAP-ENV:Envelope>\n'
 
 //한글 분리 함수
 String.prototype.toKorChars = function () {
