@@ -2141,7 +2141,7 @@ function backGroundSys(params) {
 		}
 	}
 
-	loop: {
+/*	loop: {
 		c = '.음슴체 감지';
 		a = 'all';
 		d = '음슴체를 감지해서 경고문을 출력합니다.';
@@ -2163,6 +2163,7 @@ function backGroundSys(params) {
 			}
 		}
 	}
+*/
 
 	loop: {
 		c = '.최근로거';
