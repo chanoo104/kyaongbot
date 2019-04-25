@@ -11,6 +11,10 @@
     Ky.memArray = Ky.memArray || new Array();
     Ky.memOn = Ky.memOn || false;
     Ky.admin = Ky.admin || new Array();
+    Ky.recentLog = Ky.recentLog || new Object();
+    Ky.recentLog[room] = Ky.recentLog[room] || new Object();
+    Ky.recentLog[room].msg = Ky.recentLog[room].msg || new Array();
+    Ky.recentLog[room].sender = Ky.recentLog[room].sender || new Array();
 
     if (Ky.admin.length == 0 && msg == '!µî·Ï') {
         Ky.admin.push(Ky.memCheck);
