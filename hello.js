@@ -2,6 +2,8 @@
 
 eval(DataBase.getDataBase('moment'));
 
+var uCode = '뷁';
+
 
 
 
