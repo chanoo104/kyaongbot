@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'ㅇ';
+var uCode = 'd뷁';
 
 
 
@@ -515,10 +515,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (msg.substr(0, 6) == '!견적비교 ') {
                 replier.reply('파싱 중...');
                 var input = msg.substring(6).trim();
-                if (input.indexOf('&productSeqList=') != 0 && input.indexOf('&quantityList=') != 0) {
+                if (input.indexOf('&productSeqList=') != -1 && input.indexOf('&quantityList=') != -1) {
                     var pList = msg.split('&productSeqList=')[1].split('&')[0].split(',');
                     var pCount = msg.split('&quantityList=')[1].split('&')[0].split(',');
-                } else if (input.indexOf('?productSeq=') != 0 && input.indexOf('&count=') != 0) {
+                } else if (input.indexOf('?productSeq=') != -1 && input.indexOf('&count=') != -1) {
                     var pList = msg.split('?productSeq=')[1].split('&')[0].split(',');
                     var pCount = msg.split('&count=')[1].split('&')[0].split(',');
                 } else {
