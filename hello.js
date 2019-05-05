@@ -423,29 +423,33 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             replier.reply(list.slice(0, -1))
         }
         if (msg.substr(0, 5) == '!다나와 ') {
-            input = msg.substring(5).trim();
-            var p = Utils.getWebText('https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+' + input).split('http://prod.danawa.com/info/?pcode=')[1]
-            if (typeof p == 'undefined') {
-                replier.reply('잘못된 입력입니다.');
-            } else {
-                var p = p.split('"')[0].split('&')[0];
-                if (Number.isInteger(Number(p)) == true) {
-
-                    var pCode = p
-                    var doc1 = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).get()
-                    var t = doc1.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
-                    var pName = t[0],
-                        pDescription = t[1];
-                    var pPriceOpen = doc1.select('strong.ppnum'),
-                        pPriceCash = doc1.select('strong.num_low01').get(0);
-                    var pChart = getPriceChart(pCode, 12);
-                    var pRelated = getRelatedPrice(pCode);
-
-                    replier.reply('[ ' + pName + ' ]' + blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n최저가: ' + pPriceOpen + '\n현금최저가": ' + pPriceCash + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart);
-
-                } else {
+            try {
+                input = msg.substring(5).trim();
+                var p = Utils.getWebText('https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+' + input).split('http://prod.danawa.com/info/?pcode=')[1]
+                if (typeof p == 'undefined') {
                     replier.reply('잘못된 입력입니다.');
+                } else {
+                    var p = p.split('"')[0].split('&')[0];
+                    if (Number.isInteger(Number(p)) == true) {
+
+                        var pCode = p
+                        var doc1 = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).get()
+                        var t = doc1.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
+                        var pName = t[0],
+                            pDescription = t[1];
+                        var pPriceOpen = doc1.select('strong.ppnum').text(),
+                            pPriceCash = doc1.select('strong.num_low01').get(0).text();
+                        var pChart = getPriceChart(pCode, 12);
+                        var pRelated = getRelatedPrice(pCode);
+
+                        replier.reply('[ ' + pName + ' ]' + blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n최저가: ' + pPriceOpen + '\n현금최저가": ' + pPriceCash + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart);
+
+                    } else {
+                        replier.reply('잘못된 입력입니다.');
+                    }
                 }
+            } catch (e) {
+                replier.reply('잘못된 입력입니다.');
             }
         }
 
