@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '뷁';
+var uCode = 'dd뷁';
 
 
 
@@ -313,13 +313,6 @@ function compareArray(arr1, arr2) {
     return arr;
 }
 
-function sum(array) {
-    var result = 0.0;
-    for (var i = 0; i < array.length; i++)
-        result += Number(array[i]);
-    return result;
-}
-
 
 
 
@@ -520,6 +513,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         //견적비교
         tag: {
             if (msg.substr(0, 6) == '!견적비교 ') {
+                replier.reply('파싱 중...');
                 var input = msg.substring(6).trim();
                 if (input.indexOf('&productSeqList=') != 0 && input.indexOf('&quantityList=') != 0) {
                     var pList = msg.split('&productSeqList=')[1].split('&')[0].split(',');
@@ -594,6 +588,13 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     var carr23 = compareArray(arr2, arr3);
                     var carr24 = compareArray(arr2, arr4);
                     var carr25 = compareArray(arr2, arr5);
+                    
+                    function sum(array) {
+                        var result = 0.0;
+                        for (var i = 0; i < array.length; i++)
+                            result += Number(array[i] * pCount[i]);
+                        return result;
+                    }
 
                     var sum2 = sum(arr2),
                         sum3 = sum(arr3),
@@ -604,8 +605,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
                     str += (sum2 + ' → ' + sum5 + ' ]\n(' + String(compareNumber(sum2, sum5)) + ' / ' + String(sum5 - sum2) + ')' + blank);
                     for (i = 0; i < arr3.length; i++) {
-                        str += arr1[i] + '\n ';
-                        str += arr6[i] + ' ' + arr5[i] + ' (' + carr25[i] + ' / ' + String(arr5[i] - arr2[i]) + ')\n';
+                        str += arr1[i] + '\n |';
+                        str += pCount[i] + 'x ' + arr6[i] + ' ' + (arr5[i] * pCount[i]) + ' (' + carr25[i] + ' / ' + String((arr5[i] - arr2[i]) * pCount[i]) + ')\n';
                     }
                     str += '\n\n\n';
                     for (i = 0; i < arr3.length; i++) {
