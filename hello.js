@@ -4,8 +4,6 @@ eval(DataBase.getDataBase('moment'));
 
 
 
-
-
 if (!Array.prototype.fill) {
     Object.defineProperty(Array.prototype, 'fill', {
         value: function (value) {
@@ -184,7 +182,49 @@ function parseSampleLen(result) {
     return Math.ceil((result[2] == "시간" ? scala * 60 : scala) / Chrono.TIME_UNIT_IN_MINUTE);
 }
 
+function getPriceChart(pCode, period) {
+    var data = JSON.parse(org.jsoup.Jsoup.connect('https://prod.danawa.com/info/ajax/getProductPriceList.ajax.php?productCode=' + pCode + '&period=' + period).header("Referer", "https://prod.danawa.com/info/?pcode=" + pcode).get().text()).result,
+        arr = [];
+    for (i = 0; i < data.length; i++) {
+        arr.push(data[i].date + ' | ')
+        var nowPrice = data[i].minPrice
+        if (i > 0) {
+            if ((nowPrice / prePrice) > 1.1) {
+                arr.push('▲ ')
+            } else if ((nowPrice / prePrice) > 1.02) {
+                arr.push('△ ')
+            } else if ((nowPrice / prePrice) > 0.98) {
+                arr.push('─ ')
+            } else if ((nowPrice / prePrice) > 0.9) {
+                arr.push('▽ ')
+            } else {
+                arr.push('▼ ')
+            }
+        } else arr.push('ㅤ ')
+        arr.push(nowPrice)
+        arr.push('\n')
+        var prePrice = data[i].minPrice
+    }
+    return arr.join('')
+}
 
+
+
+function getRelatedPrice(pCode) {
+    var doc = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).header('User-Agent', 'Mozilla/5.0').get();
+    var tag = doc.select('div.othr_item span.txt');
+    if (tag.size() < 1) return '';
+    var price = doc.select('div.othr_item em.prc_t');
+    var arr = ['<가격비교>\n'];
+
+    for (i = 0; i < tag.size(); i++) {
+        arr.push(tag.get(i).text() + '   ');
+        arr.push(price.get(i).text() + '\n');
+    }
+
+    arr.push('\n\n');
+    return arr.join('');
+}
 
 
 
@@ -235,7 +275,7 @@ getWeather = function () {
         미세먼지[n] += ' ' + m;
     }
 
-    return('[[ 전국날씨 ]]' + blank + arr1.join('\n') + '\n\n\n\n[[ 특보 ]]\n\n' + sel2 + '\n\n\n\n[[ 미세먼지 ]]\n' +미세먼지.join('\n'));
+    return ('[[ 전국날씨 ]]' + blank + arr1.join('\n') + '\n\n\n\n[[ 특보 ]]\n\n' + sel2 + '\n\n\n\n[[ 미세먼지 ]]\n' + 미세먼지.join('\n'));
 }
 
 
@@ -249,7 +289,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         room = room.trim();
         sender = sender.trim();
 
-        if (room[0] != '●'&&sender.indexOf('rgb')!=-1) return;
+        if (room[0] != '●' && sender.indexOf('rgb') != -1) return;
 
         Ky[room] = Ky[room] || new Object();
         Ky[room].memArray = Ky[room].memArray || new Array();
@@ -318,12 +358,12 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         //지역날씨
         let longword = "\u200b".repeat(500);
 
-        if (msg.split(" ")[0] == "!날씨"&&msg.indexOf(' ')!=-1) {
+        if (msg.split(" ")[0] == "!날씨" && msg.indexOf(' ') != -1) {
             try {
                 replier.reply("날씨 정보 파싱중...");
                 var pl = msg.substr(4) + " 날씨"
                 var web = Utils.getWebText("https://search.naver.com/search.naver?query=" + pl)
-             
+
                 var cast = web.split("cast_txt\">")[1].split("<")[0] // 케스트 변수
                 var npl = web.split("role=\"button\"><em>")[1].split("<")[0]
                 var hgod = web.split("<span class=\"todaytemp\">")[1].split("<")[0]; // 현재온도 변수
@@ -352,7 +392,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 replier.reply("[ " + npl + " 날씨 ]\n\n" + cast + blank + "\n\n현재온도 : " + hgod + "°c\n체감온도 : " + cgod + "°c\n▼ 최저기온 : " + cjgo + "°c | ▲ 최고기온 : " + cggo + "°c\n\n미세먼지 : " + msmg + "\n초미세먼지 : " + cmsmg + "\n\n자외선 : " + jys + "\n오존지수 : " + oggs + "\n습도 : " + sd + "\n\n강수 확률 : " + gshr + "\n강수량 : " + gsr + "\n\n풍속 : " + ps + "\n풍향 : " + ph);
             } catch (e) {
                 replier.reply("파싱 실패");
-replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+                replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
             }
         }
 
@@ -377,6 +417,33 @@ replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\
                 list += (i + '. ' + r.get(i).text() + '\n')
             }
             replier.reply(list.slice(0, -1))
+        }
+        if (msg.substr(0, 5) == '!다나와 ') {
+            input = msg.substring(5).trim();
+            var p = Utils.getWebText('https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+' + input).split('http://prod.danawa.com/info/?pcode=')[1]
+            if (typeof p == 'undefined') {
+                replier.reply('잘못된 입력입니다.');
+            } else {
+                var p = p.split('"')[0].split('&')[0];
+                if (Number.isInteger(Number(p)) == true) {
+
+                    var pCode = p
+                    var doc1 = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).get()
+                    var t = doc1.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
+                    var pName = t[0],
+                        pDescription = t[1];
+                    var pPriceOpen = doc1.select('strong.ppnum'),
+                        pPriceCash = doc1.select('strong.num_low01').get(0);
+                    var pChart = getPriceChart(pCode, 12);
+                    var pRelated = getRelatedPrice(pCode);
+
+                    replier.reply('[ ' + pName + ' ]' + blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n최저가: ' + pPriceOpen + '\n현금최저가": ' + pPriceCash + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart);
+
+                } else {
+                    replier.reply('[' + (i + 2) + '번째 줄] \n잘못된 입력입니다.')
+                    break loop;
+                }
+            }
         }
 
         //견적생성
