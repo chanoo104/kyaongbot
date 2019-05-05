@@ -185,7 +185,7 @@ function parseSampleLen(result) {
 }
 
 function getPriceChart(pCode, period) {
-    var data = JSON.parse(org.jsoup.Jsoup.connect('https://prod.danawa.com/info/ajax/getProductPriceList.ajax.php?productCode=' + pCode + '&period=' + period).header("Referer", "https://prod.danawa.com/info/?pcode=" + pcode).get().text()).result,
+    var data = JSON.parse(org.jsoup.Jsoup.connect('https://prod.danawa.com/info/ajax/getProductPriceList.ajax.php?productCode=' + pCode + '&period=' + period).header("Referer", "https://prod.danawa.com/info/?pcode=" + pCode).get().text()).result,
         arr = [];
     for (i = 0; i < data.length; i++) {
         arr.push(data[i].date + ' | ')
