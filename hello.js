@@ -186,6 +186,60 @@ function parseSampleLen(result) {
     return Math.ceil((result[2] == "시간" ? scala * 60 : scala) / Chrono.TIME_UNIT_IN_MINUTE);
 }
 
+function getGformRow(target, lineNo) {
+    var doc = org.jsoup.Jsoup.connect(target).header('User-Agent', 'Mozilla/5.0').get();
+    var div = doc.select('tr[style]').get(lineNo).getElementsByTag("td");
+    var arr = []
+    for (i = 1; i < div.size() + 1; i++) {
+        arr.push(div.select('td:eq(' + i + ')').text())
+    }
+    return arr;
+}
+
+
+function getGformColumn(target, lineNo, size) {
+    var doc = org.jsoup.Jsoup.connect(target).header('User-Agent', 'Mozilla/5.0').get();
+    var length = doc.select('tr[style]').size() - 1;
+    //replier.reply(length)
+    if (size > length) size = length;
+    var arr = []
+    for (y = length; y > length - size; y--) {
+        //replier.reply(getGformRow(target, y)[lineNo-1])
+        arr.push(getGformRow(target, y)[lineNo - 1]);
+    }
+    return [arr, length];
+}
+
+
+Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8_Jwh-bT7IY9unKU_OZhrO-GzRJo/htmlview#gid=735564299';
+Ky.formTargetRow = 28;
+var target = Ky.formTargetAddress;
+
+function getForm(requester) {
+    var data = getGformColumn(target, Ky.formTargetRow, 10)
+    //닉네임
+    if (data[0].indexOf(requester) != -1) {
+        //[a requester a a a] << 뒤에서 두번째
+        //  replier.reply(requester)
+        var pos = data[1] - data[0].indexOf(requester);
+        //총 길이 - 배열내 위치(0부터시작, indexof로 두번째면 1) = 몆번째
+        var oArr = getGformRow(target, 0);
+        //replier.reply(oArr);
+        var cArr = getGformRow(target, pos);
+        // replier.reply(cArr);
+        var arr = [('[ ' + requester + ' ] 님의 견적요청서') + blank];
+        for (i = 0; i < oArr.length; i++) {
+            arr.push(oArr[i] + '\n')
+            arr.push(cArr[i] + '\n\n')
+        }
+        return arr.join('').replace(/\n\s*\n\s*\n/g, '\n\n');
+    } else {
+        replier.reply('파싱 실패. 네트워크 오류이거나 해당 이름으로 등록된 설문지가 없습니다.')
+    }
+}
+
+
+
 function getPriceChart(pCode, period) {
     var data = JSON.parse(org.jsoup.Jsoup.connect('https://prod.danawa.com/info/ajax/getProductPriceList.ajax.php?productCode=' + pCode + '&period=' + period).header("Referer", "https://prod.danawa.com/info/?pcode=" + pCode).get().text()).result,
         arr = [];
@@ -228,6 +282,45 @@ function getRelatedPrice(pCode) {
 
     arr.push('\n\n');
     return arr.join('');
+}
+
+function getDanawaPrice(pCode) {
+    var regex = /[^0-9]/g;
+    var doc = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).get();
+    var pPriceOpen = doc.select('strong.ppnum').text().replace(regex, ''),
+        pPriceCash = doc.select('strong.num_low01').get(0).text().replace(regex, '');
+    var t = doc.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
+    var pName = t[0]
+
+    if (pName.length == 0) return false;
+
+    if (!pPriceOpen && !pPriceCash) {
+        return [pName, 0, 0];
+    } else if (!pPriceCash) {
+        return [pName, pPriceOpen, 0]
+    } else if (!pPriceOpen) {
+        return [pName, 0, pPriceCash]
+    } else return [pName, pPriceOpen, pPriceCash]
+}
+
+function compareNumber(a, b) {
+    var ttt = Math.round(b / a * 1000 - 1000);
+    return ttt / 10 + '%';
+}
+
+function compareArray(arr1, arr2) {
+    arr = [];
+    for (i = 0; i < arr1.length; i++) {
+        arr.push(compareNumber(arr1[i], arr2[i]));
+    }
+    return arr;
+}
+
+function sum(array) {
+    var result = 0.0;
+    for (var i = 0; i < array.length; i++)
+        result += Number(array[i]);
+    return result;
 }
 
 
@@ -422,10 +515,113 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             }
             replier.reply(list.slice(0, -1))
         }
+
+
+        //견적비교
+        tag: {
+            if (msg.substr(0, 6) == '!견적비교 ') {
+                var input = msg.substring(6).trim();
+                if (input.indexOf('&productSeqList=') != 0 && input.indexOf('&quantityList=') != 0) {
+                    var pList = msg.split('&productSeqList=')[1].split('&')[0].split(',');
+                    var pCount = msg.split('&quantityList=')[1].split('&')[0].split(',');
+                } else if (input.indexOf('?productSeq=') != 0 && input.indexOf('&count=') != 0) {
+                    var pList = msg.split('?productSeq=')[1].split('&')[0].split(',');
+                    var pCount = msg.split('&count=')[1].split('&')[0].split(',');
+                } else {
+                    replier.reply('잘못된 입력입니다.');
+                    break tag;
+                }
+
+                var regex = /[^0-9]/g;
+                if (pList.length != pCount.length) {
+                    replier.reply('잘못된 형식입니다.');
+                } else if (regex.test(pList.join(''))) {
+                    replier.reply('잘못된 형식입니다.');
+                } else if (regex.test(pCount.join(''))) {
+                    replier.reply('잘못된 형식입니다.');
+                } else {
+                    var arr1 = [],
+                        arr2 = [],
+                        arr3 = [],
+                        arr4 = [];
+                    //다나와 PC 견적인쇄 URL
+                    var url = 'http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=estimateByExternalGoodsInfo&productSeqList=' + pList.join([separator = ',']) + '&quantityList=' + pCount.join([separator = ',']) + '&type=print'
+                    var price = 0
+                    for (i = 0; i < pList.length; i++) {
+                        var t = getDanawaPrice(pList[i]);
+
+                        //다나와에 그런거 없으면
+                        if (!t) {
+                            replier.reply('잘못된 입력입니다.');
+                            break tag;
+                        }
+                        //제품명
+                        arr1.push(t[0]);
+                        //최저가
+                        arr3.push(t[1]);
+                        //현금최저가
+                        arr4.push(t[2]);
+
+                        //견적현금최저가
+                        var est = org.jsoup.Jsoup.connect(url).get();
+                        arr2.push(est.select('tr.bg_change_hover').get(i).select('td').get(4).text().replace(regex, ''));
+                    }
+                    //5:싼거, 6:뭐넣었는지
+                    var arr5 = [],
+                        arr6 = [];
+                    for (i = 0; i < arr3.length; i++) {
+                        //오픈이 현금보다 싸면
+                        if (arr3[i] <= arr4[i]) {
+                            if (arr3[i] == 0) {
+                                arr5.push(arr4[i]);
+                                arr6.push('현금')
+                            } else {
+                                arr5.push(arr3[i]);
+                                arr6.push('오픈')
+                            }
+                        }
+                        //현금이 오픈보다 싸면
+                        if (arr3[i] > arr4[i]) {
+                            if (arr4[i] == 0) {
+                                arr5.push(arr3[i]);
+                                arr6.push('오픈')
+                            } else {
+                                arr5.push(arr4[i]);
+                                arr6.push('현금')
+                            }
+                        }
+                    }
+                    var carr23 = compareArray(arr2, arr3);
+                    var carr24 = compareArray(arr2, arr4);
+                    var carr25 = compareArray(arr2, arr5);
+
+                    var sum2 = sum(arr2),
+                        sum3 = sum(arr3),
+                        sum4 = sum(arr4),
+                        sum5 = sum(arr5);
+
+                    var str = '[ ';
+
+                    str += (sum2 + ' → ' + sum5 + ' ]\n(' + String(compareNumber(sum2, sum5)) + ' / ' + String(sum5 - sum2) + ')' + blank);
+                    for (i = 0; i < arr3.length; i++) {
+                        str += arr1[i] + '\n ';
+                        str += arr6[i] + ' ' + arr5[i] + ' (' + carr25[i] + ' / ' + String(arr5[i] - arr2[i]) + ')\n';
+                    }
+                    str += '\n\n\n';
+                    for (i = 0; i < arr3.length; i++) {
+                        str += arr1[i] + ' 》 ' + arr2[i] + '\n ';
+                        str += arr3[i] + '(' + carr23[i] + ')  ' + arr4[i] + '(' + carr24[i] + ')\n';
+                    }
+                    replier.reply(str)
+                }
+            }
+        }
+
+        //다나와
         if (msg.substr(0, 5) == '!다나와 ') {
             try {
-                input = msg.substring(5).trim();
-                var p = Utils.getWebText('https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+' + input).split('http://prod.danawa.com/info/?pcode=')[1]
+                var input = msg.substring(5).trim();
+                var p = Utils.getWebText('https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+' + encodeURI(input)).split('http://prod.danawa.com/info/?pcode=')[1]
                 if (typeof p == 'undefined') {
                     replier.reply('잘못된 입력입니다.');
                 } else {
@@ -474,7 +670,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     } else {
                         est.quan.push('1')
                     }
-                    var p = Utils.getWebText('https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+' + input).split('http://prod.danawa.com/info/?pcode=')[1]
+                    var p = Utils.getWebText('https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+' + encodeURI(input)).split('http://prod.danawa.com/info/?pcode=')[1]
                     if (typeof p == 'undefined') {
                         replier.reply('[' + (i + 2) + '번째 줄] \n잘못된 입력입니다.')
                         break loop;
@@ -494,65 +690,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         //견적요청
         //첫줄(문항내용) = 0, 설문응답은 1부터 시작
-        function getGformRow(target, lineNo) {
-            var doc = org.jsoup.Jsoup.connect(target).header('User-Agent', 'Mozilla/5.0').get();
-            var div = doc.select('tr[style]').get(lineNo).getElementsByTag("td");
-            var arr = []
-            for (i = 1; i < div.size() + 1; i++) {
-                arr.push(div.select('td:eq(' + i + ')').text())
-            }
-            return arr;
-        }
-
-
-
-
-
-
-
-
-
-
-        function getGformColumn(target, lineNo, size) {
-            var doc = org.jsoup.Jsoup.connect(target).header('User-Agent', 'Mozilla/5.0').get();
-            var length = doc.select('tr[style]').size() - 1;
-            //replier.reply(length)
-            if (size > length) size = length;
-            var arr = []
-            for (y = length; y > length - size; y--) {
-                //replier.reply(getGformRow(target, y)[lineNo-1])
-                arr.push(getGformRow(target, y)[lineNo - 1]);
-            }
-            return [arr, length];
-        }
-
-
-        Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8_Jwh-bT7IY9unKU_OZhrO-GzRJo/htmlview#gid=735564299';
-        Ky.formTargetRow = 28;
-        var target = Ky.formTargetAddress;
-
-        function getForm(requester) {
-            var data = getGformColumn(target, Ky.formTargetRow, 10)
-            //닉네임
-            if (data[0].indexOf(requester) != -1) {
-                //[a requester a a a] << 뒤에서 두번째
-                //  replier.reply(requester)
-                var pos = data[1] - data[0].indexOf(requester);
-                //총 길이 - 배열내 위치(0부터시작, indexof로 두번째면 1) = 몆번째
-                var oArr = getGformRow(target, 0);
-                //replier.reply(oArr);
-                var cArr = getGformRow(target, pos);
-                // replier.reply(cArr);
-                var arr = [('[ ' + requester + ' ] 님의 견적요청서') + blank];
-                for (i = 0; i < oArr.length; i++) {
-                    arr.push(oArr[i] + '\n')
-                    arr.push(cArr[i] + '\n\n')
-                }
-                return arr.join('').replace(/\n\s*\n\s*\n/g, '\n\n');
-            } else {
-                replier.reply('파싱 실패. 네트워크 오류이거나 해당 이름으로 등록된 설문지가 없습니다.')
-            }
-        }
         if (msg.substr(0, 6) == '!견적요청 ') {
             replier.reply(getForm(msg.substring(6)))
         }
