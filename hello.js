@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'dd뷁';
+var uCode = 'ddddfdf뷁';
 
 
 
@@ -605,7 +605,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
                     str += (sum2 + ' → ' + sum5 + ' ]\n(' + String(compareNumber(sum2, sum5)) + ' / ' + String(sum5 - sum2) + ')' + blank);
                     for (i = 0; i < arr3.length; i++) {
-                        str += arr1[i] + '\n |';
+                        str += arr1[i] + '\n ';
                         str += pCount[i] + 'x ' + arr6[i] + ' ' + (arr5[i] * pCount[i]) + ' (' + carr25[i] + ' / ' + String((arr5[i] - arr2[i]) * pCount[i]) + ')\n';
                     }
                     str += '\n\n\n';
