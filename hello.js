@@ -4,6 +4,8 @@ eval(DataBase.getDataBase('moment'));
 
 
 
+
+
 if (!Array.prototype.fill) {
     Object.defineProperty(Array.prototype, 'fill', {
         value: function (value) {
@@ -440,8 +442,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     replier.reply('[ ' + pName + ' ]' + blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n최저가: ' + pPriceOpen + '\n현금최저가": ' + pPriceCash + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart);
 
                 } else {
-                    replier.reply('[' + (i + 2) + '번째 줄] \n잘못된 입력입니다.')
-                    break loop;
+                    replier.reply('잘못된 입력입니다.');
                 }
             }
         }
