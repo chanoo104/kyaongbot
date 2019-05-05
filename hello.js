@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '뷁dd';
+var uCode = 'ㅇ';
 
 
 
@@ -379,7 +379,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         room = room.trim();
         sender = sender.trim();
 
-        if (room[0] != '●') return;
+        if (room[0] != '●' && room[0] != '■') return;
 
         Ky[room] = Ky[room] || new Object();
         Ky[room].memArray = Ky[room].memArray || new Array();
