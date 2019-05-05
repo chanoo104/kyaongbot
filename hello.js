@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'ddddfdf뷁';
+var uCode = 'dfdffff뷁';
 
 
 
@@ -610,7 +610,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     }
                     str += '\n\n\n';
                     for (i = 0; i < arr3.length; i++) {
-                        str += arr1[i] + ' 》 ' + arr2[i] + '\n ';
+                        str += arr1[i] + ' 》 ' + arr2[i] + '\n| ';
                         str += arr3[i] + '(' + carr23[i] + ')  ' + arr4[i] + '(' + carr24[i] + ')\n';
                     }
                     replier.reply(str)
