@@ -1,4 +1,4 @@
-const admin = ["불여우", "rgb"]
+const admin = ["불여우", "꠵rgb"]
 const UPDATE = {};
 const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
 function getHtml(text) {
