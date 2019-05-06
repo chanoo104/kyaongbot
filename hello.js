@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '';
+var uCode = '뷁';
 
 
 
@@ -658,7 +658,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     var doc = org.jsoup.Jsoup.connect('http://m.danawa.com/product/productDetailInfoTemplate.json?productCode=' + p).header("Referer", "http://m.danawa.com/product/product.html?code=" + p).get()
                     var sel = doc.select('table.tbl_utype').html().split('</span> <a href="http://www.safetykorea.kr/"')[0].split('<span class="td_utxt">');
                     var certNo = sel[sel.length-1]
-                    var data = org.jsoup.Jsoup.connect('http://safetykorea.kr/release/certDetail').data("certNum", 'ZU10176-18003A').post().select('div.section').get(2).select('tbody');
+                    var data = org.jsoup.Jsoup.connect('http://safetykorea.kr/release/certDetail').data("certNum", certNo).post().select('div.section').get(2).select('tbody');
                     var certA = data.select('td').get(0).text();
                     var certB = data.select('td').get(2).text();
                     replier.reply('[ ' + pName + ' ]' + '\n인증번호: ' + certNo + '\n제조사: ' + certA + '\n유통사: ' + certB)
