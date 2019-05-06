@@ -240,6 +240,7 @@ function getForm(requester) {
 function getPriceChart(pCode, period) {
     var data = JSON.parse(org.jsoup.Jsoup.connect('https://prod.danawa.com/info/ajax/getProductPriceList.ajax.php?productCode=' + pCode + '&period=' + period).header("Referer", "https://prod.danawa.com/info/?pcode=" + pCode).get().text()).result,
         arr = [];
+    if (typeof(data) == 'undefined') return '';
     for (i = 0; i < data.length; i++) {
         arr.push(data[i].date + ' | ')
         var nowPrice = data[i].minPrice
