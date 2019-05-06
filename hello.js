@@ -236,6 +236,14 @@ function getForm(requester) {
 }
 
 
+function getpCodeFromGoogle(input) {
+    var p = Utils.getWebText('https://www.google.co.kr/search?&q=' + encodeURI('site:prod.danawa.com/info/?pcode=+' + input)).split('http://prod.danawa.com/info/?pcode=')[1]
+    if (typeof p == 'undefined') {
+        return;
+    }
+    return p.split('"')[0].split('&')[0];
+}
+
 
 function getPriceChart(pCode, period) {
     var data = JSON.parse(org.jsoup.Jsoup.connect('https://prod.danawa.com/info/ajax/getProductPriceList.ajax.php?productCode=' + pCode + '&period=' + period).header("Referer", "https://prod.danawa.com/info/?pcode=" + pCode).get().text()).result,
@@ -629,11 +637,37 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             }
         }
 
+        //파워
+        if (msg.substr(0, 4) == '!파워 ') {
+            var input = msg.substring(4).trim();
+            var p = getpCodeFromGoogle(input)
+            if (typeof p == 'undefined') {
+                replier.reply('잘못된 입력입니다.');
+            } else {
+                var doc = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + p).get();
+                var t = doc.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
+                var pName = t[0], pDescription = t[1]
+                if (doc.html().indexOf('data-nbpkeyword="파워서플라이"') == -1) {
+                    replier.reply('잘못된 카테고리입니다.');
+                } else {
+                    var doc = org.jsoup.Jsoup.connect('http://m.danawa.com/product/productDetailInfoTemplate.json?productCode=' + p).header("Referer", "http://m.danawa.com/product/product.html?code=" + p).get()
+                    var p = '6000733';
+                    var doc = org.jsoup.Jsoup.connect('http://m.danawa.com/product/productDetailInfoTemplate.json?productCode=' + p).header("Referer", "http://m.danawa.com/product/product.html?code=" + p).get()
+                    var sel = doc.select('table.tbl_utype').html().split('</span> <a href="http://www.safetykorea.kr/"')[0].split('<span class="td_utxt">');
+                    var certNo = sel[sel.length-1]
+                    var data = org.jsoup.Jsoup.connect('http://safetykorea.kr/release/certDetail').data("certNum", 'ZU10176-18003A').post().select('div.section').get(2).select('tbody');
+                    var certA = data.select('td').get(0).text();
+                    var certB = data.select('td').get(2).text();
+                    replier.reply('[ ' + pName + ' ]' + '\n인증번호: ' + certNo + '\n제조사: ' + certA + '\n유통사: ' + certB)
+                }
+            }
+        }
+
         //다나와
         if (msg.substr(0, 5) == '!다나와 ') {
             try {
                 var input = msg.substring(5).trim();
-                var p = Utils.getWebText('https://www.google.co.kr/search?&q=' + encodeURI('site:prod.danawa.com/info/?pcode=+' + input)).split('http://prod.danawa.com/info/?pcode=')[1]
+                var p = getpCodeFromGoogle(input);
                 if (typeof p == 'undefined') {
                     replier.reply('잘못된 입력입니다.');
                 } else {
@@ -660,7 +694,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     }
                 }
             } catch (e) {
-                replier.reply('잘못된 입력입니다.');
+                replier.reply('오류가 발생했습니다.');
             }
         }
 
@@ -685,7 +719,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     } else {
                         est.quan.push('1')
                     }
-                    var p = Utils.getWebText('https://www.google.co.kr/search?&q=' + encodeURI('site:prod.danawa.com/info/?pcode=+' + input)).split('http://prod.danawa.com/info/?pcode=')[1]
+                    var p = getpCodeFromGoogle(input);
                     if (typeof p == 'undefined') {
                         replier.reply('[' + (i + 2) + '번째 줄] \n잘못된 입력입니다.')
                         break loop;
