@@ -662,7 +662,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var data = org.jsoup.Jsoup.connect('http://safetykorea.kr/release/certDetail').data("certNum", certNo).post().select('div.section').get(2).select('tbody');
                     } catch (e) {
                         try {
-                            certNo2 = certNo += 'A'
+                            certNo2 = certNo + 'A'
                             var data = org.jsoup.Jsoup.connect('http://safetykorea.kr/release/certDetail').data("certNum", certNo2).post().select('div.section').get(2).select('tbody');
                         } catch (e) {
                             replier.reply('해당 DB 검색에 실패하였습니다. 봇 관리자에게 연락해 주세요.')
