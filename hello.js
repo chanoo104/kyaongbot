@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'd뷁';
+var uCode = 'dddfsdf뷁';
 
 
 
@@ -639,7 +639,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var pChart = getPriceChart(pCode, 12);
                         var pRelated = getRelatedPrice(pCode);
 
-                        replier.reply('[ ' + pName + ' ]' + blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n최저가: ' + pPriceOpen + '\n현금최저가: ' + pPriceCash + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart);
+                        replier.reply('[ ' + pName + ' ]' + '\n최저가: ' + pPriceOpen + '\n현금최저가: ' + pPriceCash + ' ' +blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart);
 
                     } else {
                         replier.reply('잘못된 입력입니다.');
@@ -671,7 +671,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     } else {
                         est.quan.push('1')
                     }
-                    var p = Utils.getWebText('https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+' + encodeURI(input)).split('http://prod.danawa.com/info/?pcode=')[1]
+                    var p = Utils.getWebText('https://www.google.co.kr/search?&q=' + encodeURI('site:prod.danawa.com/info/?pcode=+' + input)).split('http://prod.danawa.com/info/?pcode=')[1]
                     if (typeof p == 'undefined') {
                         replier.reply('[' + (i + 2) + '번째 줄] \n잘못된 입력입니다.')
                         break loop;
