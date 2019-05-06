@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '뷁ddd';
+var uCode = '뷁';
 
 
 
@@ -284,19 +284,17 @@ function getRelatedPrice(pCode) {
 function getDanawaPrice(pCode) {
     var regex = /[^0-9]/g;
     var doc = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).get();
-    var pPriceOpen = doc.select('strong.ppnum').text().replace(regex, ''),
-        pPriceCash = doc.select('strong.num_low01').get(0).text().replace(regex, '');
+    if (doc.select('strong.ppnum').text().length != 0) {
+        var pPriceOpen = doc.select('strong.ppnum').text().replace(regex, '');
+    } else var pPriceOpen = '0';
+    if (doc.select('strong.num_low01').text().length != 0) {
+        var pPriceCash = doc.select('strong.num_low01').get(0).text().replace(regex, '');
+    } else var pPriceCash = '0';
     var t = doc.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
     var pName = t[0]
 
-    if (pName.length == 0) return false;
-
-    if (!pPriceOpen && !pPriceCash) {
-        return [pName, 0, 0];
-    } else if (!pPriceCash) {
-        return [pName, pPriceOpen, 0]
-    } else if (!pPriceOpen) {
-        return [pName, 0, pPriceCash]
+    if (pName.length == 0) {
+        return false;
     } else return [pName, pPriceOpen, pPriceCash]
 }
 
@@ -534,6 +532,18 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 } else if (regex.test(pCount.join(''))) {
                     replier.reply('잘못된 형식입니다.');
                 } else {
+                    var exc = ['3415638', '3316772', '1363731'];
+                    for (i = 0; i < exc.length; i++) {
+                        if (pList.indexOf(exc[i]) != -1) {
+                            replier.reply('견적서비스가 제거됩니다.');
+                            pList.splice(pList.indexOf(exc[i]), 1);
+                            pCount.splice(pList.indexOf(exc[i]), 1);
+                        }
+                    }
+                    if (pList.length == 0) {
+                        replier.reply('잘못된 입력입니다.');
+                        break tag;
+                    }
                     var arr1 = [],
                         arr2 = [],
                         arr3 = [],
