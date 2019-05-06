@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'dddfsdf뷁';
+var uCode = '뷁';
 
 
 
@@ -622,7 +622,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (msg.substr(0, 5) == '!다나와 ') {
             try {
                 var input = msg.substring(5).trim();
-                var p = Utils.getWebText('https://www.google.co.kr/search?&q=site:prod.danawa.com/info/?pcode=+' + encodeURI(input)).split('http://prod.danawa.com/info/?pcode=')[1]
+                var p = Utils.getWebText('https://www.google.co.kr/search?&q=' + encodeURI('site:prod.danawa.com/info/?pcode=+' + input)).split('http://prod.danawa.com/info/?pcode=')[1]
                 if (typeof p == 'undefined') {
                     replier.reply('잘못된 입력입니다.');
                 } else {
@@ -630,12 +630,14 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     if (Number.isInteger(Number(p)) == true) {
 
                         var pCode = p
-                        var doc1 = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).get()
+                        var doc1 = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).get();
                         var t = doc1.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
                         var pName = t[0],
                             pDescription = t[1];
-                        var pPriceOpen = doc1.select('strong.ppnum').text(),
-                            pPriceCash = doc1.select('strong.num_low01').get(0).text();
+                        var pPriceOpen = doc1.select('strong.ppnum').text();
+                        if (doc1.select('strong.num_low01').text().length != 0) {
+                            var pPriceCash = doc1.select('strong.num_low01').get(0).text();
+                        } else var pPriceCash = '';
                         var pChart = getPriceChart(pCode, 12);
                         var pRelated = getRelatedPrice(pCode);
 
