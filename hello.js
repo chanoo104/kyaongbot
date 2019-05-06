@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '뷁';
+var uCode = '뷁ddd';
 
 
 
@@ -632,12 +632,13 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var pCode = p
                         var doc1 = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).get();
                         var t = doc1.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
-                        var pName = t[0],
-                            pDescription = t[1];
-                        var pPriceOpen = doc1.select('strong.ppnum').text();
+                        var pName = t[0], pDescription = t[1];
+                        if (doc1.select('strong.ppnum').text().length != 0) {
+                            var pPriceOpen = doc1.select('strong.ppnum').text();
+                        } else var pPriceOpen = '가격비교 중지';
                         if (doc1.select('strong.num_low01').text().length != 0) {
                             var pPriceCash = doc1.select('strong.num_low01').get(0).text();
-                        } else var pPriceCash = '';
+                        } else var pPriceCash = '가격비교 중지';
                         var pChart = getPriceChart(pCode, 12);
                         var pRelated = getRelatedPrice(pCode);
 
