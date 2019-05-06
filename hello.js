@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '뷁';
+var uCode = '';
 
 
 
@@ -640,7 +640,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         //파워
         if (msg.substr(0, 4) == '!파워 ') {
             var input = msg.substring(4).trim();
-            var p = getpCodeFromGoogle(input)
+            var p = Utils.getWebText('https://www.google.co.kr/search?&q=' + encodeURI('site:prod.danawa.com/info/?pcode=+ 파워 ' + input)).split('http://prod.danawa.com/info/?pcode=')[1]
+            if (typeof p == 'undefined') {
+                return;
+            }
+            p = p.split('"')[0].split('&')[0];
             if (typeof p == 'undefined') {
                 replier.reply('잘못된 입력입니다.');
             } else {
@@ -651,7 +655,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     replier.reply('잘못된 카테고리입니다.');
                 } else {
                     var doc = org.jsoup.Jsoup.connect('http://m.danawa.com/product/productDetailInfoTemplate.json?productCode=' + p).header("Referer", "http://m.danawa.com/product/product.html?code=" + p).get()
-                    var p = '6000733';
                     var doc = org.jsoup.Jsoup.connect('http://m.danawa.com/product/productDetailInfoTemplate.json?productCode=' + p).header("Referer", "http://m.danawa.com/product/product.html?code=" + p).get()
                     var sel = doc.select('table.tbl_utype').html().split('</span> <a href="http://www.safetykorea.kr/"')[0].split('<span class="td_utxt">');
                     var certNo = sel[sel.length-1]
