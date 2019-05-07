@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '123';
+var uCode = 'dfdfd뷁';
 
 
 
@@ -537,9 +537,35 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             for (i = 1; i < 21; i++) {
                 list += (i + '. ' + r.get(i).text() + '\n')
             }
-            replier.reply(list.slice(0, -1))
+            replier.reply('[[실검]]' + blank + list.slice(0, -1))
         }
 
+
+
+        //비활성 호환검사
+        if (msg.indexOf('&productSeqList=') != -1 && msg.indexOf('&quantityList=') != -1) {
+            var pList = msg.split('&productSeqList=')[1].split('&')[0].split(',');
+            var check = true;
+        } else if (msg.indexOf('?productSeq=') != -1 && msg.indexOf('&count=') != -1) {
+            var pList = msg.split('?productSeq=')[1].split('&')[0].split(',');
+            var check = true;
+        }
+        if (check) {
+            var doc = JSON.parse(org.jsoup.Jsoup.connect('http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=compatibility&productSeqList=' + pList.join('%2C')).ignoreContentType(true).get().text());
+            if (doc.desc == '') {
+                var list1 = ['cpu-ram', 'cpu-mainboard', 'ram-mainboard', 'case-mainboard', 'case-vga', 'case-power'];
+                var list2 = ['cpuMessage', 'cpuMessage', 'ramMessage', 'caseMessage', 'caseMessage', 'caseMessage'];
+                var str = '';
+                for (i = 0; i < 6; i++) {
+                    if (doc.result[list1[i]]) {
+                        if (doc.result[list1[i]].result == '0002') {
+                            str += android.text.Html.fromHtml(doc.result[list1[i]][list2[i]]) + '\n'
+                        }
+                    }
+                }
+                if (str.length > 0) replier.reply('[[해당 견적에 호환성 문제가 있습니다]]' + blank + str)
+            }
+        }
 
         //견적비교
         tag: {
@@ -552,8 +578,17 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 } else if (input.indexOf('?productSeq=') != -1 && input.indexOf('&count=') != -1) {
                     var pList = msg.split('?productSeq=')[1].split('&')[0].split(',');
                     var pCount = msg.split('&count=')[1].split('&')[0].split(',');
+                } else if (input.indexOf('shop.danawa.com/short/') != -1) {
+                    try {
+                        var d = org.jsoup.Jsoup.connect(input).get().select('form input[name=loginUrl]').attr('value')
+                        var pList = d.split('productSeqList%3D')[1].split('%26quantityList')[0].split('%2C');
+                        var pCount = d.split('quantityList%3D')[1].split('%2C');
+                    } catch (e) {
+                        replier.reply('잘못된 URL입니다.');
+                        break tag;
+                    }
                 } else {
-                    replier.reply('잘못된 입력입니다.');
+                    replier.reply('잘못된 URL입니다.');
                     break tag;
                 }
 
@@ -726,8 +761,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var cooDetail = getDanawaDetail(cooCode);
                         if (cooDescription.indexOf('/ 공랭 /') != -1) {
                             var cooType = '공냉';
-                            var chaLength = Number(chaDetail[1][chaDetail[0].indexOf('CPU 장착')].replace(/[^\.0-9]/g,''));
-                            var cooLength = Number(cooDetail[1][cooDetail[0].indexOf('CPU쿨러 높이')].replace(/[^\.0-9]/g,''));
+                            var chaLength = Number(chaDetail[1][chaDetail[0].indexOf('CPU 장착')].replace(/[^\.0-9]/g, ''));
+                            var cooLength = Number(cooDetail[1][cooDetail[0].indexOf('CPU쿨러 높이')].replace(/[^\.0-9]/g, ''));
                             if (chaLength < cooLength) {
                                 var compat = false;
                             } else if (chaLength >= cooLength) {
