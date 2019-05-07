@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '최적화!';
+var uCode = 'dd뷁';
 
 
 
@@ -359,7 +359,7 @@ Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8
 Ky.formTargetRow = 28;
 var target = Ky.formTargetAddress;
 
-const blank = "\u202D".repeat(1000);
+const blank = '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \n\n\n'
 
 function checkDetailUrl(data) {
     var regex = /^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?/;
@@ -749,7 +749,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                                 var pos = ['상단', '전면', '후면'];
                                 var compatPos = [];
                                 for (var i = 0; i < 3; i++) { //상단 전면 후면 각각
-                                    if (chaLength[i] == 'undefined') break; //호환되지 않는 위치면 스킵
+                                    if (!chaLength[i]) continue; //호환되지 않는 위치면 스킵
                                     for (var j = 0; j < chaLength[i].length; j++) { //각각의 위치에 호환되는 종류가 1개냐 2개냐에 따라 검사
                                         if (small.indexOf(chaLength[i][j]) != -1) { //샤시 120 체크
                                             if (small.indexOf(chaLength[i][j]) >= small.indexOf(String(cooLength * cooRow)) && small.indexOf(String(cooLength * cooRow)) != -1) { //샤시호환길이와 쿨러길이 비교
@@ -770,8 +770,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
                             } catch (e) {
-                                replier.reply('데이터 취득 실패')
                                 var compat = 'fail';
+                                replier.reply('스크립트 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message);
                             }
                         }
 
