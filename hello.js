@@ -543,6 +543,12 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
         //비활성 호환검사
+        if (msg.indexOf('shop.danawa.com/short') != -1) {
+            try {
+                var temp = org.jsoup.Jsoup.connect(msg).followRedirects(true).execute().url();
+                msg = temp;
+            } catch (e) {}
+        }
         if (msg.indexOf('&productSeqList=') != -1 && msg.indexOf('&quantityList=') != -1) {
             var pList = msg.split('&productSeqList=')[1].split('&')[0].split(',');
             var check = true;
@@ -550,6 +556,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             var pList = msg.split('?productSeq=')[1].split('&')[0].split(',');
             var check = true;
         }
+            
         if (check) {
             var doc = JSON.parse(org.jsoup.Jsoup.connect('http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=compatibility&productSeqList=' + pList.join('%2C')).ignoreContentType(true).get().text());
             if (doc.desc == '') {
@@ -572,21 +579,18 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (msg.substr(0, 6) == '!견적비교 ') {
                 replier.reply('파싱 중...');
                 var input = msg.substring(6).trim();
+                try {
+                    input = org.jsoup.Jsoup.connect(input).followRedirects(true).execute().url();
+                } catch (e) {
+                    replier.reply('잘못된 URL입니다.);
+                    break tag;
+                }
                 if (input.indexOf('&productSeqList=') != -1 && input.indexOf('&quantityList=') != -1) {
                     var pList = msg.split('&productSeqList=')[1].split('&')[0].split(',');
                     var pCount = msg.split('&quantityList=')[1].split('&')[0].split(',');
                 } else if (input.indexOf('?productSeq=') != -1 && input.indexOf('&count=') != -1) {
                     var pList = msg.split('?productSeq=')[1].split('&')[0].split(',');
                     var pCount = msg.split('&count=')[1].split('&')[0].split(',');
-                } else if (input.indexOf('shop.danawa.com/short/') != -1) {
-                    try {
-                        var d = org.jsoup.Jsoup.connect(input).get().select('form input[name=loginUrl]').attr('value')
-                        var pList = d.split('productSeqList%3D')[1].split('%26quantityList')[0].split('%2C');
-                        var pCount = d.split('quantityList%3D')[1].split('%2C');
-                    } catch (e) {
-                        replier.reply('잘못된 URL입니다.');
-                        break tag;
-                    }
                 } else {
                     replier.reply('잘못된 URL입니다.');
                     break tag;
