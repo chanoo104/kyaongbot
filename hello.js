@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '뷁';
+var uCode = '최적화!';
 
 
 
@@ -672,7 +672,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 var t = doc.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
                 var pName = t[0],
                     pDescription = t[1]
-                if (doc.html().indexOf('data-nbpkeyword="파워서플라이"') == -1) {
+                if (doc.select('div[class=bor_mt10 dpg_power_link] div').attr('data-nbpkeyword') != '파워서플라이') {
                     replier.reply('잘못된 카테고리입니다.');
                 } else {
                     var t = getDanawaDetail(p);
