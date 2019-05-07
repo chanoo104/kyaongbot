@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '뷁';
+var uCode = '123';
 
 
 
@@ -359,7 +359,7 @@ Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8
 Ky.formTargetRow = 28;
 var target = Ky.formTargetAddress;
 
-const blank = "\u202D".repeat(1000);
+const blank = "\u202D".repeat(1000) + '\n\n\n';
 
 function checkDetailUrl(data) {
     var regex = /^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?/;
@@ -726,8 +726,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var cooDetail = getDanawaDetail(cooCode);
                         if (cooDescription.indexOf('/ 공랭 /') != -1) {
                             var cooType = '공냉';
-                            var chaLength = Number(chaDetail[1][chaDetail[0].indexOf('CPU 장착')].replace(regex, ''));
-                            var cooLength = Number(cooDetail[1][cooDetail[0].indexOf('CPU쿨러 높이')].replace(regex, ''));
+                            var chaLength = Number(chaDetail[1][chaDetail[0].indexOf('CPU 장착')].replace(/[^\.0-9]/g,''));
+                            var cooLength = Number(cooDetail[1][cooDetail[0].indexOf('CPU쿨러 높이')].replace(/[^\.0-9]/g,''));
                             if (chaLength < cooLength) {
                                 var compat = false;
                             } else if (chaLength >= cooLength) {
