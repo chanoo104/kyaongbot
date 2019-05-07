@@ -359,7 +359,7 @@ Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8
 Ky.formTargetRow = 28;
 var target = Ky.formTargetAddress;
 
-const blank = '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \n\n\n'
+const blank = "\u200b".repeat(1000);
 
 function checkDetailUrl(data) {
     var regex = /^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?/;
