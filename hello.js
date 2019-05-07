@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'd뷁';
+var uCode = '뷁';
 
 
 
@@ -726,8 +726,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var cooDetail = getDanawaDetail(cooCode);
                         if (cooDescription.indexOf('/ 공랭 /') != -1) {
                             var cooType = '공냉';
-                            var chaLength = chaDetail[1][chaDetail[0].indexOf('CPU 장착')].replace(regex, '');
-                            var cooLength = cooDetail[1][cooDetail[0].indexOf('CPU쿨러 높이')].replace(regex, '');
+                            var chaLength = Number(chaDetail[1][chaDetail[0].indexOf('CPU 장착')].replace(regex, ''));
+                            var cooLength = Number(cooDetail[1][cooDetail[0].indexOf('CPU쿨러 높이')].replace(regex, ''));
                             if (chaLength < cooLength) {
                                 var compat = false;
                             } else if (chaLength >= cooLength) {
