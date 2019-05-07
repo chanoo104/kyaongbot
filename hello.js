@@ -771,7 +771,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
                             } catch (e) {
                                 replier.reply('데이터 취득 실패')
-                                var compat = fail;
+                                var compat = 'fail';
                             }
                         }
 
