@@ -186,8 +186,7 @@ function parseSampleLen(result) {
     return Math.ceil((result[2] == "시간" ? scala * 60 : scala) / Chrono.TIME_UNIT_IN_MINUTE);
 }
 
-function getGformRow(target, lineNo) {
-    var doc = org.jsoup.Jsoup.connect(target).header('User-Agent', 'Mozilla/5.0').get();
+function getGformRow(doc, lineNo) {
     var div = doc.select('tr[style]').get(lineNo).getElementsByTag("td");
     var arr = []
     for (i = 1; i < div.size() + 1; i++) {
@@ -197,15 +196,14 @@ function getGformRow(target, lineNo) {
 }
 
 
-function getGformColumn(target, lineNo, size) {
-    var doc = org.jsoup.Jsoup.connect(target).header('User-Agent', 'Mozilla/5.0').get();
+function getGformColumn(doc, lineNo, size) {
     var length = doc.select('tr[style]').size() - 1;
     //replier.reply(length)
     if (size > length) size = length;
     var arr = []
     for (y = length; y > length - size; y--) {
         //replier.reply(getGformRow(target, y)[lineNo-1])
-        arr.push(getGformRow(target, y)[lineNo - 1]);
+        arr.push(getGformRow(doc, y)[lineNo - 1]);
     }
     return [arr, length];
 }
@@ -213,42 +211,62 @@ function getGformColumn(target, lineNo, size) {
 
 
 function getForm(requester) {
-    var data = getGformColumn(target, Ky.formTargetRow, 10)
-    //닉네임
-    if (data[0].indexOf(requester) != -1) {
-        //[a requester a a a] << 뒤에서 두번째
-        //  replier.reply(requester)
-        var pos = data[1] - data[0].indexOf(requester);
-        //총 길이 - 배열내 위치(0부터시작, indexof로 두번째면 1) = 몆번째
-        var oArr = getGformRow(target, 0);
-        //replier.reply(oArr);
-        var cArr = getGformRow(target, pos);
-        // replier.reply(cArr);
-        var arr = [('[ ' + requester + ' ] 님의 견적요청서') + blank];
-        for (i = 0; i < oArr.length; i++) {
-            arr.push(oArr[i] + '\n')
-            arr.push(cArr[i] + '\n\n')
+    try {
+        var doc = org.jsoup.Jsoup.connect(target).header('User-Agent', 'Mozilla/5.0').get();
+        var data = getGformColumn(doc, Ky.formTargetRow, 10)
+        //닉네임
+        if (data[0].indexOf(requester) != -1) {
+            //[a requester a a a] << 뒤에서 두번째
+            //  replier.reply(requester)
+            var pos = data[1] - data[0].indexOf(requester);
+            //총 길이 - 배열내 위치(0부터시작, indexof로 두번째면 1) = 몆번째
+            var oArr = getGformRow(doc, 0);
+            //replier.reply(oArr);
+            var cArr = getGformRow(doc, pos);
+            // replier.reply(cArr);
+            var arr = [('[ ' + requester + ' ] 님의 견적요청서') + blank];
+            for (i = 0; i < oArr.length; i++) {
+                arr.push(oArr[i] + '\n')
+                arr.push(cArr[i] + '\n\n')
+            }
+            return arr.join('').replace(/\n\s*\n\s*\n/g, '\n\n');
+        } else {
+            return false;
         }
-        return arr.join('').replace(/\n\s*\n\s*\n/g, '\n\n');
-    } else {
-        replier.reply('파싱 실패. 네트워크 오류이거나 해당 이름으로 등록된 설문지가 없습니다.')
+    } catch (e) {
+        return false;
     }
 }
 
 
-function getpCodeFromGoogle(input) {
-    var p = Utils.getWebText('https://www.google.co.kr/search?&q=' + encodeURI('site:prod.danawa.com/info/?pcode=+' + input)).split('http://prod.danawa.com/info/?pcode=')[1]
+function getpCodeFromGoogle(input, type) {
+    type = type || '';
+    if (type.length == 0) type = (' ' + type + ' ');
+    var p = Utils.getWebText('https://www.google.co.kr/search?&q=' + type + encodeURI('site:prod.danawa.com/info/?pcode=+' + input)).split('http://prod.danawa.com/info/?pcode=')[1]
     if (typeof p == 'undefined') {
-        return;
+        return false;
     }
     return p.split('"')[0].split('&')[0];
+}
+
+function getDanawaDetail(pCode) {
+    var doc = org.jsoup.Jsoup.connect('http://m.danawa.com/product/productDetailInfoTemplate.json?productCode=' + pCode).header("Referer", "http://m.danawa.com/product/product.html?code=" + pCode).get().select('tbody tr'),
+        arr1 = [],
+        arr2 = [];
+    for (i = 0; i < doc.size(); i++) {
+        if (doc.get(i).select('td').size() != 0) {
+            arr1.push(doc.get(i).select('th').text());
+            arr2.push(doc.get(i).select('td span').get(0).text());
+        }
+    }
+    return [arr1, arr2];
 }
 
 
 function getPriceChart(pCode, period) {
     var data = JSON.parse(org.jsoup.Jsoup.connect('https://prod.danawa.com/info/ajax/getProductPriceList.ajax.php?productCode=' + pCode + '&period=' + period).header("Referer", "https://prod.danawa.com/info/?pcode=" + pCode).get().text()).result,
         arr = [];
-    if (typeof(data) == 'undefined') return '';
+    if (typeof (data) == 'undefined') return '';
     for (i = 0; i < data.length; i++) {
         arr.push(data[i].date + ' | ')
         var nowPrice = data[i].minPrice
@@ -327,6 +345,13 @@ function compareArray(arr1, arr2) {
 
 
 
+
+
+
+
+
+
+
 let Ky = JSON.parse(DataBase.getDataBase('memCheck')) || new Object();
 let counter = JSON.parse(DataBase.getDataBase('counterDB')) || new Object();
 
@@ -334,7 +359,7 @@ Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8
 Ky.formTargetRow = 28;
 var target = Ky.formTargetAddress;
 
-const blank = '‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭‭\n\n\n'
+const blank = '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \n\n\n'
 
 function checkDetailUrl(data) {
     var regex = /^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?/;
@@ -457,7 +482,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         if (msg.split(" ")[0] == "!날씨" && msg.indexOf(' ') != -1) {
             try {
-                replier.reply("날씨 정보 파싱중...");
                 var pl = msg.substr(4) + " 날씨"
                 var web = Utils.getWebText("https://search.naver.com/search.naver?query=" + pl)
 
@@ -486,7 +510,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 var gsr = web.split("예상 강수량")[1].split('</span')[0].replace(/(<([^>]+)>)/g, "").trim()
                 var ps = web.split("예상 풍속")[1].split('</span')[0].replace(/(<([^>]+)>)/g, "").trim() + "m/s"
                 var ph = web.split("예상 풍향")[1].split('</span')[0].replace(/(<([^>]+)>)/g, "").trim()
-                replier.reply("[ " + npl + " 날씨 ]\n\n" + cast + blank + "\n\n현재온도 : " + hgod + "°c\n체감온도 : " + cgod + "°c\n▼ 최저기온 : " + cjgo + "°c | ▲ 최고기온 : " + cggo + "°c\n\n미세먼지 : " + msmg + "\n초미세먼지 : " + cmsmg + "\n\n자외선 : " + jys + "\n오존지수 : " + oggs + "\n습도 : " + sd + "\n\n강수 확률 : " + gshr + "\n강수량 : " + gsr + "\n\n풍속 : " + ps + "\n풍향 : " + ph);
+                replier.reply("[ " + npl + " 날씨 ]\n" + cast + blank + "\n\n현재온도 : " + hgod + "°c\n체감온도 : " + cgod + "°c\n▼ 최저기온 : " + cjgo + "°c | ▲ 최고기온 : " + cggo + "°c\n\n미세먼지 : " + msmg + "\n초미세먼지 : " + cmsmg + "\n\n자외선 : " + jys + "\n오존지수 : " + oggs + "\n습도 : " + sd + "\n\n강수 확률 : " + gshr + "\n강수량 : " + gsr + "\n\n풍속 : " + ps + "\n풍향 : " + ph);
             } catch (e) {
                 replier.reply("파싱 실패");
                 replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
@@ -587,27 +611,27 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         if (arr3[i] <= arr4[i]) {
                             if (arr3[i] == 0) {
                                 arr5.push(arr4[i]);
-                                arr6.push('현금')
+                                arr6.push('[현금]')
                             } else {
                                 arr5.push(arr3[i]);
-                                arr6.push('오픈')
+                                arr6.push('[오픈]')
                             }
                         }
                         //현금이 오픈보다 싸면
                         if (arr3[i] > arr4[i]) {
                             if (arr4[i] == 0) {
                                 arr5.push(arr3[i]);
-                                arr6.push('오픈')
+                                arr6.push('[오픈]')
                             } else {
                                 arr5.push(arr4[i]);
-                                arr6.push('현금')
+                                arr6.push('[현금]')
                             }
                         }
                     }
                     var carr23 = compareArray(arr2, arr3);
                     var carr24 = compareArray(arr2, arr4);
                     var carr25 = compareArray(arr2, arr5);
-                    
+
                     function sum(array) {
                         var result = 0.0;
                         for (var i = 0; i < array.length; i++)
@@ -640,24 +664,19 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         //파워
         if (msg.substr(0, 4) == '!파워 ') {
             var input = msg.substring(4).trim();
-            var p = Utils.getWebText('https://www.google.co.kr/search?&q=' + encodeURI('site:prod.danawa.com/info/?pcode=+ 파워 ' + input)).split('http://prod.danawa.com/info/?pcode=')[1]
-            if (typeof p == 'undefined') {
-                return;
-            }
-            p = p.split('"')[0].split('&')[0];
-            if (typeof p == 'undefined') {
+            var p = getpCodeFromGoogle(input, '파워');
+            if (p == false) {
                 replier.reply('잘못된 입력입니다.');
             } else {
                 var doc = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + p).get();
                 var t = doc.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
-                var pName = t[0], pDescription = t[1]
+                var pName = t[0],
+                    pDescription = t[1]
                 if (doc.html().indexOf('data-nbpkeyword="파워서플라이"') == -1) {
                     replier.reply('잘못된 카테고리입니다.');
                 } else {
-                    var doc = org.jsoup.Jsoup.connect('http://m.danawa.com/product/productDetailInfoTemplate.json?productCode=' + p).header("Referer", "http://m.danawa.com/product/product.html?code=" + p).get()
-                    var doc = org.jsoup.Jsoup.connect('http://m.danawa.com/product/productDetailInfoTemplate.json?productCode=' + p).header("Referer", "http://m.danawa.com/product/product.html?code=" + p).get()
-                    var sel = doc.select('table.tbl_utype').html().split('</span> <a href="http://www.safetykorea.kr/"')[0].split('<span class="td_utxt">');
-                    var certNo = sel[sel.length-1];
+                    var t = getDanawaDetail(p);
+                    var certNo = t[1][t[1].length - 1]
                     try {
                         var data = org.jsoup.Jsoup.connect('http://safetykorea.kr/release/certDetail').data("certNum", certNo).post().select('div.section').get(2).select('tbody');
                     } catch (e) {
@@ -670,17 +689,142 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     }
                     var certA = data.select('td').get(0).text();
                     var certB = data.select('td').get(2).text();
-                    replier.reply('[ ' + pName + ' ]' + '\n인증번호: ' + certNo + '\n제조사: ' + certA + '\n유통사: ' + certB)
+                    replier.reply('[ ' + pName + ' ]' + '\n인증번호: ' + certNo + '\n제조사: ' + certA + '\n유통사: ' + certB);
                 }
             }
         }
+
+        //호환체크
+        //!쿨러호환
+        //케이스
+        //쿨러
+        if (msg.split('\n')[0] == '!쿨러호환') {
+            var input1 = msg.split('\n')[1];
+            var input2 = msg.split('\n')[2];
+            var chaCode = getpCodeFromGoogle(input1, '케이스');
+            var cooCode = getpCodeFromGoogle(input2, '케이스');
+            if (!chaCode || !cooCode) {
+                replier.reply('잘못된 입력입니다.');
+            } else {
+                var cha = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + chaCode).get();
+                var coo = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + cooCode).get();
+                //카테고리 확인
+                if (cha.select('div[class=bor_mt10 dpg_power_link] div').attr('data-nbpkeyword') != '컴퓨터케이스') {
+                    replier.reply('케이스 - 잘못된 카테고리입니다.');
+                } else if (coo.select('div[class=bor_mt10 dpg_power_link] div').attr('data-nbpkeyword') != '쿨러') {
+                    replier.reply('쿨러 - 잘못된 카테고리입니다.');
+                } else {
+                    var regex = /[^0-9]/g;
+                    var ta = coo.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
+                    var cooName = ta[0],
+                        cooDescription = ta[1];
+                    if (cooDescription.indexOf('/ 공랭 /') != -1 || cooDescription.indexOf('/ 수랭 /') != -1) {
+                        var tb = cha.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
+                        var chaName = tb[0],
+                            chaDescription = tb[1]; //이름 태그 긁어오기
+                        var chaDetail = getDanawaDetail(chaCode); //표긁어오기
+                        var cooDetail = getDanawaDetail(cooCode);
+                        if (cooDescription.indexOf('/ 공랭 /') != -1) {
+                            var cooType = '공냉';
+                            var chaLength = chaDetail[1][chaDetail[0].indexOf('CPU 장착')].replace(regex, '');
+                            var cooLength = cooDetail[1][cooDetail[0].indexOf('CPU쿨러 높이')].replace(regex, '');
+                            if (chaLength < cooLength) {
+                                var compat = false;
+                            } else if (chaLength >= cooLength) {
+                                var compat = true;
+                            } else {
+                                var compat = 'fail';
+                            }
+                        } else {
+                            try {
+                                var cooType = '수냉';
+                                var chaLength = []
+                                if (chaDetail[0].indexOf('라디에이터(상단)') != -1) chaLength[0] = chaDetail[1][chaDetail[0].indexOf('라디에이터(상단)')].replace(/최대/gi, '').replace(/mm/gi, '').split(', ');
+                                if (chaDetail[0].indexOf('라디에이터(전면)') != -1) chaLength[1] = chaDetail[1][chaDetail[0].indexOf('라디에이터(전면)')].replace(/최대/gi, '').replace(/mm/gi, '').split(', ');
+                                if (chaDetail[0].indexOf('라디에이터(후면)') != -1) chaLength[2] = chaDetail[1][chaDetail[0].indexOf('라디에이터(후면)')].replace(/최대/gi, '').replace(/mm/gi, '').split(', ');
+                                var cooLength = cooDetail[1][cooDetail[0].indexOf('쿨링팬 크기')].split(' x ')[0].replace(/mm/gi, ''); //섹션길이
+                                var cooRow = cooDescription.split('/ 라디에이터: ')[1].split('열 /')[0] //열
+                                var small = ['120', '240', '360', '480']; //120mm
+                                var big = ['140', '280', '420', '560']; //140mm
+                                var pos = ['상단', '전면', '후면'];
+                                var compatPos = [];
+                                for (var i = 0; i < 3; i++) { //상단 전면 후면 각각
+                                    if (chaLength[i] == 'undefined') break; //호환되지 않는 위치면 스킵
+                                    for (var j = 0; j < chaLength[i].length; j++) { //각각의 위치에 호환되는 종류가 1개냐 2개냐에 따라 검사
+                                        if (small.indexOf(chaLength[i][j]) != -1) { //샤시 120 체크
+                                            if (small.indexOf(chaLength[i][j]) >= small.indexOf(String(cooLength * cooRow)) && small.indexOf(String(cooLength * cooRow)) != -1) { //샤시호환길이와 쿨러길이 비교
+                                                if (compatPos.indexOf(pos[i]) == -1) compatPos.push(pos[i]); //호환이 되면 호환위치 추가(중복은 추가 X)
+                                            }
+                                        }
+                                        if (big.indexOf(chaLength[i][j]) != -1) { //샤시 140 체크
+                                            if (big.indexOf(chaLength[i][j]) >= big.indexOf(String(cooLength * cooRow)) && big.indexOf(String(cooLength * cooRow)) != -1) {
+                                                if (compatPos.indexOf(pos[i]) == -1) compatPos.push(pos[i]);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (compatPos.length != 0) {
+                                    var compat = true;
+                                } else var compat = false;
+
+
+                            } catch (e) {
+                                replier.reply('데이터 취득 실패')
+                                var compat = fail;
+                            }
+                        }
+
+                        //후처리
+                        if (compat == 'fail') {
+                            replier.reply('데이터 취득 실패')
+                        } else {
+                            //헤더
+                            var str = ''
+                            if (compat == true) {
+                                str += '[[호환 가능]]'
+                                if (cooType == '수냉') str += '\n호환 위치: ' + compatPos.join(', ')
+                            } else {
+                                str += '[[호환 불가능]]'
+                            }
+
+
+                            str += blank;
+
+                            //자세히보기
+                            str += '≫ ' + chaName + '\n';
+                            str += '≫ ' + cooName + '\n\n';
+
+                            if (cooType == '공냉') {
+                                str += '케이스 최대 호환 높이: ' + chaLength + '\n';
+                                str += '쿨러 높이: ' + cooLength + '\n\n';
+                            }
+
+                            if (cooType == '수냉') {
+                                str += '케이스 최대 호환 크기:\n'
+                                if (chaDetail[0].indexOf('라디에이터(상단)') != -1) str += '≫ 상단 : ' + chaDetail[1][chaDetail[0].indexOf('라디에이터(상단)')] + '\n';
+                                if (chaDetail[0].indexOf('라디에이터(전면)') != -1) str += '≫ 전면 : ' + chaDetail[1][chaDetail[0].indexOf('라디에이터(전면)')] + '\n';
+                                if (chaDetail[0].indexOf('라디에이터(후면)') != -1) str += '≫ 후면 : ' + chaDetail[1][chaDetail[0].indexOf('라디에이터(후면)')] + '\n';
+                                str += '\n쿨러 크기: ' + cooLength * cooRow + 'mm\n\n';
+                            }
+                            replier.reply(str)
+                        }
+
+
+                    } else {
+                        replier.reply('잘못된 카테고리입니다.');
+                    }
+                }
+            }
+        }
+
 
         //다나와
         if (msg.substr(0, 5) == '!다나와 ') {
             try {
                 var input = msg.substring(5).trim();
                 var p = getpCodeFromGoogle(input);
-                if (typeof p == 'undefined') {
+                if (p == false) {
                     replier.reply('잘못된 입력입니다.');
                 } else {
                     var p = p.split('"')[0].split('&')[0];
@@ -689,7 +833,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var pCode = p
                         var doc1 = org.jsoup.Jsoup.connect('http://prod.danawa.com/info/?pcode=' + pCode).get();
                         var t = doc1.select('meta[name=description]').attr('content').split(' 가격비교 - 요약정보 : ');
-                        var pName = t[0], pDescription = t[1];
+                        var pName = t[0],
+                            pDescription = t[1];
                         if (doc1.select('strong.ppnum').text().length != 0) {
                             var pPriceOpen = doc1.select('strong.ppnum').text();
                         } else var pPriceOpen = '가격비교 중지';
@@ -699,7 +844,17 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var pChart = getPriceChart(pCode, 12);
                         var pRelated = getRelatedPrice(pCode);
 
-                        replier.reply('[ ' + pName + ' ]' + '\n최저가: ' + pPriceOpen + '\n현금최저가: ' + pPriceCash + ' ' +blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart);
+                        var ta = getDanawaDetail(pCode);
+
+                        var pDetail = '\n\n\n';
+                        for (i = 0; i < ta[1].length; i++) {
+                            pDetail += ta[0][i]
+                            pDetail += ' ≫ '
+                            pDetail += ta[1][i]
+                            pDetail += '\n'
+                        }
+
+                        replier.reply('[ ' + pName + ' ]' + '\n최저가: ' + pPriceOpen + '\n현금최저가: ' + pPriceCash + ' ' + blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart + pDetail);
 
                     } else {
                         replier.reply('잘못된 입력입니다.');
@@ -707,6 +862,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 }
             } catch (e) {
                 replier.reply('오류가 발생했습니다.');
+                replier.reply('스크립트 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
             }
         }
 
@@ -732,7 +888,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         est.quan.push('1')
                     }
                     var p = getpCodeFromGoogle(input);
-                    if (typeof p == 'undefined') {
+                    if (p == false) {
                         replier.reply('[' + (i + 2) + '번째 줄] \n잘못된 입력입니다.')
                         break loop;
                     }
@@ -752,7 +908,25 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         //견적요청
         //첫줄(문항내용) = 0, 설문응답은 1부터 시작
         if (msg.substr(0, 6) == '!견적요청 ') {
-            replier.reply(getForm(msg.substring(6)))
+            var input = msg.substring(6).trim();
+            Ky.formTemp = Ky.formTemp || {
+                requester: [],
+                property: []
+            }
+            if (Ky.formTemp.requester.indexOf(input) == -1) {
+                var prop = getForm(msg.substring(6));
+                if (prop != false) {
+                    Ky.formTemp.requester.push(input);
+                    Ky.formTemp.property.push(prop);
+                    replier.reply(prop)
+                    if (Ky.formTemp.requester.length > 10) {
+                        Ky.formTemp.requester.shift();
+                        Ky.formTemp.property.shift();
+                    }
+                } else replier.reply('파싱 실패. 네트워크 오류이거나 해당 이름으로 등록된 설문지가 없습니다.');
+            } else {
+                replier.reply(Ky.formTemp.property[Ky.formTemp.requester.indexOf(input)])
+            }
         }
 
         //네이버
