@@ -534,7 +534,14 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         var pcode;
         var ID;
 
-        if (Object.keys(Ky.userHash).indexOf(hash) != -1) {
+  if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
+            try {
+                replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
+            } catch (e) {
+                replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+            }
+        }
+      if (Object.keys(Ky.userHash).indexOf(hash) != -1) {
             login = true;
             pcode = Ky.userHash[hash];
             ID = Ky.user[pcode].ID
@@ -1433,13 +1440,7 @@ replier.reply(str)
         }
 
 
-        if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
-            try {
-                replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
-            } catch (e) {
-                replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
-            }
-        }
+        
 
 
         //저장
