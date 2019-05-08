@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'dfdfd뷁';
+var uCode = '으으';
 
 
 
@@ -224,7 +224,7 @@ function getLoginData() {
 }
 
 function getRegisterData() {
-    //단순 아래 열 10개 반환
+    ///단순 열 아래서부터 10개 반환
     try {
         var doc = org.jsoup.Jsoup.connect(Ky.registerTargetAddress).header('User-Agent', 'Mozilla/5.0').get();
         var t = getGformColumn(doc, 1, 10)[0];
@@ -232,9 +232,45 @@ function getRegisterData() {
         var b = getGformColumn(doc, 3, 10)[0];
         var c = getGformColumn(doc, 4, 10)[0];
         var d = getGformColumn(doc, 5, 10)[0];
-        return [a, b, c, d, t];
+var e = getGformColumn(doc, 6, 10)[0];
+        return [t, a, b, c, d, e];
     } catch (e) {
         return false;
+    }
+}
+
+function getMarketData(requester) {
+    try {
+        var doc = org.jsoup.Jsoup.connect(Ky.marketTargetAddress).header('User-Agent', 'Mozilla/5.0').get();
+        var data = getGformColumn(doc, 2, 20)
+        //닉네임
+        if (data[0].indexOf(requester) != -1) {
+            var arr = [];
+            var log = [];
+            while (data[0].indexOf(requester) != -1) {
+                var num = data[0].indexOf(requester);
+                data[0][num] = false;
+                var pos = data[1] - num
+                //총 길이 - 배열내 위치(0부터시작, indexof로 두번째면 1) = 몆번째
+                var a = getGformRow(doc, pos);
+                if (Ky.registerSession.indexOf(a[0]) == -1) {
+                    if (Ky.user[Ky.userID[requester]].PW == a[2]) {
+                        arr.push(a);
+                        log.push('등록 성공 | ' + a[4]);
+                        Ky.registerSession.push(a[0]);
+                    } else {
+                        log.push('등록 실패 | PW 불일치 | ' + a[4]);
+                    }
+                }
+            }
+            if (arr.length == 0) return false;
+            return [arr, log];
+        } else {
+            return false;
+        }
+    } catch (e) {
+        return false;
+
     }
 }
 
@@ -386,6 +422,7 @@ let counter = JSON.parse(DataBase.getDataBase('counterDB')) || new Object();
 Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8_Jwh-bT7IY9unKU_OZhrO-GzRJo/htmlview#gid=735564299';
 Ky.registerTargetAddress = 'https://docs.google.com/spreadsheets/d/1vMaiOPbDYBCevdHrYUGTh9Y9-xlYr5BMRPLzv0cKZzY/htmlview#gid=1425276477';
 Ky.loginTargetAddress = 'https://docs.google.com/spreadsheets/d/1zf2BTvwBmPYFcLQAvlN4LPzH4QblSn-9dTUkUjivwis/htmlview#gid=1510697457';
+Ky.marketTargetAddress = 'https://docs.google.com/spreadsheets/d/1sg3CSqT9CGY0QPW38w0FytK0UhqYBGyNW0EPrNycV9w/htmlview#gid=1833799400';
 
 Ky.formTargetRow = 28;
 var target = Ky.formTargetAddress;
@@ -432,33 +469,10 @@ getWeather = function () {
 }
 
 function makeAuthID() {
-	var text = '';
-	var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
-	for (var i = 0; i < 6; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
-	return text;
-}
-
-function makeTag(params) {
-	let {
-		room,
-		msg,
-		sender,
-		isGroupChat,
-		replier,
-		imageDB,
-		packageName,
-		threadId,
-		group,
-		hash,
-		icode
-	} = params;
-	var possible = '0123456789';
-	while (true) {
-		var text = '';
-		for (var i = 0; i < 4; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
-		if (Ky.g[group].m[String(text)] === undefined) break;
-	}
-	return text;
+   var text = '';
+   var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+   for (var i = 0; i < 6; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+   return text;
 }
 
 
@@ -468,12 +482,12 @@ function makeTag(params) {
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
 
 
-    function makeTag() {
+    function makeTag(obj) {
         var possible = '0123456789';
         while (true) {
             var text = '';
             for (var i = 0; i < 4; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
-            if (Ky.userTag[String(text)] === undefined) break;
+            if (obj[String(text)] === undefined) break;
         }
         return String(text);
     }
@@ -508,6 +522,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         Ky.loginSession = Ky.loginSession || new Array();
         Ky.registerSession = Ky.registerSession || new Array();
+        Ky.marketSession = Ky.marketSession || new Array();
+        Ky.market = Ky.market || [[],[],[],[],[],[],[],[],[],[]]
 
         //pcode 객체
         Ky.user = Ky.user || new Object();
@@ -516,10 +532,15 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         var login = false;
         var pcode;
+        var ID;
 
         if (Object.keys(Ky.userHash).indexOf(hash) != -1) {
             login = true;
             pcode = Ky.userHash[hash];
+            ID = Ky.user[pcode].ID
+            Ky.user[pcode].lastName = Ky.user[pcode].lastName || new Object();
+            Ky.user[pcode].lastName[room] = sender;
+            Ky.user[pcode].lastNameAll = sender;
         }
 
         
@@ -531,11 +552,12 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 replier.reply('✘(existing_username)');
             } else {
                 var formArray = getRegisterData(msg.substring(6));
-                var a = formArray[0];
-                var b = formArray[1];
-                var c = formArray[2];
-                var d = formArray[3];
-                var t = formArray[4]
+                var a = formArray[1];
+                var b = formArray[2];
+                var c = formArray[3];
+var d = formArray[4];
+                var e = formArray[5];
+                var t = formArray[0]
                 var tt = t[n]
                 if (a.indexOf(requestID) == -1) {
                     replier.reply('✘(timeout)');
@@ -543,18 +565,18 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     replier.reply('✘(session_expired)');
                 } else {
                     var n = a.indexOf(requestID);
-                    var aa = a[n], bb = b[n], cc = c[n], dd = d[n];
+                    var aa = a[n], bb = b[n], cc = c[n], dd = d[n], ee = e[n];
                     var authID = makeAuthID();
-                    if (typeof(cc) == 'undefined') {
-                        var ee = '1대1 채팅';
-                        var ff = dd
-                    } else if (typeof(dd) == 'undefined') {
-                        var ee = '카카오톡 ID';
-                        var ff = cc
+                    if (cc == '카카오톡 ID') {
+                        var ff = '카카오톡 ID';
+                        var gg = dd
+                    } else {
+                        var ff = '1대1 채팅';
+                        var gg = ee
                     }
                     Ky.userID[aa] = authID; //닉네임>>식별코드 쌍
                     Ky.userHash[hash] = authID; //해시>>식별코드 쌍
-                    var tt = makeTag();
+                    var tt = makeTag(Ky.userTag);
                     Ky.userTag[tt] = authID;
 
                     Ky.user[authID] = {
@@ -562,8 +584,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         PW : String(bb),
                         hash : hash,
                         tag : tt,
-                        contactType : ee,
-                        contact : ff
+                        contactType : ff,
+                        contact : gg
                     }
                     login = true;
                     Ky.registerSession.push(tt);
@@ -616,7 +638,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (login) {
                 delete Ky.userHash[hash];
                 login = false;
-                replier.reply('✔(#' + Ky.user[pcode].tag + ')');
+                replier.reply('✔');
             } else replier.reply('✘(not_logined)');
         }
 
@@ -626,9 +648,90 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             } else replier.reply('✘');
         }
 
+        function getColumn(t, n) { //getColumn(배열, 열)
+            let arr = [];
+            for (i = 0; i < t.length; i++) {
+                arr.push(t[i][n]);
+            }
+            return arr;
+        }
+
+        function pullTop(t, n) {//t:2차원객체, n:끌어올릴 열 지정
+            for (i = 0; i < t[0].length; i++) {
+                let sel = t[i][n];
+                t[i].splice(n, 1);
+                t[i].unshift(sel);
+            }
+        }
+
+        function getName(p) {//t:2차원객체, n:끌어올릴 열 지정
+            if (Ky.user[p].lastName[room]) return Ky.user[p].lastName[room];
+            return Ky.user[p].lastNameAll;
+        }
+
+
+        //배열 쪼개서 2차원배열의 2차원에 넣어주기!
+        if (msg == '!상품등록') {
+            if (!login) {
+                replier.reply('✘(로그인 후에 사용 가능)');
+            } else {
+                var data = getMarketData(ID);
+
+
+                if (data == false) {
+                    replier.reply('✘(해당 아이디로 등록된 상품이 없음)');
+                } else {
+                    for (i = 0; i < data[0].length; i++) {
+                        //날짜
+                        var time = moment(data[0][i][0].replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss")
+                        //삽니다팝니다
+                        if (data[0][i][3] == '팝니다') {
+                            var asdf = 0;
+                        } else {
+                            var asdf = 1;
+                        }
+                        //연락처
+                        if (data[0][i][7] == '기본 연락처(회원가입시 작성)') data[0][i][7] = false;
+
+                        var marketid = makeTag(Ky.market[1]);
+                        Ky.market[0].unshift(pcode); //0-pcode
+                        Ky.market[1].unshift(marketid); //1-marketid
+                        Ky.market[2].unshift(time); //2-timestamp
+                        Ky.market[3].unshift(asdf); //3-삽니다팝니다
+                        Ky.market[4].unshift(data[0][i][4]); //4-상품명
+                        Ky.market[5].unshift(data[0][i][5]); //5-가격
+                        Ky.market[6].unshift(data[0][i][6]); //6-설명
+                        Ky.market[7].unshift(data[0][i][7]); //7-연락처
+                        Ky.market[8].unshift(data[0][i][8]); //8-택배거래
+                        Ky.market[9].unshift(data[0][i][9]); //9-직거래
+                    }
+                    replier.reply('[[제품 등록 로그]]' + blank + data[1].join('\n'));
+                }
+            }
+        }
+
+        if (msg == '!장터') {
+            var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
+            var str = '[[장터]]' + blank;
+            for (i = 0; i < Ky.market[0].length; i++) {
+                str += Ky.market[1][i] + ' | ';
+                str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
+                str += moment(Ky.market[2][i]).format('YYYY-MM-DD hh:mm') + '\n';
+                str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
+                str += '  ' + Ky.market[5][i] + '원 / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i] + '\n';
+                if (!Ky.market[7][i]) {
+                    str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
+                } else {
+                    '연락처 : ' +Ky.market[7][i] + '\n';
+                }
+                str += '》 ' +  Ky.market[6][i] + '\n\n\n'
+            }
+replier.reply(str)
+        }
+
 
         //자동응답
-        if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply(sender + "님, 앱에서 견적 공유시 카카오톡보내기 대신 URL복사를 써주세요. PC버전에서 안보여요.");
+        if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply(sender + "님, 앱에서 견적 공유시 카카오톡보내기 대신 URL복사를 사용해주세요. PC버전에서 안보여요.");
 
         if (Ky[room].admin.length == 0 && msg == '!등록') {
             Ky[room].admin.push(Ky[room].memCheck);
