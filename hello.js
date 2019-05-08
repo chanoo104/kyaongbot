@@ -197,6 +197,7 @@ function getGformRow(doc, lineNo) {
 
 
 function getGformColumn(doc, lineNo, size) {
+    //주의: 맨 아래서부터 반환 [마지막, 마지막에서두번째, ... ]
     var length = doc.select('tr[style]').size() - 1;
     //replier.reply(length)
     if (size > length) size = length;
@@ -209,6 +210,33 @@ function getGformColumn(doc, lineNo, size) {
 }
 
 
+function getLoginData() {
+    //단순 아래 열 10개 반환
+    try {
+        var doc = org.jsoup.Jsoup.connect(Ky.loginTargetAddress).header('User-Agent', 'Mozilla/5.0').get();
+        var t = getGformColumn(doc, 1, 10)[0];
+        var a = getGformColumn(doc, 2, 10)[0];
+        var b = getGformColumn(doc, 3, 10)[0];
+        return [a, b, t];
+    } catch (e) {
+        return false;
+    }
+}
+
+function getRegisterData() {
+    //단순 아래 열 10개 반환
+    try {
+        var doc = org.jsoup.Jsoup.connect(Ky.registerTargetAddress).header('User-Agent', 'Mozilla/5.0').get();
+        var t = getGformColumn(doc, 1, 10)[0];
+        var a = getGformColumn(doc, 2, 10)[0];
+        var b = getGformColumn(doc, 3, 10)[0];
+        var c = getGformColumn(doc, 4, 10)[0];
+        var d = getGformColumn(doc, 5, 10)[0];
+        return [a, b, c, d, t];
+    } catch (e) {
+        return false;
+    }
+}
 
 function getForm(requester) {
     try {
@@ -356,6 +384,9 @@ let Ky = JSON.parse(DataBase.getDataBase('memCheck')) || new Object();
 let counter = JSON.parse(DataBase.getDataBase('counterDB')) || new Object();
 
 Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8_Jwh-bT7IY9unKU_OZhrO-GzRJo/htmlview#gid=735564299';
+Ky.registerTargetAddress = 'https://docs.google.com/spreadsheets/d/1vMaiOPbDYBCevdHrYUGTh9Y9-xlYr5BMRPLzv0cKZzY/htmlview#gid=1425276477';
+Ky.loginTargetAddress = 'https://docs.google.com/spreadsheets/d/1zf2BTvwBmPYFcLQAvlN4LPzH4QblSn-9dTUkUjivwis/htmlview#gid=1510697457';
+
 Ky.formTargetRow = 28;
 var target = Ky.formTargetAddress;
 
@@ -400,11 +431,53 @@ getWeather = function () {
     return ('[[ 전국날씨 ]]' + blank + arr1.join('\n') + '\n\n\n\n[[ 특보 ]]\n\n' + sel2 + '\n\n\n\n[[ 미세먼지 ]]\n' + 미세먼지.join('\n'));
 }
 
+function makeAuthID() {
+	var text = '';
+	var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+	for (var i = 0; i < 6; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+	return text;
+}
+
+function makeTag(params) {
+	let {
+		room,
+		msg,
+		sender,
+		isGroupChat,
+		replier,
+		imageDB,
+		packageName,
+		threadId,
+		group,
+		hash,
+		icode
+	} = params;
+	var possible = '0123456789';
+	while (true) {
+		var text = '';
+		for (var i = 0; i < 4; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+		if (Ky.g[group].m[String(text)] === undefined) break;
+	}
+	return text;
+}
+
 
 
 
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
+
+
+    function makeTag() {
+        var possible = '0123456789';
+        while (true) {
+            var text = '';
+            for (var i = 0; i < 4; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+            if (Ky.userTag[String(text)] === undefined) break;
+        }
+        return String(text);
+    }
+
     try {
 
         msg = msg.trim();
@@ -418,21 +491,145 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         Ky[room].memOn = Ky[room].memOn || false;
         Ky[room].admin = Ky[room].admin || new Array();
 
-        function getHash() {
-            return java.lang.String(imageDB.getProfileImage()).hashCode();
-        }
-
-        Ky[room].memCheck = getHash();
+        var hash = String(java.lang.String(imageDB.getProfileImage() + sender).hashCode());
+        Ky[room].memCheck = hash;
         Ky[room].recentLog = Ky[room].recentLog || new Object();
         Ky[room].recentLog[room] = Ky[room].recentLog[room] || new Object();
         Ky[room].recentLog[room].msg = Ky[room].recentLog[room].msg || new Array();
         Ky[room].recentLog[room].sender = Ky[room].recentLog[room].sender || new Array();
 
 
+        //아이디목록, pcode와 연결
+        Ky.userID = Ky.userID || new Object();
+        //해시목록, pcode와 연결
+        Ky.userHash = Ky.userHash || new Object();
+        //태그목록, pcode와 연결
+        Ky.userTag = Ky.userTag || new Object();
 
+        Ky.loginSession = Ky.loginSession || new Array();
+        Ky.registerSession = Ky.registerSession || new Array();
+
+        //pcode 객체
+        Ky.user = Ky.user || new Object();
+        
+        //로그인상태일때 회원가입 또는 로그인 불가
+
+        var login = false;
+        var pcode;
+
+        if (Object.keys(Ky.userHash).indexOf(hash) != -1) {
+            login = true;
+            pcode = Ky.userHash[hash];
+        }
+
+        
+        if (msg.substr(0, 6) == '!회원가입 ') {
+            var requestID = msg.substring(6).trim();
+            if (login) {
+                replier.reply('✘(already_login)');
+            } else if (Object.keys(Ky.userID).indexOf(requestID) != -1) {
+                replier.reply('✘(existing_username)');
+            } else {
+                var formArray = getRegisterData(msg.substring(6));
+                var a = formArray[0];
+                var b = formArray[1];
+                var c = formArray[2];
+                var d = formArray[3];
+                var t = formArray[4]
+                var tt = t[n]
+                if (a.indexOf(requestID) == -1) {
+                    replier.reply('✘(timeout)');
+                } else if (Ky.registerSession.indexOf(tt) != -1) {
+                    replier.reply('✘(session_expired)');
+                } else {
+                    var n = a.indexOf(requestID);
+                    var aa = a[n], bb = b[n], cc = c[n], dd = d[n];
+                    var authID = makeAuthID();
+                    if (typeof(cc) == 'undefined') {
+                        var ee = '1대1 채팅';
+                        var ff = dd
+                    } else if (typeof(dd) == 'undefined') {
+                        var ee = '카카오톡 ID';
+                        var ff = cc
+                    }
+                    Ky.userID[aa] = authID; //닉네임>>식별코드 쌍
+                    Ky.userHash[hash] = authID; //해시>>식별코드 쌍
+                    var tt = makeTag();
+                    Ky.userTag[tt] = authID;
+
+                    Ky.user[authID] = {
+                        ID : aa,
+                        PW : String(bb),
+                        hash : hash,
+                        tag : tt,
+                        contactType : ee,
+                        contact : ff
+                    }
+                    login = true;
+                    Ky.registerSession.push(tt);
+                    if (Ky.registerSession.length > 10) {
+                        Ky.registerSession.shift();
+                    }
+                    replier.reply('✔');
+                }
+            }
+
+        }
+
+
+        if (msg.substr(0, 5) == '!로그인 ') {
+            var requestID = msg.substring(5).trim();
+            if (login) {
+                replier.reply('✘(already_login)');
+            } else if (Object.keys(Ky.userID).indexOf(requestID) == -1) {
+                replier.reply('✘(no_such_username)');
+            } else {
+                var formArray = getLoginData(msg.substring(5));
+                var formID = formArray[0];
+                var formPW = formArray[1];
+                var t = formArray[2];
+                var tt = t[formID.indexOf(requestID)];
+                if (formID.indexOf(requestID) == -1) {
+                    replier.reply('✘(timeout)');
+                } else if (Ky.loginSession.indexOf(tt) != -1) {
+                    replier.reply('✘(session_expired)');
+                } else {
+                    var i = formID[formID.indexOf(requestID)];
+                    var p = String(formPW[formID.indexOf(requestID)]);
+                    var c = Ky.userID[i]; //pcode 추출
+                    if (Ky.user[c].PW != p) {
+                        replier.reply('✘(password_mismatch)');
+                    } else {
+                        Ky.userHash[hash] = c; //이 해시와 pcode 연결
+                        Ky.loginSession.push(tt);
+                        if (Ky.loginSession.length > 10) {
+                            Ky.loginSession.shift();
+                        }
+                        login = true;
+                        replier.reply('✔');
+                    }
+                }
+            }
+        }
+
+        if (msg == '!로그아웃') {
+            if (login) {
+                delete Ky.userHash[hash];
+                login = false;
+                replier.reply('✔(#' + Ky.user[pcode].tag + ')');
+            } else replier.reply('✘(not_logined)');
+        }
+
+        if (msg == '!로그인') {
+            if (login) {
+                replier.reply('✔(#' + Ky.user[pcode].tag + ')');
+            } else replier.reply('✘');
+        }
 
 
         //자동응답
+        if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply(sender + "님, 앱에서 견적 공유시 카카오톡보내기 대신 URL복사를 써주세요. PC버전에서 안보여요.");
+
         if (Ky[room].admin.length == 0 && msg == '!등록') {
             Ky[room].admin.push(Ky[room].memCheck);
             replier.reply('등록 성공');
@@ -582,7 +779,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 try {
                     input = org.jsoup.Jsoup.connect(input).followRedirects(true).execute().url();
                 } catch (e) {
-                    replier.reply('잘못된 URL입니다.);
+                    replier.reply('잘못된 URL입니다.');
                     break tag;
                 }
                 if (input.indexOf('&productSeqList=') != -1 && input.indexOf('&quantityList=') != -1) {
@@ -967,6 +1164,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 replier.reply(Ky.formTemp.property[Ky.formTemp.requester.indexOf(input)])
             }
         }
+
+
 
         //네이버
         c = '!네이버';
