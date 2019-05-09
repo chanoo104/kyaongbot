@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '으으';
+var uCode = '으d으';
 
 
 
@@ -917,7 +917,7 @@ str += '\n  ';
         //비활성 호환검사
         if (msg.indexOf('shop.danawa.com/short') != -1) {
             try {
-                var temp = org.jsoup.Jsoup.connect(msg).followRedirects(true).execute().url();
+                var temp = String(org.jsoup.Jsoup.connect(msg).followRedirects(true).execute().url());
                 msg = temp;
             } catch (e) {}
         }
@@ -952,7 +952,7 @@ str += '\n  ';
                 replier.reply('파싱 중...');
                 var input = msg.substring(6).trim();
                 try {
-                    input = org.jsoup.Jsoup.connect(input).followRedirects(true).execute().url();
+                    input = String(org.jsoup.Jsoup.connect(input).followRedirects(true).execute().url());
                 } catch (e) {
                     replier.reply('잘못된 URL입니다.');
                     break tag;
