@@ -253,11 +253,11 @@ function getMarketData(requester) {
                 var pos = data[1] - num
                 //총 길이 - 배열내 위치(0부터시작, indexof로 두번째면 1) = 몆번째
                 var a = getGformRow(doc, pos);
-                if (Ky.registerSession.indexOf(a[0]) == -1) {
+                if (Ky.marketSession.indexOf(a[0]) == -1) {
                     if (Ky.user[Ky.userID[requester]].PW == a[2]) {
                         arr.push(a);
                         log.push('등록 성공 | ' + a[4]);
-                        Ky.registerSession.push(a[0]);
+                        Ky.marketSession.push(a[0]);
                     } else {
                         log.push('등록 실패 | PW 불일치 | ' + a[4]);
                     }
