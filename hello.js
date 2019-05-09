@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '으으';
+var uCode = '으으ee';
 
 
 
@@ -232,7 +232,7 @@ function getRegisterData() {
         var b = getGformColumn(doc, 3, 10)[0];
         var c = getGformColumn(doc, 4, 10)[0];
         var d = getGformColumn(doc, 5, 10)[0];
-var e = getGformColumn(doc, 6, 10)[0];
+        var e = getGformColumn(doc, 6, 10)[0];
         return [t, a, b, c, d, e];
     } catch (e) {
         return false;
@@ -469,10 +469,10 @@ getWeather = function () {
 }
 
 function makeAuthID() {
-   var text = '';
-   var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
-   for (var i = 0; i < 6; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
-   return text;
+    var text = '';
+    var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < 6; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
 }
 
 
@@ -523,25 +523,36 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         Ky.loginSession = Ky.loginSession || new Array();
         Ky.registerSession = Ky.registerSession || new Array();
         Ky.marketSession = Ky.marketSession || new Array();
-        Ky.market = Ky.market || [[],[],[],[],[],[],[],[],[],[]]
+        Ky.market = Ky.market || [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ]
 
         //pcode 객체
         Ky.user = Ky.user || new Object();
-        
+
         //로그인상태일때 회원가입 또는 로그인 불가
 
         var login = false;
         var pcode;
         var ID;
 
-  if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
+        if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
             try {
                 replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
             } catch (e) {
                 replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
             }
         }
-      if (Object.keys(Ky.userHash).indexOf(hash) != -1) {
+        if (Object.keys(Ky.userHash).indexOf(hash) != -1) {
             login = true;
             pcode = Ky.userHash[hash];
             ID = Ky.user[pcode].ID
@@ -549,8 +560,12 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             Ky.user[pcode].lastName[room] = sender;
             Ky.user[pcode].lastNameAll = sender;
         }
+function checkFormTimeout(t, ms) {
+if ((new Date().getTime() - moment(t.replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss").format('x')) > ms) {
+return true;
+} else return false;
+}
 
-        
         if (msg.substr(0, 6) == '!회원가입 ') {
             var requestID = msg.substring(6).trim();
             if (login) {
@@ -562,17 +577,23 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 var a = formArray[1];
                 var b = formArray[2];
                 var c = formArray[3];
-var d = formArray[4];
+                var d = formArray[4];
                 var e = formArray[5];
                 var t = formArray[0]
+var n = a.indexOf(requestID);
                 var tt = t[n]
                 if (a.indexOf(requestID) == -1) {
-                    replier.reply('✘(timeout)');
+                    replier.reply('✘(no_such_request)');
                 } else if (Ky.registerSession.indexOf(tt) != -1) {
                     replier.reply('✘(session_expired)');
+                } else if (checkFormTimeout(tt, 60000)) {
+                    replier.reply('✘(session_timeout)');
                 } else {
-                    var n = a.indexOf(requestID);
-                    var aa = a[n], bb = b[n], cc = c[n], dd = d[n], ee = e[n];
+                    var aa = a[n],
+                        bb = b[n],
+                        cc = c[n],
+                        dd = d[n],
+                        ee = e[n];
                     var authID = makeAuthID();
                     if (cc == '카카오톡 ID') {
                         var ff = '카카오톡 ID';
@@ -587,19 +608,19 @@ var d = formArray[4];
                     Ky.userTag[tt] = authID;
 
                     Ky.user[authID] = {
-                        ID : aa,
-                        PW : String(bb),
-                        hash : hash,
-                        tag : tt,
-                        contactType : ff,
-                        contact : gg
+                        ID: aa,
+                        PW: String(bb),
+                        hash: hash,
+                        tag: tt,
+                        contactType: ff,
+                        contact: gg
                     }
                     login = true;
                     Ky.registerSession.push(tt);
                     if (Ky.registerSession.length > 10) {
                         Ky.registerSession.shift();
                     }
-                    replier.reply('✔');
+                    replier.reply('✔(가입/로그인 성공)');
                 }
             }
 
@@ -619,9 +640,11 @@ var d = formArray[4];
                 var t = formArray[2];
                 var tt = t[formID.indexOf(requestID)];
                 if (formID.indexOf(requestID) == -1) {
-                    replier.reply('✘(timeout)');
+                    replier.reply('✘(no_such_request)');
                 } else if (Ky.loginSession.indexOf(tt) != -1) {
                     replier.reply('✘(session_expired)');
+                } else if (checkFormTimeout(tt, 30000)) {
+                    replier.reply('✘(session_timeout)');
                 } else {
                     var i = formID[formID.indexOf(requestID)];
                     var p = String(formPW[formID.indexOf(requestID)]);
@@ -663,15 +686,21 @@ var d = formArray[4];
             return arr;
         }
 
-        function pullTop(t, n) {//t:2차원객체, n:끌어올릴 열 지정
+        function deleteColumn(t, n) { //getColumn(배열, 열)
             for (i = 0; i < t[0].length; i++) {
+                t[i].splice(n, 1);
+            }
+        }
+
+        function pullTop(t, n) { //t:2차원객체, n:끌어올릴 열 지정
+            for (i = 0; i < t.length; i++) {
                 let sel = t[i][n];
                 t[i].splice(n, 1);
                 t[i].unshift(sel);
             }
         }
 
-        function getName(p) {//t:2차원객체, n:끌어올릴 열 지정
+        function getName(p) {
             if (Ky.user[p].lastName[room]) return Ky.user[p].lastName[room];
             return Ky.user[p].lastNameAll;
         }
@@ -723,17 +752,53 @@ var d = formArray[4];
             for (i = 0; i < Ky.market[0].length; i++) {
                 str += Ky.market[1][i] + ' | ';
                 str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
-                str += moment(Ky.market[2][i]).format('YYYY-MM-DD hh:mm') + '\n';
+                str += moment(Ky.market[2][i]).format('YYYY-MM-DD hh:mm') + '\n\n';
                 str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
-                str += '  ' + Ky.market[5][i] + '원 / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i] + '\n';
+                str += '  ' + Ky.market[5][i] + '원';
+                if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
+str += '\n  ';
                 if (!Ky.market[7][i]) {
                     str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
                 } else {
-                    '연락처 : ' +Ky.market[7][i] + '\n';
+                    str += '연락처 : ' + Ky.market[7][i] + '\n';
                 }
-                str += '》 ' +  Ky.market[6][i] + '\n\n\n'
+                str += '》 ' + Ky.market[6][i] + '\n\n\n'
             }
-replier.reply(str)
+            replier.reply(str)
+        }
+
+        if (msg.substr(0, 4) == '!끌올 ' || msg.substr(0, 6) == '!상태변경 ' || msg.substr(0, 6) == '!등록해제 ') {
+            if (msg.substr(0, 4) == '!끌올 ') var p = msg.substring(4).trim();
+            if (msg.substr(0, 6) == '!상태변경 ') var p = msg.substring(6).trim();
+            if (msg.substr(0, 6) == '!등록해제 ') var p = msg.substring(6).trim();
+
+            var t = Ky.market[1].indexOf(p);
+            if (t == -1) {
+                replier.reply('✘(no_such_marketID)');
+            } else {
+                if (Ky.market[0][t] != pcode) {
+                    replier.reply('✘(user_mismatch)');
+                } else {
+
+                    if (msg.substr(0, 4) == '!끌올 ') {
+                        pullTop(Ky.market, t);
+                        replier.reply('✔');
+                    }
+    
+                    if (msg.substr(0, 6) == '!상태변경 ') {
+                        if (Ky.market[3][t]%2 < 2) {
+                            Ky.market[3][t]+=2;
+                        } else Ky.market[3][t] -=2;
+                        replier.reply('✔');
+                    }
+    
+                    if (msg.substr(0, 6) == '!등록해제 ') {
+                        deleteColumn(Ky.market, t);
+                        replier.reply('✔');
+                    }
+
+                }
+            } 
         }
 
 
@@ -863,7 +928,7 @@ replier.reply(str)
             var pList = msg.split('?productSeq=')[1].split('&')[0].split(',');
             var check = true;
         }
-            
+
         if (check) {
             var doc = JSON.parse(org.jsoup.Jsoup.connect('http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=compatibility&productSeqList=' + pList.join('%2C')).ignoreContentType(true).get().text());
             if (doc.desc == '') {
@@ -1440,7 +1505,7 @@ replier.reply(str)
         }
 
 
-        
+
 
 
         //저장
