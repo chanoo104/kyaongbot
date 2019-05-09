@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '으으ee';
+var uCode = '으으';
 
 
 
@@ -687,7 +687,7 @@ var n = a.indexOf(requestID);
         }
 
         function deleteColumn(t, n) { //getColumn(배열, 열)
-            for (i = 0; i < t[0].length; i++) {
+            for (i = 0; i < t.length; i++) {
                 t[i].splice(n, 1);
             }
         }
@@ -752,7 +752,7 @@ var n = a.indexOf(requestID);
             for (i = 0; i < Ky.market[0].length; i++) {
                 str += Ky.market[1][i] + ' | ';
                 str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
-                str += moment(Ky.market[2][i]).format('YYYY-MM-DD hh:mm') + '\n\n';
+                str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
                 str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
                 str += '  ' + Ky.market[5][i] + '원';
                 if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
