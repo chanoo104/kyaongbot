@@ -480,7 +480,7 @@ var monitor = {
 m: {},
 r: {}
 }
-
+var roomList = []
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
 
@@ -498,10 +498,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 if (!isGroupChat) {
 
 monitor.m[sender] = monitor.m[sender] || {}
-if (msg == '!리스트') replier.reply(Object.keys(Ky).join('\n'));
+if (msg == '!리스트') replier.reply(roomList.join('\n'));
 if (msg.substr(0,6) == '!모니터링 '){
 if (monitor.m[sender].target) monitor.r[monitor.m[sender].target].splice(monitor.r[monitor.m[sender].target].indexOf(sender),1)
-monitor.m[sender].target = Object.keys(Ky)[msg.substring(6)-1];
+monitor.m[sender].target = roomList[msg.substring(6)-1];
 monitor.r[monitor.m[sender].target] = monitor.r[monitor.m[sender].target] || [];
 monitor.r[monitor.m[sender].target].push(sender)
 replier.reply(monitor.m[sender].target)
@@ -521,6 +521,7 @@ if (ttt != sender) Api.replyRoom(ttt, '['+sender+']\n'+msg.substring(2))
 }
 }
 } else {
+roomList.push(room)
 if (typeof(monitor.r[room]) != 'undefined'){
 if (monitor.r[room].length>0) {
 for (i=0;i<monitor.r[room].length;i++) {
