@@ -476,13 +476,15 @@ function makeAuthID() {
 }
 
 
-
+var monitor = {
+m: {},
+r: {}
+}
 
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
 
-    if (room == '전찬우') Api.replyRoom('그냥 잡담방', msg);
-    function makeTag(obj) {
+        function makeTag(obj) {
         var possible = '0123456789';
         while (true) {
             var text = '';
@@ -493,7 +495,41 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
     }
 
     try {
+if (!isGroupChat) {
 
+monitor.m[sender] = monitor.m[sender] || {}
+if (msg == '!리스트') replier.reply(Object.keys(Ky).join('\n'));
+if (msg.substr(0,6) == '!모니터링 '){
+if (monitor.m[sender].target) monitor.r[monitor.m[sender].target].splice(monitor.r[monitor.m[sender].target].indexOf(sender),1)
+monitor.m[sender].target = Object.keys(Ky)[msg.substring(6)-1];
+monitor.r[monitor.m[sender].target] = monitor.r[monitor.m[sender].target] || [];
+monitor.r[monitor.m[sender].target].push(sender)
+replier.reply(monitor.m[sender].target)
+}
+if (msg == '!중단') {
+if (monitor.m[sender].target) {
+monitor.r[monitor.m[sender].target].splice(monitor.r[monitor.m[sender].target].indexOf(sender),1)
+delete monitor.m[sender].target
+replier.reply('성공')
+}
+}
+if (msg.split(' ')[0] == '.' && monitor.m[sender].target) {
+Api.replyRoom(monitor.m[sender].target, '['+sender+']\n'+(msg.substring(2)))
+for (i=0;i<monitor.r[monitor.m[sender].target].length;i++) {
+var ttt = monitor.r[monitor.m[sender].target][i];
+if (ttt != sender) Api.replyRoom(ttt, '['+sender+']\n'+msg.substring(2))
+}
+}
+} else {
+if (typeof(monitor.r[room]) != 'undefined'){
+if (monitor.r[room].length>0) {
+for (i=0;i<monitor.r[room].length;i++) {
+Api.replyRoom(monitor.r[room][i], '['+sender+']\n'+msg)
+}
+}
+}
+
+}
         msg = msg.trim();
         room = room.trim();
         sender = sender.trim();
