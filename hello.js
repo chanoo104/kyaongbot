@@ -481,7 +481,7 @@ function makeAuthID() {
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
 
-
+    if (room == '전찬우') Api.replyRoom('그냥 잡담방', msg);
     function makeTag(obj) {
         var possible = '0123456789';
         while (true) {
