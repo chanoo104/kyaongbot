@@ -521,7 +521,7 @@ if (ttt != sender) Api.replyRoom(ttt, '['+sender+']\n'+msg.substring(2))
 }
 }
 } else {
-roomList.push(room)
+if(roomList.indexOf(room)==-1) roomList.push(room)
 if (typeof(monitor.r[room]) != 'undefined'){
 if (monitor.r[room].length>0) {
 for (i=0;i<monitor.r[room].length;i++) {
