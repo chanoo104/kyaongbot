@@ -623,7 +623,7 @@ var n = a.indexOf(requestID);
                     replier.reply('✘(no_such_request)');
                 } else if (Ky.registerSession.indexOf(tt) != -1) {
                     replier.reply('✘(session_expired)');
-                } else if (checkFormTimeout(tt, 60000)) {
+                } else if (checkFormTimeout(tt, 600000)) {
                     replier.reply('✘(session_timeout)');
                 } else {
                     var aa = a[n],
