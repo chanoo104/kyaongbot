@@ -996,11 +996,11 @@ str += '\n  ';
                     break tag;
                 }
                 if (input.indexOf('&productSeqList=') != -1 && input.indexOf('&quantityList=') != -1) {
-                    var pList = msg.split('&productSeqList=')[1].split('&')[0].split(',');
-                    var pCount = msg.split('&quantityList=')[1].split('&')[0].split(',');
+                    var pList = input.split('&productSeqList=')[1].split('&')[0].split(',');
+                    var pCount = input.split('&quantityList=')[1].split('&')[0].split(',');
                 } else if (input.indexOf('?productSeq=') != -1 && input.indexOf('&count=') != -1) {
-                    var pList = msg.split('?productSeq=')[1].split('&')[0].split(',');
-                    var pCount = msg.split('&count=')[1].split('&')[0].split(',');
+                    var pList = input.split('?productSeq=')[1].split('&')[0].split(',');
+                    var pCount = input.split('&count=')[1].split('&')[0].split(',');
                 } else {
                     replier.reply('잘못된 URL입니다.');
                     break tag;
@@ -1077,30 +1077,48 @@ str += '\n  ';
                             }
                         }
                     }
-                    var carr23 = compareArray(arr2, arr3);
-                    var carr24 = compareArray(arr2, arr4);
-                    var carr25 = compareArray(arr2, arr5);
+                    var carr23 = compareArray(arr2, arr3),
+                        carr24 = compareArray(arr2, arr4),
+                        carr25 = compareArray(arr2, arr5);
 
                     function sum(array) {
                         var result = 0.0;
-                        for (var i = 0; i < array.length; i++)
+                        for (var i = 0; i < array.length; i++) {
                             result += Number(array[i] * pCount[i]);
+                        }
                         return result;
                     }
 
-                    var sum2 = sum(arr2),
-                        sum3 = sum(arr3),
+                    var sum2 = 0.0;
+                    for (var i = 0; i < arr2.length; i++) {
+                        if (arr2[i] == 0) {
+                            var tt = arr5[i]
+                        } else var tt = arr2[i]
+                        sum2 += Number(tt * pCount[i]);
+                    }
+
+                    var sum22 = sum(arr2);
+
+                    var sum3 = sum(arr3),
                         sum4 = sum(arr4),
                         sum5 = sum(arr5);
 
-                    var str = '[ ';
-
-                    str += (sum2 + ' → ' + sum5 + ' ]\n(' + String(compareNumber(sum2, sum5)) + ' / ' + String(sum5 - sum2) + ')' + blank);
+                    var str = '[ ' + sum2;
+                    if (sum22 == sum2) str += '*';
+                    str += (' → ' + sum5 + ' ]\n(' + String(compareNumber(sum2, sum5)) + ' / ' + String(sum5 - sum2) + ')' + blank);
                     for (i = 0; i < arr3.length; i++) {
+                        if (arr2[i] == 0) str += '*';
                         str += arr1[i] + '\n ';
                         str += pCount[i] + 'x ' + arr6[i] + ' ' + (arr5[i] * pCount[i]) + ' (' + carr25[i] + ' / ' + String((arr5[i] - arr2[i]) * pCount[i]) + ')\n';
                     }
-                    str += '\n\n\n';
+                    str += '\n\n';
+                    str += '견적: ' + sum2 
+                    if (sum22 != sum2) str += '(' + sum22 + ')';
+                    str += '\n오픈: ' + sum3;
+                    if (arr3.indexOf('0')) str += '*'
+                    str += '\n현금: ' + sum4;
+                    if (arr4.indexOf('0')) str += '*'
+                    str += '\n\n';
                     for (i = 0; i < arr3.length; i++) {
                         str += arr1[i] + ' 》 ' + arr2[i] + '\n| ';
                         str += arr3[i] + '(' + carr23[i] + ')  ' + arr4[i] + '(' + carr24[i] + ')\n';
