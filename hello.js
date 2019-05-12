@@ -260,6 +260,7 @@ function getMarketData(requester) {
                         Ky.marketSession.push(a[0]);
                     } else {
                         log.push('등록 실패 | PW 불일치 | ' + a[4]);
+                        Ky.marketSession.push(a[0]);
                     }
                 }
             }
@@ -598,7 +599,7 @@ Api.replyRoom(monitor.r[room][i], '['+sender+']\n'+msg)
             Ky.user[pcode].lastNameAll = sender;
         }
 function checkFormTimeout(t, ms) {
-if ((new Date().getTime() - moment(t.replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss").format('x')) > ms) {
+if ((new Date().getTime() - moment(t.replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss").add(9,'h').format('x')) > ms) {
 return true;
 } else return false;
 }
@@ -610,7 +611,7 @@ return true;
             } else if (Object.keys(Ky.userID).indexOf(requestID) != -1) {
                 replier.reply('✘(existing_username)');
             } else {
-                var formArray = getRegisterData(msg.substring(6));
+                var formArray = getRegisterData();
                 var a = formArray[1];
                 var b = formArray[2];
                 var c = formArray[3];
@@ -671,7 +672,7 @@ var n = a.indexOf(requestID);
             } else if (Object.keys(Ky.userID).indexOf(requestID) == -1) {
                 replier.reply('✘(no_such_username)');
             } else {
-                var formArray = getLoginData(msg.substring(5));
+                var formArray = getLoginData();
                 var formID = formArray[0];
                 var formPW = formArray[1];
                 var t = formArray[2];
@@ -756,7 +757,7 @@ var n = a.indexOf(requestID);
                 } else {
                     for (i = 0; i < data[0].length; i++) {
                         //날짜
-                        var time = moment(data[0][i][0].replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss")
+                        var time = moment(data[0][i][0].replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss").add(9,'h')
                         //삽니다팝니다
                         if (data[0][i][3] == '팝니다') {
                             var asdf = 0;
