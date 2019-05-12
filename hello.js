@@ -860,7 +860,7 @@ str += '\n  ';
 
         if (Ky[room].memArray.indexOf(Ky[room].memCheck) == -1) {
             if (Ky[room].memOn == true) {
-                replier.reply('[자동응답]\n■■■■■■■■■■■■\n' + sender + '님 어서오세요!\n모바일은 우측상단 메뉴열고\nPC는 채팅창 맨위 방제아래\n하트버튼을 채워주세요!\n■■■■■■■■■■■■');
+                replier.reply('[자동응답]\n■■■■■■■■■■■■\n' + sender + '님 어서오세요!\n모바일은 우측상단 메뉴열고\nPC는 채팅창 맨위 방제아래\n하트버튼을 채워주세요!');
             }
             Ky[room].memArray.push(Ky[room].memCheck);
         }
@@ -1303,7 +1303,7 @@ str += '\n  ';
                             pDetail += '\n'
                         }
 
-                        replier.reply('[ ' + pName + ' ]' + '\n최저가: ' + pPriceOpen + '\n현금최저가: ' + pPriceCash + ' ' + blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart + pDetail);
+                        replier.reply('[ ' + pName + ' ]\n' + pPriceOpen + ' / ' + pPriceCash + ' ' + blank + 'http://prod.danawa.com/info/?pcode=' + pCode + '\n\n' + pDescription + '\n\n\n' + pRelated + pChart + pDetail);
 
                     } else {
                         replier.reply('잘못된 입력입니다.');
