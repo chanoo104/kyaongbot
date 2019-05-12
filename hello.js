@@ -680,7 +680,7 @@ var n = a.indexOf(requestID);
                     replier.reply('✘(no_such_request)');
                 } else if (Ky.loginSession.indexOf(tt) != -1) {
                     replier.reply('✘(session_expired)');
-                } else if (checkFormTimeout(tt, 30000)) {
+                } else if (checkFormTimeout(tt, 60000)) {
                     replier.reply('✘(session_timeout)');
                 } else {
                     var i = formID[formID.indexOf(requestID)];
