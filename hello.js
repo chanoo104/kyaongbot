@@ -1104,7 +1104,7 @@ str += '\n  ';
                         sum5 = sum(arr5);
 
                     var str = '[ ' + sum2;
-                    if (sum22 == sum2) str += '*';
+                    if (sum22 != sum2) str += '*';
                     str += (' → ' + sum5 + ' ]\n(' + String(compareNumber(sum2, sum5)) + ' / ' + String(sum5 - sum2) + ')' + blank);
                     for (i = 0; i < arr3.length; i++) {
                         if (arr2[i] == 0) str += '*';
