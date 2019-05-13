@@ -805,6 +805,41 @@ str += '\n  ';
             replier.reply(str)
         }
 
+
+        if (msg == '!내상품') {
+            var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
+            var str = '';
+            for (i = 0; i < Ky.market[0].length; i++) {
+                if (Ky.market[0][i] != pcode) continue;
+                str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
+                str += '  ' + Ky.market[5][i] + '원';
+                if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
+str += '\n  ';
+            }
+
+            str += blank;
+
+            for (i = 0; i < Ky.market[0].length; i++) {
+                if (Ky.market[0][i] != pcode) continue;
+                str += Ky.market[1][i] + ' | ';
+                str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
+                str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
+                str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
+                str += '  ' + Ky.market[5][i] + '원';
+                if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
+str += '\n  ';
+                if (!Ky.market[7][i]) {
+                    str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
+                } else {
+                    str += '연락처 : ' + Ky.market[7][i] + '\n';
+                }
+                str += '》 ' + Ky.market[6][i] + '\n\n\n'
+            }
+
+
+            replier.reply(str)
+        }
+
         if (msg.substr(0, 4) == '!끌올 ' || msg.substr(0, 6) == '!상태변경 ' || msg.substr(0, 6) == '!등록해제 ') {
             if (msg.substr(0, 4) == '!끌올 ') var p = msg.substring(4).trim();
             if (msg.substr(0, 6) == '!상태변경 ') var p = msg.substring(6).trim();
