@@ -811,10 +811,8 @@ str += '\n  ';
             var str = '';
             for (i = 0; i < Ky.market[0].length; i++) {
                 if (Ky.market[0][i] != pcode) continue;
-                str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
-                str += '  ' + Ky.market[5][i] + '원';
-                if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
-str += '\n  ';
+                if (Ky.market[3][i] != 0 && Ky.market[3][i] != 1) continue;
+                str += '[' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
             }
 
             str += blank;
