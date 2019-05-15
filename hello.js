@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'dd';
+var uCode = '으d으';
 
 
 
@@ -839,7 +839,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             replier.reply(str)
         }
 
-        if (msg.substr(0, 4) == '!끌올 ' || msg.substr(0, 6) == '!상태변경 ' || msg.substr(0, 6) == '!등록해제 ') {
+        if (msg.substr(0, 4) == '!끌올 ' || msg.substr(0, 6) == '!상태변경 ' || msg.substr(0, 6) == '!등록해제 ' || msg.substr(0, 6) == '!가격변경 ') {
             if (msg.substr(0, 4) == '!끌올 ') var p = msg.substring(4).trim();
             if (msg.substr(0, 6) == '!상태변경 ') var p = msg.substring(6).trim();
             if (msg.substr(0, 6) == '!등록해제 ') var p = msg.substring(6).trim();
@@ -874,8 +874,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     }
 
                     if (msg.substr(0, 6) == '!가격변경 ') {
-                        if (q.match(/^[1-9][0-9]*$/g)) {
-                            if (q>499) {
+                        if (q.match(/^[1-9][0-9]*$/g || q==0)) {
+                            if (q>499 || q==0) {
                                 Ky.market[5][t] = String(q);
                                 replier.reply('✔');
                             } else replier.reply('✘(단위는 KRW입니다)')
