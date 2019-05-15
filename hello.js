@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '으d으';
+var uCode = 'dd';
 
 
 
@@ -478,14 +478,14 @@ function makeAuthID() {
 
 
 var monitor = {
-m: {},
-r: {}
+    m: {},
+    r: {}
 }
 var roomList = []
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
 
-        function makeTag(obj) {
+    function makeTag(obj) {
         var possible = '0123456789';
         while (true) {
             var text = '';
@@ -496,42 +496,42 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
     }
 
     try {
-if (!isGroupChat) {
+        if (!isGroupChat) {
 
-monitor.m[sender] = monitor.m[sender] || {}
-if (msg == '!리스트') replier.reply(roomList.join('\n'));
-if (msg.substr(0,6) == '!모니터링 '){
-if (monitor.m[sender].target) monitor.r[monitor.m[sender].target].splice(monitor.r[monitor.m[sender].target].indexOf(sender),1)
-monitor.m[sender].target = roomList[msg.substring(6)-1];
-monitor.r[monitor.m[sender].target] = monitor.r[monitor.m[sender].target] || [];
-monitor.r[monitor.m[sender].target].push(sender)
-replier.reply(monitor.m[sender].target)
-}
-if (msg == '!중단') {
-if (monitor.m[sender].target) {
-monitor.r[monitor.m[sender].target].splice(monitor.r[monitor.m[sender].target].indexOf(sender),1)
-delete monitor.m[sender].target
-replier.reply('성공')
-}
-}
-if (msg.split(' ')[0] == '.' && monitor.m[sender].target) {
-Api.replyRoom(monitor.m[sender].target, '['+sender+']\n'+(msg.substring(2)))
-for (i=0;i<monitor.r[monitor.m[sender].target].length;i++) {
-var ttt = monitor.r[monitor.m[sender].target][i];
-if (ttt != sender) Api.replyRoom(ttt, '['+sender+']\n'+msg.substring(2))
-}
-}
-} else {
-if(roomList.indexOf(room)==-1) roomList.push(room)
-if (typeof(monitor.r[room]) != 'undefined'){
-if (monitor.r[room].length>0) {
-for (i=0;i<monitor.r[room].length;i++) {
-Api.replyRoom(monitor.r[room][i], '['+sender+']\n'+msg)
-}
-}
-}
+            monitor.m[sender] = monitor.m[sender] || {}
+            if (msg == '!리스트') replier.reply(roomList.join('\n'));
+            if (msg.substr(0, 6) == '!모니터링 ') {
+                if (monitor.m[sender].target) monitor.r[monitor.m[sender].target].splice(monitor.r[monitor.m[sender].target].indexOf(sender), 1)
+                monitor.m[sender].target = roomList[msg.substring(6) - 1];
+                monitor.r[monitor.m[sender].target] = monitor.r[monitor.m[sender].target] || [];
+                monitor.r[monitor.m[sender].target].push(sender)
+                replier.reply(monitor.m[sender].target)
+            }
+            if (msg == '!중단') {
+                if (monitor.m[sender].target) {
+                    monitor.r[monitor.m[sender].target].splice(monitor.r[monitor.m[sender].target].indexOf(sender), 1)
+                    delete monitor.m[sender].target
+                    replier.reply('성공')
+                }
+            }
+            if (msg.split(' ')[0] == '.' && monitor.m[sender].target) {
+                Api.replyRoom(monitor.m[sender].target, '[' + sender + ']\n' + (msg.substring(2)))
+                for (i = 0; i < monitor.r[monitor.m[sender].target].length; i++) {
+                    var ttt = monitor.r[monitor.m[sender].target][i];
+                    if (ttt != sender) Api.replyRoom(ttt, '[' + sender + ']\n' + msg.substring(2))
+                }
+            }
+        } else {
+            if (roomList.indexOf(room) == -1) roomList.push(room)
+            if (typeof (monitor.r[room]) != 'undefined') {
+                if (monitor.r[room].length > 0) {
+                    for (i = 0; i < monitor.r[room].length; i++) {
+                        Api.replyRoom(monitor.r[room][i], '[' + sender + ']\n' + msg)
+                    }
+                }
+            }
 
-}
+        }
         msg = msg.trim();
         room = room.trim();
         sender = sender.trim();
@@ -598,11 +598,12 @@ Api.replyRoom(monitor.r[room][i], '['+sender+']\n'+msg)
             Ky.user[pcode].lastName[room] = sender;
             Ky.user[pcode].lastNameAll = sender;
         }
-function checkFormTimeout(t, ms) {
-if ((new Date().getTime() - moment(t.replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss").add(9,'h').format('x')) > ms) {
-return true;
-} else return false;
-}
+
+        function checkFormTimeout(t, ms) {
+            if ((new Date().getTime() - moment(t.replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss").add(9, 'h').format('x')) > ms) {
+                return true;
+            } else return false;
+        }
 
         if (msg.substr(0, 6) == '!회원가입 ') {
             var requestID = msg.substring(6).trim();
@@ -618,7 +619,7 @@ return true;
                 var d = formArray[4];
                 var e = formArray[5];
                 var t = formArray[0]
-var n = a.indexOf(requestID);
+                var n = a.indexOf(requestID);
                 var tt = t[n]
                 if (a.indexOf(requestID) == -1) {
                     replier.reply('✘(no_such_request)');
@@ -757,7 +758,7 @@ var n = a.indexOf(requestID);
                 } else {
                     for (i = 0; i < data[0].length; i++) {
                         //날짜
-                        var time = moment(data[0][i][0].replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss").add(9,'h')
+                        var time = moment(data[0][i][0].replace('오전', 'AM').replace('오후', 'PM'), "YYYY.MM.DD A hh:mm:ss").add(9, 'h')
                         //삽니다팝니다
                         if (data[0][i][3] == '팝니다') {
                             var asdf = 0;
@@ -794,7 +795,7 @@ var n = a.indexOf(requestID);
                 str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
                 str += '  ' + Ky.market[5][i] + '원';
                 if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
-str += '\n  ';
+                str += '\n  ';
                 if (!Ky.market[7][i]) {
                     str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
                 } else {
@@ -825,7 +826,7 @@ str += '\n  ';
                 str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
                 str += '  ' + Ky.market[5][i] + '원';
                 if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
-str += '\n  ';
+                str += '\n  ';
                 if (!Ky.market[7][i]) {
                     str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
                 } else {
@@ -842,6 +843,10 @@ str += '\n  ';
             if (msg.substr(0, 4) == '!끌올 ') var p = msg.substring(4).trim();
             if (msg.substr(0, 6) == '!상태변경 ') var p = msg.substring(6).trim();
             if (msg.substr(0, 6) == '!등록해제 ') var p = msg.substring(6).trim();
+            if (msg.substr(0, 6) == '!가격변경 ') {
+                var p = msg.split(' ')[1];
+                var q = msg.split(' ')[2];
+            }
 
             var t = Ky.market[1].indexOf(p);
             if (t == -1) {
@@ -855,21 +860,30 @@ str += '\n  ';
                         pullTop(Ky.market, t);
                         replier.reply('✔');
                     }
-    
+
                     if (msg.substr(0, 6) == '!상태변경 ') {
-                        if (Ky.market[3][t]%2 < 2) {
-                            Ky.market[3][t]+=2;
-                        } else Ky.market[3][t] -=2;
+                        if (Ky.market[3][t] % 2 < 2) {
+                            Ky.market[3][t] += 2;
+                        } else Ky.market[3][t] -= 2;
                         replier.reply('✔');
                     }
-    
+
                     if (msg.substr(0, 6) == '!등록해제 ') {
                         deleteColumn(Ky.market, t);
                         replier.reply('✔');
                     }
 
+                    if (msg.substr(0, 6) == '!가격변경 ') {
+                        if (q.match(/^[1-9][0-9]*$/g)) {
+                            if (q>499) {
+                                Ky.market[5][t] = String(q);
+                                replier.reply('✔');
+                            } else replier.reply('✘(단위는 KRW입니다)')
+                        } else replier.reply('✘(자연수만 입력해 주세요)')
+                    }
+
                 }
-            } 
+            }
         }
 
 
@@ -986,7 +1000,7 @@ str += '\n  ';
 
 
         //비활성 호환검사
-        if (msg.indexOf('shop.danawa.com/short') != -1) {
+        if (msg.indexOf('shop.danawa.com/short') != -1 || msg.indexOf('is.gd') != -1) {
             try {
                 var temp = String(org.jsoup.Jsoup.connect(msg).followRedirects(true).execute().url());
                 msg = temp;
@@ -1145,7 +1159,7 @@ str += '\n  ';
                         str += pCount[i] + 'x ' + arr6[i] + ' ' + (arr5[i] * pCount[i]) + ' (' + carr25[i] + ' / ' + String((arr5[i] - arr2[i]) * pCount[i]) + ')\n';
                     }
                     str += '\n\n';
-                    str += '견적: ' + sum2 
+                    str += '견적: ' + sum2
                     if (sum22 != sum2) str += '(' + sum22 + ')';
                     str += '\n오픈: ' + sum3;
                     if (arr3.indexOf('0')) str += '*'
@@ -1400,7 +1414,7 @@ str += '\n  ';
                         break loop;
                     }
                 }
-                replier.reply('http://micro.danawa.com/product/wishList?productSeq=' + est.code.join([separator = ',']) + '&count=' + est.quan.join([separator = ',']));
+                replier.reply(shortURL('http://micro.danawa.com/product/wishList?productSeq=' + est.code.join([separator = ',']) + '&count=' + est.quan.join([separator = ','])));
             }
         }
 
@@ -1434,7 +1448,7 @@ str += '\n  ';
         //네이버
         c = '!네이버';
         if (msg.substr(0, c.length + 1) == c + ' ') {
-            replier.reply('https://search.naver.com/search.naver?query=' + encodeURI(msg.substring(c.length + 1)))
+            replier.reply(shortURL('https://search.naver.com/search.naver?query=' + encodeURI(msg.substring(c.length + 1))));
         }
 
         //구글
