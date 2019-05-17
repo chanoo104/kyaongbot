@@ -4,7 +4,9 @@ eval(DataBase.getDataBase('moment'));
 
 var uCode = '으d으';
 
-
+let charge = true;
+let batteryOK = true;
+let backupCount = 0;
 
 
 
@@ -417,7 +419,7 @@ function compareArray(arr1, arr2) {
 
 
 
-let Ky = JSON.parse(DataBase.getDataBase('memCheck')) || new Object();
+let Ky = JSON.parse(DataBase.getDataBase('KyBot')) || new Object();
 let counter = JSON.parse(DataBase.getDataBase('counterDB')) || new Object();
 
 Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8_Jwh-bT7IY9unKU_OZhrO-GzRJo/htmlview#gid=735564299';
@@ -1608,14 +1610,49 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         }
 
 
+        //배터리 경고
+        if (!Device.isCharging() && charge) {
+            replier.reply('[시스템 메세지]\nisCharging == false')
+            charge == false;
+        };
+        if (Device.isCharging() && !charge) {
+            replier.reply('[시스템 메세지]\nisCharging == true')
+            charge == true;
+        };
 
+        if (Device.getBatteryLevel() < 10 && batteryOK) {
+            replier.reply('[시스템 메세지]\nbatteryLevel < 10')
+            charge == false;
+        };
+        if (Device.getBatteryLevel() && !batteryOK) {
+            replier.reply('[시스템 메세지]\nbatteryLevel > 10')
+            charge == true;
+        };
 
+        Device.getBatteryLevel()
 
         //저장
-        DataBase.setDataBase('memCheck', JSON.stringify(Ky));
-        DataBase.setDataBase('counterDB', JSON.stringify(counter));
+        backupCount++;
+        if (backupCount >= 200) {
+            DataBase.setDataBase('KyBot', JSON.stringify(Ky));
+            DataBase.setDataBase('KyBot_backup', JSON.stringify(Ky));
+            backupCount = 0;
+            Api.gc();
+        }
+        
+
+        //백업
 
     } catch (e) {
         replier.reply('스크립트 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
     }
+}
+
+function onStartCompile() {
+	/*컴파일 또는 Api.reload호출시, 컴파일 되기 이전에 호출되는 함수입니다.
+	 *제안하는 용도: 리로드시 자동 백업*/
+    DataBase.setDataBase('KyBot', JSON.stringify(Ky));
+    DataBase.setDataBase('KyBot_compile', JSON.stringify(Ky));
+    DataBase.setDataBase('counterDB', JSON.stringify(counter));
+	Api.gc();
 }
