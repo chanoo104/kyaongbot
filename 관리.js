@@ -21,6 +21,13 @@ UPDATE.saveData = function (msg, code) { //파일에 내용을 저장하는 함�
 };
 
 function response(room, msg, sender, isGroupChat, replier, ImageDB) {
+    if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
+        try {
+            replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
+        } catch (e) {
+            replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+        }
+    }
     if (admin.indexOf(sender) != -1) {
         if (msg == "!봇상태") {
             Sclist = [];
