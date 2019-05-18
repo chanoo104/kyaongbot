@@ -452,11 +452,6 @@ function pullTop(t, n) { //t:2차원객체, n:끌어올릴 열 지정
     }
 }
 
-function getName(p) {
-    if (Ky.user[p].lastName[room]) return Ky.user[p].lastName[room];
-    return Ky.user[p].lastNameAll;
-}
-
 
 
 function checkDetailUrl(data) {
@@ -936,6 +931,12 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             }
         }
 
+        
+        function getName(p) {
+    if (Ky.user[p].lastName[room]) return Ky.user[p].lastName[room];
+    return Ky.user[p].lastNameAll;
+}
+        
         if (msg == '!장터') {
             var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
             var str = '[[장터]]' + blank;
