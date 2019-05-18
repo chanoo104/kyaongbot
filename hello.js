@@ -596,6 +596,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         Ky.r[room].memArray = Ky.r[room].memArray || new Array();
         Ky.r[room].memOn = Ky.r[room].memOn || false;
         Ky.r[room].admin = Ky.r[room].admin || new Array();
+        Ky.r[room].permission = Ky.r[room].permission || new Object();
 
         var hash = String(java.lang.String(imageDB.getProfileImage() + sender).hashCode());
         Ky.r[room].memCheck = hash;
@@ -639,6 +640,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         var pcode;
         var ID;
 
+
         //eval
         if (msg.split(' ')[0] == ',' && sender.indexOf('rgb') != -1) {
             try {
@@ -653,7 +655,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             login = true;
             pcode = Ky.userHash[hash];
             ID = Ky.user[pcode].ID;
-            permission = Ky.user[pcode].type;
+            permission = Ky.r[room].permission[pcode];
             Ky.user[pcode].lastName = Ky.user[pcode].lastName || new Object();
             Ky.user[pcode].lastName[room] = sender;
             Ky.user[pcode].lastNameAll = sender;
@@ -662,7 +664,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
         if (ID == 'odosk') {
-            Ky.user[pcode].type = 0;
+            Ky.r[room].permission[pcode] = 0;
         }
 
         //다른사람의 권한을 자기보다 한단계 아래까지 올릴수 있음.
@@ -671,10 +673,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (login) {
                 if (userGroup.indexOf(permission) <= userGroup.indexOf('manager')) {
                     if (Object.keys(Ky.userID).indexOf(i) == -1) {
-                        a = Ky.user[Ky.userID[i]].type;
+                        a = Ky.r[room].permission[Ky.userID[i]];
                         if (userGroup.indexOf(a) > userGroup.indexOf(permission) + 1) {
-                            Ky.user[Ky.userID[i]].type = userGroup[userGroup.indexOf(a) - 1];
-                            replier.reply(Ky.user[Ky.userID[i]].type);
+                            Ky.r[room].permission[Ky.userID[i]] = userGroup[userGroup.indexOf(a) - 1];
+                            replier.reply(Ky.r[room].permission[Ky.userID[i]]);
                         } else replier.reply('error:permission_lacking');
                     }
                 }
@@ -685,11 +687,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (login) {
                 if (userGroup.indexOf(permission) <= userGroup.indexOf('manager')) {
                     if (Object.keys(Ky.userID).indexOf(i) == -1) {
-                        a = Ky.user[Ky.userID[i]].type;
+                        a = Ky.r[room].permission[Ky.userID[i]];
                         if (userGroup.indexOf(a) > userGroup.indexOf(permission)) {
                             if (userGroup.indexOf(a) < userGroup.length) {
-                                Ky.user[Ky.userID[i]].type = userGroup[userGroup.indexOf(a) + 1];
-                                replier.reply(Ky.user[Ky.userID[i]].type);
+                                Ky.r[room].permission[Ky.userID[i]] = userGroup[userGroup.indexOf(a) + 1];
+                                replier.reply(Ky.r[room].permission[Ky.userID[i]]);
                             } else replier.reply('error:lastIndex')
                         } else replier.reply('error:permission_lacking');
                     }
