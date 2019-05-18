@@ -672,7 +672,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             i = msg.substring(9);
             if (login) {
                 if (userGroup.indexOf(permission) <= userGroup.indexOf('manager')) {
-                    if (Object.keys(Ky.userID).indexOf(i) == -1) {
+                    if (Object.keys(Ky.userID).indexOf(i) != -1) {
                         a = Ky.r[room].permission[Ky.userID[i]];
                         if (userGroup.indexOf(a) > userGroup.indexOf(permission) + 1) {
                             Ky.r[room].permission[Ky.userID[i]] = userGroup[userGroup.indexOf(a) - 1];
@@ -686,7 +686,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             i = msg.substring(8);
             if (login) {
                 if (userGroup.indexOf(permission) <= userGroup.indexOf('manager')) {
-                    if (Object.keys(Ky.userID).indexOf(i) == -1) {
+                    if (Object.keys(Ky.userID).indexOf(i) != -1) {
                         a = Ky.r[room].permission[Ky.userID[i]];
                         if (userGroup.indexOf(a) > userGroup.indexOf(permission)) {
                             if (userGroup.indexOf(a) < userGroup.length) {
