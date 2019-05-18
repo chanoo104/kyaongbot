@@ -640,7 +640,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         var ID;
 
         //eval
-        if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
+        if (msg.split(' ')[0] == ',' && sender.indexOf('rgb') != -1) {
             try {
                 replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
             } catch (e) {
@@ -1889,6 +1889,15 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
         //백업
+
+        //eval
+        if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
+            try {
+                replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
+            } catch (e) {
+                replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+            }
+        }
 
 
     } catch (e) {
