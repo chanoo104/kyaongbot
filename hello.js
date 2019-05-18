@@ -828,7 +828,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             }
 
         }
-        if (login) Ky.user[pcode].type = Ky.user[pcode].type || userGroup[userGroup.length - 1];
 
 
         if (msg.substr(0, 5) == '!로그인 ') {
@@ -1880,6 +1879,12 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             DataBase.setDataBase('KyBot_backup', JSON.stringify(Ky));
             backupCount = 0;
             Api.gc();
+        }
+
+        Ky.backupDay = Ky.backupDay || new Date().getDate();
+        if (new Date().getDate() != Ky.backupDay) {
+            Ky.backupDay = new Date().getDate();
+            DataBase.setDataBase('KyBot_' + Ky.backupDay, JSON.stringify(Ky));
         }
 
 
