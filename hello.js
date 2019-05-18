@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '으';
+var uCode = '으d으';
 
 let charge = true;
 let batteryOK = true;
@@ -689,7 +689,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     if (Object.keys(Ky.userID).indexOf(i) != -1) {
                         a = Ky.r[room].permission[Ky.userID[i]];
                         if (userGroup.indexOf(a) > userGroup.indexOf(permission)) {
-                            if (userGroup.indexOf(a) < userGroup.length) {
+                            if (userGroup.indexOf(a) < userGroup.length - 1) {
                                 Ky.r[room].permission[Ky.userID[i]] = userGroup[userGroup.indexOf(a) + 1];
                                 replier.reply(Ky.r[room].permission[Ky.userID[i]]);
                             } else replier.reply('error:lastIndex')
