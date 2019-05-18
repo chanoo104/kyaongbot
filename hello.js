@@ -669,7 +669,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (msg.substr(0, 9) == '.promote ') {
             i = msg.substring(9);
             if (login) {
-                if (userGroup.indexOf(permission) >= userGroup.indexOf('manager')) {
+                if (userGroup.indexOf(permission) <= userGroup.indexOf('manager')) {
                     if (Object.keys(Ky.userID).indexOf(i) == -1) {
                         a = Ky.user[Ky.userID[i]].type;
                         if (userGroup.indexOf(a) > userGroup.indexOf(permission) + 1) {
@@ -683,7 +683,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (msg.substr(0, 8) == '.demote ') {
             i = msg.substring(8);
             if (login) {
-                if (userGroup.indexOf(permission) >= userGroup.indexOf('manager')) {
+                if (userGroup.indexOf(permission) <= userGroup.indexOf('manager')) {
                     if (Object.keys(Ky.userID).indexOf(i) == -1) {
                         a = Ky.user[Ky.userID[i]].type;
                         if (userGroup.indexOf(a) > userGroup.indexOf(permission)) {
@@ -721,7 +721,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         let c, d;
 
         if (login) {
-            if (userGroup.indexOf(permission) >= userGroup.indexOf('manager')) {
+            if (userGroup.indexOf(permission) <= userGroup.indexOf('manager')) {
                 if (msg == '.print') {
                     var char = '';
                     for (i = 0; i < Object.keys(Ky.r[room].command).length; i++) {
