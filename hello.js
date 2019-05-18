@@ -650,6 +650,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             }
         }
 
+        Ky.r[room].permission[pcode] = Ky.r[room].permission[pcode] || userGroup[userGroup.length-1];
+        if (ID == 'odosk') {
+            Ky.r[room].permission[pcode] = userGroup[0];
+        }
+
         //기본상태업데이트등
         if (Object.keys(Ky.userHash).indexOf(hash) != -1) {
             login = true;
@@ -660,13 +665,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             Ky.user[pcode].lastName[room] = sender;
             Ky.user[pcode].lastNameAll = sender;
         }
-
-
-
-        if (ID == 'odosk') {
-            Ky.r[room].permission[pcode] = 0;
-        }
-
+        
         //다른사람의 권한을 자기보다 한단계 아래까지 올릴수 있음.
         if (msg.substr(0, 9) == '.promote ') {
             i = msg.substring(9);
@@ -817,8 +816,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         hash: hash,
                         tag: tt,
                         contactType: ff,
-                        contact: gg,
-                        type: userGroup[userGroup.length - 1]
+                        contact: gg
                     }
                     login = true;
                     Ky.registerSession.push(tt);
