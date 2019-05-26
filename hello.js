@@ -2,12 +2,11 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '으d으';
+var uCode = 'asdf';
 
 let charge = true;
 let batteryOK = true;
 let backupCount = 0;
-
 
 let Ky = JSON.parse(DataBase.getDataBase('KyBot')) || new Object();
 
@@ -18,7 +17,7 @@ let counter = JSON.parse(DataBase.getDataBase('counterDB')) || new Object();
 
 Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8_Jwh-bT7IY9unKU_OZhrO-GzRJo/htmlview#gid=735564299';
 Ky.registerTargetAddress = 'https://docs.google.com/spreadsheets/d/1vMaiOPbDYBCevdHrYUGTh9Y9-xlYr5BMRPLzv0cKZzY/htmlview#gid=1425276477';
-Ky.loginTargetAddress = 'https://docs.google.com/spreadsheets/d/1zf2BTvwBmPYFcLQAvlN4LPzH4QblSn-9dTUkUjivwis/htmlview#gid=1011621269';
+Ky.loginTargetAddress = 'https://docs.google.com/spreadsheets/d/1zf2BTvwBmPYFcLQAvlN4LPzH4QblSn-9dTUkUjivwis/htmlview'
 Ky.marketTargetAddress = 'https://docs.google.com/spreadsheets/d/1sg3CSqT9CGY0QPW38w0FytK0UhqYBGyNW0EPrNycV9w/htmlview#gid=1833799400';
 
 Ky.formTargetRow = 28;
@@ -181,7 +180,7 @@ Room.prototype.sync = function (now) {
         this.db.fill(0);
     } else {
         for (; this.timestamp < now; ++this.timestamp) {
-            this.dbCursor = (this.dbCursor + 1) % Room.DB_CAPACITY;e
+            this.dbCursor = (this.dbCursor + 1) % Room.DB_CAPACITY;
             this.db[this.dbCursor] = 0;
         }
     }
@@ -456,10 +455,7 @@ function pullTop(t, n) { //t:2차원객체, n:끌어올릴 열 지정
     }
 }
 
-function getName(p) {
-    if (Ky.user[p].lastName[room]) return Ky.user[p].lastName[room];
-    return Ky.user[p].lastNameAll;
-}
+
 
 
 
@@ -526,7 +522,7 @@ function checkFeed() {
 
     //reddit buildapcsales
     var doc = org.jsoup.Jsoup.connect('https://www.reddit.com/r/buildapcsales/new/.rss').get().select('entry')
-    for (i=0; i<doc.size(); i++) {
+    for (i = 0; i < doc.size(); i++) {
         var title = doc.get(i).select('title').text();
         var link = doc.get(i).select('link').attr('href');
         if (Ky.feedContainer.indexOf(link) != -1) break;
@@ -537,12 +533,24 @@ function checkFeed() {
 
     //cooln
     var doc = org.jsoup.Jsoup.connect('http://coolenjoy.net/rss?bo_table=jirum').get().select('item')
-    for (i=0; i<doc.size(); i++) {
+    for (i = 0; i < doc.size(); i++) {
         var title = doc.get(i).select('title').text();
-        var link = doc.get(i).select('link').text();
+        var link = 'http://coolenjoy.net/bbs/jirum/' + doc.get(i).select('link').text().split('id=')[1];
         if (Ky.feedContainer.indexOf(link) != -1) break;
-        var content = (''+android.text.Html.fromHtml(org.jsoup.Jsoup.connect('http://coolenjoy.net/rss?bo_table=jirum').get().select('item').get(0).select('description').text())).replace(/\n\n/g, '\n')
+        Ky.feedContainer.push(link);
+        var content = ('' + android.text.Html.fromHtml(org.jsoup.Jsoup.connect('http://coolenjoy.net/rss?bo_table=jirum').get().select('item').get(i).select('description').text())).replace(/\n\n/g, '\n')
         returnContainer.push([title, link, content]);
+    }
+
+    //해뽐
+    var doc = org.jsoup.Jsoup.connect('https://cox.kr/widgets/widget.php?widget_id=demo&bo_table=rss&wr_id=354').header("Referer", "https://cox.kr/widgets/widget.php?widget_id=demo&bo_table=rss&wr_id=354").get().select('li')
+    for (i = 0; i < doc.size(); i++) {
+        var title = doc.get(i).select('a').text();
+        var link = doc.get(i).select('a').attr('href');
+        if (Ky.feedContainer.indexOf(link) != -1) break;
+        Ky.feedContainer.push(link);
+        var content = doc.get(i).select('.rss-content').text().trim();
+        returnContainer.push([title, link, content])
     }
 
     return returnContainer;
@@ -580,6 +588,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (obj[String(text)] === undefined) break;
         }
         return String(text);
+    }
+
+    function getName(p) {
+        if (Ky.user[p].lastName[room]) return Ky.user[p].lastName[room];
+        return Ky.user[p].lastNameAll;
     }
 
     try {
@@ -626,29 +639,50 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         let startCheck;
         if (firstLoad) {
-    
+            replier.reply('reloaded!');
             startCheck = makeAuthID();
             DataBase.setDataBase('Ky_compileID', JSON.stringify(startCheck));
-            
-            new java.lang.Thread({
-                run: function () { 
-                    while (true) {
-                        if (startCheck != JSON.parse(DataBase.getDataBase('Ky_compileID'))) break loop;
-                        java.lang.Thread.sleep(60000);
-                        let feed = checkFeed();
-                        if (feed.length != 0 && feedSubList.length != 0) {
-                            for (x=0; x<feed.length; x++) {
-                            let feedString = feed[x][0]
+            firstLoad = false;
+
+            while (true) {
+                //break;
+                if (startCheck != JSON.parse(DataBase.getDataBase('Ky_compileID'))) break;
+
+                
+                java.lang.Thread.sleep(180000 + Math.floor(Math.random() * 180000));
+
+
+                let feed = checkFeed();
+                if (firstLoad) {
+                    firstLoad = false;
+                    continue;
+                }
+
+                if (feed.length != 0 && Ky.feedSubList.length != 0) {
+                    if (feed.length < 5) {
+                        for (x = 0; x < feed.length; x++) {
+                            let feedString = feed[x][0];
                             feedString += blank + feed[x][1] + '\n\n\n' + feed[x][2]
-                                for (y=0; y<feedSubList.length; y++) {
-                                    Api.replyRoom(feedSubList[y], feedString)
-                                }
+                            for (y = 0; y < Ky.feedSubList.length; y++) {
+                                Api.replyRoom(Ky.feedSubList[y], feedString);
                             }
+                        }
+                    } else {
+                        let feedString = '[[최신특가 모아보기]]'
+                        feedString += blank;
+                        for (x = 0; x < feed.length; x++) {
+                            feedString += feed[x][0] + '\n\n';
+                            feedString += feed[x][1] + '\n\n' + feed[x][2] + '\n';
+                            feedString += 'ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ' + '\n'
+                        }
+                        for (y = 0; y < Ky.feedSubList.length; y++) {
+                            Api.replyRoom(Ky.feedSubList[y], feedString);
                         }
                     }
                 }
-            }).start();
-    
+
+
+            }
         }
 
         if (room[0] != '●' && room[0] != '■') return;
@@ -825,8 +859,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 }
                 if (msg == '.unsub') {
                     if (Ky.feedSubList.indexOf(room) != -1) {
-                      Ky.feedSubList.splice(Ky.feedSubList.indexOf(room));
-                      replier.reply('✔');
+                        Ky.feedSubList.splice(Ky.feedSubList.indexOf(room));
+                        replier.reply('✔');
                     } else replier.reply('already unsubbed')
                 }
 
@@ -1046,7 +1080,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 if (Ky.market[3][i] != 0 && Ky.market[3][i] != 1) continue;
                 str += '[' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
             }
-
+            str = str.slice(0, -1);
             str += blank;
 
             for (i = 0; i < Ky.market[0].length; i++) {
@@ -1063,7 +1097,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 } else {
                     str += '연락처 : ' + Ky.market[7][i] + '\n';
                 }
-                str += '》 ' + Ky.market[6][i] + '\n\n\n'
+                str += '》 ' + Ky.market[6][i] + '\n';
+                str += 'ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ' + '\n';
             }
 
 
@@ -1934,7 +1969,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             replier.reply('[시스템 메세지]\nbatteryLevel < 10')
             batteryOK = false;
         };
-        if (Device.getBatteryLevel() && !batteryOK) {
+        if (Device.getBatteryLevel() >= 10 && !batteryOK) {
             replier.reply('[시스템 메세지]\nbatteryLevel > 10')
             batteryOK = true;
         };
