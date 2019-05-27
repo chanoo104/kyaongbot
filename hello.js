@@ -525,7 +525,7 @@ function checkFeed(debug) {
 
     //reddit buildapcsales
     try {
-        var doc = org.jsoup.Jsoup.connect('https://www.reddit.com/r/buildapcsales/new/.rss').header('User-Agent', redditHeader).get().select('entry');
+        var doc = org.jsoup.Jsoup.connect('https://www.reddit.com/r/buildapcsales/new/.rss').header('User-Agent', Ky.redditHeader).get().select('entry');
         for (i = 0; i < doc.size(); i++) {
             var title = doc.get(i).select('title').text();
             var link = doc.get(i).select('link').attr('href');
