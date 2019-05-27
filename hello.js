@@ -1182,7 +1182,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
         //자동응답
-        if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply(sender + "님, 앱에서 견적 공유시 카카오톡보내기 대신 URL복사를 사용해주세요. PC버전에서 안보여요.");
+        if (msg.indexOf("[다나와 PC견적]") >= 0) replier.reply(String.fromCharCode(0) + sender + "님, 앱에서 견적 공유시 카카오톡보내기 대신 URL복사를 사용해주세요. PC버전에서 안보여요.");
 
         if (Ky.r[room].admin.length == 0 && msg == '!등록') {
             Ky.r[room].admin.push(Ky.r[room].memCheck);
@@ -1655,7 +1655,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                             break loop;
                         }
                     }
-                    replier.reply(shortURL('http://micro.danawa.com/product/wishList?productSeq=' + est.code.join([separator = ',']) + '&count=' + est.quan.join([separator = ','])));
+                    replier.reply('a.co■견적생성■\n' + shortURL('http://micro.danawa.com/product/wishList?productSeq=' + est.code.join([separator = ',']) + '&count=' + est.quan.join([separator = ','])));
                 }
             }
         }
