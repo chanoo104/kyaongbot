@@ -1850,6 +1850,12 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         ///////////////////////잡다한기능//////////////////////
 
+if (msg.indexOf('소라고둥') != -1) {
+var ran = Math.floor(Math.random())
+if (ran == 0) replier.reply('돼')
+if (ran == 1) replier.reply('안돼')
+}
+
         com: {
             var c = '날씨';
             var a = 'all';
