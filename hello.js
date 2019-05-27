@@ -529,7 +529,7 @@ function checkFeed(debug) {
         for (i = 0; i < doc.size(); i++) {
             var title = doc.get(i).select('title').text();
             var link = doc.get(i).select('link').attr('href');
-            if (Ky.feedContainer.indexOf(link) != -1) break;
+            if (Ky.feedContainer.lastIndexOf(link) != -1) break;
             var content = org.jsoup.Jsoup.parse(doc.get(i).select('content').text()).select('a').get(1).attr('href')
             if (!debug) {
                 Ky.feedContainer.push(link);
@@ -546,7 +546,7 @@ function checkFeed(debug) {
         for (i = 0; i < doc.size(); i++) {
             var title = doc.get(i).select('title').text();
             var link = 'http://coolenjoy.net/bbs/jirum/' + doc.get(i).select('link').text().split('id=')[1];
-            if (Ky.feedContainer.indexOf(link) != -1) break;
+            if (Ky.feedContainer.lastIndexOf(link) != -1) break;
             var content = ('' + android.text.Html.fromHtml(org.jsoup.Jsoup.connect('http://coolenjoy.net/rss?bo_table=jirum').get().select('item').get(i).select('description').text())).replace(/\n\n/g, '\n');
             if (!debug) {
                 Ky.feedContainer.push(link);
@@ -563,7 +563,7 @@ function checkFeed(debug) {
         for (i = 0; i < doc.size(); i++) {
             var title = doc.get(i).select('a').text();
             var link = doc.get(i).select('a').attr('href');
-            if (Ky.feedContainer.indexOf(link) != -1) break;
+            if (Ky.feedContainer.lastIndexOf(link) != -1) break;
             var content = doc.get(i).select('.rss-content').text().trim();
             if (!debug) {
                 Ky.feedContainer.push(link);
