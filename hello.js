@@ -573,7 +573,7 @@ function checkFeed(debug) {
     } catch (e) {
         if (debug) returnContainer.push('[3]\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message);
     }
-
+    if (debug) if (returnContainer.length == 0) returnContainer = '✔'
     return returnContainer;
 
 }
