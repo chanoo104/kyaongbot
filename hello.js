@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'asdf';
+var uCode = 'reddit';
 
 let charge = true;
 let batteryOK = true;
@@ -521,7 +521,7 @@ function checkFeed() {
     var returnContainer = [];
 
     //reddit buildapcsales
-    var doc = org.jsoup.Jsoup.connect('https://www.reddit.com/r/buildapcsales/new/.rss').get().select('entry')
+    var doc = org.jsoup.Jsoup.connect('https://www.reddit.com/r/buildapcsales/new/.rss').header('User-Agent', 'Googlebot/2.1(+http://www.googlebot.com/bot.html)').get().select('entry');
     for (i = 0; i < doc.size(); i++) {
         var title = doc.get(i).select('title').text();
         var link = doc.get(i).select('link').attr('href');
@@ -538,12 +538,12 @@ function checkFeed() {
         var link = 'http://coolenjoy.net/bbs/jirum/' + doc.get(i).select('link').text().split('id=')[1];
         if (Ky.feedContainer.indexOf(link) != -1) break;
         Ky.feedContainer.push(link);
-        var content = ('' + android.text.Html.fromHtml(org.jsoup.Jsoup.connect('http://coolenjoy.net/rss?bo_table=jirum').get().select('item').get(i).select('description').text())).replace(/\n\n/g, '\n')
+        var content = ('' + android.text.Html.fromHtml(org.jsoup.Jsoup.connect('http://coolenjoy.net/rss?bo_table=jirum').get().select('item').get(i).select('description').text())).replace(/\n\n/g, '\n');
         returnContainer.push([title, link, content]);
     }
 
     //해뽐
-    var doc = org.jsoup.Jsoup.connect('https://cox.kr/widgets/widget.php?widget_id=demo&bo_table=rss&wr_id=354').header("Referer", "https://cox.kr/widgets/widget.php?widget_id=demo&bo_table=rss&wr_id=354").get().select('li')
+    var doc = org.jsoup.Jsoup.connect('https://cox.kr/widgets/widget.php?widget_id=demo&bo_table=rss&wr_id=354').header("Referer", "https://cox.kr/widgets/widget.php?widget_id=demo&bo_table=rss&wr_id=354").get().select('li');
     for (i = 0; i < doc.size(); i++) {
         var title = doc.get(i).select('a').text();
         var link = doc.get(i).select('a').attr('href');
