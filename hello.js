@@ -28,9 +28,6 @@ const blank = "\u202D".repeat(1000) + '\n\n\n';
 let userGroup = ['admin', 'manager', 'moderator', 'member'];
 
 ThreadManager = new Object();
-const blank = "\u202D".repeat(1000) + '\n\n\n';
-
-
 
 function grap(a) {
 let log = ''
