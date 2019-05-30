@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'asdsdf';
+var uCode = '111';
 
 let charge = true;
 let batteryOK = true;
@@ -754,9 +754,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         Ky.r[room].recentLog[room].msg = Ky.r[room].recentLog[room].msg || new Array();
         Ky.r[room].recentLog[room].sender = Ky.r[room].recentLog[room].sender || new Array();
 
-        Ky.r[room].feedCounter = Ky.feedCounter || 0;
-        Ky.r[room].feedTimer = Ky.feedTimer || 0;
-        Ky.r[room].feed = Ky.feed || [];
+        Ky.r[room].feedCounter = Ky.r[room].feedCounter || 0;
+        Ky.r[room].feedTimer = Ky.r[room].feedTimer || 0;
+        Ky.r[room].feed = Ky.r[room].feed || [];
 
         Ky.r[room].command = Ky.r[room].command || new Object();
 
