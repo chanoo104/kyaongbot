@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'asdfdsafsdf';
+var uCode = 'asdsdf';
 
 let charge = true;
 let batteryOK = true;
@@ -12,9 +12,7 @@ let Ky = JSON.parse(DataBase.getDataBase('KyBot')) || new Object();
 
 Ky.feedContainer = Ky.feedContainer || new Array();
 Ky.feedSubList = Ky.feedSubList || new Array();
-Ky.feedCounter = Ky.feedCounter || 0;
-Ky.feedTimer = Ky.feedTimer || 0;
-Ky.feed = Ky.feed || [];
+
 
 let counter = JSON.parse(DataBase.getDataBase('counterDB')) || new Object();
 
@@ -739,79 +737,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         sender = sender.trim();
 
 
-        let startCheck;
 
-        Ky.feedCounter++;
-
-        if (firstLoad) {
-            replier.reply('reloaded!');
-            startCheck = makeAuthID();
-            DataBase.setDataBase('Ky_compileID', JSON.stringify(startCheck));
-            firstLoad = false;
-
-            while (true) {
-                //break;
-                if (startCheck != JSON.parse(DataBase.getDataBase('Ky_compileID'))) break;
-
-
-                java.lang.Thread.sleep(540000 + Math.floor(Math.random() * 120000)); //9~11분
-
-                if (firstLoad) {
-                    firstLoad = false;
-                    continue;
-                }
-
-                timeNow = new Date().getTime();
-
-                //채팅이 50개 이상 쌓였으면 그냥 보내기
-                //채팅이 10개이상 50개 미만 쌓였으면 마지막 보낸지 27분이상 지났으면 보내기
-                //채팅이 10개이하 쌓였으면 마지막 보낸지 162분 이상 지났으면 보내기
-
-                //채팅이 10개이상 50개미만이고 마지막으로 보낸지 27분 안지났으면 continue
-                //채팅이 10개미만이고 마지막으로 보낸지 162분 안지났으면 continue
-
-                let feed = checkFeed();
-                if (Ky.feed.length != 0) Ky.feed = Ky.feed.concat(feed);
-
-                if (Ky.feedCounter < 50 && Ky.feedCounter >= 10 && timeNow - Ky.feedTimer < 1620000) {
-                    continue;
-                }
-                if (Ky.feedCounter < 10 && timeNow - Ky.feedTimer < 9720000) {
-                    continue;
-                }
-
-                Ky.feedCounter = 0;
-                Ky.feedTimer = new Date().getTime();
-
-                
-
-                if (Ky.feed.length != 0 && Ky.feedSubList.length != 0) {
-                    if (Ky.feed.length < 4) {
-                        for (x = 0; x < Ky.feed.length; x++) {
-                            var feedString = Ky.feed[x][0];
-                            feedString += blank + Ky.feed[x][1] + '\n\n\n' + Ky.feed[x][2]
-                            for (y = 0; y < Ky.feedSubList.length; y++) {
-                                Api.replyRoom(Ky.feedSubList[y], feedString);
-                            }
-                        }
-                    } else {
-                        var feedString = '[[최신특가 모아보기]]'
-                        feedString += blank;
-                        for (x = 0; x < Ky.feed.length; x++) {
-                            feedString += Ky.feed[x][0] + '\n\n';
-                            feedString += Ky.feed[x][1] + '\n\n' + Ky.feed[x][2] + '\n';
-                            feedString += 'ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ' + '\n'
-                        }
-                        for (y = 0; y < Ky.feedSubList.length; y++) {
-                            Api.replyRoom(Ky.feedSubList[y], feedString);
-                        }
-                    }
-                }
-
-                Ky.feed = [];
-
-            }
-        }
 
         if (room[0] != '●' && room[0] != '■') return;
         Ky.r = Ky.r || new Object();
@@ -828,6 +754,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         Ky.r[room].recentLog[room].msg = Ky.r[room].recentLog[room].msg || new Array();
         Ky.r[room].recentLog[room].sender = Ky.r[room].recentLog[room].sender || new Array();
 
+        Ky.r[room].feedCounter = Ky.feedCounter || 0;
+        Ky.r[room].feedTimer = Ky.feedTimer || 0;
+        Ky.r[room].feed = Ky.feed || [];
 
         Ky.r[room].command = Ky.r[room].command || new Object();
 
@@ -863,6 +792,88 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         var pcode;
         var ID;
 
+        let startCheck;
+
+        Ky.r[room].feedCounter++;
+
+        if (firstLoad) {
+            replier.reply('reloaded!');
+            startCheck = makeAuthID();
+            DataBase.setDataBase('Ky_compileID', JSON.stringify(startCheck));
+            firstLoad = false;
+
+            while (true) {
+                //break;
+                if (startCheck != JSON.parse(DataBase.getDataBase('Ky_compileID'))) break;
+
+
+                java.lang.Thread.sleep(540000 + Math.floor(Math.random() * 120000)); //9~11분
+
+                if (firstLoad) {
+                    firstLoad = false;
+                    continue;
+                }
+
+                timeNow = new Date().getTime();
+
+                //채팅이 50개 이상 쌓였으면 그냥 보내기
+                //채팅이 10개이상 50개 미만 쌓였으면 마지막 보낸지 27분이상 지났으면 보내기
+                //채팅이 10개이하 쌓였으면 마지막 보낸지 162분 이상 지났으면 보내기
+
+                //채팅이 10개이상 50개미만이고 마지막으로 보낸지 27분 안지났으면 continue
+                //채팅이 10개미만이고 마지막으로 보낸지 162분 안지났으면 continue
+
+                //방마다 다 따로해야하는데 for루프로 보낼 방만 따로 배열 뽑아서 그걸 돌리기
+
+                let feed = checkFeed();
+                let feedReplyList = [];
+
+                for (i = 0; i < Ky.feedSubList.length; i++) {
+
+                    let r = Ky.feedSubList[i];
+
+                    if (Ky.r[r].feed.length != 0) Ky.r[r].feed = Ky.r[r].feed.concat(feed);
+
+                    if (Ky.r[r].feedCounter < 50 && Ky.r[r].feedCounter >= 10 && timeNow - Ky.r[r].feedTimer < 1620000) continue;
+                    if (Ky.r[r].feedCounter < 10 && timeNow - Ky.r[r].feedTimer < 9720000) continue;
+
+                    feedReplyList.push(r);
+
+                    Ky.r[r].feedCounter = 0;
+                    Ky.r[r].feedTimer = new Date().getTime();
+
+                }
+
+                if (Ky.feedReplyList.length != 0) continue;
+                
+                for (y = 0; y < Ky.feedReplyList.length; y++) {
+
+                    if (Ky.feed.length != 0) continue;
+
+                    let r = feedReplyList[y];
+
+                    if (Ky.r[r].feed.length < 4) {
+                        for (x = 0; x < Ky.r[r].feed.length; x++) {
+                            var feedString = Ky.r[r].feed[x][0];
+                            feedString += blank + Ky.r[r].feed[x][1] + '\n\n\n' + Ky.r[r].feed[x][2]
+                        }
+                    } else {
+                        var feedString = '[[최신특가 모아보기]]'
+                        feedString += blank;
+                        for (x = 0; x < Ky.r[r].feed.length; x++) {
+                            feedString += Ky.r[r].feed[x][0] + '\n\n';
+                            feedString += Ky.r[r].feed[x][1] + '\n\n' + Ky.r[r].feed[x][2] + '\n';
+                            feedString += 'ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ' + '\n'
+                        }
+                    }
+                    Api.replyRoom(r, feedString);
+                    Ky.r[r].feed = [];
+
+                }
+
+
+            }
+        }
 
         //eval
         if (msg.split(' ')[0] == ',' && sender.indexOf('rgb') != -1) {
