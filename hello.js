@@ -740,6 +740,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
         let startCheck;
+
+        Ky.feedCounter++;
+
         if (firstLoad) {
             replier.reply('reloaded!');
             startCheck = makeAuthID();
@@ -758,7 +761,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     continue;
                 }
 
-                Ky.feedCounter++;
                 timeNow = new Date().getTime();
 
                 //채팅이 50개 이상 쌓였으면 그냥 보내기
@@ -767,7 +769,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
                 //채팅이 10개이상 50개미만이고 마지막으로 보낸지 27분 안지났으면 continue
                 //채팅이 10개미만이고 마지막으로 보낸지 162분 안지났으면 continue
-                
+
                 let feed = checkFeed();
                 if (Ky.feed.length != 0) Ky.feed = Ky.feed.concat(feed);
 
