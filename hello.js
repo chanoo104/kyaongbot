@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'ㅁㅁㅁ';
+var uCode = 'ㅁㅁ';
 
 let charge = true;
 let batteryOK = true;
@@ -846,7 +846,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
                 }
 
-                if (feedReplyList.length != 0) continue;
+                if (feedReplyList.length == 0) continue;
                 
                 for (y = 0; y <feedReplyList.length; y++) {
 
