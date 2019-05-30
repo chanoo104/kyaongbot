@@ -850,7 +850,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 
                 for (y = 0; y <feedReplyList.length; y++) {
 
-                    if (Ky.feed.length != 0) continue;
+                    if (Ky.feed.length == 0) continue;
 
                     let r = feedReplyList[y];
 
