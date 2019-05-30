@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = '111';
+var uCode = 'ㅁㅁㅁ';
 
 let charge = true;
 let batteryOK = true;
@@ -832,10 +832,12 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
                     let r = Ky.feedSubList[i];
 
-                    if (Ky.r[r].feed.length != 0) Ky.r[r].feed = Ky.r[r].feed.concat(feed);
+                    if (feed != 0) Ky.r[r].feed = Ky.r[r].feed.concat(feed);
 
                     if (Ky.r[r].feedCounter < 50 && Ky.r[r].feedCounter >= 10 && timeNow - Ky.r[r].feedTimer < 1620000) continue;
                     if (Ky.r[r].feedCounter < 10 && timeNow - Ky.r[r].feedTimer < 9720000) continue;
+
+                    if (Ky.r[r].feed.length == 0) continue;
 
                     feedReplyList.push(r);
 
@@ -844,9 +846,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
                 }
 
-                if (Ky.feedReplyList.length != 0) continue;
+                if (feedReplyList.length != 0) continue;
                 
-                for (y = 0; y < Ky.feedReplyList.length; y++) {
+                for (y = 0; y <feedReplyList.length; y++) {
 
                     if (Ky.feed.length != 0) continue;
 
