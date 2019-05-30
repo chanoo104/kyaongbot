@@ -12,6 +12,9 @@ let Ky = JSON.parse(DataBase.getDataBase('KyBot')) || new Object();
 
 Ky.feedContainer = Ky.feedContainer || new Array();
 Ky.feedSubList = Ky.feedSubList || new Array();
+Ky.feedCounter = Ky.feedCounter || 0;
+Ky.feedTimer = Ky.feedTimer || 0;
+Ky.feed = Ky.feed || [];
 
 let counter = JSON.parse(DataBase.getDataBase('counterDB')) || new Object();
 
@@ -29,77 +32,78 @@ let userGroup = ['admin', 'manager', 'moderator', 'member'];
 
 ThreadManager = new Object();
 
+
 function grap(a) {
-let log = ''
-//autosort, return max
-//[true, name, score]
-for (var i = 0; i < a.length; i++) {
-if (a[i][0] == false) {
-log += a[i][1] + '\n';
-a.splice(i, 1);
-i--;
-}
-}
-if (a.length==0) return false;
-let arr = [];
-for (var i = 0; i < a.length; i++) {
-arr.push(a[i][2]);
-}
-var b = Math.max.apply(null, arr);
+    let log = ''
+    //autosort, return max
+    //[true, name, score]
+    for (var i = 0; i < a.length; i++) {
+        if (a[i][0] == false) {
+            log += a[i][1] + '\n';
+            a.splice(i, 1);
+            i--;
+        }
+    }
+    if (a.length == 0) return false;
+    let arr = [];
+    for (var i = 0; i < a.length; i++) {
+        arr.push(a[i][2]);
+    }
+    var b = Math.max.apply(null, arr);
 
-a.sort(function (p, q) { // 내림차순
-return q[2] - p[2];
-});
+    a.sort(function (p, q) { // 내림차순
+        return q[2] - p[2];
+    });
 
-function addbox(b) {
-var c=''
-for (var z = 0; z < Math.floor(b); z++) {
-c += "█";
-}
-var leftover = Math.round((b - Math.floor(b))*10)
-if (leftover != 0) c += graph2[leftover]
-return c + ' ';
-}
+    function addbox(b) {
+        var c = ''
+        for (var z = 0; z < Math.floor(b); z++) {
+            c += "█";
+        }
+        var leftover = Math.round((b - Math.floor(b)) * 10)
+        if (leftover != 0) c += graph2[leftover]
+        return c + ' ';
+    }
 
-var graph2 = ["▏", "▎", "▍", "▌", "▋", "▊", "▉", "█", "█", "█"];
-graphlog = "";
-for (var i = 0; i < a.length; i++) {
+    var graph2 = ["▏", "▎", "▍", "▌", "▋", "▊", "▉", "█", "█", "█"];
+    graphlog = "";
+    for (var i = 0; i < a.length; i++) {
 
-graphlog += "\n" + addbox(25 / b * a[i][2]) + "\n" + a[i][2] + ' | ' + a[i][1];
+        graphlog += "\n" + addbox(25 / b * a[i][2]) + "\n" + a[i][2] + ' | ' + a[i][1];
 
-}
-return [graphlog, log];
+    }
+    return [graphlog, log];
 }
 
 const offDB = {
-'NVIDIA GeForce GTX 1650' : 8600,
-'NVIDIA GeForce GTX 1660' : 13500,
-'NVIDIA GeForce GTX 1660 Ti' : 15500,
-'NVIDIA GeForce RTX 2060' : 19000,
-'AMD Radeon RX 590' : 15500,
-'AMD Radeon VII' : 26000
+    'NVIDIA GeForce GTX 1650': 8600,
+    'NVIDIA GeForce GTX 1660': 13500,
+    'NVIDIA GeForce GTX 1660 Ti': 15500,
+    'NVIDIA GeForce RTX 2060': 19000,
+    'AMD Radeon RX 590': 15500,
+    'AMD Radeon VII': 26000
 }
 
 
 
 function getFS(input) {
-try {
-var u = 'https://www.ask.com/web?q=' + encodeURI('site:https://benchmarks.ul.com/hardware/gpu/+' + input);
-var url = org.jsoup.Jsoup.connect(u).get().select('a[class=PartialSearchResults-item-title-link result-link]').attr('href');
-//var u = 'https://www.google.co.kr/search?&q=' + encodeURI('site:https://benchmarks.ul.com/hardware/gpu/+' + input);
-//var url = org.jsoup.Jsoup.connect(u).get().select('div[id=rso] a').attr('href');
-//var u = 'https://duckduckgo.com/html/?q=' + encodeURI('site:https://benchmarks.ul.com/hardware/gpu/+' + input);
-//var url = decodeURIComponent(org.jsoup.Jsoup.connect(u).get().select('a[class=result__snippet]').attr('href')).split('uddg=')[1]
-if (url.length == 0 || url.indexOf('https://benchmarks.ul.com/hardware/gpu/') == -1) return [false, input, 1];
+    try {
+        var u = 'https://www.ask.com/web?q=' + encodeURI('site:https://benchmarks.ul.com/hardware/gpu/+' + input);
+        var url = org.jsoup.Jsoup.connect(u).get().select('a[class=PartialSearchResults-item-title-link result-link]').attr('href');
+        //var u = 'https://www.google.co.kr/search?&q=' + encodeURI('site:https://benchmarks.ul.com/hardware/gpu/+' + input);
+        //var url = org.jsoup.Jsoup.connect(u).get().select('div[id=rso] a').attr('href');
+        //var u = 'https://duckduckgo.com/html/?q=' + encodeURI('site:https://benchmarks.ul.com/hardware/gpu/+' + input);
+        //var url = decodeURIComponent(org.jsoup.Jsoup.connect(u).get().select('a[class=result__snippet]').attr('href')).split('uddg=')[1]
+        if (url.length == 0 || url.indexOf('https://benchmarks.ul.com/hardware/gpu/') == -1) return [false, input, 1];
 
-var name = org.jsoup.Jsoup.connect(url).get().select('h1 span[class=OneLinkNoTx]').text();
-var score = org.jsoup.Jsoup.connect(url).get().select('span[class=result-pimp-badge-score-item]').text();
-if (name.length == 0) return [false, input, 2];
-if (score == 0) return [true, name, offDB[name] || 0];
-return [true, name, score];
-} catch (e) {
-return [false, input, 3];
-}
+        var name = org.jsoup.Jsoup.connect(url).get().select('h1 span[class=OneLinkNoTx]').text();
+        var score = org.jsoup.Jsoup.connect(url).get().select('span[class=result-pimp-badge-score-item]').text();
+        if (name.length == 0) return [false, input, 2];
+        if (score == 0) return [true, name, offDB[name] || 0];
+        return [true, name, score];
+    } catch (e) {
+        return [false, input, 3];
+    }
 }
 
 
@@ -594,7 +598,7 @@ let firstLoad = true;
 Ky.redditHeader = Ky.redditHeader || 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
 
 function checkFeed(debug) {
-    
+
     debug = debug || false;
 
     var returnContainer = [];
@@ -649,7 +653,8 @@ function checkFeed(debug) {
     } catch (e) {
         if (debug) returnContainer.push('[3]\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message);
     }
-    if (debug) if (returnContainer.length == 0) returnContainer = '✔'
+    if (debug)
+        if (returnContainer.length == 0) returnContainer = '✔'
     return returnContainer;
 
 }
@@ -745,31 +750,54 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 //break;
                 if (startCheck != JSON.parse(DataBase.getDataBase('Ky_compileID'))) break;
 
-                
-                java.lang.Thread.sleep(180000 + Math.floor(Math.random() * 180000));
 
+                java.lang.Thread.sleep(540000 + Math.floor(Math.random() * 120000)); //9~11분
 
-                let feed = checkFeed();
                 if (firstLoad) {
                     firstLoad = false;
                     continue;
                 }
 
-                if (feed.length != 0 && Ky.feedSubList.length != 0) {
-                    if (feed.length < 5) {
-                        for (x = 0; x < feed.length; x++) {
-                            let feedString = feed[x][0];
-                            feedString += blank + feed[x][1] + '\n\n\n' + feed[x][2]
+                Ky.feedCounter++;
+                timeNow = new Date().getTime();
+
+                //채팅이 50개 이상 쌓였으면 그냥 보내기
+                //채팅이 10개이상 50개 미만 쌓였으면 마지막 보낸지 27분이상 지났으면 보내기
+                //채팅이 10개이하 쌓였으면 마지막 보낸지 162분 이상 지났으면 보내기
+
+                //채팅이 10개이상 50개미만이고 마지막으로 보낸지 27분 안지났으면 continue
+                //채팅이 10개미만이고 마지막으로 보낸지 162분 안지났으면 continue
+                
+                let feed = checkFeed();
+                if (Ky.feed.length != 0) Ky.feed = Ky.feed.concat(feed);
+
+                if (Ky.feedCounter < 50 && Ky.feedCounter >= 10 && timeNow - Ky.feedTimer < 1620000) {
+                    continue;
+                }
+                if (Ky.feedCounter < 10 && timeNow - Ky.feedTimer < 9720000) {
+                    continue;
+                }
+
+                Ky.feedCounter = 0;
+                Ky.feedTimer = new Date().getTime();
+
+                
+
+                if (Ky.feed.length != 0 && Ky.feedSubList.length != 0) {
+                    if (Ky.feed.length < 4) {
+                        for (x = 0; x < Ky.feed.length; x++) {
+                            var feedString = Ky.feed[x][0];
+                            feedString += blank + Ky.feed[x][1] + '\n\n\n' + Ky.feed[x][2]
                             for (y = 0; y < Ky.feedSubList.length; y++) {
                                 Api.replyRoom(Ky.feedSubList[y], feedString);
                             }
                         }
                     } else {
-                        let feedString = '[[최신특가 모아보기]]'
+                        var feedString = '[[최신특가 모아보기]]'
                         feedString += blank;
-                        for (x = 0; x < feed.length; x++) {
-                            feedString += feed[x][0] + '\n\n';
-                            feedString += feed[x][1] + '\n\n' + feed[x][2] + '\n';
+                        for (x = 0; x < Ky.feed.length; x++) {
+                            feedString += Ky.feed[x][0] + '\n\n';
+                            feedString += Ky.feed[x][1] + '\n\n' + Ky.feed[x][2] + '\n';
                             feedString += 'ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ' + '\n'
                         }
                         for (y = 0; y < Ky.feedSubList.length; y++) {
@@ -778,6 +806,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     }
                 }
 
+                Ky.feed = [];
 
             }
         }
@@ -1766,120 +1795,120 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         }
 
 
-com: {
+        com: {
             var c = '파스';
             var a = 'all';
             if (!commandChk(c, a)) break com;
-    
-var returnFS = [];
+
+            var returnFS = [];
 
 
-if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
-try {
-replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
-} catch (e) {
-replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
-}
-}
+            if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
+                try {
+                    replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
+                } catch (e) {
+                    replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+                }
+            }
 
-if (msg.substr(0, 4) == '!파스 ') {
-var requestID = msg.substring(4).trim();
-
-
-var inputArray = msg.substring(4).trim().split(',');
-
-// var inputArray = ['gt520', '1080 ti', 'rx570', 'rx480', '1050ti', 'gtx980', 'vega 64', 'r9 fury', 'gtx750', 'gt1030', 'titan xp']
+            if (msg.substr(0, 4) == '!파스 ') {
+                var requestID = msg.substring(4).trim();
 
 
+                var inputArray = msg.substring(4).trim().split(',');
 
-var threadBin = [];
-var threadCount = 0;
+                // var inputArray = ['gt520', '1080 ti', 'rx570', 'rx480', '1050ti', 'gtx980', 'vega 64', 'r9 fury', 'gtx750', 'gt1030', 'titan xp']
 
 
 
-
-
-new java.lang.Thread({
-run: function () {
-
-
-
-new java.lang.Thread({
-run: function () {
-
-
-var ttt = 0;
-for (i = 0; i < inputArray.length; i++) {
-//replier.reply(inputArray)
-inputArray[i] = inputArray[i].match(/[a-zA-Zㄱ-ㅎ가-힣]+|[0-9]+(?:\.[0-9]+|)/g).join(' ');
-
-while (threadCount > 5) { //동시처리 스레드 개수
-//replier.reply('pending...')
-java.lang.Thread.sleep(100);
-}
-
-
-ThreadManager[replier] = new java.lang.Thread(new java.lang.Runnable() {
-run: function () {
-//replier.reply('parsing...' + i + ' ' + inputArray[i]);
-threadCount++;
-threadBin.push(replier);
-//할일
-returnFS.push(getFS(inputArray[i]));
-//할일끝
-threadCount--;
-}
-})
-ThreadManager[replier].start();
-java.lang.Thread.sleep(100);
-
-
-}
-}
-}).start();
-
-
-let count = 0;
-let valid = true;
-while (returnFS.length < inputArray.length) {
-//replier.reply(returnFS.length)
-java.lang.Thread.sleep(100);
-count++;
-if (count > 75) {
-valid = false;
-break;
-}
-}
-
-try{
-if (!valid) {
-for (n = 0; n < threadBin.length; n++) {
-try {
-ThreadManager[threadBin[n]].interrupt();
-} catch (e) {}
-}
-replier.reply('오류: 요청시간 또는 트래픽 초과')
-} else {
-var graph = grap(returnFS);
-if (!graph) {
-replier.reply('오류: 네트워트 통신 장애 또는 트래픽 초과');
-} else {
-var str = '■전체 보기■';
-str += blank + graph[0];
-if (graph[1].length != 0) str += '\n\n\n오류:\n' + graph[1];
-replier.reply(str);
-}
-}
-} catch (e) {
-replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
-}
+                var threadBin = [];
+                var threadCount = 0;
 
 
 
-}
-}).start();
-}
-}
+
+
+                new java.lang.Thread({
+                    run: function () {
+
+
+
+                        new java.lang.Thread({
+                            run: function () {
+
+
+                                var ttt = 0;
+                                for (i = 0; i < inputArray.length; i++) {
+                                    //replier.reply(inputArray)
+                                    inputArray[i] = inputArray[i].match(/[a-zA-Zㄱ-ㅎ가-힣]+|[0-9]+(?:\.[0-9]+|)/g).join(' ');
+
+                                    while (threadCount > 5) { //동시처리 스레드 개수
+                                        //replier.reply('pending...')
+                                        java.lang.Thread.sleep(100);
+                                    }
+
+
+                                    ThreadManager[replier] = new java.lang.Thread(new java.lang.Runnable() {
+                                        run: function () {
+                                            //replier.reply('parsing...' + i + ' ' + inputArray[i]);
+                                            threadCount++;
+                                            threadBin.push(replier);
+                                            //할일
+                                            returnFS.push(getFS(inputArray[i]));
+                                            //할일끝
+                                            threadCount--;
+                                        }
+                                    })
+                                    ThreadManager[replier].start();
+                                    java.lang.Thread.sleep(100);
+
+
+                                }
+                            }
+                        }).start();
+
+
+                        let count = 0;
+                        let valid = true;
+                        while (returnFS.length < inputArray.length) {
+                            //replier.reply(returnFS.length)
+                            java.lang.Thread.sleep(100);
+                            count++;
+                            if (count > 75) {
+                                valid = false;
+                                break;
+                            }
+                        }
+
+                        try {
+                            if (!valid) {
+                                for (n = 0; n < threadBin.length; n++) {
+                                    try {
+                                        ThreadManager[threadBin[n]].interrupt();
+                                    } catch (e) {}
+                                }
+                                replier.reply('오류: 요청시간 또는 트래픽 초과')
+                            } else {
+                                var graph = grap(returnFS);
+                                if (!graph) {
+                                    replier.reply('오류: 네트워트 통신 장애 또는 트래픽 초과');
+                                } else {
+                                    var str = '■전체 보기■';
+                                    str += blank + graph[0];
+                                    if (graph[1].length != 0) str += '\n\n\n오류:\n' + graph[1];
+                                    replier.reply(str);
+                                }
+                            }
+                        } catch (e) {
+                            replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+                        }
+
+
+
+                    }
+                }).start();
+            }
+        }
 
 
 
@@ -2058,11 +2087,11 @@ replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\
 
         ///////////////////////잡다한기능//////////////////////
 
-if (msg.indexOf('소라고둥') != -1 && msg.indexOf('?') != -1) {
-var ran = Math.round(Math.random())
-if (ran == 0) replier.reply('돼')
-if (ran == 1) replier.reply('안돼')
-}
+        if (msg.indexOf('소라고둥') != -1 && msg.indexOf('?') != -1) {
+            var ran = Math.round(Math.random())
+            if (ran == 0) replier.reply('돼')
+            if (ran == 1) replier.reply('안돼')
+        }
 
         com: {
             var c = '날씨';
