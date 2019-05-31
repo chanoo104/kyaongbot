@@ -849,10 +849,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 if (feedReplyList.length == 0) continue;
                 
                 for (y = 0; y <feedReplyList.length; y++) {
-
-                    if (Ky.feed.length == 0) continue;
-
+                    
                     let r = feedReplyList[y];
+                    
+                    if (Ky.r[r].feed.length == 0) continue;
 
                     if (Ky.r[r].feed.length < 4) {
                         for (x = 0; x < Ky.r[r].feed.length; x++) {
