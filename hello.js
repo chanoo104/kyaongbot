@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'ㅁㅁ';
+var uCode = 'ㅁ1ㅁ';
 
 let charge = true;
 let batteryOK = true;
