@@ -1775,7 +1775,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                             break loop;
                         }
                     }
-                    replier.reply('■견적생성■ a.co\n' + shortURL('http://micro.danawa.com/product/wishList?productSeq=' + est.code.join([separator = ',']) + '&count=' + est.quan.join([separator = ','])));
+                    replier.reply('■견적생성■ .co\n' + shortURL('http://micro.danawa.com/product/wishList?productSeq=' + est.code.join([separator = ',']) + '&count=' + est.quan.join([separator = ','])));
                 }
             }
         }
