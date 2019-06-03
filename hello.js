@@ -889,7 +889,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (Ky.r[room].feedCounter < 1000 && Ky.r[room].feedCounter >= 50 && timeNow - Ky.r[room].feedTimer < 9000000) ttttt = false;
         if (Ky.r[room].feedCounter < 50 && timeNow - Ky.r[room].feedTimer < 12000000) ttttt = false;
 
-        if (ttttt && Ky.noMarketList.indexOf(room) != -1) {
+        if (ttttt && Ky.noMarketList.indexOf(room) == -1) {
             Ky.r[room].marketCounter = 0;
             Ky.r[room].marketTimer = new Date().getTime();
             new java.lang.Thread({
@@ -1046,17 +1046,17 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         replier.reply('✔');
                     } else replier.reply('already unsubbed');
                 }
-                if (msg == '.subm') {
+                if (msg == '.unsubm') {
                     if (Ky.noMarketList.indexOf(room) == -1) {
                         Ky.noMarketList.push(room);
                         replier.reply('✔');
-                    } else replier.reply('already subbed');
+                    } else replier.reply('already unsubbed');
                 }
-                if (msg == '.unsubm') {
+                if (msg == '.subm') {
                     if (Ky.noMarketList.indexOf(room) != -1) {
                         Ky.noMarketList.splice(Ky.noMarketList.indexOf(room));
                         replier.reply('✔');
-                    } else replier.reply('already unsubbed');
+                    } else replier.reply('already subbed');
                 }
             }
         }
