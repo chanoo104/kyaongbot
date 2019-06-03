@@ -884,6 +884,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         Ky.r[room].marketCounter = Ky.r[room].marketCounter++ || 0;
         Ky.noMarketList = Ky.noMarketList || new Array();
         var ttttt = true;
+        var timeNow = new Date().getTime();
         if (timeNow - Ky.r[room].feedTimer < 6000000) ttttt = false;
         if (Ky.r[room].feedCounter < 1000 && Ky.r[room].feedCounter >= 50 && timeNow - Ky.r[room].feedTimer < 9000000) ttttt = false;
         if (Ky.r[room].feedCounter < 50 && timeNow - Ky.r[room].feedTimer < 12000000) ttttt = false;
