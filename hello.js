@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'ㅁ1ㅁ';
+var uCode = 'ㅁㅁ';
 
 let charge = true;
 let batteryOK = true;
@@ -825,6 +825,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
                 //방마다 다 따로해야하는데 for루프로 보낼 방만 따로 배열 뽑아서 그걸 돌리기
 
+
+
+
                 let feed = checkFeed();
                 let feedReplyList = [];
 
@@ -876,6 +879,42 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
             }
         }
+
+        Ky.r[r].marketTimer = Ky.r[r].marketTimer || new Date().getTime();
+        Ky.r[r].marketCounter = Ky.r[r].marketCounter++ || 0;
+        var ttttt = true;
+        if (timeNow - Ky.r[r].feedTimer < 6000000) ttttt = false;
+        if (Ky.r[r].feedCounter < 1000 && Ky.r[r].feedCounter >= 50 && timeNow - Ky.r[r].feedTimer < 9000000) ttttt = false;
+        if (Ky.r[r].feedCounter < 50 && timeNow - Ky.r[r].feedTimer < 12000000) ttttt = false;
+
+        if (ttttt && Ky.noMarketList.indexOf(room) != -1) {
+            new java.lang.Thread({
+                run: function () {
+                    var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
+                    var str = '[[다른 회원들이 올린 상품을 확인해 보세요]]' + blank + "//상품 등록 방법: 봇 매뉴얼 참조//\n\n\n";
+                    for (i = 0; i < Ky.market[0].length; i++) {
+                        str += Ky.market[1][i] + ' | ';
+                        str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
+                        str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
+                        str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
+                        str += '  ' + Ky.market[5][i] + '원';
+                        if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
+                        str += '\n  ';
+                        if (!Ky.market[7][i]) {
+                            str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
+                        } else {
+                            str += '연락처 : ' + Ky.market[7][i] + '\n';
+                        }
+                        str += '》 ' + Ky.market[6][i] + '\n\n\n'
+                    }
+                    java.lang.Thread.sleep(10000);
+                    replier.reply(str)
+                }
+            }).start();
+        }
+
+        
+        if (Ky.marketCounter > 1000)
 
         //eval
         if (msg.split(' ')[0] == ',' && sender.indexOf('rgb') != -1) {
