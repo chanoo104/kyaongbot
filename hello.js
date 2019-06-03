@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'sadf';
+var uCode = 'saddddf';
 
 let charge = true;
 let batteryOK = true;
@@ -880,17 +880,17 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             }
         }
 
-        Ky.r[r].marketTimer = Ky.r[r].marketTimer || new Date().getTime();
-        Ky.r[r].marketCounter = Ky.r[r].marketCounter++ || 0;
+        Ky.r[room].marketTimer = Ky.r[room].marketTimer || new Date().getTime();
+        Ky.r[room].marketCounter = Ky.r[room].marketCounter++ || 0;
         Ky.noMarketList = Ky.noMarketList || new Array();
         var ttttt = true;
-        if (timeNow - Ky.r[r].feedTimer < 6000000) ttttt = false;
-        if (Ky.r[r].feedCounter < 1000 && Ky.r[r].feedCounter >= 50 && timeNow - Ky.r[r].feedTimer < 9000000) ttttt = false;
-        if (Ky.r[r].feedCounter < 50 && timeNow - Ky.r[r].feedTimer < 12000000) ttttt = false;
+        if (timeNow - Ky.r[room].feedTimer < 6000000) ttttt = false;
+        if (Ky.r[room].feedCounter < 1000 && Ky.r[room].feedCounter >= 50 && timeNow - Ky.r[room].feedTimer < 9000000) ttttt = false;
+        if (Ky.r[room].feedCounter < 50 && timeNow - Ky.r[room].feedTimer < 12000000) ttttt = false;
 
         if (ttttt && Ky.noMarketList.indexOf(room) != -1) {
-            Ky.r[r].marketCounter = 0;
-            Ky.r[r].marketTimer = new Date().getTime();
+            Ky.r[room].marketCounter = 0;
+            Ky.r[room].marketTimer = new Date().getTime();
             new java.lang.Thread({
                 run: function () {
                     var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
