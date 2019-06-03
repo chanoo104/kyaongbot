@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'ㅁㅁ';
+var uCode = 'sadf';
 
 let charge = true;
 let batteryOK = true;
@@ -882,12 +882,15 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         Ky.r[r].marketTimer = Ky.r[r].marketTimer || new Date().getTime();
         Ky.r[r].marketCounter = Ky.r[r].marketCounter++ || 0;
+        Ky.noMarketList = Ky.noMarketList || new Array();
         var ttttt = true;
         if (timeNow - Ky.r[r].feedTimer < 6000000) ttttt = false;
         if (Ky.r[r].feedCounter < 1000 && Ky.r[r].feedCounter >= 50 && timeNow - Ky.r[r].feedTimer < 9000000) ttttt = false;
         if (Ky.r[r].feedCounter < 50 && timeNow - Ky.r[r].feedTimer < 12000000) ttttt = false;
 
         if (ttttt && Ky.noMarketList.indexOf(room) != -1) {
+            Ky.r[r].marketCounter = 0;
+            Ky.r[r].marketTimer = new Date().getTime();
             new java.lang.Thread({
                 run: function () {
                     var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
@@ -914,7 +917,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         }
 
         
-        if (Ky.marketCounter > 1000)
 
         //eval
         if (msg.split(' ')[0] == ',' && sender.indexOf('rgb') != -1) {
@@ -1035,15 +1037,26 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     if (Ky.feedSubList.indexOf(room) == -1) {
                         Ky.feedSubList.push(room);
                         replier.reply('✔');
-                    } else replier.reply('already subbed')
+                    } else replier.reply('already subbed');
                 }
                 if (msg == '.unsub') {
                     if (Ky.feedSubList.indexOf(room) != -1) {
                         Ky.feedSubList.splice(Ky.feedSubList.indexOf(room));
                         replier.reply('✔');
-                    } else replier.reply('already unsubbed')
+                    } else replier.reply('already unsubbed');
                 }
-
+                if (msg == '.subm') {
+                    if (Ky.noMarketList.indexOf(room) == -1) {
+                        Ky.noMarketList.push(room);
+                        replier.reply('✔');
+                    } else replier.reply('already subbed');
+                }
+                if (msg == '.unsubm') {
+                    if (Ky.noMarketList.indexOf(room) != -1) {
+                        Ky.noMarketList.splice(Ky.noMarketList.indexOf(room));
+                        replier.reply('✔');
+                    } else replier.reply('already unsubbed');
+                }
             }
         }
 
