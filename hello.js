@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'saddddf';
+var uCode = 'sadf';
 
 let charge = true;
 let batteryOK = true;
