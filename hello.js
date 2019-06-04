@@ -1322,7 +1322,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     }
 
                     if (msg.substr(0, 6) == '!상태변경 ') {
-                        if (Ky.market[3][t] % 2 < 2) {
+                        if (Ky.market[3][t] < 2) {
                             Ky.market[3][t] += 2;
                         } else Ky.market[3][t] -= 2;
                         replier.reply('✔');
