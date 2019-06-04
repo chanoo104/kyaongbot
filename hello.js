@@ -881,7 +881,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         }
 
         Ky.r[room].marketTimer = Ky.r[room].marketTimer || new Date().getTime();
-        Ky.r[room].marketCounter = Ky.r[room].marketCounter++ || 0;
+        Ky.r[room].marketCounter = Ky.r[room].marketCounter || 0;
+        Ky.r[room].marketCounter++;
         Ky.noMarketList = Ky.noMarketList || new Array();
         var ttttt = true;
         var timeNow = new Date().getTime();
