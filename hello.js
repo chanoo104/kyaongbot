@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'sadf';
+var uCode = 's00';
 
 let charge = true;
 let batteryOK = true;
@@ -893,8 +893,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (ttttt && Ky.noMarketList.indexOf(room) == -1) {
             Ky.r[room].marketCounter = 0;
             Ky.r[room].marketTimer = new Date().getTime();
-            new java.lang.Thread({
-                run: function () {
+ 
                     var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
                     var str = '[[다른 회원들이 올린 상품을 확인해 보세요]]' + blank + "//상품 등록 방법: 봇 매뉴얼 참조//\n\n\n";
                     for (i = 0; i < Ky.market[0].length; i++) {
@@ -912,10 +911,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         }
                         str += '》 ' + Ky.market[6][i] + '\n\n\n'
                     }
-                    java.lang.Thread.sleep(10000);
+                    //java.lang.Thread.sleep(10000);
                     replier.reply(str)
-                }
-            }).start();
+             
         }
 
         
