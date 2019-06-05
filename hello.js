@@ -919,11 +919,16 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         
 
         //eval
-        if (msg.split(' ')[0] == ',' && sender.indexOf('rgb') != -1) {
-            try {
-                replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
-            } catch (e) {
-                replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+        com: {
+            var c = 'evalfront';
+            var a = 'admin';
+            if (commandChk(c, a) == false) break com;
+            if (msg.split(' ')[0] == ',') {
+                try {
+                    replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
+                } catch (e) {
+                    replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+                }
             }
         }
 
@@ -1870,14 +1875,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             var returnFS = [];
 
 
-            if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
-                try {
-                    replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
-                } catch (e) {
-                    replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
-                }
-            }
-
             if (msg.substr(0, 4) == '!파스 ') {
                 var requestID = msg.substring(4).trim();
 
@@ -2305,11 +2302,15 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         //백업
 
         //eval
-        if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
-            try {
-                replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
-            } catch (e) {
-                replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+        com: {
+            var c = 'evalend';
+            var a = 'admin';
+            if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
+                try {
+                    replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
+                } catch (e) {
+                    replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
+                }
             }
         }
 
