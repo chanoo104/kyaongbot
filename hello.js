@@ -2307,7 +2307,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         com: {
             var c = 'evalend';
             var a = 'admin';
-            if (msg.split(' ')[0] == '.' && sender.indexOf('rgb') != -1) {
+            if (!commandChk(c, a)) break com;
+            if (msg.split(' ')[0] == '.') {
                 try {
                     replier.reply(eval(msg.substr(msg.split(' ', 1)[0].length + 1)));
                 } catch (e) {
