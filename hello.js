@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 's00';
+var uCode = 's';
 
 let charge = true;
 let batteryOK = true;
@@ -2166,14 +2166,14 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 try {
                     var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.substring(3)).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
                     if (con.split('_')[0] == 'command') {
-                        chatbot(con.split('_')[1]);
+                        replier.reply(chatbot(con.split('_')[1]));
                     } else replier.reply(con);
                 } catch (e) {
                     var doc = org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/user/login').data('email', 'odosk@naver.com', 'password', 'Kjch6819@').ignoreContentType(true).method(org.jsoup.Connection.Method.POST).execute();
                     Ky.cookie = doc.cookie("BSESSIONID");
                     var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.substring(3)).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
                     if (con.split('_')[0] == 'command') {
-                        chatbot(con.split('_')[1]);
+                        replier.reply(chatbot(con.split('_')[1]));
                     } else replier.reply(con);
                 }
             }
