@@ -2161,11 +2161,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (msg.split(' ')[0] == '..')
             Ky.cookie = Ky.cookie || '';
             try {
-                replier.reply(JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=asdf').cookie('BSESSIONID', ).ignoreContentType(true).get().text()).response.replies[0].reply);
+                replier.reply(JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=asdf').cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply);
             } catch (e) {
                 var doc = org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/user/login').data('email', 'odosk@naver.com', 'password', 'Kjch6819@').ignoreContentType(true).method(org.jsoup.Connection.Method.POST).execute();
                 Ky.cookie = doc.cookie("BSESSIONID");
-                replier.reply(JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=asdf').cookie('BSESSIONID', ).ignoreContentType(true).get().text()).response.replies[0].reply);
+                replier.reply(JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=asdf').cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply);
             }
         }
 
