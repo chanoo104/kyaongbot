@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 's0sdf0';
+var uCode = 's00';
 
 let charge = true;
 let batteryOK = true;
@@ -1901,23 +1901,14 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
                 // var inputArray = ['gt520', '1080 ti', 'rx570', 'rx480', '1050ti', 'gtx980', 'vega 64', 'r9 fury', 'gtx750', 'gt1030', 'titan xp']
 
-
-
                 var threadBin = [];
                 var threadCount = 0;
-
-
-
-
 
                 new java.lang.Thread({
                     run: function () {
 
-
-
                         new java.lang.Thread({
                             run: function () {
-
 
                                 var ttt = 0;
                                 for (i = 0; i < inputArray.length; i++) {
@@ -1928,7 +1919,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                                         //replier.reply('pending...')
                                         java.lang.Thread.sleep(100);
                                     }
-
 
                                     ThreadManager[replier] = new java.lang.Thread(new java.lang.Runnable() {
                                         run: function () {
@@ -1944,11 +1934,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                                     ThreadManager[replier].start();
                                     java.lang.Thread.sleep(100);
 
-
                                 }
                             }
                         }).start();
-
 
                         let count = 0;
                         let valid = true;
@@ -1984,7 +1972,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         } catch (e) {
                             replier.reply('eval 실행 중 오류 발생!\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message)
                         }
-
 
 
                     }
@@ -2177,14 +2164,14 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (msg.split(' ')[0] == '..') {
                 Ky.cookie = Ky.cookie || '';
                 try {
-                    var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.split(' ')[1]).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
+                    var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.substring(3)).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
                     if (con.split('_')[0] == 'command') {
                         chatbot(con.split('_')[1]);
                     } else replier.reply(con);
                 } catch (e) {
                     var doc = org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/user/login').data('email', 'odosk@naver.com', 'password', 'Kjch6819@').ignoreContentType(true).method(org.jsoup.Connection.Method.POST).execute();
                     Ky.cookie = doc.cookie("BSESSIONID");
-                    var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.split(' ')[1]).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
+                    var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.substring(3)).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
                     if (con.split('_')[0] == 'command') {
                         chatbot(con.split('_')[1]);
                     } else replier.reply(con);
