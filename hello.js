@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 's00';
+var uCode = 's0sdf0';
 
 let charge = true;
 let batteryOK = true;
@@ -82,6 +82,14 @@ const offDB = {
     'AMD Radeon VII': 26000
 }
 
+function chatbot(com) {
+    if (com == '날씨') {
+        return getWeather(0);
+    }
+    if (com == '미세먼지') {
+        return getWeather(2);
+    }
+}
 
 
 function getFS(input) {
@@ -550,7 +558,11 @@ function shortURL(text) {
 }
 
 
-getWeather = function () {
+
+
+
+getWeather = function (set) {
+    var set = set || 'false';
     var doc = org.jsoup.Jsoup.connect('https://m.search.naver.com/search.naver?sm=tab_hty.top&query=%EB%82%A0%EC%94%A8').get();
     var sel1 = doc.select('section').get(1).select('div[class=weather_box _weather_box]').select('div[class=lcl_lst]').select('a'),
         arr1 = [];
@@ -572,9 +584,13 @@ getWeather = function () {
         if (Number(m) >= 151) m += ' - 매우나쁨';
         미세먼지[n] += ' ' + m;
     }
-
+    if (set == 0) return ('[[ 전국날씨 ]]' + blank + arr1.join('\n'));
+    if (set == 2) return ('[[ 미세먼지 ]]' + blank + 미세먼지.join('\n'));
     return ('[[ 전국날씨 ]]' + blank + arr1.join('\n') + '\n\n\n\n[[ 특보 ]]\n\n' + sel2 + '\n\n\n\n[[ 미세먼지 ]]\n' + 미세먼지.join('\n'));
 }
+
+
+
 
 function makeAuthID() {
     var text = '';
@@ -2146,7 +2162,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
 
-
+        
 
 
 
@@ -2161,11 +2177,17 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (msg.split(' ')[0] == '..') {
                 Ky.cookie = Ky.cookie || '';
                 try {
-                    replier.reply(JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.split(' ')[1]).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply);
+                    var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.split(' ')[1]).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
+                    if (con.split('_')[0] == 'command') {
+                        chatbot(con.split('_')[1]);
+                    } else replier.reply(con);
                 } catch (e) {
                     var doc = org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/user/login').data('email', 'odosk@naver.com', 'password', 'Kjch6819@').ignoreContentType(true).method(org.jsoup.Connection.Method.POST).execute();
                     Ky.cookie = doc.cookie("BSESSIONID");
-                    replier.reply(JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.split(' ')[1]).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply);
+                    var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.split(' ')[1]).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
+                    if (con.split('_')[0] == 'command') {
+                        chatbot(con.split('_')[1]);
+                    } else replier.reply(con);
                 }
             }
         }
