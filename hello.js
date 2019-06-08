@@ -964,8 +964,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             Ky.user[pcode].lastName = Ky.user[pcode].lastName || new Object();
             Ky.user[pcode].lastName[room] = sender;
             Ky.user[pcode].lastNameAll = sender;
-            Ky.user[pcode].parsel = Ky.user[pcode].parsel || [[],[],[],[],[],[],[]]; //택배사, 구분명, 운송장, 개인정보, 추적여부, 상태1, 상태2
-            Ky.user[pcode].parselChkTime = Ky.user[pcode].parselChkTime || new Date().getTime();
             Ky.r[room].permission[pcode] = Ky.r[room].permission[pcode] || userGroup[userGroup.length - 1];
             if (ID == 'odosk') {
                 Ky.r[room].permission[pcode] = userGroup[0];
@@ -1232,6 +1230,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             } else replier.reply('✘');
         }
 
+        if (login) {
+            Ky.user[pcode].parsel = Ky.user[pcode].parsel || [[],[],[],[],[],[],[]]; //택배사, 구분명, 운송장, 개인정보, 추적여부, 상태1, 상태2
+            Ky.user[pcode].parselChkTime = Ky.user[pcode].parselChkTime || new Date().getTime();
+        }
 
 
 
