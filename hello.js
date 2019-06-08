@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'ss00';
+var uCode = 's00';
 
 let charge = true;
 let batteryOK = true;
@@ -1419,7 +1419,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                             Ky.user[pcode].parsel[3].unshift(private);
                             Ky.user[pcode].parsel[4].unshift(true);
                             Ky.user[pcode].parsel[5].unshift(j.state);
-                            Ky.user[pcode].parsel[6].unshift(j.progress.length);
+                            Ky.user[pcode].parsel[6].unshift(j.progresses.length);
         
                             if (Ky.user[pcode].parsel[0].length > 5) deleteColumn(Ky.user[pcode].parsel, 5);
         
@@ -1456,21 +1456,21 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
                         
         
-                        if (j.state != Ky.user[pcode].parsel[5][i] || j.progress.length != Ky.user[pcode].parsel[6][i]) {
+                        if (j.state != Ky.user[pcode].parsel[5][i] || j.progresses.length != Ky.user[pcode].parsel[6][i]) {
                             Ky.user[pcode].parsel[5][i] = j.state;
-                            Ky.user[pcode].parsel[6][i] = j.progress.length;
+                            Ky.user[pcode].parsel[6][i] = j.progresses.length;
         
                             let private = Ky.user[pcode].parsel[3];
         
                             let str = '[' + sender + ' - ' + Ky.user[pcode].parsel[1][i] + ']\n' + parselStateName[parselStateCode.indexOf(j.state)];
-                            if (!private) str += ' | ' + j.progress[x].location;
+                            if (!private) str += ' | ' + j.progresses[x].location;
                             str +=  blank;
                             
                             for (x=0; x<j.progresses.length; ++x) {
-                                str += j.progress[x].status.text + ' | ';
-                                if (!private) str += j.progress[x].location + ' | ';
-                                str += j.progress[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
-                                str += ' > ' + j.progress[x].description + '\n'
+                                str += j.progresses[x].status.text + ' | ';
+                                if (!private) str += j.progresses[x].location + ' | ';
+                                str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
+                                str += ' > ' + j.progresses[x].description + '\n'
                             }
         
                             str.replace(/^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/g, '*전화번호 검열*');
@@ -1512,18 +1512,18 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                             continue;
                         }
         
-                        if (j.state != Ky.user[pcode].parsel[5][i] || j.progress.length != Ky.user[pcode].parsel[6][i]) {
+                        if (j.state != Ky.user[pcode].parsel[5][i] || j.progresses.length != Ky.user[pcode].parsel[6][i]) {
                             Ky.user[pcode].parsel[5][i] = j.state;
-                            Ky.user[pcode].parsel[6][i] = j.progress.length;
+                            Ky.user[pcode].parsel[6][i] = j.progresses.length;
         
                             str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + parselStateName[parselStateCode.indexOf(j.state)] + '\n';
                             let private = Ky.user[pcode].parsel[3];
         
                             for (x=0; x<j.progresses.length; ++x) {
-                                str += j.progress[x].status.text + ' | ';
-                                if (!private) str += j.progress[x].location + ' | ';
-                                str += j.progress[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
-                                str += ' > ' + j.progress[x].description + '\n'
+                                str += j.progresses[x].status.text + ' | ';
+                                if (!private) str += j.progresses[x].location + ' | ';
+                                str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
+                                str += ' > ' + j.progresses[x].description + '\n'
                             }
                             str += '\n'
         
