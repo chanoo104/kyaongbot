@@ -2,12 +2,15 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 's00';
+var ucode = 's00';
 
 let charge = true;
 let batteryOK = true;
 let backupCount = 0;
 
+let firstLoad = true;
+
+let ThreadManager = new Object();
 let Ky = JSON.parse(DataBase.getDataBase('KyBot')) || new Object();
 
 Ky.feedContainer = Ky.feedContainer || new Array();
@@ -16,28 +19,43 @@ Ky.feedSubList = Ky.feedSubList || new Array();
 
 let counter = JSON.parse(DataBase.getDataBase('counterDB')) || new Object();
 
+
+
+const blank = "\u202D".repeat(1000) + '\n\n\n';
+
+let userGroup = ['admin', 'manager', 'moderator', 'member'];
+
 Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8_Jwh-bT7IY9unKU_OZhrO-GzRJo/htmlview#gid=735564299';
+Ky.formTargetRow = 28;
 Ky.registerTargetAddress = 'https://docs.google.com/spreadsheets/d/1vMaiOPbDYBCevdHrYUGTh9Y9-xlYr5BMRPLzv0cKZzY/htmlview#gid=1425276477';
 Ky.loginTargetAddress = 'https://docs.google.com/spreadsheets/d/1zf2BTvwBmPYFcLQAvlN4LPzH4QblSn-9dTUkUjivwis/htmlview'
 Ky.marketTargetAddress = 'https://docs.google.com/spreadsheets/d/1sg3CSqT9CGY0QPW38w0FytK0UhqYBGyNW0EPrNycV9w/htmlview#gid=1833799400';
 
 Ky.parselTargetAddress = 'https://docs.google.com/spreadsheets/d/1ZyUUwWAU8u1PsPljT2iH6IV493DAJGVOb5HZ9k27z-g/htmlview';
 
-
+Ky.redditHeader = Ky.redditHeader || 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
 
 const carrierName = ['우체국택배', 'CJ 대한통운', 'GS Postbox 편의점택배', 'CU 편의점택배', '한진택배', '로젠택배', '롯데택배'];
 const carrierCode = ['kr.epost', 'kr.cjlogistics', 'kr.cvsnet', 'kr.cupost', 'kr.hanjin', 'kr.logen', 'kr.lotte'];
 const parselStateName = ['상품준비중', '상품인수', '상품이동중', '배송출발', '배송완료'];
 const parselStateCode = ['information_received', 'at_pickup', 'in_transit', 'out_for_delivery', 'delivered'];
 
-Ky.formTargetRow = 28;
-var target = Ky.formTargetAddress;
+const offDB = {
+    'NVIDIA GeForce GTX 1650': 8600,
+    'NVIDIA GeForce GTX 1660': 13500,
+    'NVIDIA GeForce GTX 1660 Ti': 15500,
+    'NVIDIA GeForce RTX 2060': 19000,
+    'AMD Radeon RX 590': 15500,
+    'AMD Radeon VII': 26000
+}
 
-const blank = "\u202D".repeat(1000) + '\n\n\n';
 
-let userGroup = ['admin', 'manager', 'moderator', 'member'];
+var monitor = {
+    m: {},
+    r: {}
+}
+var roomList = []
 
-ThreadManager = new Object();
 
 
 function grap(a) {
@@ -82,14 +100,7 @@ function grap(a) {
     return [graphlog, log];
 }
 
-const offDB = {
-    'NVIDIA GeForce GTX 1650': 8600,
-    'NVIDIA GeForce GTX 1660': 13500,
-    'NVIDIA GeForce GTX 1660 Ti': 15500,
-    'NVIDIA GeForce RTX 2060': 19000,
-    'AMD Radeon RX 590': 15500,
-    'AMD Radeon VII': 26000
-}
+
 
 function chatbot(com) {
     if (com == '날씨') {
@@ -615,22 +626,9 @@ function makeAuthID() {
     return text;
 }
 
-
-
-
-
-
-
-
-
-let firstLoad = true;
-
-Ky.redditHeader = Ky.redditHeader || 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
-
 function checkFeed(debug) {
 
     debug = debug || false;
-
     var returnContainer = [];
 
     //reddit buildapcsales
@@ -683,8 +681,11 @@ function checkFeed(debug) {
     } catch (e) {
         if (debug) returnContainer.push('[3]\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message);
     }
-    if (debug)
-        if (returnContainer.length == 0) returnContainer = '✔'
+    if (debug) if (returnContainer.length == 0) returnContainer = '✔'
+    if (Ky.feedContainer.length > 200) {
+        Ky.feedContainer.shift();
+        Ky.feedContainer.shift();
+    }
     return returnContainer;
 
 }
@@ -698,36 +699,37 @@ function checkFeed(debug) {
 
 
 
-var monitor = {
-    m: {},
-    r: {}
-}
-var roomList = []
-
-
-
 
 
 
 
 
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName, threadId) {
-    function makeTag(obj) {
-        var possible = '0123456789';
-        while (true) {
-            var text = '';
-            for (var i = 0; i < 4; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
-            if (obj[String(text)] === undefined) break;
-        }
-        return String(text);
-    }
-
-    function getName(p) {
-        if (Ky.user[p].lastName[room]) return Ky.user[p].lastName[room];
-        return Ky.user[p].lastNameAll;
-    }
-
     try {
+
+
+        function makeTag(obj) {
+            var possible = '0123456789';
+            while (true) {
+                var text = '';
+                for (var i = 0; i < 4; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+                if (obj[String(text)] === undefined) break;
+            }
+            return String(text);
+        }
+
+        function getName(p) {
+            if (Ky.user[p].lastName[room]) return Ky.user[p].lastName[room];
+            return Ky.user[p].lastNameAll;
+        }
+
+
+        msg = msg.trim();
+        room = room.trim();
+        sender = sender.trim();
+
+
+        //모니터링, 본 코드와 관계없이 독립적으로 동작
         if (!isGroupChat) {
 
             monitor.m[sender] = monitor.m[sender] || {}
@@ -764,9 +766,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             }
 
         }
-        msg = msg.trim();
-        room = room.trim();
-        sender = sender.trim();
+        //~모니터링, 본 코드와 관계없이 독립적으로 동작
+
+
+
+        
 
 
 
@@ -782,9 +786,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         var hash = String(java.lang.String(imageDB.getProfileImage() + sender).hashCode());
         Ky.r[room].memCheck = hash;
         Ky.r[room].recentLog = Ky.r[room].recentLog || new Object();
-        Ky.r[room].recentLog[room] = Ky.r[room].recentLog[room] || new Object();
-        Ky.r[room].recentLog[room].msg = Ky.r[room].recentLog[room].msg || new Array();
-        Ky.r[room].recentLog[room].sender = Ky.r[room].recentLog[room].sender || new Array();
+        Ky.r[room].recentLog.msg = Ky.r[room].recentLog.msg || new Array();
+        Ky.r[room].recentLog.sender = Ky.r[room].recentLog.sender || new Array();
 
         Ky.r[room].feedCounter = Ky.r[room].feedCounter || 0;
         Ky.r[room].feedTimer = Ky.r[room].feedTimer || 0;
@@ -825,9 +828,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         var pcode;
         var ID;
 
-        let startCheck;
+        
 
-        Ky.r[room].feedCounter++;
+        
+
+        let startCheck;
 
         if (firstLoad) {
             replier.reply('reloaded!');
@@ -859,10 +864,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 //방마다 다 따로해야하는데 for루프로 보낼 방만 따로 배열 뽑아서 그걸 돌리기
 
 
-
-
                 let feed = checkFeed();
                 let feedReplyList = [];
+
+                Ky.r[room].feedCounter++;
 
                 for (i = 0; i < Ky.feedSubList.length; i++) {
 
@@ -883,11 +888,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 }
 
                 if (feedReplyList.length == 0) continue;
-                
-                for (y = 0; y <feedReplyList.length; y++) {
-                    
+
+                for (y = 0; y < feedReplyList.length; y++) {
+
                     let r = feedReplyList[y];
-                    
+
                     if (Ky.r[r].feed.length == 0) continue;
 
                     if (Ky.r[r].feed.length < 4) {
@@ -926,30 +931,30 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (ttttt && Ky.noMarketList.indexOf(room) == -1) {
             Ky.r[room].marketCounter = 0;
             Ky.r[room].marketTimer = new Date().getTime();
- 
-                    var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
-                    var str = '[[다른 회원들이 올린 상품을 확인해 보세요]]' + blank + "//상품 등록 방법: 봇 매뉴얼 참조//\n\n\n";
-                    for (i = 0; i < Ky.market[0].length; i++) {
-                        str += Ky.market[1][i] + ' | ';
-                        str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
-                        str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
-                        str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
-                        str += '  ' + Ky.market[5][i] + '원';
-                        if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
-                        str += '\n  ';
-                        if (!Ky.market[7][i]) {
-                            str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
-                        } else {
-                            str += '연락처 : ' + Ky.market[7][i] + '\n';
-                        }
-                        str += '》 ' + Ky.market[6][i] + '\n\n\n'
-                    }
-                    //java.lang.Thread.sleep(10000);
-                    replier.reply(str)
-             
+
+            var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
+            var str = '[[다른 회원들이 올린 상품을 확인해 보세요]]' + blank + "//상품 등록 방법: 봇 매뉴얼 참조//\n\n\n";
+            for (i = 0; i < Ky.market[0].length; i++) {
+                str += Ky.market[1][i] + ' | ';
+                str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
+                str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
+                str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
+                str += '  ' + Ky.market[5][i] + '원';
+                if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
+                str += '\n  ';
+                if (!Ky.market[7][i]) {
+                    str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
+                } else {
+                    str += '연락처 : ' + Ky.market[7][i] + '\n';
+                }
+                str += '》 ' + Ky.market[6][i] + '\n\n\n'
+            }
+            //java.lang.Thread.sleep(10000);
+            replier.reply(str)
+
         }
 
-        
+
 
 
 
@@ -1105,11 +1110,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
         //로깅
-        Ky.r[room].recentLog[room].msg.unshift(msg);
-        if (Ky.r[room].recentLog[room].msg.length > 50) Ky.r[room].recentLog[room].msg.pop;
+        Ky.r[room].recentLog.msg.unshift(msg);
+        if (Ky.r[room].recentLog.msg.length > 50) Ky.r[room].recentLog.msg.pop;
 
-        Ky.r[room].recentLog[room].sender.unshift(sender);
-        if (Ky.r[room].recentLog[room].sender.length > 50) Ky.r[room].recentLog[room].sender.pop;
+        Ky.r[room].recentLog.sender.unshift(sender);
+        if (Ky.r[room].recentLog.sender.length > 50) Ky.r[room].recentLog.sender.pop;
 
 
 
@@ -1232,7 +1237,15 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         if (login) {
             pcode = Ky.userHash[hash];
-            Ky.user[pcode].parsel = Ky.user[pcode].parsel || [[],[],[],[],[],[],[]]; //택배사, 구분명, 운송장, 개인정보, 추적여부, 상태1, 상태2
+            Ky.user[pcode].parsel = Ky.user[pcode].parsel || [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+            ]; //택배사, 구분명, 운송장, 개인정보, 추적여부, 상태1, 상태2
             Ky.user[pcode].parselChkTime = Ky.user[pcode].parselChkTime || new Date().getTime();
         }
 
@@ -1409,7 +1422,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var c = carrierCode[carrierName.indexOf(data[0][i][3])];
                         var n = data[0][i][5];
                         var j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).timeout(5000).ignoreHttpErrors(true).ignoreContentType(true).get().text());
-                        if (Object.keys(j).length < 2) {//에러
+                        if (Object.keys(j).length < 2) { //에러
                             data[1][i] = '등록 실패 | ' + j.message
                         } else {
                             if (data[0][i][6] == '위치정보 검열') {
@@ -1422,119 +1435,119 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                             Ky.user[pcode].parsel[4].unshift(true);
                             Ky.user[pcode].parsel[5].unshift(j.state.id);
                             Ky.user[pcode].parsel[6].unshift(j.progresses.length);
-        
+
                             if (Ky.user[pcode].parsel[0].length > 5) deleteColumn(Ky.user[pcode].parsel, 5);
-        
+
                             var count = 0;
-                            for (var i = 0; i < Ky.user[pcode].parsel[4].length; ++i){
+                            for (var i = 0; i < Ky.user[pcode].parsel[4].length; ++i) {
                                 if (Ky.user[pcode].parsel[4][i] == true) count++;
                                 if (count > 2) Ky.user[pcode].parsel[4][i] = false;
                             }
-        
+
                         }
                     }
                     replier.reply('[[제품 등록 로그]]' + blank + data[1].join('\n'));
                 }
             }
         }
-        
-        
-        
+
+
+
         com: {
             var c = '실시간트래킹';
             var a = 'member';
             var d = 'false'
             if (commandChk(c, a, d) == false) break com;
-        
+
             if (Ky.user[pcode].parsel[0].length > 0) {
                 if (new Date().getTime() - Ky.user[pcode].parselChkTime > 600000) {
                     Ky.user[pcode].parselChkTime = new Date().getTime();
-                    for (i=0; i<Ky.user[pcode].parsel[4].length; i++) {
-        
+                    for (i = 0; i < Ky.user[pcode].parsel[4].length; i++) {
+
                         if (!Ky.user[pcode].parsel[4][i]) continue;
-        
+
                         let c = carrierCode[carrierName.indexOf(Ky.user[pcode].parsel[0][i])];
                         let n = Ky.user[pcode].parsel[2][i];
                         let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).timeout(5000).ignoreHttpErrors(true).ignoreContentType(true).get().text());
-                        
-        
+
+
                         if (j.state.id != Ky.user[pcode].parsel[5][i] || j.progresses.length != Ky.user[pcode].parsel[6][i]) {
                             Ky.user[pcode].parsel[5][i] = j.state.id;
                             Ky.user[pcode].parsel[6][i] = j.progresses.length;
-        
+
                             let private = Ky.user[pcode].parsel[3][i];
-        
+
                             let str = '[' + sender + ' - ' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text;
                             if (!private) str += ' | ' + j.progresses[x].location.name;
-                            str +=  blank;
-                            
-                            for (x=0; x<j.progresses.length; ++x) {
+                            str += blank;
+
+                            for (x = 0; x < j.progresses.length; ++x) {
                                 str += j.progresses[x].status.text + ' | ';
                                 if (!private) str += j.progresses[x].location.name + ' | ';
                                 str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
                                 str += ' > ' + j.progresses[x].description + '\n'
                             }
-        
+
                             str = str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
                             replier.reply(str);
                             if (j.state.id == 'delivered') Ky.user[pcode].parsel[4][i] = false;
                         }
-        
+
                     }
                 }
             }
         }
-        
+
         com: {
             var c = '일괄트래킹';
             var a = 'member';
             var d = 'false'
             if (commandChk(c, a, d) == false) break com;
-        
+
             if (msg == '!트래킹') {
                 if (Ky.user[pcode].parsel[4].length > 0) {
                     try {
-        
-                    let str = '■전체 보기■' + blank;
-                    
-                    for (i=0; i<Ky.user[pcode].parsel[4].length; i++) {
-        
-                        if (Ky.user[pcode].parsel[5][i] == 'delivered') {
-                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + '배송완료' + '\n\n';
-                            continue;
+
+                        let str = '■전체 보기■' + blank;
+
+                        for (i = 0; i < Ky.user[pcode].parsel[4].length; i++) {
+
+                            if (Ky.user[pcode].parsel[5][i] == 'delivered') {
+                                str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + '배송완료' + '\n\n';
+                                continue;
+                            }
+
+                            let c = carrierCode[carrierName.indexOf(Ky.user[pcode].parsel[0][i])];
+                            let n = Ky.user[pcode].parsel[2][i];
+                            let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
+
+
+                            if (j.state.id == 'delivered') {
+                                str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text + '\n\n';
+                                Ky.user[pcode].parsel[4][i] = false;
+                                continue;
+                            }
+
+                            Ky.user[pcode].parsel[5][i] = j.state.id;
+                            Ky.user[pcode].parsel[6][i] = j.progresses.length;
+
+                            str += '[' + Ky.user[pcode].parsel[1][i] + ' - ' + j.state.text + ']\n';
+                            let private = Ky.user[pcode].parsel[3][i];
+
+                            for (x = 0; x < j.progresses.length; ++x) {
+                                str += j.progresses[x].status.text + ' | ';
+                                if (!private) str += j.progresses[x].location.name + ' | ';
+                                str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
+                                str += ' > ' + j.progresses[x].description + '\n'
+                            }
+                            str += '\n'
+
                         }
-                        
-                        let c = carrierCode[carrierName.indexOf(Ky.user[pcode].parsel[0][i])];
-                        let n = Ky.user[pcode].parsel[2][i];
-                        let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
-                        
-        
-                        if (j.state.id == 'delivered') {
-                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text + '\n\n';
-                            Ky.user[pcode].parsel[4][i] = false;
-                            continue;
-                        }
-        
-                        Ky.user[pcode].parsel[5][i] = j.state.id;
-                        Ky.user[pcode].parsel[6][i] = j.progresses.length;
-    
-                        str += '[' + Ky.user[pcode].parsel[1][i] + ' - ' + j.state.text + ']\n';
-                        let private = Ky.user[pcode].parsel[3][i];
-    
-                        for (x=0; x<j.progresses.length; ++x) {
-                            str += j.progresses[x].status.text + ' | ';
-                            if (!private) str += j.progresses[x].location.name + ' | ';
-                            str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
-                            str += ' > ' + j.progresses[x].description + '\n'
-                        }
-                        str += '\n'
-                        
+                        str = str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
+                        replier.reply(str);
+                    } catch (e) {
+                        replier.reply('네트워크 오류, 재시도해 주세요.')
                     }
-                    str = str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
-                    replier.reply(str);
-                } catch (e) {
-                    replier.reply('네트워크 오류, 재시도해 주세요.')
-                }
                 }
             }
         }
@@ -2167,13 +2180,13 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 replier.reply('50 이하의 자연수를 입력해 주세요.');
             } else {
                 n--;
-                if (n > Ky.r[room].recentLog[room].sender.length - 1) n = Ky.r[room].recentLog[room].sender.length - 1;
+                if (n > Ky.r[room].recentLog.sender.length - 1) n = Ky.r[room].recentLog.sender.length - 1;
                 var char = ('▼전체보기 클릭▼' + blank);
                 for (i = n; i >= 0; i--) {
                     char += '\n》';
-                    char += Ky.r[room].recentLog[room].sender[i];
+                    char += Ky.r[room].recentLog.sender[i];
                     char += '\n';
-                    char += Ky.r[room].recentLog[room].msg[i];
+                    char += Ky.r[room].recentLog.msg[i];
                     char += '\n';
                 }
                 replier.reply(char);
@@ -2320,7 +2333,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
 
-        
+
 
 
 
