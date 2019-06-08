@@ -1005,7 +1005,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
 
-        function commandChk(c, a) {
+        function commandChk(c, a, d) {
             var d = d || true;
             Ky.r[room].command[c] = Ky.r[room].command[c] || [d, a];
             a = Ky.r[room].command[c][1];
