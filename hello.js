@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 's0d0';
+var uCode = 's00';
 
 let charge = true;
 let batteryOK = true;
@@ -21,7 +21,7 @@ Ky.registerTargetAddress = 'https://docs.google.com/spreadsheets/d/1vMaiOPbDYBCe
 Ky.loginTargetAddress = 'https://docs.google.com/spreadsheets/d/1zf2BTvwBmPYFcLQAvlN4LPzH4QblSn-9dTUkUjivwis/htmlview'
 Ky.marketTargetAddress = 'https://docs.google.com/spreadsheets/d/1sg3CSqT9CGY0QPW38w0FytK0UhqYBGyNW0EPrNycV9w/htmlview#gid=1833799400';
 
-Ky.parselTargetAddress = 'https://docs.google.com/spreadsheets/d/194vLEdlM0g4I5axUgfdArqImFKdSwbEI3xwcDN6yrGE/htmlview';
+Ky.parselTargetAddress = 'https://docs.google.com/spreadsheets/d/1ZyUUwWAU8u1PsPljT2iH6IV493DAJGVOb5HZ9k27z-g/htmlview';
 
 
 
@@ -1408,8 +1408,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         var c = carrierCode[carrierName.indexOf(data[0][i][3])];
                         var n = data[0][i][5];
                         var j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
-                        replier.reply(JSON.stringify(j))
-                        if (Object.keys(j).length < 1) {//에러
+                        if (Object.keys(j).length < 2) {//에러
                             data[1][i] = '등록 실패 | ' + j.message
                         } else {
                             if (data[0][i][5] == '위치정보 검열') {
@@ -1420,14 +1419,14 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                             Ky.user[pcode].parsel[2].unshift(data[0][i][5]);
                             Ky.user[pcode].parsel[3].unshift(private);
                             Ky.user[pcode].parsel[4].unshift(true);
-                            Ky.user[pcode].parsel[5].unshift(j.state);
+                            Ky.user[pcode].parsel[5].unshift(j.state.id);
                             Ky.user[pcode].parsel[6].unshift(j.progresses.length);
         
                             if (Ky.user[pcode].parsel[0].length > 5) deleteColumn(Ky.user[pcode].parsel, 5);
         
                             var count = 0;
                             for (var i = 0; i < Ky.user[pcode].parsel[4].length; ++i){
-                                if (array[i] == 2) count++;
+                                if (Ky.user[pcode].parsel[4][i] == true) count++;
                                 if (count > 2) Ky.user[pcode].parsel[4][i] = false;
                             }
         
@@ -1458,13 +1457,13 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
                         
         
-                        if (j.state != Ky.user[pcode].parsel[5][i] || j.progresses.length != Ky.user[pcode].parsel[6][i]) {
-                            Ky.user[pcode].parsel[5][i] = j.state;
+                        if (j.state.id != Ky.user[pcode].parsel[5][i] || j.progresses.length != Ky.user[pcode].parsel[6][i]) {
+                            Ky.user[pcode].parsel[5][i] = j.state.id;
                             Ky.user[pcode].parsel[6][i] = j.progresses.length;
         
-                            let private = Ky.user[pcode].parsel[3];
+                            let private = Ky.user[pcode].parsel[3][i];
         
-                            let str = '[' + sender + ' - ' + Ky.user[pcode].parsel[1][i] + ']\n' + parselStateName[parselStateCode.indexOf(j.state)];
+                            let str = '[' + sender + ' - ' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text;
                             if (!private) str += ' | ' + j.progresses[x].location;
                             str +=  blank;
                             
@@ -1477,7 +1476,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         
                             str.replace(/^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/g, '*전화번호 검열*');
                             replier.reply(str);
-                            if (j.state == 'delivered') Ky.user[pcode].parsel[4][i] = false;
+                            if (j.state.id == 'delivered') Ky.user[pcode].parsel[4][i] = false;
                         }
         
                     }
@@ -1498,7 +1497,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         
                     for (i=0; i<Ky.user[pcode].parsel[4].length; i++) {
         
-                        if (Ky.user[pcode].parsel[5]) {
+                        if (Ky.user[pcode].parsel[5][i]) {
                             str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + '배송완료' + '\n\n';
                             continue;
                         }
@@ -1508,17 +1507,17 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
                         
         
-                        if (j.state == 'delivered') {
-                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + parselStateName[parselStateCode.indexOf(j.state)] + '\n\n';
+                        if (j.state.id == 'delivered') {
+                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text + '\n\n';
                             Ky.user[pcode].parsel[4][i] = false;
                             continue;
                         }
         
-                        if (j.state != Ky.user[pcode].parsel[5][i] || j.progresses.length != Ky.user[pcode].parsel[6][i]) {
-                            Ky.user[pcode].parsel[5][i] = j.state;
+                        if (j.state.id != Ky.user[pcode].parsel[5][i] || j.progresses.length != Ky.user[pcode].parsel[6][i]) {
+                            Ky.user[pcode].parsel[5][i] = j.state.id;
                             Ky.user[pcode].parsel[6][i] = j.progresses.length;
         
-                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + parselStateName[parselStateCode.indexOf(j.state)] + '\n';
+                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text + '\n';
                             let private = Ky.user[pcode].parsel[3];
         
                             for (x=0; x<j.progresses.length; ++x) {
