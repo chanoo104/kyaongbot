@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 's00';
+var uCode = 'ss00';
 
 let charge = true;
 let batteryOK = true;
@@ -1231,6 +1231,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         }
 
         if (login) {
+            pcode = Ky.userHash[hash];
             Ky.user[pcode].parsel = Ky.user[pcode].parsel || [[],[],[],[],[],[],[]]; //택배사, 구분명, 운송장, 개인정보, 추적여부, 상태1, 상태2
             Ky.user[pcode].parselChkTime = Ky.user[pcode].parselChkTime || new Date().getTime();
         }
