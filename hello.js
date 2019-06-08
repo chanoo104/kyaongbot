@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 'ss00';
+var uCode = 's00';
 
 let charge = true;
 let batteryOK = true;
@@ -1493,16 +1493,17 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         
             if (msg == '!트래킹') {
                 if (Ky.user[pcode].parsel[4].length > 0) {
+                    try {
         
                     let str = '■전체 보기■' + blank;
-        
+                    
                     for (i=0; i<Ky.user[pcode].parsel[4].length; i++) {
         
                         if (Ky.user[pcode].parsel[5][i] == 'delivered') {
                             str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + '배송완료' + '\n\n';
                             continue;
                         }
-        
+                        
                         let c = carrierCode[carrierName.indexOf(Ky.user[pcode].parsel[0][i])];
                         let n = Ky.user[pcode].parsel[2][i];
                         let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
@@ -1531,6 +1532,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     }
                     str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
                     replier.reply(str);
+                } catch (e) {
+                    replier.reply('네트워크 오류, 재시도해 주세요.')
+                }
                 }
             }
         }
