@@ -1497,7 +1497,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         
                     for (i=0; i<Ky.user[pcode].parsel[4].length; i++) {
         
-                        if (Ky.user[pcode].parsel[5][i]) {
+                        if (Ky.user[pcode].parsel[5][i] == 'delivered') {
                             str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + '배송완료' + '\n\n';
                             continue;
                         }
