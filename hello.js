@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 's';
+var uCode = 'ss00';
 
 let charge = true;
 let batteryOK = true;
@@ -20,6 +20,15 @@ Ky.formTargetAddress = 'https://docs.google.com/spreadsheets/d/1DfzO6DiPTPN9jYX8
 Ky.registerTargetAddress = 'https://docs.google.com/spreadsheets/d/1vMaiOPbDYBCevdHrYUGTh9Y9-xlYr5BMRPLzv0cKZzY/htmlview#gid=1425276477';
 Ky.loginTargetAddress = 'https://docs.google.com/spreadsheets/d/1zf2BTvwBmPYFcLQAvlN4LPzH4QblSn-9dTUkUjivwis/htmlview'
 Ky.marketTargetAddress = 'https://docs.google.com/spreadsheets/d/1sg3CSqT9CGY0QPW38w0FytK0UhqYBGyNW0EPrNycV9w/htmlview#gid=1833799400';
+
+Ky.parselTargetAddress = 'https://docs.google.com/spreadsheets/d/194vLEdlM0g4I5axUgfdArqImFKdSwbEI3xwcDN6yrGE/htmlview';
+
+
+
+const carrierName = ['우체국택배', 'CJ 대한통운', 'GS Postbox 편의점택배', 'CU 편의점택배', '한진택배', '로젠택배', '롯데택배'];
+const carrierCode = ['kr.epost', 'kr.cjlogistics', 'kr.cvsnet', 'kr.cupost', 'kr.hanjin', 'kr.logen', 'kr.lotte'];
+const parselStateName = ['상품준비중', '상품인수', '상품이동중', '배송출발', '배송완료'];
+const parselStateCode = ['information_received', 'at_pickup', 'in_transit', 'out_for_delivery', 'delivered'];
 
 Ky.formTargetRow = 28;
 var target = Ky.formTargetAddress;
@@ -349,8 +358,16 @@ function getRegisterData() {
 }
 
 function getMarketData(requester) {
+    return getAuthorizedData(requester, Ky.marketTargetAddress, Ky.marketSession);
+}
+
+function getParselData(requester) {
+    return getAuthorizedData(requester, Ky.parselTargetAddress, Ky.parselSession);
+}
+
+function getAuthorizedData(requester, targetAddress, session) {
     try {
-        var doc = org.jsoup.Jsoup.connect(Ky.marketTargetAddress).header('User-Agent', 'Mozilla/5.0').get();
+        var doc = org.jsoup.Jsoup.connect(targetAddress).header('User-Agent', 'Mozilla/5.0').get();
         var data = getGformColumn(doc, 2, 20)
         //닉네임
         if (data[0].indexOf(requester) != -1) {
@@ -362,14 +379,14 @@ function getMarketData(requester) {
                 var pos = data[1] - num
                 //총 길이 - 배열내 위치(0부터시작, indexof로 두번째면 1) = 몆번째
                 var a = getGformRow(doc, pos);
-                if (Ky.marketSession.indexOf(a[0]) == -1) {
+                if (session.indexOf(a[0]) == -1) {
                     if (Ky.user[Ky.userID[requester]].PW == a[2]) {
                         arr.push(a);
                         log.push('등록 성공 | ' + a[4]);
-                        Ky.marketSession.push(a[0]);
+                        session.push(a[0]);
                     } else {
                         log.push('등록 실패 | PW 불일치 | ' + a[4]);
-                        Ky.marketSession.push(a[0]);
+                        session.push(a[0]);
                     }
                 }
             }
@@ -380,7 +397,6 @@ function getMarketData(requester) {
         }
     } catch (e) {
         return false;
-
     }
 }
 
@@ -787,6 +803,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         Ky.loginSession = Ky.loginSession || new Array();
         Ky.registerSession = Ky.registerSession || new Array();
         Ky.marketSession = Ky.marketSession || new Array();
+        Ky.parselSession = Ky.parselSession || new Array();
         Ky.market = Ky.market || [
             [],
             [],
@@ -947,6 +964,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             Ky.user[pcode].lastName = Ky.user[pcode].lastName || new Object();
             Ky.user[pcode].lastName[room] = sender;
             Ky.user[pcode].lastNameAll = sender;
+            Ky.user[pcode].parsel = Ky.user[pcode].parsel || [[],[],[],[],[],[],[]]; //택배사, 구분명, 운송장, 개인정보, 추적여부, 상태1, 상태2
+            Ky.user[pcode].parselChkTime = Ky.user[pcode].parselChkTime || new Date().getTime();
             Ky.r[room].permission[pcode] = Ky.r[room].permission[pcode] || userGroup[userGroup.length - 1];
             if (ID == 'odosk') {
                 Ky.r[room].permission[pcode] = userGroup[0];
@@ -989,7 +1008,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
         function commandChk(c, a) {
-            Ky.r[room].command[c] = Ky.r[room].command[c] || [true, a];
+            var d = d || true;
+            Ky.r[room].command[c] = Ky.r[room].command[c] || [d, a];
             a = Ky.r[room].command[c][1];
             if (!login && a != 'all') {
                 //replier.reply('이 기능을 사용하려면 인증이 필요합니다. 인증 방법은 공지사항을 참조하세요.');
@@ -1364,6 +1384,153 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         } else replier.reply('✘(자연수만 입력해 주세요)')
                     }
 
+                }
+            }
+        }
+
+
+
+
+
+
+
+        if (msg == '!운송장등록') {
+            if (!login) {
+                replier.reply('✘(로그인 후에 사용 가능)');
+            } else {
+                var data = getParselData(ID);
+                if (data == false) {
+                    replier.reply('✘(해당 아이디로 등록된 운송장이 없음)');
+                } else {
+                    for (i = 0; i < data[0].length; i++) {
+                        var c = carrierCode[carrierName.indexOf(data[0][i][3])];
+                        var n = data[0][i][5];
+                        var j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
+                        
+                        if (Object.keys(j).length < 1) {//에러
+                            data[1][i] = '등록 실패 | ' + j.message
+                        } else {
+                            if (data[0][i][5] == '위치정보 검열') {
+                                var private = true
+                            } else var private = false
+                            Ky.user[pcode].parsel[0].unshift(data[0][i][3]);
+                            Ky.user[pcode].parsel[1].unshift(data[0][i][4]);
+                            Ky.user[pcode].parsel[2].unshift(data[0][i][5]);
+                            Ky.user[pcode].parsel[3].unshift(private);
+                            Ky.user[pcode].parsel[4].unshift(true);
+                            Ky.user[pcode].parsel[5].unshift(j.state);
+                            Ky.user[pcode].parsel[6].unshift(j.progress.length);
+        
+                            if (Ky.user[pcode].parsel[0].length > 5) deleteColumn(Ky.user[pcode].parsel, 5);
+        
+                            var count = 0;
+                            for (var i = 0; i < Ky.user[pcode].parsel[4].length; ++i){
+                                if (array[i] == 2) count++;
+                                if (count > 2) Ky.user[pcode].parsel[4][i] = false;
+                            }
+        
+                        }
+                    }
+                    replier.reply('[[제품 등록 로그]]' + blank + data[1].join('\n'));
+                }
+            }
+        }
+        
+        
+        
+        com: {
+            var c = '실시간트래킹';
+            var a = 'member';
+            var d = 'false'
+            if (commandChk(c, a, d) == false) break com;
+        
+            if (Ky.user[pcode].parsel[0].length > 0) {
+                if (new Date().getTime() - Ky.user[pcode].parselChkTime > 600000) {
+                    Ky.user[pcode].parselChkTime = new Date().getTime();
+                    for (i=0; i<Ky.user[pcode].parsel[4].length; i++) {
+        
+                        if (!Ky.user[pcode].parsel[4][i]) continue;
+        
+                        let c = carrierCode[carrierName.indexOf(Ky.user[pcode].parsel[0][i])];
+                        let n = Ky.user[pcode].parsel[2][i];
+                        let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
+                        
+        
+                        if (j.state != Ky.user[pcode].parsel[5][i] || j.progress.length != Ky.user[pcode].parsel[6][i]) {
+                            Ky.user[pcode].parsel[5][i] = j.state;
+                            Ky.user[pcode].parsel[6][i] = j.progress.length;
+        
+                            let private = Ky.user[pcode].parsel[3];
+        
+                            let str = '[' + sender + ' - ' + Ky.user[pcode].parsel[1][i] + ']\n' + parselStateName[parselStateCode.indexOf(j.state)];
+                            if (!private) str += ' | ' + j.progress[x].location;
+                            str +=  blank;
+                            
+                            for (x=0; x<j.progresses.length; ++x) {
+                                str += j.progress[x].status.text + ' | ';
+                                if (!private) str += j.progress[x].location + ' | ';
+                                str += j.progress[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
+                                str += ' > ' + j.progress[x].description + '\n'
+                            }
+        
+                            str.replace(/^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/g, '*전화번호 검열*');
+                            replier.reply(str);
+                            if (j.state == 'delivered') Ky.user[pcode].parsel[4][i] = false;
+                        }
+        
+                    }
+                }
+            }
+        }
+        
+        com: {
+            var c = '일괄트래킹';
+            var a = 'member';
+            var d = 'false'
+            if (commandChk(c, a, d) == false) break com;
+        
+            if (msg == '!트래킹') {
+                if (Ky.user[pcode].parsel[4].length > 0) {
+        
+                    let str = '■전체 보기■' + blank;
+        
+                    for (i=0; i<Ky.user[pcode].parsel[4].length; i++) {
+        
+                        if (Ky.user[pcode].parsel[5]) {
+                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + '배송완료' + '\n\n';
+                            continue;
+                        }
+        
+                        let c = carrierCode[carrierName.indexOf(Ky.user[pcode].parsel[0][i])];
+                        let n = Ky.user[pcode].parsel[2][i];
+                        let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
+                        
+        
+                        if (j.state == 'delivered') {
+                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + parselStateName[parselStateCode.indexOf(j.state)] + '\n\n';
+                            Ky.user[pcode].parsel[4][i] = false;
+                            continue;
+                        }
+        
+                        if (j.state != Ky.user[pcode].parsel[5][i] || j.progress.length != Ky.user[pcode].parsel[6][i]) {
+                            Ky.user[pcode].parsel[5][i] = j.state;
+                            Ky.user[pcode].parsel[6][i] = j.progress.length;
+        
+                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + parselStateName[parselStateCode.indexOf(j.state)] + '\n';
+                            let private = Ky.user[pcode].parsel[3];
+        
+                            for (x=0; x<j.progresses.length; ++x) {
+                                str += j.progress[x].status.text + ' | ';
+                                if (!private) str += j.progress[x].location + ' | ';
+                                str += j.progress[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
+                                str += ' > ' + j.progress[x].description + '\n'
+                            }
+                            str += '\n'
+        
+                        }
+                    }
+                    str.replace(/^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/g, '*전화번호 검열*');
+                    replier.reply(str);
                 }
             }
         }
