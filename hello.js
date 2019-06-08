@@ -1408,7 +1408,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                     for (i = 0; i < data[0].length; i++) {
                         var c = carrierCode[carrierName.indexOf(data[0][i][3])];
                         var n = data[0][i][5];
-                        var j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
+                        var j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).timeout(5000).ignoreHttpErrors(true).ignoreContentType(true).get().text());
                         if (Object.keys(j).length < 2) {//에러
                             data[1][i] = '등록 실패 | ' + j.message
                         } else {
@@ -1455,7 +1455,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         
                         let c = carrierCode[carrierName.indexOf(Ky.user[pcode].parsel[0][i])];
                         let n = Ky.user[pcode].parsel[2][i];
-                        let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).ignoreHttpErrors(true).ignoreContentType(true).get().text());
+                        let j = JSON.parse(org.jsoup.Jsoup.connect('https://apis.tracker.delivery/carriers/' + c + '/tracks/' + n).timeout(5000).ignoreHttpErrors(true).ignoreContentType(true).get().text());
                         
         
                         if (j.state.id != Ky.user[pcode].parsel[5][i] || j.progresses.length != Ky.user[pcode].parsel[6][i]) {
@@ -1475,7 +1475,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                                 str += ' > ' + j.progresses[x].description + '\n'
                             }
         
-                            str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
+                            str = str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
                             replier.reply(str);
                             if (j.state.id == 'delivered') Ky.user[pcode].parsel[4][i] = false;
                         }
@@ -1530,7 +1530,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         str += '\n'
                         
                     }
-                    str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
+                    str = str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
                     replier.reply(str);
                 } catch (e) {
                     replier.reply('네트워크 오류, 재시도해 주세요.')
