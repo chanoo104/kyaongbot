@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 's00';
+var uCode = 's0sdfa0';
 
 let charge = true;
 let batteryOK = true;
@@ -1513,22 +1513,20 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                             continue;
                         }
         
-                        if (j.state.id != Ky.user[pcode].parsel[5][i] || j.progresses.length != Ky.user[pcode].parsel[6][i]) {
-                            Ky.user[pcode].parsel[5][i] = j.state.id;
-                            Ky.user[pcode].parsel[6][i] = j.progresses.length;
-        
-                            str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text + '\n';
-                            let private = Ky.user[pcode].parsel[3];
-        
-                            for (x=0; x<j.progresses.length; ++x) {
-                                str += j.progresses[x].status.text + ' | ';
-                                if (!private) str += j.progresses[x].location + ' | ';
-                                str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
-                                str += ' > ' + j.progresses[x].description + '\n'
-                            }
-                            str += '\n'
-        
+                        Ky.user[pcode].parsel[5][i] = j.state.id;
+                        Ky.user[pcode].parsel[6][i] = j.progresses.length;
+    
+                        str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text + '\n';
+                        let private = Ky.user[pcode].parsel[3];
+    
+                        for (x=0; x<j.progresses.length; ++x) {
+                            str += j.progresses[x].status.text + ' | ';
+                            if (!private) str += j.progresses[x].location + ' | ';
+                            str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
+                            str += ' > ' + j.progresses[x].description + '\n'
                         }
+                        str += '\n'
+                        
                     }
                     str.replace(/^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/g, '*전화번호 검열*');
                     replier.reply(str);
