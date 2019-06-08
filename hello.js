@@ -1474,7 +1474,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                                 str += ' > ' + j.progresses[x].description + '\n'
                             }
         
-                            str.replace(/^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/g, '*전화번호 검열*');
+                            str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
                             replier.reply(str);
                             if (j.state.id == 'delivered') Ky.user[pcode].parsel[4][i] = false;
                         }
@@ -1528,7 +1528,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         str += '\n'
                         
                     }
-                    str.replace(/^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/g, '*전화번호 검열*');
+                    str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
                     replier.reply(str);
                 }
             }
