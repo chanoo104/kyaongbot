@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var uCode = 's0sdfa0';
+var uCode = 's00';
 
 let charge = true;
 let batteryOK = true;
@@ -1516,7 +1516,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         Ky.user[pcode].parsel[5][i] = j.state.id;
                         Ky.user[pcode].parsel[6][i] = j.progresses.length;
     
-                        str += '[' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text + '\n';
+                        str += '[' + Ky.user[pcode].parsel[1][i] + ' - ' + j.state.text + ']\n';
                         let private = Ky.user[pcode].parsel[3];
     
                         for (x=0; x<j.progresses.length; ++x) {
