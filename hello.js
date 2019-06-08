@@ -1411,7 +1411,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         if (Object.keys(j).length < 2) {//에러
                             data[1][i] = '등록 실패 | ' + j.message
                         } else {
-                            if (data[0][i][5] == '위치정보 검열') {
+                            if (data[0][i][6] == '위치정보 검열') {
                                 var private = true
                             } else var private = false
                             Ky.user[pcode].parsel[0].unshift(data[0][i][3]);
@@ -1464,12 +1464,12 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                             let private = Ky.user[pcode].parsel[3][i];
         
                             let str = '[' + sender + ' - ' + Ky.user[pcode].parsel[1][i] + ']\n' + j.state.text;
-                            if (!private) str += ' | ' + j.progresses[x].location;
+                            if (!private) str += ' | ' + j.progresses[x].location.name;
                             str +=  blank;
                             
                             for (x=0; x<j.progresses.length; ++x) {
                                 str += j.progresses[x].status.text + ' | ';
-                                if (!private) str += j.progresses[x].location + ' | ';
+                                if (!private) str += j.progresses[x].location.name + ' | ';
                                 str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
                                 str += ' > ' + j.progresses[x].description + '\n'
                             }
@@ -1517,11 +1517,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         Ky.user[pcode].parsel[6][i] = j.progresses.length;
     
                         str += '[' + Ky.user[pcode].parsel[1][i] + ' - ' + j.state.text + ']\n';
-                        let private = Ky.user[pcode].parsel[3];
+                        let private = Ky.user[pcode].parsel[3][i];
     
                         for (x=0; x<j.progresses.length; ++x) {
                             str += j.progresses[x].status.text + ' | ';
-                            if (!private) str += j.progresses[x].location + ' | ';
+                            if (!private) str += j.progresses[x].location.name + ' | ';
                             str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
                             str += ' > ' + j.progresses[x].description + '\n'
                         }
