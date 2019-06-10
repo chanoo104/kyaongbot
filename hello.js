@@ -2,7 +2,7 @@
 
 eval(DataBase.getDataBase('moment'));
 
-var ucode = 's00';
+var ucode = 's0sadfdsa0';
 
 let charge = true;
 let batteryOK = true;
@@ -1126,9 +1126,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (msg.substr(0, 6) == '!회원가입 ') {
             var requestID = msg.substring(6).trim();
             if (login) {
-                replier.reply('✘(already_login)');
+                replier.reply('✘(이미 로그인된 상태)');
             } else if (Object.keys(Ky.userID).indexOf(requestID) != -1) {
-                replier.reply('✘(existing_username)');
+                replier.reply('✘(해당 아이디가 존재하지 않음)');
             } else {
                 var formArray = getRegisterData();
                 var a = formArray[1];
@@ -1140,11 +1140,11 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 var n = a.indexOf(requestID);
                 var tt = t[n]
                 if (a.indexOf(requestID) == -1) {
-                    replier.reply('✘(no_such_request)');
+                    replier.reply('✘(요청이 존재하지 않음)');
                 } else if (Ky.registerSession.indexOf(tt) != -1) {
-                    replier.reply('✘(session_expired)');
+                    replier.reply('✘(세션 만료)');
                 } else if (checkFormTimeout(tt, 600000)) {
-                    replier.reply('✘(session_timeout)');
+                    replier.reply('✘(세션 타임아웃)');
                 } else {
                     var aa = a[n],
                         bb = b[n],
@@ -1187,9 +1187,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (msg.substr(0, 5) == '!로그인 ') {
             var requestID = msg.substring(5).trim();
             if (login) {
-                replier.reply('✘(already_login)');
+                replier.reply('✘(이미 로그인된 상태)');
             } else if (Object.keys(Ky.userID).indexOf(requestID) == -1) {
-                replier.reply('✘(no_such_username)');
+                replier.reply('✘(해당 아이디가 존재하지 않음)');
             } else {
                 var formArray = getLoginData();
                 var formID = formArray[0];
@@ -1197,17 +1197,17 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 var t = formArray[2];
                 var tt = t[formID.indexOf(requestID)];
                 if (formID.indexOf(requestID) == -1) {
-                    replier.reply('✘(no_such_request)');
+                    replier.reply('✘(요청이 존재하지 않음)');
                 } else if (Ky.loginSession.indexOf(tt) != -1) {
-                    replier.reply('✘(session_expired)');
+                    replier.reply('✘(세션 만료)');
                 } else if (checkFormTimeout(tt, 60000)) {
-                    replier.reply('✘(session_timeout)');
+                    replier.reply('✘(세션 타임아웃)');
                 } else {
                     var i = formID[formID.indexOf(requestID)];
                     var p = String(formPW[formID.indexOf(requestID)]);
                     var c = Ky.userID[i]; //pcode 추출
                     if (Ky.user[c].PW != p) {
-                        replier.reply('✘(password_mismatch)');
+                        replier.reply('✘(비밀번호 불일치)');
                     } else {
                         Ky.userHash[hash] = c; //이 해시와 pcode 연결
                         Ky.loginSession.push(tt);
@@ -1226,7 +1226,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 delete Ky.userHash[hash];
                 login = false;
                 replier.reply('✔');
-            } else replier.reply('✘(not_logined)');
+            } else replier.reply('✘(로그인된 상태가 아님)');
         }
 
         if (msg == '!로그인') {
@@ -1252,6 +1252,19 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
 
+        switch (msg) {
+            case '!매뉴얼':
+            case '!명령어':
+            case '!설명':
+            case '!설명서':
+            case '!가이드':
+            case '!봇설명':
+            case '!봇설명서':
+            case '!기능':
+            case '!도움말':
+                replier.reply('■■■봇 매뉴얼■■■\nhttps://bit.ly/2EgxAg5');
+                break;
+          }
 
 
 
@@ -1265,7 +1278,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         //배열 쪼개서 2차원배열의 2차원에 넣어주기!
         if (msg == '!상품등록') {
             if (!login) {
-                replier.reply('✘(로그인 후에 사용 가능)');
+                replier.reply('✘(로그인 후 사용 가능)\nhttps://bit.ly/2EgxAg5');
             } else {
                 var data = getMarketData(ID);
 
@@ -1325,36 +1338,45 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
         if (msg == '!내상품') {
-            var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
-            var str = '';
-            for (i = 0; i < Ky.market[0].length; i++) {
-                if (Ky.market[0][i] != pcode) continue;
-                if (Ky.market[3][i] != 0 && Ky.market[3][i] != 1) continue;
-                str += '[' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
-            }
-            str = str.slice(0, -1);
-            str += blank;
-
-            for (i = 0; i < Ky.market[0].length; i++) {
-                if (Ky.market[0][i] != pcode) continue;
-                str += Ky.market[1][i] + ' | ';
-                str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
-                str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
-                str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
-                str += '  ' + Ky.market[5][i] + '원';
-                if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
-                str += '\n  ';
-                if (!Ky.market[7][i]) {
-                    str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
+            if (login) {
+                var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
+                var str = '';
+                if (Ky.market[0].length == 0) {
+                    replier.reply('✘(해당 아이디로 등록된 상품이 없음)')
                 } else {
-                    str += '연락처 : ' + Ky.market[7][i] + '\n';
-                }
-                str += '》 ' + Ky.market[6][i] + '\n';
-                str += 'ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ' + '\n';
-            }
+                    for (i = 0; i < Ky.market[0].length; i++) {
+                        if (Ky.market[0][i] != pcode) continue;
+                        if (Ky.market[3][i] != 0 && Ky.market[3][i] != 1) continue;
+                        str += '[' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
+                    }
+                    str = str.slice(0, -1);
+                    str += blank;
 
 
-            replier.reply(str)
+
+                    for (i = 0; i < Ky.market[0].length; i++) {
+                        
+                        if (Ky.market[0][i] != pcode) continue;
+                        str += Ky.market[1][i] + ' | ';
+                        str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
+                        str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
+                        str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
+                        str += '  ' + Ky.market[5][i] + '원';
+                        if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
+                        str += '\n  ';
+                        if (!Ky.market[7][i]) {
+                            str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
+                        } else {
+                            str += '연락처 : ' + Ky.market[7][i] + '\n';
+                        }
+                        str += '》 ' + Ky.market[6][i] + '\n';
+                        str += 'ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ' + '\n';
+                    }
+
+
+                    replier.reply(str)
+               }
+            } else replier.reply('✘(로그인 후 사용 가능)\nhttps://bit.ly/2EgxAg5');
         }
 
         if (msg.substr(0, 4) == '!끌올 ' || msg.substr(0, 6) == '!상태변경 ' || msg.substr(0, 6) == '!등록해제 ' || msg.substr(0, 6) == '!가격변경 ') {
@@ -1368,10 +1390,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
             var t = Ky.market[1].indexOf(p);
             if (t == -1) {
-                replier.reply('✘(no_such_marketID)');
+                replier.reply('✘(해당 상품 ID 없음)');
             } else {
                 if (Ky.market[0][t] != pcode) {
-                    replier.reply('✘(user_mismatch)');
+
                 } else {
 
                     if (msg.substr(0, 4) == '!끌올 ') {
@@ -1396,8 +1418,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                             if (q > 499 || q == 0) {
                                 Ky.market[5][t] = String(q);
                                 replier.reply('✔');
-                            } else replier.reply('✘(단위는 KRW입니다)')
-                        } else replier.reply('✘(자연수만 입력해 주세요)')
+                            } else replier.reply('✘(단위: KRW)')
+                        } else replier.reply('✘(자연수만 입력)')
                     }
 
                 }
@@ -1412,7 +1434,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         if (msg == '!운송장등록') {
             if (!login) {
-                replier.reply('✘(로그인 후에 사용 가능)');
+                replier.reply('✘(로그인 후 사용 가능)\nhttps://bit.ly/2EgxAg5');
             } else {
                 var data = getParselData(ID);
                 if (data == false) {
@@ -2353,7 +2375,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         replier.reply(chatbot(con.split('_')[1]));
                     } else replier.reply(con);
                 } catch (e) {
-                    var doc = org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/user/login').data('email', 'odosk@naver.com', 'password', 'zjavbxhr123!').ignoreContentType(true).method(org.jsoup.Connection.Method.POST).execute();
+                    var doc = org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/user/login').data('email', 'odosk@naver.com', 'password', 'Kjch6819@').ignoreContentType(true).method(org.jsoup.Connection.Method.POST).execute();
                     Ky.cookie = doc.cookie("BSESSIONID");
                     var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.substring(3)).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
                     if (con.split('_')[0] == 'command') {
