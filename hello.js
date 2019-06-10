@@ -2353,7 +2353,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         replier.reply(chatbot(con.split('_')[1]));
                     } else replier.reply(con);
                 } catch (e) {
-                    var doc = org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/user/login').data('email', 'odosk@naver.com', 'password', 'Kjch6819@').ignoreContentType(true).method(org.jsoup.Connection.Method.POST).execute();
+                    var doc = org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/user/login').data('email', 'odosk@naver.com', 'password', 'zjavbxhr123!').ignoreContentType(true).method(org.jsoup.Connection.Method.POST).execute();
                     Ky.cookie = doc.cookie("BSESSIONID");
                     var con = JSON.parse(org.jsoup.Jsoup.connect('https://builder.pingpong.us/api/builder/5cf90197e4b0da63fa5f49b5/chat/simulator?query=' + msg.substring(3)).cookie('BSESSIONID', Ky.cookie).ignoreContentType(true).get().text()).response.replies[0].reply;
                     if (con.split('_')[0] == 'command') {
