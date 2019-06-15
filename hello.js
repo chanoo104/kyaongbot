@@ -924,9 +924,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         Ky.noMarketList = Ky.noMarketList || new Array();
         var ttttt = true;
         var timeNow = new Date().getTime();
-        if (timeNow - Ky.r[room].marketTimer < 6000000 || Ky.r[room].marketCounter < 20) ttttt = false;
-        if (Ky.r[room].marketCounter < 1000 && Ky.r[room].marketCounter >= 50 && timeNow - Ky.r[room].marketTimer < 9000000) ttttt = false;
-        if (Ky.r[room].marketCounter < 50 && timeNow - Ky.r[room].marketTimer < 12000000) ttttt = false;
+        if (timeNow - Ky.r[room].marketTimer < 12000000 || Ky.r[room].marketCounter < 20) ttttt = false;
+        if (Ky.r[room].marketCounter < 1000 && Ky.r[room].marketCounter >= 50 && timeNow - Ky.r[room].marketTimer < 18000000) ttttt = false;
+        if (Ky.r[room].marketCounter < 50 && timeNow - Ky.r[room].marketTimer < 24000000) ttttt = false;
 
         if (ttttt && Ky.noMarketList.indexOf(room) == -1) {
             Ky.r[room].marketCounter = 0;
