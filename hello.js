@@ -1119,10 +1119,10 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         //로깅
         Ky.r[room].recentLog.msg.unshift(msg);
-        if (Ky.r[room].recentLog.msg.length > 50) Ky.r[room].recentLog.msg.pop;
+        if (Ky.r[room].recentLog.msg.length > 50) Ky.r[room].recentLog.msg.pop();
 
         Ky.r[room].recentLog.sender.unshift(sender);
-        if (Ky.r[room].recentLog.sender.length > 50) Ky.r[room].recentLog.sender.pop;
+        if (Ky.r[room].recentLog.sender.length > 50) Ky.r[room].recentLog.sender.pop();
 
 
 
