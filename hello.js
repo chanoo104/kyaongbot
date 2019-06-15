@@ -2392,6 +2392,29 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 }
             }
         }
+        
+        Ky.autoReply = Ky.autoReply || new Object();
+        com: {
+            var c = '가르치기';
+            var a = 'manager';
+            if (commandChk(c, a) == false) break com;
+
+            if (msg.indexOf("!가르치기 ") == 0 && msg.indexOf("\n") != -1) {
+                Ky.autoReply['!' + msg.substr(6).split("\n")[0]] = msg.substr(msg.split("\n")[0].length + 1);
+                replier.reply("✔");
+            }
+        }
+        
+        com: {
+            var c = '가르치기 답장';
+            var a = 'all';
+            var d = false;
+            if (commandChk(c, a, d) == false) break com;
+
+            if(Ky.autoReply[msg] != undefined) replier.reply(Ky.autoReply[msg]);
+        }
+
+        
 
         if (msg.indexOf('소라고둥') != -1 && msg.indexOf('?') != -1) {
             var ran = Math.round(Math.random())
