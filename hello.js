@@ -681,7 +681,8 @@ function checkFeed(debug) {
     } catch (e) {
         if (debug) returnContainer.push('[3]\nlineNumber: ' + e.lineNumber + '\nmessage : ' + e.message);
     }
-    if (debug) if (returnContainer.length == 0) returnContainer = '✔'
+    if (debug)
+        if (returnContainer.length == 0) returnContainer = '✔'
     if (Ky.feedContainer.length > 200) {
         Ky.feedContainer.shift();
         Ky.feedContainer.shift();
@@ -770,7 +771,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
 
-        
+
 
 
 
@@ -828,9 +829,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         var pcode;
         var ID;
 
-        
 
-        
+
+
 
         let startCheck;
 
@@ -929,38 +930,37 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (Ky.r[room].marketCounter < 50 && timeNow - Ky.r[room].marketTimer < 24000000) ttttt = false;
 
         if (ttttt && Ky.noMarketList.indexOf(room) == -1) {
-            new java.lang.Thread({
-                run: function () {
-                    java.lang.Thread.sleep(30000);
-
-                    Ky.r[room].marketCounter = 0;
-                    Ky.r[room].marketTimer = new Date().getTime();
-        
-                    var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
-                    var str = '[[다른 회원들이 올린 상품을 확인해 보세요]]' + blank + "//상품 등록 방법: 봇 매뉴얼 참조//\n\n\n";
-                    for (i = 0; i < Ky.market[0].length; i++) {
-                        str += Ky.market[1][i] + ' | ';
-                        str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
-                        str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
-                        str += '  [' + typ[Ky.market[a3][i]] + '] ' + Ky.market[4][i] + '\n';
-                        str += '  ' + Ky.market[5][i] + '원';
-                        if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
-                        str += '\n  ';
-                        if (!Ky.market[7][i]) {
-                            str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
-                        } else {
-                            str += '연락처 : ' + Ky.market[7][i] + '\n';
-                        }
-                        str += '》 ' + Ky.market[6][i] + '\n\n\n'
-                    }
-                    //java.lang.Thread.sleep(10000);
-                    replier.reply(str)
-                        
-                }
-            }).start();
+            var ttt = new java.util.Timer();
+            ttt.schedule(taskAutoMarket, 30 * 1000);
             
-
         }
+
+        var taskAutoMarket = new java.util.TimerTask({
+            run: function () {
+                Ky.r[room].marketCounter = 0;
+                Ky.r[room].marketTimer = new Date().getTime();
+
+                var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
+                var str = '[[다른 회원들이 올린 상품을 확인해 보세요]]' + blank + "//상품 등록 방법: 봇 매뉴얼 참조//\n\n\n";
+                for (i = 0; i < Ky.market[0].length; i++) {
+                    str += Ky.market[1][i] + ' | ';
+                    str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
+                    str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
+                    str += '  [' + typ[Ky.market[a3][i]] + '] ' + Ky.market[4][i] + '\n';
+                    str += '  ' + Ky.market[5][i] + '원';
+                    if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
+                    str += '\n  ';
+                    if (!Ky.market[7][i]) {
+                        str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
+                    } else {
+                        str += '연락처 : ' + Ky.market[7][i] + '\n';
+                    }
+                    str += '》 ' + Ky.market[6][i] + '\n\n\n'
+                }
+                //java.lang.Thread.sleep(10000);
+                replier.reply(str)
+            }
+        });
 
 
 
@@ -1272,7 +1272,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             case '!도움말':
                 replier.reply('■■■봇 매뉴얼■■■\nhttps://bit.ly/2EgxAg5');
                 break;
-          }
+        }
 
 
 
@@ -1363,7 +1363,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
                     for (i = 0; i < Ky.market[0].length; i++) {
-                        
+
                         if (Ky.market[0][i] != pcode) continue;
                         str += Ky.market[1][i] + ' | ';
                         str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
@@ -1383,7 +1383,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
                     replier.reply(str)
-               }
+                }
             } else replier.reply('✘(로그인 후 사용 가능)\nhttps://bit.ly/2EgxAg5');
         }
 
@@ -2392,7 +2392,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 }
             }
         }
-        
+
+
         Ky.autoReply = Ky.autoReply || new Object();
         com: {
             var c = '가르치기';
@@ -2404,17 +2405,17 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 replier.reply("✔");
             }
         }
-        
+
         com: {
             var c = '가르치기 답장';
             var a = 'all';
             var d = false;
             if (commandChk(c, a, d) == false) break com;
 
-            if(Ky.autoReply[msg] != undefined) replier.reply(Ky.autoReply[msg]);
+            if (Ky.autoReply[msg] != undefined) replier.reply(Ky.autoReply[msg]);
         }
 
-        
+
 
         if (msg.indexOf('소라고둥') != -1 && msg.indexOf('?') != -1) {
             var ran = Math.round(Math.random())
