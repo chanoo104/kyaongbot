@@ -942,7 +942,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 str += Ky.market[1][i] + ' | ';
                 str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
                 str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
-                str += '  [' + typ[Ky.market[a3][i]] + '] ' + Ky.market[4][i] + '\n';
+                str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
                 str += '  ' + Ky.market[5][i] + '원';
                 if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
                 str += '\n  ';
