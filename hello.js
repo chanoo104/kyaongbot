@@ -929,28 +929,36 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (Ky.r[room].marketCounter < 50 && timeNow - Ky.r[room].marketTimer < 24000000) ttttt = false;
 
         if (ttttt && Ky.noMarketList.indexOf(room) == -1) {
-            Ky.r[room].marketCounter = 0;
-            Ky.r[room].marketTimer = new Date().getTime();
+            new java.lang.Thread({
+                run: function () {
+                    java.lang.Thread.sleep(30000);
 
-            var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
-            var str = '[[다른 회원들이 올린 상품을 확인해 보세요]]' + blank + "//상품 등록 방법: 봇 매뉴얼 참조//\n\n\n";
-            for (i = 0; i < Ky.market[0].length; i++) {
-                str += Ky.market[1][i] + ' | ';
-                str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
-                str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
-                str += '  [' + typ[Ky.market[3][i]] + '] ' + Ky.market[4][i] + '\n';
-                str += '  ' + Ky.market[5][i] + '원';
-                if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
-                str += '\n  ';
-                if (!Ky.market[7][i]) {
-                    str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
-                } else {
-                    str += '연락처 : ' + Ky.market[7][i] + '\n';
+                    Ky.r[room].marketCounter = 0;
+                    Ky.r[room].marketTimer = new Date().getTime();
+        
+                    var typ = ['팝니다', '삽니다', '판매 예약중', '구매 예약중']
+                    var str = '[[다른 회원들이 올린 상품을 확인해 보세요]]' + blank + "//상품 등록 방법: 봇 매뉴얼 참조//\n\n\n";
+                    for (i = 0; i < Ky.market[0].length; i++) {
+                        str += Ky.market[1][i] + ' | ';
+                        str += getName(Ky.market[0][i]) + '#' + Ky.user[Ky.market[0][i]].tag + ' | ';
+                        str += moment(Ky.market[2][i]).format('YYYY-MM-DD HH:mm') + '\n\n';
+                        str += '  [' + typ[Ky.market[a3][i]] + '] ' + Ky.market[4][i] + '\n';
+                        str += '  ' + Ky.market[5][i] + '원';
+                        if (Ky.market[3][i] == 0) str += ' / 택배 ' + Ky.market[8][i] + ' / 직거래 ' + Ky.market[9][i];
+                        str += '\n  ';
+                        if (!Ky.market[7][i]) {
+                            str += Ky.user[Ky.market[0][i]].contactType + ' : ' + Ky.user[Ky.market[0][i]].contact + '\n';
+                        } else {
+                            str += '연락처 : ' + Ky.market[7][i] + '\n';
+                        }
+                        str += '》 ' + Ky.market[6][i] + '\n\n\n'
+                    }
+                    //java.lang.Thread.sleep(10000);
+                    replier.reply(str)
+                        
                 }
-                str += '》 ' + Ky.market[6][i] + '\n\n\n'
-            }
-            //java.lang.Thread.sleep(10000);
-            replier.reply(str)
+            }).start();
+            
 
         }
 
