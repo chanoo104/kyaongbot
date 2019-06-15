@@ -1,6 +1,7 @@
 //KyLite v1 끝말잇기없음
 
 eval(DataBase.getDataBase('moment'));
+importPackage(java.util);
 
 var ucode = 's0sadfdsa0';
 
@@ -930,7 +931,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (Ky.r[room].marketCounter < 50 && timeNow - Ky.r[room].marketTimer < 24000000) ttttt = false;
 
         if (ttttt && Ky.noMarketList.indexOf(room) == -1) {
-            var ttt = new java.util.Timer();
+            var ttt = new Timer();
             ttt.schedule(taskAutoMarket, 30 * 1000);
             
         }
