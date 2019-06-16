@@ -932,7 +932,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         if (Ky.r[room].marketCounter < 50 && timeNow - Ky.r[room].marketTimer < 24000000) ttttt = false;
 
         if (ttttt && Ky.noMarketList.indexOf(room) == -1) {
-            var ttt = new Timer();
+            ThreadManager.temp.ttt = new Timer();
             Ky.r[room].marketCounter = 0;
             Ky.r[room].marketTimer = new Date().getTime();
 
@@ -956,7 +956,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
             //java.lang.Thread.sleep(10000);
             ThreadManager.temp.taskAutoMarket = str;
-            ttt.schedule(taskAutoMarket, 30 * 1000);
+            ThreadManager.temp.ttt.schedule(taskAutoMarket, 30 * 1000);
             
         }
 
