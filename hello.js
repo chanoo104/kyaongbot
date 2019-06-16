@@ -957,16 +957,16 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             //java.lang.Thread.sleep(10000);
             ThreadManager.temp.taskAutoMarket = str;
             ThreadManager.temp.ttt.schedule(taskAutoMarket, 30 * 1000);
-            
-        }
-
-        var taskAutoMarket = new java.util.TimerTask({
+          var taskAutoMarket = new java.util.TimerTask({
             run: function () {
                 replier.reply(ThreadManager.temp.taskAutoMarket)
             }
         });
 
+  
+        }
 
+        
 
 
 
