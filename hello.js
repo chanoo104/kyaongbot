@@ -1521,7 +1521,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                                 str += j.progresses[x].status.text + ' | ';
                                 if (!private) str += j.progresses[x].location.name + ' | ';
                                 str += j.progresses[x].time.replace('T', ' ').replace('+09:00', '') + '\n';
-                                str += ' > ' + j.progresses[x].description + '\n'
+                                if (j.state.id != 'delivered') str += ' > ' + j.progresses[x].description + '\n'
                             }
 
                             str = str.replace(/01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})/g, '*전화번호 검열*');
