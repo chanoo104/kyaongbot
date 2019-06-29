@@ -415,7 +415,7 @@ function getAuthorizedData(requester, targetAddress, session) {
 
 function getForm(requester) {
     try {
-        var doc = org.jsoup.Jsoup.connect(target).header('User-Agent', 'Mozilla/5.0').get();
+        var doc = org.jsoup.Jsoup.connect(Ky.formTargetAddress).header('User-Agent', 'Mozilla/5.0').get();
         var data = getGformColumn(doc, Ky.formTargetRow, 10)
         //닉네임
         if (data[0].indexOf(requester) != -1) {
