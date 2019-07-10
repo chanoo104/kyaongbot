@@ -1141,8 +1141,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             var requestID = msg.substring(6).trim();
             if (login) {
                 replier.reply('✘(이미 로그인된 상태)');
-            } else if (Object.keys(Ky.userID).indexOf(requestID) != -1) {
-                replier.reply('✘(해당 아이디가 존재하지 않음)');
             } else {
                 var formArray = getRegisterData();
                 var a = formArray[1];
