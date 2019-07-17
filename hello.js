@@ -1064,12 +1064,18 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 if (msg == '.print') {
                     var char = '';
                     for (i = 0; i < Object.keys(Ky.r[room].command).length; i++) {
-                        char += Object.keys(Ky.r[room].command)[i];
-                        char += '  ';
-                        char += Ky.r[room].command[Object.keys(Ky.r[room].command)[i]][0];
-                        char += '  ';
-                        char += Ky.r[room].command[Object.keys(Ky.r[room].command)[i]][1];
-                        char += '\n';
+                        var charr = ''
+                        try {
+                        charr += Object.keys(Ky.r[room].command)[i];
+                        charr += '  ';
+                        charr += Ky.r[room].command[Object.keys(Ky.r[room].command)[i]][0];
+                        charr += '  ';
+                        charr += Ky.r[room].command[Object.keys(Ky.r[room].command)[i]][1];
+                        charr += '\n';
+                        } catch (e) {
+                            continue;
+                        }
+                        char += 
                     }
                     char += '\n' + userGroup.join(',');
                     replier.reply(char);
