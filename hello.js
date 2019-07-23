@@ -1292,7 +1292,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (commandChk(c, a, d) == false) break com;
 
             if (msg.substr(0, 6) == '!전체공지 ') {
-                let announcement = msg.substring(6).trim();
+                let announcement = '[전체공지]\n' +msg.substring(6).trim();
                 let count = 0;
                 for (i=0; i<Object.keys(Ky.r).length; ++i) {
                     if (Api.replyRoom(Object.keys(Ky.r)[i], announcement)) count++;;
