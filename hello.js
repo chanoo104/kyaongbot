@@ -1251,7 +1251,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (login) {
                 let str = '✔(#' + Ky.user[pcode].tag + ')';
                 if (userGroup.indexOf(permission) <= userGroup.indexOf('moderator')) str += '\n' + permission;
-                replier.reply();
+                replier.reply(str);
             } else replier.reply('✘');
         }
 
@@ -1286,6 +1286,20 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 break;
         }
 
+        com: {
+            var c = '전체공지';
+            var a = 'admin';
+            if (commandChk(c, a, d) == false) break com;
+
+            if (msg.substr(0, 6) == '!전체공지 ') {
+                let announcement = msg.substring(6).trim();
+                let count = 0;
+                for (i=0; i<Object.keys(Ky.r).length; ++i) {
+                    if (Api.replyRoom(Object.keys(Ky.r)[i], announcement)) count++;;
+                }
+                replier.reply('✔(' + count + ')');
+            }
+        }
 
 
 
