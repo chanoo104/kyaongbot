@@ -1075,7 +1075,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                         } catch (e) {
                             continue;
                         }
-                        char += 
+                        char += charr;
                     }
                     char += '\n' + userGroup.join(',');
                     replier.reply(char);
@@ -1249,7 +1249,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
         if (msg == '!로그인') {
             if (login) {
-                replier.reply('✔(#' + Ky.user[pcode].tag + ')');
+                let str = '✔(#' + Ky.user[pcode].tag + ')';
+                if (userGroup.indexOf(permission) <= userGroup.indexOf('moderator')) str += '\n' + permission;
+                replier.reply();
             } else replier.reply('✘');
         }
 
@@ -1410,7 +1412,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (t == -1) {
                 replier.reply('✘(해당 상품 ID 없음)');
             } else {
-                if (Ky.market[0][t] != pcode) {
+                if (Ky.market[0][t] != pcode && userGroup.indexOf(permission) > userGroup.indexOf('moderator')) {
 
                 } else {
 
