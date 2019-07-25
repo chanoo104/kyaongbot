@@ -1295,6 +1295,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 let announcement = '[전체공지]\n' +msg.substring(6).trim();
                 let count = 0;
                 for (i=0; i<Object.keys(Ky.r).length; ++i) {
+                    if (Object.keys(Ky.r)[i].startsWith('●')) continue;
                     if (Api.replyRoom(Object.keys(Ky.r)[i], announcement)) count++;;
                 }
                 replier.reply('✔(' + count + ')');
