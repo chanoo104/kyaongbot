@@ -1025,7 +1025,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
 
 
         function commandChk(c, a, d) {
-            var d = d || true;
+            if (typeof d == 'undefined') var d= true
+            
             Ky.r[room].command[c] = Ky.r[room].command[c] || [d, a];
             a = Ky.r[room].command[c][1];
             if (!login && a != 'all') {
@@ -2428,7 +2429,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (commandChk(c, a) == false) break com;
 
             if (msg.indexOf("!가르치기 ") == 0 && msg.indexOf("\n") != -1) {
-                Ky.autoReply['!' + msg.substr(6).split("\n")[0]] = msg.substr(msg.split("\n")[0].length + 1);
+                Ky.autoReply['!' + msg.substr(6).split("\n")[0]] = msg.substr(msg.split("\n")[0].length + 1).replace('?blank&', blank);
                 replier.reply("✔");
             }
         }
