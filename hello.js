@@ -2434,7 +2434,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         }
 
         com: {
-            var c = '가르치기 답장';
+            var c = '가르치기답장';
             var a = 'all';
             var d = false;
             if (commandChk(c, a, d) == false) break com;
