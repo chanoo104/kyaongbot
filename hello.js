@@ -2431,7 +2431,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             if (msg.indexOf("!가르치기 ") == 0 && msg.indexOf("\n") != -1) {
                 Ky.autoReply['!' + msg.substr(6).split("\n")[0]] = msg.substr(msg.split("\n")[0].length + 1).replace('?blank&', blank);
                 replier.reply("✔");
-
+            }
+            
             if (msg.indexOf("!이어가르치기 ") == 0 && msg.indexOf("\n") != -1) {
                 Ky.autoReply['!' + msg.substr(8).split("\n")[0]] = Ky.autoReply['!' + msg.substr(8).split("\n")[0]] + msg.substr(msg.split("\n")[0].length + 1).replace('?blank&', blank);
                 replier.reply("✔");
