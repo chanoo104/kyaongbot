@@ -3,7 +3,7 @@
 eval(DataBase.getDataBase('moment'));
 importPackage(java.util);
 
-const Danawa = DataBase.getDataBase('danawa')
+const Danawa = JSON.parse(DataBase.getDataBase('danawa'))
 
 const danawaList = [['Cpu', 'cpu', 'CPU', '씨퓨'], ['메인보드', '멤보', '마더보드'], ['Ram', 'ram','RAM', '램', '메모리'], ['Gpu', 'gpu', 'GPU', '그래픽', '글카', '그래픽카드'], ['Ssd', 'ssd', 'SSD', '스스디'], ['Hdd', 'hdd', 'HDD', '하드', '하드디스크'], ['Odd', 'odd', 'Odd', '시디롬', '씨디롬'], ['케이스', '샤시'], ['파워', '파워서플라이', '전원공급장치', 'Smps', 'smps', 'SMPS'], ['키보드'], ['마우스'], ['사운드', '스피커'], ['모니터'], ['쿨러', '튜닝'], ['소프트웨어']]
 
