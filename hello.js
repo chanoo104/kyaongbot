@@ -3,6 +3,10 @@
 eval(DataBase.getDataBase('moment'));
 importPackage(java.util);
 
+const Danawa = DataBases.getDataBase('danawa')
+
+const danawaList = [['Cpu', 'cpu', 'CPU', '씨퓨'], ['메인보드', '멤보', '마더보드'], ['Ram', 'ram','RAM', '램', '메모리'], ['Gpu', 'gpu', 'GPU', '그래픽', '글카', '그래픽카드'], ['Ssd', 'ssd', 'SSD', '스스디'], ['Hdd', 'hdd', 'HDD', '하드', '하드디스크'], ['Odd', 'odd', 'Odd', '시디롬', '씨디롬'], ['케이스', '샤시'], ['파워', '파워서플라이', '전원공급장치', 'Smps', 'smps', 'SMPS'], ['키보드'], ['마우스'], ['사운드', '스피커'], ['모니터'], ['쿨러', '튜닝'], ['소프트웨어']]
+
 var ucode = 's0sadfdsa0';
 
 let charge = true;
@@ -1283,6 +1287,9 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             case '!봇설명서':
             case '!기능':
             case '!도움말':
+            case '!지침서':
+            case '!도움서':
+            case '!도움':
                 replier.reply('■■■봇 매뉴얼■■■\nhttps://bit.ly/2EgxAg5');
                 break;
         }
@@ -2399,6 +2406,29 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
         ///////////////////////잡다한기능//////////////////////
 
         com: {
+            var c = '랜덤부품';
+            var a = 'all';
+            if (!commandChk(c, a)) break com;
+            if (msg.substr(0, 4) == '!랜덤 ') {
+                let tem = false;
+                let index = 0;
+                for (i=0; i<danawaList.length; ++i) {
+                    if (danawaList[i].indexOf(msg.substring(4).trim()) != -1) {
+                        tem = true;
+                        index = i;
+                        break;
+                    }
+                }
+                if (tem) {
+                    let len = Danawa[i][1].length;
+                    let ind = Math.floor(Math.random() * len / 2);
+                    replier.reply(Danawa[i][1].ind)
+                    replier.reply(Danawa[i][2].ind)
+                }
+            }
+        }
+
+        com: {
             var c = 'AI챗봇';
             var a = 'member';
             if (commandChk(c, a) == false) break com;
@@ -2511,6 +2541,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
             var a = 'all';
             if (!commandChk(c, a)) break com;
             //주소단축
+            c = '!단축';
             if (msg.substr(0, c.length + 1) == c + ' ') {
                 if (checkDetailUrl(msg.substring(c.length + 1))) {
                     replier.reply(shortURL(msg.substring(c.length + 1)))
