@@ -2422,8 +2422,8 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName,
                 if (tem) {
                     let len = Danawa[i][1].length;
                     let ind = Math.floor(Math.random() * len / 2);
-                    replier.reply(Danawa[i][1].ind)
-                    replier.reply(Danawa[i][2].ind)
+                    replier.reply(Danawa[i][1][ind])
+                    replier.reply(Danawa[i][2][ind])
                 }
             }
         }
